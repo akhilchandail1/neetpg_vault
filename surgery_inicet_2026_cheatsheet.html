@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Surgery Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0e0e; --surface: #0f1a1a; --surface2: #162424; --border: #1e3030;
+    --accent: #2dd4bf; --accent2: #facc15; --accent3: #fb923c; --accent4: #f9a8d4; --accent5: #c4b5fd;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #0a0e0e 0%, #0d1f1f 50%, #0a0e0e 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent); color: #0a0e0e; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent); color: #0a0e0e; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.teal::before { background: var(--accent); }
+  .card.yellow::before { background: var(--accent2); }
+  .card.orange::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.purple::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.teal .card-title { color: var(--accent); }
+  .card.yellow .card-title { color: var(--accent2); }
+  .card.orange .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.purple .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #162424; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.yellow { color: var(--accent2); }
+  .kv-val.orange { color: var(--accent3); }
+  .kv-val.danger { color: var(--danger); }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(45,212,191,0.07); border: 1px solid rgba(45,212,191,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent); margin-top: 8px; line-height: 1.5; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .stage-row { display: flex; gap: 8px; margin-bottom: 7px; align-items: flex-start; font-size: 12.5px; }
+  .stage-num { background: var(--accent); color: #0a0e0e; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  .mt-12 { margin-top: 12px; }
+  @media (max-width: 800px) { .grid-auto, .grid-2 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>Sur<span>gery</span> Cheatsheet</h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('git',this)">GI Tract</div>
+    <div class="tab" onclick="showSection('hepato',this)">Hepatobiliary</div>
+    <div class="tab" onclick="showSection('breast',this)">Breast &amp; Thyroid</div>
+    <div class="tab" onclick="showSection('vascular',this)">Vascular</div>
+    <div class="tab" onclick="showSection('trauma',this)">Trauma &amp; Burns</div>
+    <div class="tab" onclick="showSection('surgical_onco',this)">Surgical Oncology</div>
+    <div class="tab" onclick="showSection('periop',this)">Perioperative</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- GI TRACT -->
+<div class="section active" id="git">
+  <div class="section-title">GI Tract <span>Surgery</span></div>
+  <div class="section-sub">Oesophagus, stomach, small bowel, colon, rectum, appendix</div>
+  <div class="grid-auto">
+    <div class="card teal">
+      <div class="card-title">🔴 Acute Appendicitis</div>
+      <div class="kv-row"><span class="kv-key">Alvarado score (MANTRELS)</span><span class="kv-val">Score ≥7 = appendicitis likely</span></div>
+      <div class="kv-row"><span class="kv-key">Investigation of choice</span><span class="kv-val highlight">CT abdomen (adults); USG (children/pregnant)</span></div>
+      <div class="kv-row"><span class="kv-key">Normal appendix diameter</span><span class="kv-val green">&lt;6 mm</span></div>
+      <div class="kv-row"><span class="kv-key">McBurney's point</span><span class="kv-val">2/3 way from umbilicus to ASIS</span></div>
+      <div class="kv-row"><span class="kv-key">Rovsing's sign</span><span class="kv-val">Pain at McBurney's on LIF palpation</span></div>
+      <div class="kv-row"><span class="kv-key">Psoas sign</span><span class="kv-val">Retrocaecal appendix</span></div>
+      <div class="kv-row"><span class="kv-key">Obturator sign</span><span class="kv-val">Pelvic appendix</span></div>
+      <div class="kv-row"><span class="kv-key">MC complication</span><span class="kv-val danger">Perforation → peritonitis</span></div>
+    </div>
+    <div class="card yellow">
+      <div class="card-title">🔴 Small Bowel Obstruction</div>
+      <div class="kv-row"><span class="kv-key">MC cause (adults)</span><span class="kv-val highlight">Adhesions (post-surgery)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause (children)</span><span class="kv-val">Intussusception</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause (hernia) if no surgery Hx</span><span class="kv-val">Inguinal hernia</span></div>
+      <div class="kv-row"><span class="kv-key">X-ray finding</span><span class="kv-val">Central, multiple air-fluid levels</span></div>
+      <div class="kv-row"><span class="kv-key">Closed loop obstruction</span><span class="kv-val danger">Emergency surgery — ischaemia risk</span></div>
+      <div class="kv-row"><span class="kv-key">Richter's hernia</span><span class="kv-val">Partial bowel wall herniated (no obstruction)</span></div>
+      <div class="kv-row"><span class="kv-key">Gallstone ileus</span><span class="kv-val">Air in biliary tree (Rigler's triad)</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔴 Colorectal Cancer</div>
+      <div class="kv-row"><span class="kv-key">MC type</span><span class="kv-val">Adenocarcinoma</span></div>
+      <div class="kv-row"><span class="kv-key">MC site</span><span class="kv-val highlight">Rectosigmoid junction</span></div>
+      <div class="kv-row"><span class="kv-key">Right-sided tumour</span><span class="kv-val">Anaemia, weight loss (occult bleeding)</span></div>
+      <div class="kv-row"><span class="kv-key">Left-sided tumour</span><span class="kv-val">Altered bowel habit, obstruction</span></div>
+      <div class="kv-row"><span class="kv-key">Staging (Dukes' A)</span><span class="kv-val green">Confined to bowel wall</span></div>
+      <div class="kv-row"><span class="kv-key">Dukes' B</span><span class="kv-val">Through bowel wall, no LN</span></div>
+      <div class="kv-row"><span class="kv-key">Dukes' C</span><span class="kv-val danger">LN involved</span></div>
+      <div class="kv-row"><span class="kv-key">Dukes' D</span><span class="kv-val danger">Distant metastasis</span></div>
+      <div class="kv-row"><span class="kv-key">CEA role</span><span class="kv-val">Monitoring recurrence (not diagnosis)</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🔴 Hernia Types</div>
+      <div class="kv-row"><span class="kv-key">MC hernia overall</span><span class="kv-val highlight">Indirect inguinal hernia</span></div>
+      <div class="kv-row"><span class="kv-key">MC in women</span><span class="kv-val">Indirect inguinal &gt; femoral</span></div>
+      <div class="kv-row"><span class="kv-key">Femoral hernia</span><span class="kv-val danger">High strangulation risk</span></div>
+      <div class="kv-row"><span class="kv-key">Hesselbach's triangle</span><span class="kv-val">Direct inguinal hernia through it</span></div>
+      <div class="kv-row"><span class="kv-key">Spigelian hernia</span><span class="kv-val">Lateral edge of rectus abdominis</span></div>
+      <div class="kv-row"><span class="kv-key">Obturator hernia</span><span class="kv-val">Howship-Romberg sign (medial thigh pain)</span></div>
+      <div class="kv-row"><span class="kv-key">Paraduodenal hernia</span><span class="kv-val">MC internal hernia</span></div>
+      <div class="kv-row"><span class="kv-key">Littre's hernia</span><span class="kv-val">Contains Meckel's diverticulum</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🔴 Peptic Ulcer Disease</div>
+      <div class="kv-row"><span class="kv-key">DU MC site</span><span class="kv-val">1st part of duodenum (anterior wall)</span></div>
+      <div class="kv-row"><span class="kv-key">Perforation MC site</span><span class="kv-val">Anterior duodenal wall</span></div>
+      <div class="kv-row"><span class="kv-key">Bleeding DU</span><span class="kv-val danger">Posterior wall (gastroduodenal artery)</span></div>
+      <div class="kv-row"><span class="kv-key">Erect CXR finding (perforation)</span><span class="kv-val danger">Gas under diaphragm</span></div>
+      <div class="kv-row"><span class="kv-key">H. pylori test</span><span class="kv-val">Urea breath test (UBT) — non-invasive gold std</span></div>
+      <div class="kv-row"><span class="kv-key">H. pylori eradication</span><span class="kv-val">Triple therapy: PPI + Amoxicillin + Clarithromycin</span></div>
+      <div class="kv-row"><span class="kv-key">Zollinger-Ellison</span><span class="kv-val">Gastrinoma; recurrent PUD + diarrhoea</span></div>
+    </div>
+    <div class="card teal">
+      <div class="card-title">🔴 Meckel's Diverticulum</div>
+      <div class="kv-row"><span class="kv-key">Rule of 2's</span><span class="kv-val highlight">2% population, 2 ft from ileocaecal valve, 2 inches long, 2:1 M:F, 2 yrs age, 2 types of ectopic mucosa</span></div>
+      <div class="kv-row"><span class="kv-key">MC complication (child)</span><span class="kv-val danger">Painless PR bleeding</span></div>
+      <div class="kv-row"><span class="kv-key">MC complication (adult)</span><span class="kv-val">Intestinal obstruction</span></div>
+      <div class="kv-row"><span class="kv-key">Investigation</span><span class="kv-val">Tc-99m pertechnetate scan</span></div>
+      <div class="kv-row"><span class="kv-key">Ectopic mucosa</span><span class="kv-val">Gastric (MC), pancreatic</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- HEPATOBILIARY -->
+<div class="section" id="hepato">
+  <div class="section-title">Hepato<span>biliary Surgery</span></div>
+  <div class="section-sub">Gallstones, bile duct, liver, pancreas</div>
+  <div class="grid-auto">
+    <div class="card teal">
+      <div class="card-title">🫀 Gallstone Disease</div>
+      <div class="kv-row"><span class="kv-key">MC type of gallstone</span><span class="kv-val highlight">Cholesterol stones (80%)</span></div>
+      <div class="kv-row"><span class="kv-key">Pigment stones</span><span class="kv-val">Haemolytic anaemia, cirrhosis</span></div>
+      <div class="kv-row"><span class="kv-key">Charcot's triad</span><span class="kv-val danger">Fever + RUQ pain + Jaundice (cholangitis)</span></div>
+      <div class="kv-row"><span class="kv-key">Reynold's pentad</span><span class="kv-val danger">Charcot's triad + shock + confusion (severe)</span></div>
+      <div class="kv-row"><span class="kv-key">Murphy's sign</span><span class="kv-val">Acute cholecystitis (inspiratory arrest)</span></div>
+      <div class="kv-row"><span class="kv-key">Gold std investigation</span><span class="kv-val">Ultrasound (gallstones)</span></div>
+      <div class="kv-row"><span class="kv-key">Gold std biliary anatomy</span><span class="kv-val">MRCP</span></div>
+      <div class="kv-row"><span class="kv-key">Mirizzi syndrome</span><span class="kv-val">Stone in Hartmann's pouch → CBD compression</span></div>
+    </div>
+    <div class="card yellow">
+      <div class="card-title">🔬 Acute Pancreatitis</div>
+      <div class="kv-row"><span class="kv-key">MC causes</span><span class="kv-val highlight">GET SMASHED: Gallstones, Ethanol (#1 &amp; #2)</span></div>
+      <div class="kv-row"><span class="kv-key">Ranson's criteria (admission)</span><span class="kv-val">Age &gt;55, WBC &gt;16k, glucose &gt;200, LDH &gt;350, AST &gt;250</span></div>
+      <div class="kv-row"><span class="kv-key">Ranson's (48 hrs)</span><span class="kv-val">Hct drop &gt;10, BUN ↑ &gt;5, Ca &lt;8, PO2 &lt;60, base deficit &gt;4, fluid &gt;6L</span></div>
+      <div class="kv-row"><span class="kv-key">Score ≥3 = severe</span><span class="kv-val danger">ICU admission</span></div>
+      <div class="kv-row"><span class="kv-key">CT severity index (Balthazar)</span><span class="kv-val">A–E grading</span></div>
+      <div class="kv-row"><span class="kv-key">Grey-Turner sign</span><span class="kv-val">Flank bruising (haemorrhagic pancreatitis)</span></div>
+      <div class="kv-row"><span class="kv-key">Cullen's sign</span><span class="kv-val">Periumbilical bruising</span></div>
+      <div class="kv-row"><span class="kv-key">Fox's sign</span><span class="kv-val">Inguinal ligament bruising</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔬 Obstructive Jaundice</div>
+      <div class="kv-row"><span class="kv-key">Courvoisier's law</span><span class="kv-val highlight">Palpable GB + painless jaundice → not gallstones (= malignancy)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause painless jaundice</span><span class="kv-val danger">Pancreatic head carcinoma</span></div>
+      <div class="kv-row"><span class="kv-key">Double duct sign</span><span class="kv-val">Ca pancreas (dilated CBD + PD)</span></div>
+      <div class="kv-row"><span class="kv-key">Klatskin tumour</span><span class="kv-val">Hilar cholangiocarcinoma (Bismuth-Corlette)</span></div>
+      <div class="kv-row"><span class="kv-key">Cholangiocarcinoma risk</span><span class="kv-val">PSC, choledochal cyst, clonorchis</span></div>
+      <div class="kv-row"><span class="kv-key">Whipple's procedure</span><span class="kv-val">Pancreaticoduodenectomy (Ca head pancreas)</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🔬 Liver Surgery</div>
+      <div class="kv-row"><span class="kv-key">Liver segments (Couinaud)</span><span class="kv-val">8 segments (based on hepatic veins)</span></div>
+      <div class="kv-row"><span class="kv-key">MC liver tumour (primary)</span><span class="kv-val danger">HCC</span></div>
+      <div class="kv-row"><span class="kv-key">MC liver tumour overall</span><span class="kv-val">Metastasis</span></div>
+      <div class="kv-row"><span class="kv-key">HCC diagnosis criteria</span><span class="kv-val">LI-RADS 5 on CECT (washout)</span></div>
+      <div class="kv-row"><span class="kv-key">AFP level (diagnostic)</span><span class="kv-val">&gt;400 ng/mL with liver mass = HCC</span></div>
+      <div class="kv-row"><span class="kv-key">Amoebic liver abscess fluid</span><span class="kv-val highlight">Anchovy sauce (chocolate) fluid</span></div>
+      <div class="kv-row"><span class="kv-key">Pyogenic liver abscess</span><span class="kv-val">MC E. coli; drain + antibiotics</span></div>
+      <div class="kv-row"><span class="kv-key">Hydatid cyst</span><span class="kv-val">Echinococcus granulosus; PAIR procedure</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- BREAST & THYROID -->
+<div class="section" id="breast">
+  <div class="section-title">Breast <span>&amp; Thyroid Surgery</span></div>
+  <div class="section-sub">Breast cancer, thyroid nodule, neck dissection, parathyroid</div>
+  <div class="grid-auto">
+    <div class="card teal">
+      <div class="card-title">🩺 Breast Cancer</div>
+      <div class="kv-row"><span class="kv-key">MC breast cancer</span><span class="kv-val highlight">Invasive ductal carcinoma (IDC) — 70–80%</span></div>
+      <div class="kv-row"><span class="kv-key">MC benign breast tumour</span><span class="kv-val">Fibroadenoma (young women)</span></div>
+      <div class="kv-row"><span class="kv-key">MC benign breast disease</span><span class="kv-val">Fibrocystic disease</span></div>
+      <div class="kv-row"><span class="kv-key">Paget's disease of nipple</span><span class="kv-val danger">Underlying DCIS / IDC</span></div>
+      <div class="kv-row"><span class="kv-key">Inflammatory breast cancer</span><span class="kv-val danger">Peau d'orange; worst prognosis</span></div>
+      <div class="kv-row"><span class="kv-key">Best biopsy</span><span class="kv-val">Core needle biopsy (CNB)</span></div>
+      <div class="kv-row"><span class="kv-key">Triple assessment</span><span class="kv-val">Clinical + Imaging + Histology (FNAC/CNB)</span></div>
+      <div class="kv-row"><span class="kv-key">Sentinel lymph node biopsy</span><span class="kv-val">Tc-99m + patent blue dye</span></div>
+    </div>
+    <div class="card yellow">
+      <div class="card-title">🩺 Thyroid Surgery</div>
+      <div class="kv-row"><span class="kv-key">MC thyroid cancer</span><span class="kv-val highlight">Papillary thyroid carcinoma (PTC) — 80%</span></div>
+      <div class="kv-row"><span class="kv-key">PTC cell type</span><span class="kv-val">Orphan Annie eye nuclei; psammoma bodies</span></div>
+      <div class="kv-row"><span class="kv-key">Best prognosis</span><span class="kv-val green">Papillary (99% 10-yr survival)</span></div>
+      <div class="kv-row"><span class="kv-key">Worst prognosis</span><span class="kv-val danger">Anaplastic thyroid carcinoma</span></div>
+      <div class="kv-row"><span class="kv-key">Follicular Ca invasion</span><span class="kv-val">Blood-borne (not LN) → bone/lung mets</span></div>
+      <div class="kv-row"><span class="kv-key">MTC marker</span><span class="kv-val highlight">Calcitonin (+ CEA)</span></div>
+      <div class="kv-row"><span class="kv-key">MEN 2A</span><span class="kv-val">MTC + phaeochromocytoma + hyperparathyroidism</span></div>
+      <div class="kv-row"><span class="kv-key">RET proto-oncogene</span><span class="kv-val">MTC / MEN 2</span></div>
+      <div class="kv-row"><span class="kv-key">Post-thyroidectomy complication</span><span class="kv-val danger">Hypocalcaemia (hypoparathyroidism)</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🩺 Parathyroid &amp; Neck</div>
+      <div class="kv-row"><span class="kv-key">Primary hyperparathyroidism</span><span class="kv-val">Adenoma (85%), hyperplasia (15%)</span></div>
+      <div class="kv-row"><span class="kv-key">Bones, stones, groans, moans</span><span class="kv-val">Hypercalcaemia mnemonic</span></div>
+      <div class="kv-row"><span class="kv-key">Secondary hyperparathyroidism</span><span class="kv-val">CKD (hypocalcaemia → PTH ↑)</span></div>
+      <div class="kv-row"><span class="kv-key">Tertiary hyperparathyroidism</span><span class="kv-val">Autonomous PTH secretion despite Ca normalisation</span></div>
+      <div class="kv-row"><span class="kv-key">Branchial cyst</span><span class="kv-val">2nd branchial cleft MC; anterior to SCM</span></div>
+      <div class="kv-row"><span class="kv-key">Thyroglossal cyst</span><span class="kv-val">Moves up on tongue protrusion</span></div>
+      <div class="kv-row"><span class="kv-key">Sistrunk operation</span><span class="kv-val">Thyroglossal cyst + body of hyoid</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">⚡ Breast Reconstruction</div>
+      <div class="kv-row"><span class="kv-key">Conservative surgery</span><span class="kv-val">Lumpectomy + axillary clearance + RT</span></div>
+      <div class="kv-row"><span class="kv-key">Mastectomy types</span><span class="kv-val">Simple, modified radical (Patey), radical (Halsted)</span></div>
+      <div class="kv-row"><span class="kv-key">Patey's operation</span><span class="kv-val">MRM — removes pectoralis minor only</span></div>
+      <div class="kv-row"><span class="kv-key">Halsted radical</span><span class="kv-val">Removes pectoralis major + minor (historic)</span></div>
+      <div class="kv-row"><span class="kv-key">ER+ breast cancer Rx</span><span class="kv-val">Tamoxifen (premenopausal) / Aromatase inhibitor</span></div>
+      <div class="kv-row"><span class="kv-key">HER2+ breast cancer</span><span class="kv-val">Trastuzumab (Herceptin)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- VASCULAR -->
+<div class="section" id="vascular">
+  <div class="section-title">Vascular <span>Surgery</span></div>
+  <div class="section-sub">AAA, PAD, DVT, varicose veins, carotid disease</div>
+  <div class="grid-auto">
+    <div class="card teal">
+      <div class="card-title">🫀 AAA (Abdominal Aortic Aneurysm)</div>
+      <div class="kv-row"><span class="kv-key">Aneurysm definition</span><span class="kv-val">Aorta &gt;3 cm (normal &lt;2 cm)</span></div>
+      <div class="kv-row"><span class="kv-key">Elective repair threshold</span><span class="kv-val highlight">≥5.5 cm in men; ≥5 cm in women</span></div>
+      <div class="kv-row"><span class="kv-key">Ruptured AAA triad</span><span class="kv-val danger">Hypotension + pulsatile mass + back pain</span></div>
+      <div class="kv-row"><span class="kv-key">Screening modality</span><span class="kv-val">Ultrasound (AAA screening programme)</span></div>
+      <div class="kv-row"><span class="kv-key">EVAR</span><span class="kv-val">Endovascular aneurysm repair (less invasive)</span></div>
+      <div class="kv-row"><span class="kv-key">Open repair</span><span class="kv-val">Tube graft or bifurcated graft</span></div>
+      <div class="kv-row"><span class="kv-key">MC complication EVAR</span><span class="kv-val danger">Endoleak (especially Type II — lumbar arteries)</span></div>
+    </div>
+    <div class="card yellow">
+      <div class="card-title">🦵 Peripheral Arterial Disease</div>
+      <div class="kv-row"><span class="kv-key">Fontaine I</span><span class="kv-val">Asymptomatic</span></div>
+      <div class="kv-row"><span class="kv-key">Fontaine IIa</span><span class="kv-val">IC &gt;200 m</span></div>
+      <div class="kv-row"><span class="kv-key">Fontaine IIb</span><span class="kv-val">IC &lt;200 m</span></div>
+      <div class="kv-row"><span class="kv-key">Fontaine III</span><span class="kv-val danger">Rest pain</span></div>
+      <div class="kv-row"><span class="kv-key">Fontaine IV</span><span class="kv-val danger">Tissue loss / gangrene (critical limb ischaemia)</span></div>
+      <div class="kv-row"><span class="kv-key">ABPI normal</span><span class="kv-val green">0.9–1.3</span></div>
+      <div class="kv-row"><span class="kv-key">ABPI &lt;0.9</span><span class="kv-val">PAD</span></div>
+      <div class="kv-row"><span class="kv-key">ABPI &lt;0.5</span><span class="kv-val danger">Critical limb ischaemia</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🦵 DVT &amp; Varicose Veins</div>
+      <div class="kv-row"><span class="kv-key">DVT diagnosis gold std</span><span class="kv-val">Duplex ultrasound</span></div>
+      <div class="kv-row"><span class="kv-key">DVT Rx</span><span class="kv-val">LMWH → DOAC (rivaroxaban/apixaban)</span></div>
+      <div class="kv-row"><span class="kv-key">Virchow's triad</span><span class="kv-val highlight">Stasis + Endothelial damage + Hypercoagulability</span></div>
+      <div class="kv-row"><span class="kv-key">Varicose veins MC cause</span><span class="kv-val">Saphenofemoral junction incompetence</span></div>
+      <div class="kv-row"><span class="kv-key">Trendelenburg test</span><span class="kv-val">SFJ incompetence</span></div>
+      <div class="kv-row"><span class="kv-key">Perthe's test</span><span class="kv-val">Deep vein patency (before surgery)</span></div>
+      <div class="kv-row"><span class="kv-key">MC post-phlebitic syndrome</span><span class="kv-val">Medial gaiter area ulcer</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🫀 Carotid Disease</div>
+      <div class="kv-row"><span class="kv-key">Carotid endarterectomy indication</span><span class="kv-val">Symptomatic stenosis &gt;70%</span></div>
+      <div class="kv-row"><span class="kv-key">Asymptomatic stenosis Rx</span><span class="kv-val">Surgery if &gt;80% (some guidelines)</span></div>
+      <div class="kv-row"><span class="kv-key">Amaurosis fugax</span><span class="kv-val">Transient monocular blindness (ICA TIA)</span></div>
+      <div class="kv-row"><span class="kv-key">Best imaging carotid</span><span class="kv-val">CT angiography / Duplex USG</span></div>
+      <div class="kv-row"><span class="kv-key">Carotid body tumour</span><span class="kv-val">Chemodectoma; splays ICA + ECA (Lyre sign)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TRAUMA -->
+<div class="section" id="trauma">
+  <div class="section-title">Trauma <span>&amp; Burns</span></div>
+  <div class="section-sub">ATLS, abdominal trauma, burns assessment, wound care</div>
+  <div class="grid-auto">
+    <div class="card teal">
+      <div class="card-title">⚡ ATLS Primary Survey (ABCDE)</div>
+      <div class="kv-row"><span class="kv-key">A — Airway</span><span class="kv-val">Maintain with C-spine protection</span></div>
+      <div class="kv-row"><span class="kv-key">B — Breathing</span><span class="kv-val">Ventilation; tension PTX, open PTX, flail chest</span></div>
+      <div class="kv-row"><span class="kv-key">C — Circulation</span><span class="kv-val">Haemorrhage control; shock Rx</span></div>
+      <div class="kv-row"><span class="kv-key">D — Disability</span><span class="kv-val">GCS, pupils</span></div>
+      <div class="kv-row"><span class="kv-key">E — Exposure</span><span class="kv-val">Full exposure + prevent hypothermia</span></div>
+      <div class="kv-row"><span class="kv-key">Class I haemorrhage</span><span class="kv-val green">≤750 mL (&lt;15%); HR normal</span></div>
+      <div class="kv-row"><span class="kv-key">Class III haemorrhage</span><span class="kv-val danger">1500–2000 mL; BP drops, confusion</span></div>
+      <div class="kv-row"><span class="kv-key">Class IV haemorrhage</span><span class="kv-val danger">&gt;2000 mL; life-threatening</span></div>
+    </div>
+    <div class="card yellow">
+      <div class="card-title">🔥 Burns — Assessment</div>
+      <div class="kv-row"><span class="kv-key">Wallace rule of 9's</span><span class="kv-val highlight">Head 9%, each arm 9%, each leg 18%, trunk 36%, perineum 1%</span></div>
+      <div class="kv-row"><span class="kv-key">Lund-Browder chart</span><span class="kv-val">More accurate in children</span></div>
+      <div class="kv-row"><span class="kv-key">Palm rule</span><span class="kv-val">Patient's palm = 1% BSA</span></div>
+      <div class="kv-row"><span class="kv-key">Superficial (1st degree)</span><span class="kv-val">Epidermis only; erythema; heals without scar</span></div>
+      <div class="kv-row"><span class="kv-key">Partial thickness (2nd)</span><span class="kv-val">Blisters; painful; heals in 2–3 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Full thickness (3rd)</span><span class="kv-val danger">Painless (nerve destruction); leathery; grafting</span></div>
+      <div class="kv-row"><span class="kv-key">Parkland formula</span><span class="kv-val highlight">4 mL × wt(kg) × %BSA (Hartmann's, first 24 hrs)</span></div>
+      <div class="kv-row"><span class="kv-key">First 8 hrs</span><span class="kv-val">50% of calculated fluid</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔪 Abdominal Trauma</div>
+      <div class="kv-row"><span class="kv-key">FAST scan</span><span class="kv-val">Free fluid in Morrison's pouch, paracolic gutters, pelvis</span></div>
+      <div class="kv-row"><span class="kv-key">MC solid organ injured (blunt)</span><span class="kv-val highlight">Spleen &gt; Liver</span></div>
+      <div class="kv-row"><span class="kv-key">MC solid organ (penetrating)</span><span class="kv-val">Small bowel &gt; Colon</span></div>
+      <div class="kv-row"><span class="kv-key">Splenic injury grade</span><span class="kv-val">AAST I–V; Grade V = shattered spleen</span></div>
+      <div class="kv-row"><span class="kv-key">Grade I–III</span><span class="kv-val green">Non-operative management (haemodynamically stable)</span></div>
+      <div class="kv-row"><span class="kv-key">Grade IV–V</span><span class="kv-val danger">Splenectomy</span></div>
+      <div class="kv-row"><span class="kv-key">Seat belt injury</span><span class="kv-val">Chance fracture (L2–L4) + hollow viscus injury</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">⚠️ Post-Splenectomy</div>
+      <div class="kv-row"><span class="kv-key">OPSI</span><span class="kv-val danger">Overwhelming post-splenectomy infection</span></div>
+      <div class="kv-row"><span class="kv-key">MC organisms OPSI</span><span class="kv-val danger">S. pneumoniae (MC), H. influenzae, N. meningitidis</span></div>
+      <div class="kv-row"><span class="kv-key">Vaccinations needed</span><span class="kv-val">Pneumococcal, Hib, Meningococcal, Influenza</span></div>
+      <div class="kv-row"><span class="kv-key">Vaccine timing</span><span class="kv-val">2 wks before elective / 2 wks after emergency splenectomy</span></div>
+      <div class="kv-row"><span class="kv-key">Prophylactic antibiotics</span><span class="kv-val">Phenoxymethylpenicillin (Pen V) lifelong</span></div>
+      <div class="kv-row"><span class="kv-key">Blood film post-splenectomy</span><span class="kv-val">Howell-Jolly bodies, target cells</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SURGICAL ONCOLOGY -->
+<div class="section" id="surgical_onco">
+  <div class="section-title">Surgical <span>Oncology</span></div>
+  <div class="section-sub">GI cancers, staging, surgical principles, margins</div>
+  <div class="grid-auto">
+    <div class="card teal span-full">
+      <div class="card-title">📊 TNM Staging Essentials</div>
+      <table class="comparison-table">
+        <tr><th>Cancer</th><th>Key Staging Fact</th><th>Surgery of Choice</th></tr>
+        <tr><td>Oesophageal Ca</td><td>Squamous upper 2/3, Adeno lower 1/3; CT + PET for staging</td><td>Ivor-Lewis / McKeown (3-stage)</td></tr>
+        <tr><td>Gastric Ca</td><td>Virchow's node (left supraclavicular); Sister Mary Joseph's nodule (umbilicus)</td><td>Total / subtotal gastrectomy + D2 lymphadenectomy</td></tr>
+        <tr><td>Pancreatic Ca</td><td>Head (80%) → obstructive jaundice; Body/tail → pain + late presentation</td><td>Whipple's (pancreaticoduodenectomy)</td></tr>
+        <tr><td>Rectal Ca</td><td>TME (total mesorectal excision) principle; CRM must be ≥1 mm</td><td>Low anterior resection / APR (very low rectal)</td></tr>
+        <tr><td>Hepatocellular Ca</td><td>Cirrhosis + AFP &gt;400; Barcelona (BCLC) staging guides Rx</td><td>Resection / transplant (Milan criteria)</td></tr>
+        <tr><td>Adrenal phaeochromocytoma</td><td>Rule of 10s: 10% bilateral, 10% extra-adrenal, 10% malignant</td><td>Laparoscopic adrenalectomy (after α-blockade)</td></tr>
+      </table>
+    </div>
+    <div class="card yellow">
+      <div class="card-title">🔴 Tumour Markers</div>
+      <div class="kv-row"><span class="kv-key">CEA</span><span class="kv-val">CRC, gastric, breast (monitoring)</span></div>
+      <div class="kv-row"><span class="kv-key">CA 19-9</span><span class="kv-val highlight">Pancreatic Ca (most specific)</span></div>
+      <div class="kv-row"><span class="kv-key">AFP</span><span class="kv-val">HCC, yolk sac tumour</span></div>
+      <div class="kv-row"><span class="kv-key">CA-125</span><span class="kv-val">Ovarian Ca (epithelial)</span></div>
+      <div class="kv-row"><span class="kv-key">PSA</span><span class="kv-val">Prostate Ca</span></div>
+      <div class="kv-row"><span class="kv-key">Calcitonin</span><span class="kv-val">Medullary thyroid Ca</span></div>
+      <div class="kv-row"><span class="kv-key">β-hCG + AFP</span><span class="kv-val">Testicular (non-seminoma)</span></div>
+      <div class="kv-row"><span class="kv-key">PLAP</span><span class="kv-val">Seminoma</span></div>
+      <div class="kv-row"><span class="kv-key">VMA/metanephrines</span><span class="kv-val">Phaeochromocytoma</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔬 Lymph Node Dissection</div>
+      <div class="kv-row"><span class="kv-key">D1 dissection (gastric)</span><span class="kv-val">Perigastric nodes</span></div>
+      <div class="kv-row"><span class="kv-key">D2 dissection</span><span class="kv-val highlight">Standard for gastric Ca (celiac axis nodes)</span></div>
+      <div class="kv-row"><span class="kv-key">Neck dissection (RND)</span><span class="kv-val">All 5 levels + SCM + IJV + CN XI</span></div>
+      <div class="kv-row"><span class="kv-key">Modified RND</span><span class="kv-val">Preserves SCM / IJV / CN XI</span></div>
+      <div class="kv-row"><span class="kv-key">Sentinel node concept</span><span class="kv-val">First lymph node to receive drainage from tumour</span></div>
+      <div class="kv-row"><span class="kv-key">SLNB used in</span><span class="kv-val">Breast Ca, melanoma, CRC</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PERIOPERATIVE -->
+<div class="section" id="periop">
+  <div class="section-title">Perioperative <span>Surgery</span></div>
+  <div class="section-sub">ASA grading, surgical risk, wound healing, complications</div>
+  <div class="grid-auto">
+    <div class="card teal">
+      <div class="card-title">📊 ASA Classification</div>
+      <div class="kv-row"><span class="kv-key">ASA I</span><span class="kv-val green">Healthy, no disease</span></div>
+      <div class="kv-row"><span class="kv-key">ASA II</span><span class="kv-val">Mild systemic disease</span></div>
+      <div class="kv-row"><span class="kv-key">ASA III</span><span class="kv-val">Severe systemic disease (not incapacitating)</span></div>
+      <div class="kv-row"><span class="kv-key">ASA IV</span><span class="kv-val danger">Incapacitating disease, constant threat to life</span></div>
+      <div class="kv-row"><span class="kv-key">ASA V</span><span class="kv-val danger">Moribund — unlikely to survive 24 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">ASA VI</span><span class="kv-val danger">Brain-dead organ donor</span></div>
+      <div class="kv-row"><span class="kv-key">Add E suffix</span><span class="kv-val">Emergency surgery (eg. ASA II E)</span></div>
+    </div>
+    <div class="card yellow">
+      <div class="card-title">🩹 Wound Healing</div>
+      <div class="kv-row"><span class="kv-key">Primary intention</span><span class="kv-val">Clean wound, edges apposed</span></div>
+      <div class="kv-row"><span class="kv-key">Secondary intention</span><span class="kv-val">Open wound heals by granulation</span></div>
+      <div class="kv-row"><span class="kv-key">Tertiary (delayed 1°)</span><span class="kv-val">Delayed closure after contamination clears</span></div>
+      <div class="kv-row"><span class="kv-key">Healing phases</span><span class="kv-val highlight">Haemostasis → Inflammation → Proliferation → Remodelling</span></div>
+      <div class="kv-row"><span class="kv-key">Collagen type (early healing)</span><span class="kv-val">Type III (replaced by Type I)</span></div>
+      <div class="kv-row"><span class="kv-key">Max tensile strength</span><span class="kv-val">Never reaches original (70–80% at 6 wks)</span></div>
+      <div class="kv-row"><span class="kv-key">Keloid vs hypertrophic</span><span class="kv-val danger">Keloid = beyond wound margins; hypertrophic = within</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">⚠️ Surgical Site Infection</div>
+      <div class="kv-row"><span class="kv-key">Superficial SSI</span><span class="kv-val">Skin + subcutaneous tissue; within 30 days</span></div>
+      <div class="kv-row"><span class="kv-key">Deep SSI</span><span class="kv-val">Deep soft tissue (fascia + muscle)</span></div>
+      <div class="kv-row"><span class="kv-key">Organ/space SSI</span><span class="kv-val">Any organ opened during surgery</span></div>
+      <div class="kv-row"><span class="kv-key">Wound classification (clean)</span><span class="kv-val green">No GI/GU/respiratory entry; &lt;2% infection</span></div>
+      <div class="kv-row"><span class="kv-key">Contaminated</span><span class="kv-val">GI spillage; &lt;15% infection</span></div>
+      <div class="kv-row"><span class="kv-key">Dirty</span><span class="kv-val danger">Established infection; &gt;40% infection</span></div>
+      <div class="kv-row"><span class="kv-key">Prophylactic antibiotic timing</span><span class="kv-val highlight">30–60 min before incision</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🚨 Post-op Complications</div>
+      <div class="kv-row"><span class="kv-key">Fever 1st 24 hrs</span><span class="kv-val">Wind — atelectasis/pneumonia</span></div>
+      <div class="kv-row"><span class="kv-key">Fever Day 3–5</span><span class="kv-val">Water — UTI</span></div>
+      <div class="kv-row"><span class="kv-key">Fever Day 5–7</span><span class="kv-val danger">Wound infection</span></div>
+      <div class="kv-row"><span class="kv-key">Fever Day 7–10</span><span class="kv-val danger">Walking — DVT</span></div>
+      <div class="kv-row"><span class="kv-key">Fever Day 10+</span><span class="kv-val danger">Wonder drugs — drugs, deep abscess</span></div>
+      <div class="kv-row"><span class="kv-key">Anastomotic leak timing</span><span class="kv-val danger">Day 5–7 post-op</span></div>
+      <div class="info-box">5 W's of post-op fever: Wind, Water, Wound, Walking, Wonder drugs</div>
+    </div>
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency surgery facts for rapid revision</div>
+  <div class="grid-2">
+    <div class="card teal">
+      <div class="card-title">⭐ Surgery Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">MC cause surgical jaundice</span><span class="kv-val highlight">Choledocholithiasis</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause GI bleed (upper)</span><span class="kv-val">Peptic ulcer disease</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause GI bleed (lower)</span><span class="kv-val">Haemorrhoids</span></div>
+      <div class="kv-row"><span class="kv-key">Anal fissure MC site</span><span class="kv-val">Posterior midline (6 o'clock)</span></div>
+      <div class="kv-row"><span class="kv-key">Pilonidal sinus</span><span class="kv-val">Natal cleft; hair-containing sinus</span></div>
+      <div class="kv-row"><span class="kv-key">Fistula-in-ano Goodsall's rule</span><span class="kv-val">Posterior fistula → internal opening at 6 o'clock</span></div>
+      <div class="kv-row"><span class="kv-key">Haemorrhoidal plexus</span><span class="kv-val">Superior (internal) + inferior (external)</span></div>
+      <div class="kv-row"><span class="kv-key">Internal haemorrhoids</span><span class="kv-val">Painless bright red bleeding (above dentate line)</span></div>
+      <div class="kv-row"><span class="kv-key">External haemorrhoids</span><span class="kv-val">Painful (below dentate line, somatic nerve)</span></div>
+      <div class="kv-row"><span class="kv-key">Tenchkhoff catheter</span><span class="kv-val">Peritoneal dialysis</span></div>
+      <div class="kv-row"><span class="kv-key">Pringle manoeuvre</span><span class="kv-val">Compression of hepatoduodenal ligament (hepatic inflow control)</span></div>
+      <div class="kv-row"><span class="kv-key">Kocher's manoeuvre</span><span class="kv-val">Duodenum + pancreatic head mobilization</span></div>
+      <div class="kv-row"><span class="kv-key">HPYB association</span><span class="kv-val">H. pylori → MALT lymphoma (gastric)</span></div>
+      <div class="kv-row"><span class="kv-key">Trousseau's sign</span><span class="kv-val">Migratory thrombophlebitis → visceral Ca</span></div>
+      <div class="kv-row"><span class="kv-key">Achalasia manometry</span><span class="kv-val">Absent peristalsis + high LOS pressure</span></div>
+    </div>
+    <div class="card yellow">
+      <div class="card-title">⭐ Surgery Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">Oesophageal varices Rx</span><span class="kv-val highlight">Endoscopic band ligation (acute)</span></div>
+      <div class="kv-row"><span class="kv-key">Sengstaken-Blakemore tube</span><span class="kv-val">Temporary tamponade (variceal bleed)</span></div>
+      <div class="kv-row"><span class="kv-key">Boerhaave syndrome</span><span class="kv-val danger">Spontaneous oesophageal perforation</span></div>
+      <div class="kv-row"><span class="kv-key">Mackler's triad</span><span class="kv-val">Vomiting + chest pain + subcutaneous emphysema (Boerhaave)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause thyroid mass</span><span class="kv-val">Multinodular goitre</span></div>
+      <div class="kv-row"><span class="kv-key">Solitary thyroid nodule</span><span class="kv-val">FNAC (first-line investigation)</span></div>
+      <div class="kv-row"><span class="kv-key">BRAF V600E mutation</span><span class="kv-val">Papillary thyroid carcinoma</span></div>
+      <div class="kv-row"><span class="kv-key">Adrenal incidentaloma</span><span class="kv-val">&lt;4 cm + non-functional → follow-up; &gt;4 cm → surgery</span></div>
+      <div class="kv-row"><span class="kv-key">Conn's syndrome</span><span class="kv-val">Primary hyperaldosteronism (adrenal adenoma)</span></div>
+      <div class="kv-row"><span class="kv-key">Cushing's syndrome (MC source)</span><span class="kv-val">Iatrogenic (steroids) &gt; pituitary ACTH</span></div>
+      <div class="kv-row"><span class="kv-key">Phaeochromocytoma</span><span class="kv-val danger">α-block first (phenoxybenzamine) THEN β-block</span></div>
+      <div class="kv-row"><span class="kv-key">Superior mesenteric artery supplies</span><span class="kv-val">Duodenum → 2/3 transverse colon</span></div>
+      <div class="kv-row"><span class="kv-key">Hindgut (IMA territory)</span><span class="kv-val">Left colon, sigmoid, upper rectum</span></div>
+      <div class="kv-row"><span class="kv-key">McEvedy's incision</span><span class="kv-val">Femoral hernia repair</span></div>
+      <div class="kv-row"><span class="kv-key">Shouldice repair</span><span class="kv-val">Inguinal hernia (gold std open repair)</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

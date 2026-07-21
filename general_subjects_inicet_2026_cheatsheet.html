@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>General Subjects Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0e1a; --surface: #111827; --surface2: #1a2235; --border: #1e2d45;
+    --accent: #fb923c; --accent2: #7dd3fc; --accent3: #86efac; --accent4: #f9a8d4; --accent5: #c4b5fd;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #0f172a 0%, #05100f 50%, #0f172a 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent3); color: #0a0e1a; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent3); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent3); color: #0a0e1a; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent3); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.orange::before { background: var(--accent); }
+  .card.blue::before { background: var(--accent2); }
+  .card.green::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.purple::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.orange .card-title { color: var(--accent); }
+  .card.blue .card-title { color: var(--accent2); }
+  .card.green .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.purple .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #1a2235; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.blue { color: var(--accent2); }
+  .kv-val.green { color: var(--accent3); }
+  .kv-val.pink { color: var(--accent4); }
+  .kv-val.purple { color: var(--accent5); }
+  .kv-val.danger { color: var(--danger); }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(125,211,252,0.06); border: 1px solid rgba(125,211,252,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent2); margin-top: 8px; line-height: 1.5; }
+  .green-box { background: rgba(134,239,172,0.06); border: 1px solid rgba(134,239,172,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent3); margin-top: 8px; line-height: 1.5; }
+  .mnemonic-box { background: rgba(196,181,253,0.07); border: 1px solid rgba(196,181,253,0.25); border-radius: 8px; padding: 10px 13px; font-size: 12px; color: var(--accent5); margin-top: 8px; line-height: 1.7; font-family: 'DM Mono', monospace; }
+  .mnemonic-box b { color: #e2e8f0; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent3); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  .mt-12 { margin-top: 12px; }
+  @media (max-width: 800px) { .grid-auto, .grid-2, .grid-3 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>General <span>Subjects</span> Cheatsheet</h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('pharma',this)">Pharmacology</div>
+    <div class="tab" onclick="showSection('micro',this)">Microbiology</div>
+    <div class="tab" onclick="showSection('path',this)">Pathology</div>
+    <div class="tab" onclick="showSection('physio',this)">Physiology</div>
+    <div class="tab" onclick="showSection('biochem',this)">Biochemistry</div>
+    <div class="tab" onclick="showSection('anatomy',this)">Anatomy</div>
+    <div class="tab" onclick="showSection('forensic',this)">Forensic Medicine</div>
+    <div class="tab" onclick="showSection('spm',this)">SPM / PSM</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- PHARMACOLOGY -->
+<div class="section active" id="pharma">
+  <div class="section-title">Pharma<span>cology</span></div>
+  <div class="section-sub">Autonomic, CVS, CNS, antimicrobials, anticancer — high-yield drug facts</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">💊 Pharmacokinetics Essentials</div>
+      <div class="kv-row"><span class="kv-key">Zero-order kinetics</span><span class="kv-val danger">Fixed amount eliminated (phenytoin, ethanol, aspirin high dose)</span></div>
+      <div class="kv-row"><span class="kv-key">First-order kinetics</span><span class="kv-val green">Fixed fraction eliminated (most drugs)</span></div>
+      <div class="kv-row"><span class="kv-key">Bioavailability (F)</span><span class="kv-val">Fraction reaching systemic circulation unchanged</span></div>
+      <div class="kv-row"><span class="kv-key">High first-pass metabolism</span><span class="kv-val danger">Morphine, propranolol, lignocaine, nitrates, labetalol</span></div>
+      <div class="kv-row"><span class="kv-key">Vd &gt;1 L/kg</span><span class="kv-val">Widely distributed; lipophilic (chloroquine, digoxin)</span></div>
+      <div class="kv-row"><span class="kv-key">Plasma protein binding (highest)</span><span class="kv-val">Warfarin (99%), Diazepam (98%)</span></div>
+      <div class="kv-row"><span class="kv-key">CYP450 inducers</span><span class="kv-val highlight">RIPES: Rifampicin, Isoniazid, Phenytoin, Ethanol (chronic), Smokng/St John's wort</span></div>
+      <div class="kv-row"><span class="kv-key">CYP450 inhibitors</span><span class="kv-val danger">SICKFACES: Sulfonamides, Isoniazid, Cimetidine, Ketoconazole, Fluconazole, Amiodarone, Ciprofloxacin, Erythromycin, SSRIs</span></div>
+      <div class="mnemonic-box"><b>Therapeutic index</b> = TD50 / ED50 (high TI = safer drug)</div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🫀 Autonomic Pharmacology</div>
+      <div class="kv-row"><span class="kv-key">Muscarinic agonist (MC)</span><span class="kv-val highlight">Pilocarpine (glaucoma)</span></div>
+      <div class="kv-row"><span class="kv-key">Nicotinic blocker (NMJ)</span><span class="kv-val">Succinylcholine (depolarising) / Vecuronium (non-dep)</span></div>
+      <div class="kv-row"><span class="kv-key">Succinylcholine metabolism</span><span class="kv-val">Plasma cholinesterase (pseudocholinesterase)</span></div>
+      <div class="kv-row"><span class="kv-key">Neostigmine use</span><span class="kv-val green">Reversal of non-depolarising NMBs; myasthenia gravis</span></div>
+      <div class="kv-row"><span class="kv-key">Atropine MOA</span><span class="kv-val">Muscarinic antagonist; ↑HR, ↓secretions, mydriasis</span></div>
+      <div class="kv-row"><span class="kv-key">α1 blocker</span><span class="kv-val">Prazosin (HTN + BPH); postural hypotension SE</span></div>
+      <div class="kv-row"><span class="kv-key">β1 selective blockers</span><span class="kv-val">Metoprolol, Atenolol, Bisoprolol (MBA)</span></div>
+      <div class="kv-row"><span class="kv-key">Non-selective β blocker</span><span class="kv-val danger">Propranolol — avoid in asthma, DM</span></div>
+      <div class="kv-row"><span class="kv-key">Phenoxybenzamine</span><span class="kv-val highlight">Irreversible α blocker; pheochromocytoma pre-op</span></div>
+      <div class="mnemonic-box"><b>MBA</b> = Metoprolol, Bisoprolol, Atenolol (β1 selective)</div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🫀 CVS Drugs</div>
+      <div class="kv-row"><span class="kv-key">Digoxin MOA</span><span class="kv-val blue">Na/K ATPase inhibition → ↑intracellular Ca</span></div>
+      <div class="kv-row"><span class="kv-key">Digoxin toxicity</span><span class="kv-val danger">Yellow-green vision, bradycardia, heart block; antidote: Digibind</span></div>
+      <div class="kv-row"><span class="kv-key">Amiodarone class</span><span class="kv-val">Class III (K channel blocker); also I, II, IV properties</span></div>
+      <div class="kv-row"><span class="kv-key">Amiodarone toxicity</span><span class="kv-val danger">Pulmonary fibrosis, corneal microdeposits, thyroid dysfunction, photosensitivity</span></div>
+      <div class="kv-row"><span class="kv-key">ACE inhibitors SE</span><span class="kv-val danger">Dry cough (bradykinin), angioedema, hyperkalaemia</span></div>
+      <div class="kv-row"><span class="kv-key">ACE-I contraindication</span><span class="kv-val danger">Bilateral RAS, pregnancy (teratogenic)</span></div>
+      <div class="kv-row"><span class="kv-key">Statins MOA</span><span class="kv-val">HMG-CoA reductase inhibitors</span></div>
+      <div class="kv-row"><span class="kv-key">Statin SE</span><span class="kv-val danger">Myopathy / rhabdomyolysis (↑CK)</span></div>
+      <div class="kv-row"><span class="kv-key">Fibrates MOA</span><span class="kv-val">PPARα agonist → ↓TG (best drug for hypertriglyceridaemia)</span></div>
+      <div class="kv-row"><span class="kv-key">Nitrates MOA</span><span class="kv-val">→ NO → ↑cGMP → venodilation (reduce preload)</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🧠 CNS Drugs</div>
+      <div class="kv-row"><span class="kv-key">Benzodiazepine MOA</span><span class="kv-val purple">↑frequency of Cl⁻ channel opening (GABA-A)</span></div>
+      <div class="kv-row"><span class="kv-key">Barbiturate MOA</span><span class="kv-val">↑duration of Cl⁻ channel opening</span></div>
+      <div class="kv-row"><span class="kv-key">BZD antidote</span><span class="kv-val green">Flumazenil</span></div>
+      <div class="kv-row"><span class="kv-key">Opioid antidote</span><span class="kv-val green">Naloxone</span></div>
+      <div class="kv-row"><span class="kv-key">Haloperidol class</span><span class="kv-val">Typical antipsychotic; D2 blocker</span></div>
+      <div class="kv-row"><span class="kv-key">EPS (extrapyramidal SE)</span><span class="kv-val danger">Typicals &gt;&gt; Atypicals (clozapine = least EPS)</span></div>
+      <div class="kv-row"><span class="kv-key">Clozapine SE</span><span class="kv-val danger">Agranulocytosis (monitor WBC weekly)</span></div>
+      <div class="kv-row"><span class="kv-key">Lithium toxicity</span><span class="kv-val danger">Tremor, polyuria, hypothyroidism, Ebstein's anomaly (pregnancy)</span></div>
+      <div class="kv-row"><span class="kv-key">SSRI mechanism</span><span class="kv-val">Block serotonin reuptake (5-HT transporter)</span></div>
+      <div class="kv-row"><span class="kv-key">TCA overdose</span><span class="kv-val danger">Cardiac arrhythmia, widened QRS; Rx: sodium bicarbonate</span></div>
+      <div class="kv-row"><span class="kv-key">Serotonin syndrome</span><span class="kv-val danger">Hyperthermia + autonomic instability + myoclonus; Rx: cyproheptadine</span></div>
+      <div class="kv-row"><span class="kv-key">NMS (neuroleptic malignant)</span><span class="kv-val danger">Hyperthermia + rigidity + ↑CK; Rx: dantrolene + bromocriptine</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🦠 Antimicrobials — Key Points</div>
+      <div class="kv-row"><span class="kv-key">Cell wall synthesis inhibitors</span><span class="kv-val green">Penicillins, Cephalosporins, Vancomycin, Carbapenems</span></div>
+      <div class="kv-row"><span class="kv-key">30S ribosome inhibitors</span><span class="kv-val">Aminoglycosides (bactericidal), Tetracyclines (bacteriostatic)</span></div>
+      <div class="kv-row"><span class="kv-key">50S ribosome inhibitors</span><span class="kv-val">Macrolides, Chloramphenicol, Linezolid, Clindamycin</span></div>
+      <div class="kv-row"><span class="kv-key">DNA gyrase inhibitors</span><span class="kv-val">Fluoroquinolones (Ciprofloxacin)</span></div>
+      <div class="kv-row"><span class="kv-key">Aminoglycoside SE</span><span class="kv-val danger">Ototoxicity + nephrotoxicity (irreversible hearing loss)</span></div>
+      <div class="kv-row"><span class="kv-key">Tetracycline CI</span><span class="kv-val danger">Pregnancy, children &lt;8 yrs (teeth discolouration, bones)</span></div>
+      <div class="kv-row"><span class="kv-key">Chloramphenicol SE</span><span class="kv-val danger">Grey baby syndrome, aplastic anaemia</span></div>
+      <div class="kv-row"><span class="kv-key">Vancomycin SE</span><span class="kv-val danger">Red man syndrome (histamine release — slow infusion)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug for MRSA</span><span class="kv-val highlight">Vancomycin (1st line), Linezolid, Daptomycin</span></div>
+      <div class="kv-row"><span class="kv-key">Drug for Pseudomonas</span><span class="kv-val">Pip-tazo, Ceftazidime, Ciprofloxacin, Imipenem, Colistin</span></div>
+      <div class="kv-row"><span class="kv-key">Drug for C. difficile</span><span class="kv-val">Oral Vancomycin / Fidaxomicin (Metronidazole 2nd line)</span></div>
+      <div class="kv-row"><span class="kv-key">Rifampicin MOA</span><span class="kv-val">RNA polymerase inhibitor; red-orange body fluids</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">💉 Anticancer & Immunosuppressants</div>
+      <div class="kv-row"><span class="kv-key">Methotrexate MOA</span><span class="kv-val pink">DHFR inhibitor → ↓THF → ↓purine/pyrimidine synthesis</span></div>
+      <div class="kv-row"><span class="kv-key">MTX rescue</span><span class="kv-val green">Leucovorin (folinic acid)</span></div>
+      <div class="kv-row"><span class="kv-key">Cyclophosphamide SE</span><span class="kv-val danger">Haemorrhagic cystitis; Rx: Mesna (uroprotection)</span></div>
+      <div class="kv-row"><span class="kv-key">Bleomycin SE</span><span class="kv-val danger">Pulmonary fibrosis (dose-limiting)</span></div>
+      <div class="kv-row"><span class="kv-key">Cisplatin SE</span><span class="kv-val danger">Nephrotoxicity + ototoxicity + peripheral neuropathy</span></div>
+      <div class="kv-row"><span class="kv-key">Vincristine SE</span><span class="kv-val danger">Peripheral neuropathy (NOT bone marrow suppression)</span></div>
+      <div class="kv-row"><span class="kv-key">Doxorubicin SE</span><span class="kv-val danger">Cardiotoxicity (cardiomyopathy); red urine</span></div>
+      <div class="kv-row"><span class="kv-key">Imatinib (Gleevec)</span><span class="kv-val highlight">BCR-ABL tyrosine kinase inhibitor; CML treatment</span></div>
+      <div class="kv-row"><span class="kv-key">Rituximab</span><span class="kv-val">Anti-CD20; B-cell lymphoma / RA</span></div>
+      <div class="kv-row"><span class="kv-key">Cyclosporine MOA</span><span class="kv-val">Calcineurin inhibitor → ↓IL-2 → ↓T-cell activation</span></div>
+      <div class="kv-row"><span class="kv-key">Tacrolimus</span><span class="kv-val">Calcineurin inhibitor (FK506); more potent than CSA</span></div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-auto">
+    <div class="card blue span-full">
+      <div class="card-title">📊 Important Drug SE / Toxicity Quick Table</div>
+      <table class="comparison-table">
+        <tr><th>Drug</th><th>Classic Side Effect</th><th>Antidote / Management</th></tr>
+        <tr><td>Paracetamol OD</td><td>Centrilobular hepatic necrosis (Zone 3)</td><td>N-acetylcysteine (within 8 hrs)</td></tr>
+        <tr><td>Aspirin OD</td><td>Respiratory alkalosis then metabolic acidosis</td><td>Sodium bicarbonate (alkalinise urine)</td></tr>
+        <tr><td>Iron OD</td><td>GI corrosion, haemorrhagic gastroenteritis, hepatic failure</td><td>Desferrioxamine (DFO)</td></tr>
+        <tr><td>Organophosphate</td><td>SLUDGE: Salivation, Lacrimation, Urination, Defaecation, GI cramps, Emesis</td><td>Atropine + Pralidoxime (2-PAM)</td></tr>
+        <tr><td>Opioid OD</td><td>Miosis, CNS depression, respiratory depression</td><td>Naloxone (IV)</td></tr>
+        <tr><td>Heparin OD</td><td>Bleeding, HIT (thrombocytopaenia)</td><td>Protamine sulphate</td></tr>
+        <tr><td>Warfarin OD</td><td>Bleeding, teratogenic (warfarin embryopathy)</td><td>Vitamin K / Fresh frozen plasma</td></tr>
+        <tr><td>Cyanide poisoning</td><td>Bitter almond smell, cherry red skin</td><td>Hydroxocobalamin / Sodium thiosulphate</td></tr>
+        <tr><td>Carbon monoxide</td><td>Cherry red skin, headache, COHb</td><td>100% O2 / Hyperbaric oxygen</td></tr>
+        <tr><td>Methanol OD</td><td>Blindness (formate → retinal toxicity)</td><td>Fomepizole / Ethanol / Haemodialysis</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MICROBIOLOGY -->
+<div class="section" id="micro">
+  <div class="section-title">Micro<span>biology</span></div>
+  <div class="section-sub">Bacteriology, virology, mycology, parasitology — key organisms and labs</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">🦠 Gram Stain Classification</div>
+      <div class="kv-row"><span class="kv-key">Gram +ve cocci clusters</span><span class="kv-val green">Staphylococcus</span></div>
+      <div class="kv-row"><span class="kv-key">Gram +ve cocci chains</span><span class="kv-val green">Streptococcus / Enterococcus</span></div>
+      <div class="kv-row"><span class="kv-key">Gram +ve rods (spore)</span><span class="kv-val">Bacillus anthracis, Clostridium spp.</span></div>
+      <div class="kv-row"><span class="kv-key">Gram –ve diplococci</span><span class="kv-val">Neisseria gonorrhoeae, N. meningitidis</span></div>
+      <div class="kv-row"><span class="kv-key">Gram –ve rods (lactose +ve)</span><span class="kv-val">E. coli, Klebsiella, Enterobacter</span></div>
+      <div class="kv-row"><span class="kv-key">Gram –ve rods (lactose –ve)</span><span class="kv-val">Salmonella, Shigella, Proteus, Pseudomonas</span></div>
+      <div class="kv-row"><span class="kv-key">No cell wall (no Gram stain)</span><span class="kv-val danger">Mycoplasma, Chlamydia, Rickettsia</span></div>
+      <div class="kv-row"><span class="kv-key">Acid-fast bacilli</span><span class="kv-val highlight">Mycobacterium, Nocardia (weakly)</span></div>
+      <div class="mnemonic-box"><b>GNOME</b> = Gram negative, No cell wall, Obligate intracellular, Mycoplasma/Chlamydia, Extremely small</div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🧫 Culture Media — High Yield</div>
+      <div class="kv-row"><span class="kv-key">Blood agar</span><span class="kv-val highlight">General purpose; shows haemolysis patterns</span></div>
+      <div class="kv-row"><span class="kv-key">MacConkey agar</span><span class="kv-val">Lactose fermenters (pink) vs non-fermenters (colourless)</span></div>
+      <div class="kv-row"><span class="kv-key">Thayer-Martin (VCN) agar</span><span class="kv-val">Neisseria gonorrhoeae</span></div>
+      <div class="kv-row"><span class="kv-key">Lowenstein-Jensen (LJ) medium</span><span class="kv-val">Mycobacterium tuberculosis</span></div>
+      <div class="kv-row"><span class="kv-key">Bordet-Gengou agar</span><span class="kv-val">Bordetella pertussis (whooping cough)</span></div>
+      <div class="kv-row"><span class="kv-key">Chocolate agar</span><span class="kv-val">H. influenzae, N. gonorrhoeae (heated blood)</span></div>
+      <div class="kv-row"><span class="kv-key">TCBS agar</span><span class="kv-val">Vibrio cholerae (yellow colonies)</span></div>
+      <div class="kv-row"><span class="kv-key">Sabouraud's dextrose agar</span><span class="kv-val">Fungi</span></div>
+      <div class="kv-row"><span class="kv-key">DCA (Deoxycholate Citrate)</span><span class="kv-val">Salmonella, Shigella</span></div>
+      <div class="kv-row"><span class="kv-key">Cystine tellurite / Tinsdale agar</span><span class="kv-val">Corynebacterium diphtheriae</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🦠 Viruses — Key Facts</div>
+      <div class="kv-row"><span class="kv-key">Naked (non-enveloped) RNA viruses</span><span class="kv-val blue">Picornavirus (Polio, Hep A, Rhinovirus), Reovirus, Calicivirus</span></div>
+      <div class="kv-row"><span class="kv-key">Enveloped RNA viruses</span><span class="kv-val">Influenza, HIV, Rabies, Measles, Mumps, Rubella, Hep C</span></div>
+      <div class="kv-row"><span class="kv-key">DNA viruses (all dsDNA except)</span><span class="kv-val">Parvovirus (ssDNA)</span></div>
+      <div class="kv-row"><span class="kv-key">HIV genome</span><span class="kv-val">ssRNA (+ sense); retrovirus</span></div>
+      <div class="kv-row"><span class="kv-key">Herpes family (HSSHEVZ)</span><span class="kv-val highlight">HSV-1, HSV-2, VZV, EBV, CMV, HHV-6, HHV-8</span></div>
+      <div class="kv-row"><span class="kv-key">EBV association</span><span class="kv-val danger">Burkitt's lymphoma, NPC, infectious mononucleosis</span></div>
+      <div class="kv-row"><span class="kv-key">HHV-8</span><span class="kv-val danger">Kaposi's sarcoma</span></div>
+      <div class="kv-row"><span class="kv-key">Rabies inclusion body</span><span class="kv-val">Negri bodies (hippocampus / Purkinje cells)</span></div>
+      <div class="kv-row"><span class="kv-key">Dengue serotypes</span><span class="kv-val">4 serotypes; DENV 1–4; Aedes aegypti vector</span></div>
+      <div class="kv-row"><span class="kv-key">Dengue hemorrhagic fever</span><span class="kv-val danger">2nd infection different serotype → ADE (antibody-dependent enhancement)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🦠 Bacteria — Must Know</div>
+      <div class="kv-row"><span class="kv-key">Coagulase +ve Staph</span><span class="kv-val danger">S. aureus ONLY</span></div>
+      <div class="kv-row"><span class="kv-key">β-haemolysis Group A Strep</span><span class="kv-val">S. pyogenes; → rheumatic fever, PSGN</span></div>
+      <div class="kv-row"><span class="kv-key">Optochin sensitive</span><span class="kv-val green">S. pneumoniae (vs S. viridans — resistant)</span></div>
+      <div class="kv-row"><span class="kv-key">Anthrax toxin</span><span class="kv-val danger">Protective antigen + Lethal factor + Oedema factor</span></div>
+      <div class="kv-row"><span class="kv-key">Cholera toxin</span><span class="kv-val">↑adenylyl cyclase → ↑cAMP → Cl⁻ efflux → rice-water stools</span></div>
+      <div class="kv-row"><span class="kv-key">Tetanus toxin (tetanospasmin)</span><span class="kv-val danger">Blocks glycine/GABA release → spastic paralysis</span></div>
+      <div class="kv-row"><span class="kv-key">Botulinum toxin</span><span class="kv-val danger">Blocks ACh release at NMJ → flaccid paralysis</span></div>
+      <div class="kv-row"><span class="kv-key">Shiga toxin</span><span class="kv-val">Inhibits 60S ribosome (EF-1 inactivation); HUS</span></div>
+      <div class="kv-row"><span class="kv-key">Diphtheria toxin MOA</span><span class="kv-val danger">ADP-ribosylation of EF-2 → inhibits protein synthesis</span></div>
+      <div class="kv-row"><span class="kv-key">Pseudomembrane site</span><span class="kv-val">Pharynx/tonsils; grey-white membrane</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🐛 Parasitology Essentials</div>
+      <div class="kv-row"><span class="kv-key">Malaria — Plasmodium species</span><span class="kv-val">P. falciparum (MC deadly), P. vivax (MC in India), P. ovale, P. malariae</span></div>
+      <div class="kv-row"><span class="kv-key">Schüffner's dots</span><span class="kv-val">P. vivax / P. ovale</span></div>
+      <div class="kv-row"><span class="kv-key">Maurer's clefts</span><span class="kv-val">P. falciparum</span></div>
+      <div class="kv-row"><span class="kv-key">Ziemann's dots</span><span class="kv-val">P. malariae</span></div>
+      <div class="kv-row"><span class="kv-key">Blackwater fever</span><span class="kv-val danger">P. falciparum → massive intravascular haemolysis → haemoglobinuria</span></div>
+      <div class="kv-row"><span class="kv-key">Kala-azar organism</span><span class="kv-val">Leishmania donovani; vector: Phlebotomus sandfly</span></div>
+      <div class="kv-row"><span class="kv-key">Aldehyde test</span><span class="kv-val">Kala-azar (LD bodies in macrophages)</span></div>
+      <div class="kv-row"><span class="kv-key">Toxoplasma in HIV</span><span class="kv-val danger">CD4 &lt;100; ring-enhancing lesions (brain); Rx: Pyrimethamine+sulfadiazine</span></div>
+      <div class="kv-row"><span class="kv-key">Hydatid cyst</span><span class="kv-val">Echinococcus granulosus; dogs → humans; liver MC site</span></div>
+      <div class="kv-row"><span class="kv-key">Chagas disease</span><span class="kv-val">T. cruzi; Reduviid bug (kissing bug); megacolon, cardiomyopathy</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🧪 Serological Tests</div>
+      <div class="kv-row"><span class="kv-key">VDRL / RPR</span><span class="kv-val">Syphilis screening (non-treponemal)</span></div>
+      <div class="kv-row"><span class="kv-key">FTA-ABS / TPHA</span><span class="kv-val green">Syphilis confirmation (treponemal)</span></div>
+      <div class="kv-row"><span class="kv-key">Weil-Felix test</span><span class="kv-val">Rickettsial infections (OX-2, OX-19, OX-K)</span></div>
+      <div class="kv-row"><span class="kv-key">Widal test</span><span class="kv-val">Typhoid (O and H antigens; OX rising titre)</span></div>
+      <div class="kv-row"><span class="kv-key">Paul-Bunnell test</span><span class="kv-val">Infectious mononucleosis (heterophile antibodies)</span></div>
+      <div class="kv-row"><span class="kv-key">Monospot test</span><span class="kv-val">Rapid EBV screening</span></div>
+      <div class="kv-row"><span class="kv-key">HIV diagnosis (gold standard)</span><span class="kv-val highlight">Western blot (after +ve ELISA)</span></div>
+      <div class="kv-row"><span class="kv-key">Window period HIV</span><span class="kv-val danger">3–4 weeks (p24 antigen); 3 months (antibody)</span></div>
+      <div class="kv-row"><span class="kv-key">India ink preparation</span><span class="kv-val">Cryptococcus neoformans (capsule)</span></div>
+      <div class="kv-row"><span class="kv-key">KOH mount</span><span class="kv-val">Fungal infections (hyphae, pseudohyphae)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PATHOLOGY -->
+<div class="section" id="path">
+  <div class="section-title">General <span>Pathology</span></div>
+  <div class="section-sub">Cell injury, inflammation, neoplasia, haematology, immunopathology</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">🔬 Cell Injury & Necrosis</div>
+      <div class="kv-row"><span class="kv-key">Reversible injury hallmark</span><span class="kv-val green">Cell swelling (hydropic change)</span></div>
+      <div class="kv-row"><span class="kv-key">Point of no return</span><span class="kv-val danger">Membrane damage + mitochondrial swelling</span></div>
+      <div class="kv-row"><span class="kv-key">Coagulative necrosis</span><span class="kv-val">Ischaemia (all organs except brain); architecture preserved</span></div>
+      <div class="kv-row"><span class="kv-key">Liquefactive necrosis</span><span class="kv-val danger">Brain infarct + Abscess (bacterial infection)</span></div>
+      <div class="kv-row"><span class="kv-key">Caseous necrosis</span><span class="kv-val">TB (cheese-like; no architecture)</span></div>
+      <div class="kv-row"><span class="kv-key">Fat necrosis</span><span class="kv-val">Acute pancreatitis (enzymatic) / Breast trauma (saponification)</span></div>
+      <div class="kv-row"><span class="kv-key">Fibrinoid necrosis</span><span class="kv-val danger">Vasculitis, malignant hypertension, immune complex disease</span></div>
+      <div class="kv-row"><span class="kv-key">Gangrenous necrosis</span><span class="kv-val">Dry = coagulative; Wet = liquefactive + bacterial superinfection</span></div>
+      <div class="kv-row"><span class="kv-key">Apoptosis vs Necrosis</span><span class="kv-val">Apoptosis: programmed, no inflammation, caspases; Necrosis: passive, inflammation</span></div>
+      <div class="mnemonic-box"><b>CIA BFF</b> = Coagulative, Liquefactive, cAseouS, Brown atrophy, Fibrinoid, Fat, Gangrenous</div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🔥 Inflammation</div>
+      <div class="kv-row"><span class="kv-key">Cardinal signs</span><span class="kv-val highlight">Rubor, Calor, Dolor, Tumor, Functio laesa</span></div>
+      <div class="kv-row"><span class="kv-key">1st cells in acute inflammation</span><span class="kv-val danger">Neutrophils (within 24–48 hrs)</span></div>
+      <div class="kv-row"><span class="kv-key">Chronic inflammation cells</span><span class="kv-val">Macrophages, lymphocytes, plasma cells</span></div>
+      <div class="kv-row"><span class="kv-key">Granuloma composition</span><span class="kv-val">Epithelioid cells (activated macrophages) + Langerhans giant cells</span></div>
+      <div class="kv-row"><span class="kv-key">Caseating granuloma</span><span class="kv-val danger">TB, Leprosy, deep fungal infections</span></div>
+      <div class="kv-row"><span class="kv-key">Non-caseating granuloma</span><span class="kv-val">Sarcoidosis, Crohn's disease, Berylliosis, foreign body</span></div>
+      <div class="kv-row"><span class="kv-key">IL-1, TNF-α, IL-6</span><span class="kv-val">Acute phase response mediators (fever, CRP, fibrinogen)</span></div>
+      <div class="kv-row"><span class="kv-key">Wound healing: primary intention</span><span class="kv-val green">Clean surgical wound; minimal scar</span></div>
+      <div class="kv-row"><span class="kv-key">Wound healing: secondary intention</span><span class="kv-val">Large wound; more granulation tissue, contraction, scar</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🔬 Neoplasia Basics</div>
+      <div class="kv-row"><span class="kv-key">Benign vs Malignant (differentiation)</span><span class="kv-val">Benign: well-differentiated, encapsulated, no mets</span></div>
+      <div class="kv-row"><span class="kv-key">Carcinoma in situ</span><span class="kv-val">Full-thickness dysplasia, basement membrane INTACT</span></div>
+      <div class="kv-row"><span class="kv-key">Tumour grade</span><span class="kv-val">Degree of differentiation (I–III; I = well diff)</span></div>
+      <div class="kv-row"><span class="kv-key">Tumour stage</span><span class="kv-val">TNM / extent of spread (more prognostic than grade)</span></div>
+      <div class="kv-row"><span class="kv-key">Proto-oncogene → oncogene</span><span class="kv-val danger">Point mutation, amplification, translocation</span></div>
+      <div class="kv-row"><span class="kv-key">RAS mutation</span><span class="kv-val danger">MC activated oncogene in human cancers</span></div>
+      <div class="kv-row"><span class="kv-key">p53 (TP53)</span><span class="kv-val danger">MC mutated tumour suppressor; "guardian of genome"</span></div>
+      <div class="kv-row"><span class="kv-key">Li-Fraumeni syndrome</span><span class="kv-val">Germline TP53 mutation</span></div>
+      <div class="kv-row"><span class="kv-key">RB gene</span><span class="kv-val">Retinoblastoma; requires both alleles lost (Knudson 2-hit)</span></div>
+      <div class="kv-row"><span class="kv-key">Warburg effect</span><span class="kv-val">Aerobic glycolysis in tumour cells (↑glucose uptake → PET scan)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🩸 Haematopathology</div>
+      <div class="kv-row"><span class="kv-key">Iron deficiency anaemia</span><span class="kv-val">Microcytic hypochromic; ↓ferritin, ↓serum iron, ↑TIBC</span></div>
+      <div class="kv-row"><span class="kv-key">Megaloblastic anaemia</span><span class="kv-val">B12/folate deficiency; hypersegmented neutrophils</span></div>
+      <div class="kv-row"><span class="kv-key">B12 deficiency special</span><span class="kv-val danger">Subacute combined degeneration of cord (dorsal + lateral columns)</span></div>
+      <div class="kv-row"><span class="kv-key">Haemolytic anaemia labs</span><span class="kv-val">↑LDH, ↑indirect bilirubin, ↓haptoglobin, ↑reticulocytes</span></div>
+      <div class="kv-row"><span class="kv-key">DIC findings</span><span class="kv-val danger">↑PT, ↑aPTT, ↓fibrinogen, ↓platelets, ↑D-dimer, schistocytes</span></div>
+      <div class="kv-row"><span class="kv-key">CML translocation</span><span class="kv-val danger">t(9;22) Philadelphia chromosome; BCR-ABL; Rx: Imatinib</span></div>
+      <div class="kv-row"><span class="kv-key">CLL features</span><span class="kv-val">MC leukaemia in adults (West); smudge cells</span></div>
+      <div class="kv-row"><span class="kv-key">ALL features</span><span class="kv-val">MC childhood malignancy; lymphoblasts; t(12;21)</span></div>
+      <div class="kv-row"><span class="kv-key">Auer rods</span><span class="kv-val danger">AML (myeloperoxidase +ve); M3 (APML) — DIC risk</span></div>
+      <div class="kv-row"><span class="kv-key">Reed-Sternberg cells</span><span class="kv-val">Hodgkin's lymphoma (CD15+, CD30+, CD45−)</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🛡️ Immunopathology</div>
+      <div class="kv-row"><span class="kv-key">Type I hypersensitivity</span><span class="kv-val purple">IgE mediated; mast cells; anaphylaxis, atopy</span></div>
+      <div class="kv-row"><span class="kv-key">Type II hypersensitivity</span><span class="kv-val">IgG/IgM + complement; haemolytic anaemia, Goodpasture's, MG</span></div>
+      <div class="kv-row"><span class="kv-key">Type III hypersensitivity</span><span class="kv-val">Immune complex; SLE, serum sickness, post-strep GN</span></div>
+      <div class="kv-row"><span class="kv-key">Type IV hypersensitivity</span><span class="kv-val danger">T-cell mediated (delayed); TB, contact dermatitis, sarcoidosis, transplant rejection</span></div>
+      <div class="kv-row"><span class="kv-key">SLE hallmark</span><span class="kv-val danger">Anti-dsDNA (most specific) + Anti-Smith antibodies</span></div>
+      <div class="kv-row"><span class="kv-key">RA serological markers</span><span class="kv-val">Rheumatoid factor (IgM anti-IgG); Anti-CCP (most specific)</span></div>
+      <div class="kv-row"><span class="kv-key">Scleroderma antibodies</span><span class="kv-val">Anti-Scl-70 (diffuse); Anti-centromere (limited/CREST)</span></div>
+      <div class="kv-row"><span class="kv-key">Primary immunodeficiency</span><span class="kv-val">X-linked agammaglobulinaemia (Bruton's) — no B cells</span></div>
+      <div class="kv-row"><span class="kv-key">SCID</span><span class="kv-val danger">No T and B cells; ADA deficiency (adenosine deaminase)</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🧬 Amyloidosis & Storage Disorders</div>
+      <div class="kv-row"><span class="kv-key">Amyloid staining</span><span class="kv-val pink">Congo red → apple-green birefringence (polarised light)</span></div>
+      <div class="kv-row"><span class="kv-key">AL amyloid</span><span class="kv-val">Multiple myeloma (light chains)</span></div>
+      <div class="kv-row"><span class="kv-key">AA amyloid</span><span class="kv-val">Chronic inflammation (SAA protein)</span></div>
+      <div class="kv-row"><span class="kv-key">Gaucher's disease</span><span class="kv-val">Glucocerebrosidase deficiency; crumpled paper cells</span></div>
+      <div class="kv-row"><span class="kv-key">Niemann-Pick</span><span class="kv-val">Sphingomyelinase deficiency; foam cells; cherry red spot</span></div>
+      <div class="kv-row"><span class="kv-key">Tay-Sachs</span><span class="kv-val danger">Hexosaminidase A deficiency; GM2 ganglioside; cherry red spot</span></div>
+      <div class="kv-row"><span class="kv-key">Hurler's syndrome</span><span class="kv-val">α-L-iduronidase deficiency; gargoylism; MPS-I</span></div>
+      <div class="kv-row"><span class="kv-key">Wilson's disease</span><span class="kv-val danger">ATP7B mutation; Cu accumulation; Kayser-Fleischer rings; Rx: Penicillamine</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PHYSIOLOGY -->
+<div class="section" id="physio">
+  <div class="section-title">General <span>Physiology</span></div>
+  <div class="section-sub">CVS, respiratory, renal, neurophysiology, endocrine — key values and concepts</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">🫀 Cardiac Physiology</div>
+      <div class="kv-row"><span class="kv-key">Normal cardiac output</span><span class="kv-val green">5 L/min (HR 70 × SV 70 mL)</span></div>
+      <div class="kv-row"><span class="kv-key">Cardiac index</span><span class="kv-val">CO/BSA = 2.5–3.5 L/min/m²</span></div>
+      <div class="kv-row"><span class="kv-key">Starling's law</span><span class="kv-val">↑preload → ↑SV (up to a point)</span></div>
+      <div class="kv-row"><span class="kv-key">SA node rate</span><span class="kv-val">60–100 bpm (pacemaker)</span></div>
+      <div class="kv-row"><span class="kv-key">AV node rate (intrinsic)</span><span class="kv-val">40–60 bpm</span></div>
+      <div class="kv-row"><span class="kv-key">Purkinje fibre rate</span><span class="kv-val">15–40 bpm</span></div>
+      <div class="kv-row"><span class="kv-key">Action potential Phase 0</span><span class="kv-val">Fast Na⁺ influx (depolarisation)</span></div>
+      <div class="kv-row"><span class="kv-key">Action potential Phase 2</span><span class="kv-val">Plateau — Ca²⁺ influx (L-type channels)</span></div>
+      <div class="kv-row"><span class="kv-key">Absolute refractory period</span><span class="kv-val">Phases 0, 1, 2, and early 3 (cannot re-excite)</span></div>
+      <div class="kv-row"><span class="kv-key">LVEDP normal</span><span class="kv-val">5–12 mmHg</span></div>
+      <div class="kv-row"><span class="kv-key">Ejection fraction (normal)</span><span class="kv-val green">55–70%</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🫁 Respiratory Physiology</div>
+      <div class="kv-row"><span class="kv-key">Tidal volume (TV)</span><span class="kv-val blue">500 mL</span></div>
+      <div class="kv-row"><span class="kv-key">IRV</span><span class="kv-val">3000 mL (inspiratory reserve)</span></div>
+      <div class="kv-row"><span class="kv-key">ERV</span><span class="kv-val">1100 mL (expiratory reserve)</span></div>
+      <div class="kv-row"><span class="kv-key">Residual volume (RV)</span><span class="kv-val">1200 mL (cannot be measured by spirometry)</span></div>
+      <div class="kv-row"><span class="kv-key">FRC (FRV)</span><span class="kv-val">ERV + RV = 2300 mL</span></div>
+      <div class="kv-row"><span class="kv-key">TLC</span><span class="kv-val">6000 mL (all volumes)</span></div>
+      <div class="kv-row"><span class="kv-key">Vital capacity (VC)</span><span class="kv-val green">TLC − RV = 4800 mL</span></div>
+      <div class="kv-row"><span class="kv-key">FEV1/FVC ratio</span><span class="kv-val">Normal ≥0.75 (75%)</span></div>
+      <div class="kv-row"><span class="kv-key">Obstructive pattern</span><span class="kv-val danger">↓FEV1/FVC; ↑RV; ↑TLC (emphysema, asthma)</span></div>
+      <div class="kv-row"><span class="kv-key">Restrictive pattern</span><span class="kv-val">↓FVC; normal or ↑FEV1/FVC; ↓TLC</span></div>
+      <div class="kv-row"><span class="kv-key">Hypoxic pulmonary vasoconstriction</span><span class="kv-val">Unique to pulmonary circulation (↓O2 → vasoconstriction)</span></div>
+      <div class="kv-row"><span class="kv-key">Respiratory quotient (RQ)</span><span class="kv-val">Carbs=1.0, Protein=0.8, Fat=0.7</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🫘 Renal Physiology</div>
+      <div class="kv-row"><span class="kv-key">GFR (normal)</span><span class="kv-val highlight">125 mL/min (180 L/day filtered)</span></div>
+      <div class="kv-row"><span class="kv-key">Filtration fraction</span><span class="kv-val">GFR/RPF = 125/600 = ~20%</span></div>
+      <div class="kv-row"><span class="kv-key">Tm for glucose</span><span class="kv-val">375 mg/min; splay begins ~200 mg/dL</span></div>
+      <div class="kv-row"><span class="kv-key">Best measure of GFR</span><span class="kv-val">Inulin clearance (gold standard)</span></div>
+      <div class="kv-row"><span class="kv-key">Clinical GFR estimate</span><span class="kv-val">Creatinine clearance (Cockcroft-Gault)</span></div>
+      <div class="kv-row"><span class="kv-key">PCT reabsorption</span><span class="kv-val">67% Na, water; all glucose and amino acids; most HCO₃</span></div>
+      <div class="kv-row"><span class="kv-key">Loop of Henle</span><span class="kv-val">Concentrating segment; NKCC2 co-transporter (furosemide site)</span></div>
+      <div class="kv-row"><span class="kv-key">DCT</span><span class="kv-val">NCC transporter (thiazide site); Ca reabsorption (PTH)</span></div>
+      <div class="kv-row"><span class="kv-key">Collecting duct</span><span class="kv-val">ADH (aquaporin-2); Aldosterone (ENaC; principal cells)</span></div>
+      <div class="kv-row"><span class="kv-key">Juxtaglomerular apparatus</span><span class="kv-val">Renin secretion (↓BP, ↓Na, sympathetic activation)</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🧠 Neurophysiology</div>
+      <div class="kv-row"><span class="kv-key">Resting membrane potential</span><span class="kv-val purple">−70 mV (neuron)</span></div>
+      <div class="kv-row"><span class="kv-key">Threshold potential</span><span class="kv-val">−55 mV (action potential fires)</span></div>
+      <div class="kv-row"><span class="kv-key">Fastest nerve fibres</span><span class="kv-val green">Aα (proprioception, motor) = 70–120 m/s</span></div>
+      <div class="kv-row"><span class="kv-key">Pain (fast)</span><span class="kv-val">Aδ fibres (sharp, acute pain)</span></div>
+      <div class="kv-row"><span class="kv-key">Pain (slow)</span><span class="kv-val">C fibres (dull, burning, chronic)</span></div>
+      <div class="kv-row"><span class="kv-key">Autonomic (preganglionic)</span><span class="kv-val">B fibres (lightly myelinated)</span></div>
+      <div class="kv-row"><span class="kv-key">Dorsal column pathway</span><span class="kv-val">Vibration, proprioception, fine touch (ipsilateral)</span></div>
+      <div class="kv-row"><span class="kv-key">Spinothalamic tract</span><span class="kv-val">Pain and temperature (crosses 1–2 levels → contralateral)</span></div>
+      <div class="kv-row"><span class="kv-key">Cerebellum function</span><span class="kv-val">Coordination; damage → ipsilateral signs (ataxia)</span></div>
+      <div class="kv-row"><span class="kv-key">EEG waves</span><span class="kv-val">α (awake, eyes closed 8–13 Hz); β (awake, mental activity); θ/δ (sleep)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">⚡ Endocrine Physiology</div>
+      <div class="kv-row"><span class="kv-key">ADH (vasopressin)</span><span class="kv-val">↑plasma osmolality or ↓BP → release; acts on V2 receptors (collecting duct)</span></div>
+      <div class="kv-row"><span class="kv-key">SIADH</span><span class="kv-val danger">↑ADH → hyponatraemia + concentrated urine</span></div>
+      <div class="kv-row"><span class="kv-key">Diabetes insipidus</span><span class="kv-val danger">Deficiency (central) or resistance (nephrogenic) to ADH → dilute urine</span></div>
+      <div class="kv-row"><span class="kv-key">PTH effect</span><span class="kv-val">↑Ca, ↓PO₄ (↑bone resorption, ↑renal Ca reabsorption, ↑1,25 vit D)</span></div>
+      <div class="kv-row"><span class="kv-key">Calcitonin</span><span class="kv-val green">↓serum Ca (↓bone resorption); thyroid C-cells</span></div>
+      <div class="kv-row"><span class="kv-key">Cortisol effect</span><span class="kv-val">↑gluconeogenesis, ↑lipolysis, anti-inflammatory, ↑Na retention</span></div>
+      <div class="kv-row"><span class="kv-key">Aldosterone</span><span class="kv-val">↑Na retention, ↑K excretion (zona glomerulosa)</span></div>
+      <div class="kv-row"><span class="kv-key">Insulin effects</span><span class="kv-val green">↑glucose uptake, ↑glycogen, ↑protein synthesis, ↓lipolysis</span></div>
+      <div class="kv-row"><span class="kv-key">Glucagon effects</span><span class="kv-val">↑glycogenolysis, ↑gluconeogenesis, ↑lipolysis</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">📊 Key Normal Values</div>
+      <table class="comparison-table">
+        <tr><th>Parameter</th><th>Normal Value</th></tr>
+        <tr><td>Serum Na</td><td>135–145 mmol/L</td></tr>
+        <tr><td>Serum K</td><td>3.5–5.0 mmol/L</td></tr>
+        <tr><td>Serum Ca</td><td>2.1–2.6 mmol/L (8.5–10.5 mg/dL)</td></tr>
+        <tr><td>Blood pH</td><td>7.35–7.45</td></tr>
+        <tr><td>PaO2</td><td>80–100 mmHg</td></tr>
+        <tr><td>PaCO2</td><td>35–45 mmHg</td></tr>
+        <tr><td>HCO3</td><td>22–26 mmol/L</td></tr>
+        <tr><td>Plasma osmolality</td><td>275–295 mOsm/kg</td></tr>
+        <tr><td>Haemoglobin (male)</td><td>13.5–17.5 g/dL</td></tr>
+        <tr><td>Haemoglobin (female)</td><td>12–15.5 g/dL</td></tr>
+        <tr><td>Platelet count</td><td>150,000–400,000/µL</td></tr>
+        <tr><td>INR (normal)</td><td>0.8–1.2</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- BIOCHEMISTRY -->
+<div class="section" id="biochem">
+  <div class="section-title">Bio<span>chemistry</span></div>
+  <div class="section-sub">Metabolism, enzymes, vitamins, molecular biology — exam favourites</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">⚗️ Carbohydrate Metabolism</div>
+      <div class="kv-row"><span class="kv-key">Glycolysis net ATP (anaerobic)</span><span class="kv-val green">2 ATP (net)</span></div>
+      <div class="kv-row"><span class="kv-key">Aerobic glucose → ATP</span><span class="kv-val green">30–32 ATP</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting enzyme (glycolysis)</span><span class="kv-val highlight">Phosphofructokinase-1 (PFK-1)</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting (gluconeogenesis)</span><span class="kv-val">Fructose 1,6-bisphosphatase</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting (glycogenolysis)</span><span class="kv-val">Glycogen phosphorylase</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting (glycogenesis)</span><span class="kv-val">Glycogen synthase</span></div>
+      <div class="kv-row"><span class="kv-key">HMP shunt function</span><span class="kv-val">NADPH (reductive biosynthesis, antioxidant) + Ribose-5-P</span></div>
+      <div class="kv-row"><span class="kv-key">G6PD deficiency</span><span class="kv-val danger">↓NADPH → Heinz bodies, haemolytic anaemia (triggered by drugs/infections)</span></div>
+      <div class="kv-row"><span class="kv-key">Cori cycle</span><span class="kv-val">Muscle lactate → liver → glucose (gluconeogenesis)</span></div>
+      <div class="kv-row"><span class="kv-key">Pyruvate carboxylase</span><span class="kv-val">Needs biotin; pyruvate → oxaloacetate (gluconeogenesis)</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🧬 Vitamins — High Yield</div>
+      <table class="comparison-table">
+        <tr><th>Vitamin</th><th>Deficiency Disease</th><th>Key Fact</th></tr>
+        <tr><td>A (Retinol)</td><td>Night blindness, xerophthalmia, Bitot's spots</td><td>Teratogenic in excess</td></tr>
+        <tr><td>B1 (Thiamine)</td><td>Beriberi (wet/dry), Wernicke-Korsakoff</td><td>Coenzyme for PDH, α-KGDH, transketolase</td></tr>
+        <tr><td>B2 (Riboflavin)</td><td>Angular stomatitis, corneal vascularisation</td><td>FAD / FMN precursor</td></tr>
+        <tr><td>B3 (Niacin)</td><td>Pellagra (3D: Dermatitis, Diarrhoea, Dementia)</td><td>Carcinoid ↑Trp→5-HT consumption → pellagra</td></tr>
+        <tr><td>B6 (Pyridoxine)</td><td>Sideroblastic anaemia, peripheral neuropathy</td><td>Deficiency with INH; give pyridoxine prophylactically</td></tr>
+        <tr><td>B9 (Folate)</td><td>Megaloblastic anaemia, NTD</td><td>Heat-labile; supplemented peri-conception</td></tr>
+        <tr><td>B12 (Cobalamin)</td><td>Megaloblastic anaemia + SACD</td><td>Intrinsic factor from parietal cells needed</td></tr>
+        <tr><td>C (Ascorbic acid)</td><td>Scurvy (perifollicular haemorrhage, corkscrew hair)</td><td>Collagen hydroxylation; antioxidant</td></tr>
+        <tr><td>D (Calciferol)</td><td>Rickets (child), Osteomalacia (adult)</td><td>1α-hydroxylase in kidney (active form 1,25-OH D3)</td></tr>
+        <tr><td>K (Phylloquinone)</td><td>Bleeding tendency (↑PT, ↑INR)</td><td>Activates II, VII, IX, X, Protein C and S</td></tr>
+      </table>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🧪 Enzymes & Molecular Biology</div>
+      <div class="kv-row"><span class="kv-key">Km definition</span><span class="kv-val blue">[S] at half-maximal velocity (Vmax/2)</span></div>
+      <div class="kv-row"><span class="kv-key">Low Km</span><span class="kv-val green">High affinity for substrate</span></div>
+      <div class="kv-row"><span class="kv-key">Competitive inhibition</span><span class="kv-val">↑Km, same Vmax (overcome by ↑substrate)</span></div>
+      <div class="kv-row"><span class="kv-key">Non-competitive inhibition</span><span class="kv-val danger">↓Vmax, same Km (cannot overcome)</span></div>
+      <div class="kv-row"><span class="kv-key">DNA replication enzyme</span><span class="kv-val">DNA polymerase III (prokaryotes); α,δ,ε (eukaryotes)</span></div>
+      <div class="kv-row"><span class="kv-key">RNA polymerase</span><span class="kv-val">Synthesises RNA (no primer needed)</span></div>
+      <div class="kv-row"><span class="kv-key">Reverse transcriptase</span><span class="kv-val">RNA → DNA (retroviruses, telomerase)</span></div>
+      <div class="kv-row"><span class="kv-key">PCR components</span><span class="kv-val">Template DNA, primers, Taq polymerase, dNTPs</span></div>
+      <div class="kv-row"><span class="kv-key">Southern blot</span><span class="kv-val">DNA detection</span></div>
+      <div class="kv-row"><span class="kv-key">Northern blot</span><span class="kv-val">RNA detection</span></div>
+      <div class="kv-row"><span class="kv-key">Western blot</span><span class="kv-val">Protein detection (HIV confirmation)</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🧬 Amino Acids & Protein Metabolism</div>
+      <div class="kv-row"><span class="kv-key">Essential amino acids</span><span class="kv-val purple">PVT TIM HaLL: Phe, Val, Thr, Trp, Ile, Met, His, Lys, Leu</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting (urea cycle)</span><span class="kv-val">Carbamoyl phosphate synthetase I (CPS-I)</span></div>
+      <div class="kv-row"><span class="kv-key">Hyperammonaemia Rx</span><span class="kv-val">Lactulose + rifaximin (↓gut NH₃ production)</span></div>
+      <div class="kv-row"><span class="kv-key">PKU (phenylketonuria)</span><span class="kv-val danger">Phenylalanine hydroxylase deficiency; mousy odour; intellectual disability</span></div>
+      <div class="kv-row"><span class="kv-key">Alkaptonuria</span><span class="kv-val">Homogentisate oxidase deficiency; dark urine; ochronosis</span></div>
+      <div class="kv-row"><span class="kv-key">Maple syrup urine disease</span><span class="kv-val danger">BCKDH deficiency; branched-chain AAs; maple syrup urine; neonatal crisis</span></div>
+      <div class="kv-row"><span class="kv-key">Homocystinuria</span><span class="kv-val">Cystathionine synthase deficiency; ↑homocysteine; marfanoid + DVT</span></div>
+      <div class="kv-row"><span class="kv-key">Hartnup disease</span><span class="kv-val">Tryptophan transport defect; pellagra-like symptoms</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">⚗️ Lipid Metabolism</div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting (fatty acid synthesis)</span><span class="kv-val highlight">ACC (Acetyl-CoA carboxylase) — needs biotin</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting (fatty acid oxidation)</span><span class="kv-val">Carnitine palmitoyltransferase I (CPT-I)</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting (cholesterol synthesis)</span><span class="kv-val danger">HMG-CoA reductase (statin target)</span></div>
+      <div class="kv-row"><span class="kv-key">Ketone body synthesis</span><span class="kv-val">Liver (mitochondria); used by brain in starvation</span></div>
+      <div class="kv-row"><span class="kv-key">VLDL</span><span class="kv-val">Liver → carries TG; becomes IDL → LDL</span></div>
+      <div class="kv-row"><span class="kv-key">HDL</span><span class="kv-val green">Reverse cholesterol transport; anti-atherogenic</span></div>
+      <div class="kv-row"><span class="kv-key">Lipoprotein lipase (LPL)</span><span class="kv-val">Breaks down chylomicrons and VLDL TG; activated by apoC-II</span></div>
+      <div class="kv-row"><span class="kv-key">Abetalipoproteinaemia</span><span class="kv-val danger">No chylomicrons/VLDL; fat malabsorption; acanthocytosis; ataxia</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ANATOMY -->
+<div class="section" id="anatomy">
+  <div class="section-title">General <span>Anatomy</span></div>
+  <div class="section-sub">Clinically important nerves, muscles, spaces, and surface anatomy</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">🫀 Heart & Mediastinum</div>
+      <div class="kv-row"><span class="kv-key">SA node location</span><span class="kv-val green">SVC–RA junction (sulcus terminalis)</span></div>
+      <div class="kv-row"><span class="kv-key">AV node location</span><span class="kv-val">Triangle of Koch (coronary sinus + septal leaflet TV + Todaro tendon)</span></div>
+      <div class="kv-row"><span class="kv-key">Blood supply SA node</span><span class="kv-val">RCA (60%) / LCx (40%)</span></div>
+      <div class="kv-row"><span class="kv-key">Dominant coronary artery</span><span class="kv-val">Gives PDA; RCA dominant in 85%</span></div>
+      <div class="kv-row"><span class="kv-key">LAD supplies</span><span class="kv-val highlight">Anterior LV + anterior 2/3 septum + apex</span></div>
+      <div class="kv-row"><span class="kv-key">Inferior MI (RCA)</span><span class="kv-val danger">IWMI: ST↑ in II, III, aVF; may involve RV</span></div>
+      <div class="kv-row"><span class="kv-key">Erb's point (auscultation)</span><span class="kv-val">3rd left ICS, parasternal line (aortic regurgitation)</span></div>
+      <div class="kv-row"><span class="kv-key">Recurrent laryngeal nerve</span><span class="kv-val danger">Left loops under arch of aorta; Right under subclavian</span></div>
+      <div class="kv-row"><span class="kv-key">Ligamentum arteriosum</span><span class="kv-val">Remnant of ductus arteriosus; below aortic arch</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🦵 Lower Limb Nerves</div>
+      <div class="kv-row"><span class="kv-key">Femoral nerve (L2,3,4)</span><span class="kv-val highlight">Anterior thigh; quadriceps; knee jerk reflex</span></div>
+      <div class="kv-row"><span class="kv-key">Obturator nerve (L2,3,4)</span><span class="kv-val">Medial thigh; hip adductors</span></div>
+      <div class="kv-row"><span class="kv-key">Sciatic nerve (L4-S3)</span><span class="kv-val">Posterior thigh; all below knee</span></div>
+      <div class="kv-row"><span class="kv-key">Common peroneal nerve</span><span class="kv-val danger">Fibular neck; dorsiflexion + eversion → foot drop</span></div>
+      <div class="kv-row"><span class="kv-key">Tibial nerve</span><span class="kv-val">Plantarflexion + inversion; sole sensation</span></div>
+      <div class="kv-row"><span class="kv-key">Superior gluteal nerve</span><span class="kv-val danger">Gluteus medius/minimus; Trendelenburg gait if damaged</span></div>
+      <div class="kv-row"><span class="kv-key">Inferior gluteal nerve</span><span class="kv-val">Gluteus maximus (hip extension)</span></div>
+      <div class="kv-row"><span class="kv-key">Pudendal nerve (S2,3,4)</span><span class="kv-val">Perineum, external sphincters, genitalia</span></div>
+      <div class="kv-row"><span class="kv-key">Lateral femoral cutaneous</span><span class="kv-val">Meralgia paraesthetica (compression at ASIS)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">💪 Upper Limb Nerves</div>
+      <div class="kv-row"><span class="kv-key">Axillary nerve (C5,6)</span><span class="kv-val blue">Deltoid; surgical neck humerus injury</span></div>
+      <div class="kv-row"><span class="kv-key">Musculocutaneous (C5,6,7)</span><span class="kv-val">Elbow flexion (biceps); lateral forearm sensation</span></div>
+      <div class="kv-row"><span class="kv-key">Radial nerve (C5–T1)</span><span class="kv-val danger">Spiral groove humerus → wrist drop; ECRL, ECRB</span></div>
+      <div class="kv-row"><span class="kv-key">Ulnar nerve (C8,T1)</span><span class="kv-val danger">Medial epicondyle → claw hand (4,5); cubital tunnel</span></div>
+      <div class="kv-row"><span class="kv-key">Median nerve (C6–T1)</span><span class="kv-val danger">Supracondylar fracture / CTS → ape thumb</span></div>
+      <div class="kv-row"><span class="kv-key">Anterior interosseous (median)</span><span class="kv-val">FPL, FDP (index, middle); no OK sign</span></div>
+      <div class="kv-row"><span class="kv-key">Posterior interosseous (radial)</span><span class="kv-val">All wrist/finger extensors; radial tunnel syndrome</span></div>
+      <div class="kv-row"><span class="kv-key">Long thoracic (C5,6,7)</span><span class="kv-val danger">Serratus anterior → winged scapula</span></div>
+      <div class="kv-row"><span class="kv-key">Spinal accessory (CN XI)</span><span class="kv-val danger">Trapezius; shoulder droop + winged scapula</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🫁 Thorax & Abdomen</div>
+      <div class="kv-row"><span class="kv-key">Diaphragm openings</span><span class="kv-val purple">T8 (IVC), T10 (oesophagus + vagus), T12 (aorta + thoracic duct + azygos)</span></div>
+      <div class="kv-row"><span class="kv-key">McBurney's point</span><span class="kv-val">1/3 distance from ASIS to umbilicus (appendix)</span></div>
+      <div class="kv-row"><span class="kv-key">Hesselbach's triangle</span><span class="kv-val">Inferior epigastric + lateral rectus + inguinal ligament; direct hernia</span></div>
+      <div class="kv-row"><span class="kv-key">Indirect hernia</span><span class="kv-val">Lateral to inferior epigastric artery; through deep ring</span></div>
+      <div class="kv-row"><span class="kv-key">Femoral canal contents</span><span class="kv-val">Lymph node of Cloquet (NAVY from lateral: N-A-V-Y)</span></div>
+      <div class="kv-row"><span class="kv-key">Porta hepatis</span><span class="kv-val">Portal vein (posterior) + hepatic artery (left) + CBD (right)</span></div>
+      <div class="kv-row"><span class="kv-key">Calot's triangle</span><span class="kv-val">Cystic artery; bounded by cystic duct + CHD + liver</span></div>
+      <div class="kv-row"><span class="kv-key">Pringle manoeuvre</span><span class="kv-val">Compress hepatoduodenal ligament to control bleeding</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🧠 Cranial Nerves High Yield</div>
+      <div class="kv-row"><span class="kv-key">CN III palsy</span><span class="kv-val danger">Down-and-out eye + ptosis + dilated pupil; PCom aneurysm</span></div>
+      <div class="kv-row"><span class="kv-key">CN IV palsy</span><span class="kv-val">Head tilt (compensatory); superior oblique weak</span></div>
+      <div class="kv-row"><span class="kv-key">CN VI palsy</span><span class="kv-val">Medial deviation (convergent squint); lateral rectus weak</span></div>
+      <div class="kv-row"><span class="kv-key">CN VII palsy (LMN)</span><span class="kv-val danger">Upper + lower face involved (Bell's palsy)</span></div>
+      <div class="kv-row"><span class="kv-key">CN VII palsy (UMN)</span><span class="kv-val">Lower face only (forehead spared) — stroke</span></div>
+      <div class="kv-row"><span class="kv-key">CN X (vagus)</span><span class="kv-val">Uvula deviates away from lesion</span></div>
+      <div class="kv-row"><span class="kv-key">CN XII (hypoglossal)</span><span class="kv-val">Tongue deviates towards lesion (LMN)</span></div>
+      <div class="kv-row"><span class="kv-key">Cavernous sinus contents</span><span class="kv-val">CN III, IV, V1, V2, VI + ICA (mnemonic: O TOM CAT)</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">📊 Embryology Essentials</div>
+      <div class="kv-row"><span class="kv-key">Neural tube closes</span><span class="kv-val pink">Day 26–28 (4 weeks)</span></div>
+      <div class="kv-row"><span class="kv-key">NTD risk reduction</span><span class="kv-val green">Folic acid supplementation peri-conception</span></div>
+      <div class="kv-row"><span class="kv-key">Pharyngeal arch 1</span><span class="kv-val">Muscles of mastication, mandible; CN V</span></div>
+      <div class="kv-row"><span class="kv-key">Pharyngeal arch 2</span><span class="kv-val">Muscles of facial expression; CN VII</span></div>
+      <div class="kv-row"><span class="kv-key">Pharyngeal arch 3</span><span class="kv-val">Stylopharyngeus; CN IX</span></div>
+      <div class="kv-row"><span class="kv-key">Thyroid development</span><span class="kv-val">Foramen caecum → thyroglossal duct → neck</span></div>
+      <div class="kv-row"><span class="kv-key">Parathyroid development</span><span class="kv-val">Pouches 3 (inferior PT) and 4 (superior PT)</span></div>
+      <div class="kv-row"><span class="kv-key">Gut rotation</span><span class="kv-val">270° counter-clockwise (herniation at 6 weeks, return at 10 weeks)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FORENSIC MEDICINE -->
+<div class="section" id="forensic">
+  <div class="section-title">Forensic <span>Medicine</span></div>
+  <div class="section-sub">Time of death, wounds, toxicology, medico-legal essentials</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">⏱️ Postmortem Changes</div>
+      <div class="kv-row"><span class="kv-key">Algor mortis</span><span class="kv-val highlight">Body cooling; ~1°C/hr (Rule of 8)</span></div>
+      <div class="kv-row"><span class="kv-key">Livor mortis onset</span><span class="kv-val">1–2 hrs; fixed at 6–8 hrs (postmortem staining)</span></div>
+      <div class="kv-row"><span class="kv-key">Rigor mortis onset</span><span class="kv-val">2–6 hrs; complete 12 hrs; passes off 36–48 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Rigor mortis order</span><span class="kv-val">Jaw → neck → trunk → limbs (Nysten's law)</span></div>
+      <div class="kv-row"><span class="kv-key">Cadaveric spasm</span><span class="kv-val danger">Instantaneous rigor at moment of death (extreme emotion)</span></div>
+      <div class="kv-row"><span class="kv-key">Putrefaction begins</span><span class="kv-val">24–48 hrs in hot climates; greenish discolouration (iliac fossa first)</span></div>
+      <div class="kv-row"><span class="kv-key">Adipocere</span><span class="kv-val">Saponification of fat in moist environment</span></div>
+      <div class="kv-row"><span class="kv-key">Mummification</span><span class="kv-val">Desiccation in hot dry environments</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🔫 Wounds — Firearm & Sharp</div>
+      <div class="kv-row"><span class="kv-key">Entry wound features</span><span class="kv-val blue">Small, inverted edges, abrasion collar, tattooing</span></div>
+      <div class="kv-row"><span class="kv-key">Exit wound features</span><span class="kv-val danger">Large, everted, irregular, no abrasion collar</span></div>
+      <div class="kv-row"><span class="kv-key">Contact shot</span><span class="kv-val danger">Stellate tear, muzzle imprint, gases inside wound</span></div>
+      <div class="kv-row"><span class="kv-key">Close-range shot (&lt;15 cm)</span><span class="kv-val">Singeing, blackening, tattooing (stippling)</span></div>
+      <div class="kv-row"><span class="kv-key">Distant shot (&gt;60 cm)</span><span class="kv-val">Only abrasion collar; no burning/tattooing</span></div>
+      <div class="kv-row"><span class="kv-key">Incised wound</span><span class="kv-val">Sharp-edged; clean, longer than deep</span></div>
+      <div class="kv-row"><span class="kv-key">Stab wound</span><span class="kv-val">Sharp-edged; deeper than long</span></div>
+      <div class="kv-row"><span class="kv-key">Laceration</span><span class="kv-val">Blunt force; irregular edges; bridging strands; dirt/debris</span></div>
+      <div class="kv-row"><span class="kv-key">Hesitation cuts</span><span class="kv-val">Multiple parallel tentative cuts → suicidal</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">☠️ Toxicology Essentials</div>
+      <div class="kv-row"><span class="kv-key">Organophosphate signs</span><span class="kv-val danger">SLUDGE + Pin-point pupils; ↓AChE activity</span></div>
+      <div class="kv-row"><span class="kv-key">OP antidote</span><span class="kv-val green">Atropine + Pralidoxime (2-PAM; oxime)</span></div>
+      <div class="kv-row"><span class="kv-key">Arsenic poisoning</span><span class="kv-val">Rain drop pigmentation; Mees' lines on nails; garlic odour</span></div>
+      <div class="kv-row"><span class="kv-key">Lead poisoning</span><span class="kv-val danger">Burton's line (blue-black gingival), basophilic stippling, wrist/foot drop</span></div>
+      <div class="kv-row"><span class="kv-key">Mercury poisoning</span><span class="kv-val">Mad Hatter's syndrome; erethism; pink disease (acrodynia)</span></div>
+      <div class="kv-row"><span class="kv-key">Cyanide odour</span><span class="kv-val">Bitter almonds (HCN); inhibits cytochrome c oxidase</span></div>
+      <div class="kv-row"><span class="kv-key">Dhatura (Atropine) poisoning</span><span class="kv-val danger">Mydriasis, tachycardia, dry mouth, flushing, delirium ("blind as bat")</span></div>
+      <div class="kv-row"><span class="kv-key">Ethanol MLC</span><span class="kv-val danger">30 mg/100 mL (India driving limit)</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">⚖️ Medico-Legal Essentials</div>
+      <div class="kv-row"><span class="kv-key">MLC (medico-legal case)</span><span class="kv-val purple">Mandatory FIR involvement; must inform police</span></div>
+      <div class="kv-row"><span class="kv-key">Dying declaration</span><span class="kv-val">Expectation of death; not on oath; admissible in court</span></div>
+      <div class="kv-row"><span class="kv-key">Age of consent (India)</span><span class="kv-val danger">18 years (POCSO); sexual act &lt;18 = rape</span></div>
+      <div class="kv-row"><span class="kv-key">Rape definition (IPC 376)</span><span class="kv-val danger">Penetration without consent (amended 2013)</span></div>
+      <div class="kv-row"><span class="kv-key">Rape examination</span><span class="kv-val">Consent needed; two-finger test abolished (SC ruling)</span></div>
+      <div class="kv-row"><span class="kv-key">Infanticide</span><span class="kv-val">Murder of child within 12 months of birth by mother</span></div>
+      <div class="kv-row"><span class="kv-key">Battered child syndrome</span><span class="kv-val">Non-accidental injury; multiple fractures at different stages</span></div>
+      <div class="kv-row"><span class="kv-key">IPC Section 302</span><span class="kv-val">Culpable homicide amounting to murder</span></div>
+      <div class="kv-row"><span class="kv-key">IPC Section 304A</span><span class="kv-val danger">Death due to negligence (medical negligence)</span></div>
+      <div class="kv-row"><span class="kv-key">IPC Section 312</span><span class="kv-val">Causing miscarriage (illegal abortion)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🔬 Forensic Serology</div>
+      <div class="kv-row"><span class="kv-key">ABO blood group typing</span><span class="kv-val">Landsteiner's rule; H antigen precursor</span></div>
+      <div class="kv-row"><span class="kv-key">Secretor status</span><span class="kv-val">80% secrete ABO antigens in body fluids (saliva, semen)</span></div>
+      <div class="kv-row"><span class="kv-key">Precipitin test</span><span class="kv-val">Identify human vs animal blood</span></div>
+      <div class="kv-row"><span class="kv-key">Teichmann's test</span><span class="kv-val">Haematin crystals (confirm bloodstain)</span></div>
+      <div class="kv-row"><span class="kv-key">Takayama's test</span><span class="kv-val">Haemochromogen crystals (confirm blood)</span></div>
+      <div class="kv-row"><span class="kv-key">DNA fingerprinting</span><span class="kv-val">Southern blot with minisatellite (VNTR) probes; most reliable identification</span></div>
+      <div class="kv-row"><span class="kv-key">Age estimation (adult)</span><span class="kv-val">Gustafson's method (teeth: APCSTR)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SPM / PSM -->
+<div class="section" id="spm">
+  <div class="section-title">SPM <span>/ PSM</span></div>
+  <div class="section-sub">Epidemiology, biostatistics, national programmes, vaccines, nutrition</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">📊 Biostatistics Essentials</div>
+      <div class="kv-row"><span class="kv-key">Sensitivity</span><span class="kv-val green">TP/(TP+FN) — ability to detect disease (rule OUT)</span></div>
+      <div class="kv-row"><span class="kv-key">Specificity</span><span class="kv-val green">TN/(TN+FP) — ability to exclude disease (rule IN)</span></div>
+      <div class="kv-row"><span class="kv-key">PPV</span><span class="kv-val">TP/(TP+FP) — depends on prevalence (↑prevalence → ↑PPV)</span></div>
+      <div class="kv-row"><span class="kv-key">NPV</span><span class="kv-val">TN/(TN+FN)</span></div>
+      <div class="kv-row"><span class="kv-key">Incidence</span><span class="kv-val">New cases / at-risk population per time period</span></div>
+      <div class="kv-row"><span class="kv-key">Prevalence</span><span class="kv-val">All cases / total population at a point in time</span></div>
+      <div class="kv-row"><span class="kv-key">Prevalence ≈</span><span class="kv-val">Incidence × Duration (for steady-state chronic disease)</span></div>
+      <div class="kv-row"><span class="kv-key">Relative risk (RR)</span><span class="kv-val">Cohort studies; RR=1 → no association</span></div>
+      <div class="kv-row"><span class="kv-key">Odds ratio (OR)</span><span class="kv-val">Case-control studies; approximates RR when prevalence low</span></div>
+      <div class="kv-row"><span class="kv-key">p-value &lt;0.05</span><span class="kv-val danger">Statistically significant result</span></div>
+      <div class="kv-row"><span class="kv-key">Type I error (α)</span><span class="kv-val danger">False positive; reject true null hypothesis (p &lt;0.05)</span></div>
+      <div class="kv-row"><span class="kv-key">Type II error (β)</span><span class="kv-val danger">False negative; fail to reject false null hypothesis</span></div>
+      <div class="mnemonic-box"><b>SnNout</b> = High Sensitivity → Negative result rules OUT disease<br><b>SpPin</b> = High Specificity → Positive result rules IN disease</div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">📈 Study Designs</div>
+      <div class="kv-row"><span class="kv-key">RCT (gold standard)</span><span class="kv-val highlight">Randomised controlled trial; least bias; prospective</span></div>
+      <div class="kv-row"><span class="kv-key">Systematic review / meta-analysis</span><span class="kv-val green">Highest level of evidence</span></div>
+      <div class="kv-row"><span class="kv-key">Cohort study</span><span class="kv-val">Prospective; exposure → outcome; RR calculated</span></div>
+      <div class="kv-row"><span class="kv-key">Case-control study</span><span class="kv-val">Retrospective; outcome → exposure; OR calculated</span></div>
+      <div class="kv-row"><span class="kv-key">Cross-sectional study</span><span class="kv-val">Prevalence; snapshot in time; no temporality</span></div>
+      <div class="kv-row"><span class="kv-key">Ecologic study</span><span class="kv-val">Group-level data; risk of ecologic fallacy</span></div>
+      <div class="kv-row"><span class="kv-key">Bias (selection)</span><span class="kv-val">Non-random sampling; Berkson's bias</span></div>
+      <div class="kv-row"><span class="kv-key">Recall bias</span><span class="kv-val danger">Case-control studies; cases recall better than controls</span></div>
+      <div class="kv-row"><span class="kv-key">Confounding</span><span class="kv-val">Third variable associated with both exposure and outcome</span></div>
+      <div class="kv-row"><span class="kv-key">Randomisation controls for</span><span class="kv-val green">Known + unknown confounders</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">💉 National Immunisation Schedule (India)</div>
+      <table class="comparison-table">
+        <tr><th>Age</th><th>Vaccines</th></tr>
+        <tr><td>Birth</td><td>BCG + OPV-0 + Hep B-1</td></tr>
+        <tr><td>6 weeks</td><td>OPV-1 + Penta-1 (DPT+HepB+Hib) + RVV-1 + PCV-1 + fIPV-1</td></tr>
+        <tr><td>10 weeks</td><td>OPV-2 + Penta-2 + RVV-2 + PCV-2</td></tr>
+        <tr><td>14 weeks</td><td>OPV-3 + Penta-3 + RVV-3 + PCV-3 + fIPV-2</td></tr>
+        <tr><td>9 months</td><td>Measles/MR-1 + JE-1 (endemic areas)</td></tr>
+        <tr><td>16–24 months</td><td>DPT booster + OPV + MR-2 + JE-2</td></tr>
+        <tr><td>5 years</td><td>DPT booster-2</td></tr>
+        <tr><td>10 years</td><td>Td (tetanus + low-dose diphtheria)</td></tr>
+        <tr><td>16 years</td><td>Td</td></tr>
+        <tr><td>Pregnant women</td><td>TT/Td (2 doses)</td></tr>
+      </table>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🌍 Epidemiology & Disease Control</div>
+      <div class="kv-row"><span class="kv-key">Herd immunity threshold</span><span class="kv-val purple">1 − 1/R₀ (e.g. measles R₀=15 → 93% coverage needed)</span></div>
+      <div class="kv-row"><span class="kv-key">Eradicated diseases</span><span class="kv-val green">Smallpox (1980); Polio (India free 2014)</span></div>
+      <div class="kv-row"><span class="kv-key">Elimination vs Eradication</span><span class="kv-val">Elimination = regional; Eradication = global</span></div>
+      <div class="kv-row"><span class="kv-key">Pandemic definition</span><span class="kv-val danger">Worldwide epidemic affecting multiple countries/continents</span></div>
+      <div class="kv-row"><span class="kv-key">Zoonosis (MC)</span><span class="kv-val">Rabies, Brucellosis, Q fever, Plague</span></div>
+      <div class="kv-row"><span class="kv-key">Incubation period (TB)</span><span class="kv-val">4–12 weeks (primary infection)</span></div>
+      <div class="kv-row"><span class="kv-key">Notifiable diseases (India)</span><span class="kv-val danger">Cholera, Plague, Yellow fever, Dengue, Malaria (mandatory reporting)</span></div>
+      <div class="kv-row"><span class="kv-key">Case fatality rate (CFR)</span><span class="kv-val">Deaths / confirmed cases × 100</span></div>
+      <div class="kv-row"><span class="kv-key">Attack rate</span><span class="kv-val">Cases / at-risk population (during outbreak)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🥗 Nutrition & National Programmes</div>
+      <div class="kv-row"><span class="kv-key">PEM (protein-energy malnutrition)</span><span class="kv-val danger">Kwashiorkor (protein def) vs Marasmus (total calorie def)</span></div>
+      <div class="kv-row"><span class="kv-key">Kwashiorkor features</span><span class="kv-val">Oedema, moon face, hair discolouration, hepatomegaly, flaky paint dermatosis</span></div>
+      <div class="kv-row"><span class="kv-key">Marasmus features</span><span class="kv-val">Wasted, 'Old man' appearance, alert, no oedema</span></div>
+      <div class="kv-row"><span class="kv-key">Wellcome classification</span><span class="kv-val">Kwashiorkor (oedema + 60–80% weight); Marasmic-kwash (&lt;60% + oedema)</span></div>
+      <div class="kv-row"><span class="kv-key">MUAC (mid-upper arm circ)</span><span class="kv-val danger">&lt;12.5 cm → severe acute malnutrition (SAM)</span></div>
+      <div class="kv-row"><span class="kv-key">IMNCI</span><span class="kv-val">Integrated Management of Neonatal and Childhood Illness</span></div>
+      <div class="kv-row"><span class="kv-key">RNTCP / NTEP</span><span class="kv-val">National Tuberculosis Elimination Programme (target: 2025)</span></div>
+      <div class="kv-row"><span class="kv-key">NACP</span><span class="kv-val">National AIDS Control Programme</span></div>
+      <div class="kv-row"><span class="kv-key">NVBDCP</span><span class="kv-val">National Vector Borne Disease Control Programme (Malaria, Dengue, Filariasis)</span></div>
+      <div class="kv-row"><span class="kv-key">NPCDCS</span><span class="kv-val">National Programme for NCDs (DM, HTN, Cancer)</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">📊 Demography & Vital Statistics</div>
+      <div class="kv-row"><span class="kv-key">Crude birth rate (India 2022)</span><span class="kv-val pink">~19.7 per 1000 population</span></div>
+      <div class="kv-row"><span class="kv-key">Crude death rate (India)</span><span class="kv-val">~6.2 per 1000</span></div>
+      <div class="kv-row"><span class="kv-key">Infant mortality rate (IMR)</span><span class="kv-val danger">Deaths &lt;1 yr / 1000 live births (India ~28)</span></div>
+      <div class="kv-row"><span class="kv-key">Neonatal mortality rate</span><span class="kv-val">Deaths in first 28 days / 1000 live births</span></div>
+      <div class="kv-row"><span class="kv-key">Maternal mortality ratio</span><span class="kv-val">Maternal deaths / 100,000 live births (India ~97)</span></div>
+      <div class="kv-row"><span class="kv-key">TFR (Total fertility rate)</span><span class="kv-val">Avg children per woman; replacement level = 2.1</span></div>
+      <div class="kv-row"><span class="kv-key">Sex ratio (Census 2011)</span><span class="kv-val">943 females per 1000 males</span></div>
+      <div class="kv-row"><span class="kv-key">Life expectancy at birth (India)</span><span class="kv-val">~69.7 years (male ~67, female ~70)</span></div>
+      <div class="kv-row"><span class="kv-key">Epidemiological triad</span><span class="kv-val">Agent + Host + Environment</span></div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

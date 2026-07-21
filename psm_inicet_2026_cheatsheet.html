@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSM Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #05080f; --surface: #0c1120; --surface2: #131a2e; --border: #1a2540;
+    --accent: #a78bfa; --accent2: #34d399; --accent3: #fb923c; --accent4: #f9a8d4; --accent5: #38bdf8;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #05080f 0%, #0a1a0e 50%, #05080f 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent2); color: #05080f; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent2); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent4); border: 1px solid var(--accent4); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent2); color: #05080f; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent2); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.violet::before { background: var(--accent); }
+  .card.green::before { background: var(--accent2); }
+  .card.orange::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.sky::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.violet .card-title { color: var(--accent); }
+  .card.green .card-title { color: var(--accent2); }
+  .card.orange .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.sky .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #131a2e; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.green { color: var(--accent2); }
+  .kv-val.orange { color: var(--accent3); }
+  .kv-val.sky { color: var(--accent5); }
+  .kv-val.danger { color: var(--danger); }
+  .kv-val.pink { color: var(--accent4); }
+  .formula-box { background: #070d1a; border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent2); margin: 6px 0; line-height: 1.8; }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(167,139,250,0.07); border: 1px solid rgba(167,139,250,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent); margin-top: 8px; line-height: 1.5; }
+  .green-box { background: rgba(52,211,153,0.07); border: 1px solid rgba(52,211,153,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent2); margin-top: 8px; line-height: 1.5; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent2); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  .mt-12 { margin-top: 12px; }
+  @media (max-width: 800px) { .grid-auto, .grid-2 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>PSM <span>Cheatsheet</span></h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('epidemiology',this)">Epidemiology</div>
+    <div class="tab" onclick="showSection('biostatistics',this)">Biostatistics</div>
+    <div class="tab" onclick="showSection('nutrition',this)">Nutrition</div>
+    <div class="tab" onclick="showSection('programs',this)">National Programs</div>
+    <div class="tab" onclick="showSection('environment',this)">Env &amp; Occ Health</div>
+    <div class="tab" onclick="showSection('demography',this)">Demography</div>
+    <div class="tab" onclick="showSection('screening',this)">Screening &amp; Vaccines</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- EPIDEMIOLOGY -->
+<div class="section active" id="epidemiology">
+  <div class="section-title">Epidemio<span>logy</span></div>
+  <div class="section-sub">Study designs, measures of disease, bias, causation, outbreak investigation</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">📐 Study Designs — Hierarchy of Evidence</div>
+      <div class="formula-box">Systematic Review/Meta-analysis → RCT → Cohort → Case-Control → Cross-sectional → Case Report → Expert Opinion</div>
+      <div class="kv-row"><span class="kv-key">RCT</span><span class="kv-val green">Gold standard for causation; randomisation eliminates confounding</span></div>
+      <div class="kv-row"><span class="kv-key">Cohort study</span><span class="kv-val">Exposure → Outcome; calculates RR; can study incidence; prospective or retrospective</span></div>
+      <div class="kv-row"><span class="kv-key">Case-control study</span><span class="kv-val">Outcome → Exposure (backwards); calculates OR; best for rare diseases</span></div>
+      <div class="kv-row"><span class="kv-key">Cross-sectional</span><span class="kv-val">Prevalence study; exposure + outcome measured simultaneously</span></div>
+      <div class="kv-row"><span class="kv-key">Ecological study</span><span class="kv-val">Group-level data; ecological fallacy risk</span></div>
+      <div class="kv-row"><span class="kv-key">Best for rare disease</span><span class="kv-val highlight">Case-control study</span></div>
+      <div class="kv-row"><span class="kv-key">Best for rare exposure</span><span class="kv-val highlight">Cohort study</span></div>
+      <div class="kv-row"><span class="kv-key">Fastest &amp; cheapest</span><span class="kv-val">Cross-sectional study</span></div>
+    </div>
+
+    <div class="card violet">
+      <div class="card-title">📊 Measures of Association</div>
+      <div class="formula-box">2×2 Table:
+          Disease+   Disease-
+Exposed:    a          b
+Unexposed:  c          d
+
+RR = [a/(a+b)] ÷ [c/(c+d)]
+OR = (a×d) / (b×c)
+AR = Risk(exposed) − Risk(unexposed)
+PAR% = (Incidence total − Incidence unexposed) / Incidence total × 100</div>
+      <div class="kv-row"><span class="kv-key">RR = 1</span><span class="kv-val">No association</span></div>
+      <div class="kv-row"><span class="kv-key">RR &gt; 1</span><span class="kv-val danger">Positive association (risk factor)</span></div>
+      <div class="kv-row"><span class="kv-key">RR &lt; 1</span><span class="kv-val green">Negative association (protective)</span></div>
+      <div class="kv-row"><span class="kv-key">OR approximates RR when</span><span class="kv-val highlight">Disease is rare (&lt;10% prevalence)</span></div>
+      <div class="kv-row"><span class="kv-key">NNT</span><span class="kv-val">1 / ARR; number needed to treat to prevent 1 event</span></div>
+      <div class="kv-row"><span class="kv-key">NNH</span><span class="kv-val danger">1 / AR; number needed to harm 1 person</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">⚠️ Bias Types — Exam Favourites</div>
+      <table class="comparison-table">
+        <tr><th>Bias</th><th>Definition / Example</th></tr>
+        <tr><td>Selection bias</td><td>Non-random selection; Berkson's bias (hospital-based case-control); healthy worker effect</td></tr>
+        <tr><td>Information bias</td><td>Systematic error in measurement; recall bias (case-control); interviewer bias</td></tr>
+        <tr><td>Recall bias</td><td>Cases remember exposure better than controls; case-control studies</td></tr>
+        <tr><td>Lead time bias</td><td>Screening detects disease earlier → appears to survive longer without actual benefit</td></tr>
+        <tr><td>Length bias</td><td>Screening preferentially picks slowly progressive disease</td></tr>
+        <tr><td>Hawthorne effect</td><td>People change behaviour because they know they are being observed</td></tr>
+        <tr><td>Neyman bias</td><td>Prevalence-incidence bias; mild/fatal cases excluded from cross-sectional study</td></tr>
+        <tr><td>Berkson's bias</td><td>Hospital-based controls differ from general population; case-control specific</td></tr>
+        <tr><td>Confounding</td><td>Third variable associated with both exposure and outcome; not a bias per se</td></tr>
+      </table>
+      <div class="green-box">Randomisation is the best method to control confounding in RCTs. Matching and stratification used in observational studies.</div>
+    </div>
+
+    <div class="card sky">
+      <div class="card-title">🔬 Causation — Bradford Hill Criteria</div>
+      <div class="formula-box">Mnemonic: STAMPED BC
+Strength, Temporality (only necessary one), Analogy, M-Plausibility, Plausibility (biological), Experiment, Dose-response, Biological gradient, Consistency, Coherence</div>
+      <div class="kv-row"><span class="kv-key">Only essential criterion</span><span class="kv-val danger">Temporality — cause must precede effect</span></div>
+      <div class="kv-row"><span class="kv-key">Strongest single criterion</span><span class="kv-val highlight">Strength of association (high RR)</span></div>
+      <div class="kv-row"><span class="kv-key">Koch's postulates</span><span class="kv-val">Organism present in every case; cultivable; reproduces disease; reisolatable</span></div>
+      <div class="kv-row"><span class="kv-key">Evans' criteria</span><span class="kv-val">Modified Koch's for chronic diseases and serological evidence</span></div>
+      <div class="kv-row"><span class="kv-key">Sufficient cause</span><span class="kv-val">Always produces disease; not always present</span></div>
+      <div class="kv-row"><span class="kv-key">Necessary cause</span><span class="kv-val">Must be present; disease cannot occur without it</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🔬 Outbreak Investigation — Steps</div>
+      <div class="formula-box">1. Confirm outbreak exists
+2. Confirm diagnosis (lab)
+3. Define cases (case definition)
+4. Count cases (line listing)
+5. Describe by Time, Place, Person (Descriptive Epi)
+6. Draw epidemic curve (point source vs propagated)
+7. Formulate hypothesis
+8. Test hypothesis (analytical study)
+9. Control measures
+10. Report &amp; Disseminate</div>
+      <div class="kv-row"><span class="kv-key">Point source epidemic curve</span><span class="kv-val highlight">Single steep rise and fall; common exposure at single time</span></div>
+      <div class="kv-row"><span class="kv-key">Propagated source</span><span class="kv-val">Multiple peaks; person-to-person spread; each peak one incubation period apart</span></div>
+      <div class="kv-row"><span class="kv-key">Attack rate</span><span class="kv-val">Number ill / Number exposed × 100 (used in outbreak)</span></div>
+      <div class="kv-row"><span class="kv-key">Secondary attack rate</span><span class="kv-val">New cases in household contacts / susceptible household contacts × 100</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">📋 Disease Frequency Measures</div>
+      <div class="kv-row"><span class="kv-key">Incidence rate</span><span class="kv-val highlight">New cases / Person-time at risk (dynamic population)</span></div>
+      <div class="kv-row"><span class="kv-key">Attack rate</span><span class="kv-val">New cases / Population at risk × 100 (short outbreak)</span></div>
+      <div class="kv-row"><span class="kv-key">Prevalence</span><span class="kv-val">All cases (new + old) / Total population at a point in time</span></div>
+      <div class="kv-row"><span class="kv-key">Prevalence ≈ Incidence × Duration</span><span class="kv-val green">Valid when disease is in steady state and prevalence is low</span></div>
+      <div class="kv-row"><span class="kv-key">Point prevalence</span><span class="kv-val">At one point in time (most common type)</span></div>
+      <div class="kv-row"><span class="kv-key">Period prevalence</span><span class="kv-val">Over a defined time period</span></div>
+      <div class="kv-row"><span class="kv-key">Crude death rate India</span><span class="kv-val green">7.4 per 1000 (SRS 2020)</span></div>
+      <div class="kv-row"><span class="kv-key">Crude birth rate India</span><span class="kv-val green">19.5 per 1000 (SRS 2020)</span></div>
+      <div class="kv-row"><span class="kv-key">IMR India (2020)</span><span class="kv-val green">28 per 1000 live births (SRS)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BIOSTATISTICS -->
+<div class="section" id="biostatistics">
+  <div class="section-title">Bio<span>statistics</span></div>
+  <div class="section-sub">Sensitivity, specificity, predictive values, tests, distributions, screening</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">🎯 Sensitivity &amp; Specificity</div>
+      <div class="formula-box">         Disease+   Disease-
+Test +:     TP         FP
+Test -:     FN         TN
+
+Sensitivity = TP / (TP + FN)  → "True Positive Rate"
+Specificity = TN / (TN + FP)  → "True Negative Rate"
+PPV = TP / (TP + FP)
+NPV = TN / (TN + FN)
+Accuracy = (TP + TN) / Total</div>
+      <div class="kv-row"><span class="kv-key">High sensitivity test used for</span><span class="kv-val highlight">Screening (SnNout — Sensitive test, Negative rules OUT)</span></div>
+      <div class="kv-row"><span class="kv-key">High specificity test used for</span><span class="kv-val highlight">Confirmation (SpPin — Specific test, Positive rules IN)</span></div>
+      <div class="kv-row"><span class="kv-key">PPV depends on</span><span class="kv-val danger">Prevalence — ↑ prevalence → ↑ PPV</span></div>
+      <div class="kv-row"><span class="kv-key">NPV depends on</span><span class="kv-val danger">Prevalence — ↑ prevalence → ↓ NPV</span></div>
+      <div class="kv-row"><span class="kv-key">Sensitivity &amp; Specificity</span><span class="kv-val">Intrinsic properties — NOT affected by prevalence</span></div>
+      <div class="kv-row"><span class="kv-key">Likelihood ratio +ve</span><span class="kv-val">Sensitivity / (1 − Specificity); &gt;10 = strong evidence</span></div>
+    </div>
+
+    <div class="card violet">
+      <div class="card-title">📊 Statistical Tests — Choose the Right One</div>
+      <table class="comparison-table">
+        <tr><th>Situation</th><th>Test</th></tr>
+        <tr><td>Compare means, 2 independent groups, normal data</td><td>Unpaired t-test (Student's t-test)</td></tr>
+        <tr><td>Compare means, same group before/after, normal data</td><td>Paired t-test</td></tr>
+        <tr><td>Compare means, ≥3 groups, normal data</td><td>ANOVA (Analysis of Variance)</td></tr>
+        <tr><td>Compare proportions (2×2 table), expected &gt;5</td><td>Chi-square (χ²) test</td></tr>
+        <tr><td>Compare proportions, small sample / expected &lt;5</td><td>Fisher's exact test</td></tr>
+        <tr><td>Non-parametric, 2 independent groups</td><td>Mann-Whitney U test</td></tr>
+        <tr><td>Non-parametric, 2 related groups (paired)</td><td>Wilcoxon signed-rank test</td></tr>
+        <tr><td>Non-parametric, ≥3 groups</td><td>Kruskal-Wallis test</td></tr>
+        <tr><td>Correlation between 2 continuous variables</td><td>Pearson's r (parametric); Spearman's ρ (non-parametric)</td></tr>
+        <tr><td>Agreement between 2 observers/methods</td><td>Kappa statistic (κ); Bland-Altman plot</td></tr>
+        <tr><td>Survival data / time-to-event</td><td>Kaplan-Meier; Log-rank test; Cox regression</td></tr>
+        <tr><td>Adjust for multiple confounders, continuous outcome</td><td>Multiple linear regression</td></tr>
+        <tr><td>Adjust for multiple confounders, binary outcome</td><td>Logistic regression → gives adjusted OR</td></tr>
+      </table>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">📈 Distributions &amp; Normal Curve</div>
+      <div class="kv-row"><span class="kv-key">Normal distribution</span><span class="kv-val highlight">Mean = Median = Mode; bell-shaped; symmetrical</span></div>
+      <div class="kv-row"><span class="kv-key">Mean ± 1 SD</span><span class="kv-val green">68.2% of observations</span></div>
+      <div class="kv-row"><span class="kv-key">Mean ± 2 SD</span><span class="kv-val green">95.4% of observations</span></div>
+      <div class="kv-row"><span class="kv-key">Mean ± 3 SD</span><span class="kv-val green">99.7% of observations</span></div>
+      <div class="kv-row"><span class="kv-key">95% CI</span><span class="kv-val highlight">Mean ± 1.96 × SE; if CI crosses 1 (for OR/RR) → not significant</span></div>
+      <div class="kv-row"><span class="kv-key">Positive skew</span><span class="kv-val">Tail to right; Mean &gt; Median &gt; Mode (MMM — Mode Most Medial)</span></div>
+      <div class="kv-row"><span class="kv-key">Negative skew</span><span class="kv-val">Tail to left; Mean &lt; Median &lt; Mode</span></div>
+      <div class="kv-row"><span class="kv-key">SE of mean</span><span class="kv-val">SD / √n; decreases with increasing sample size</span></div>
+      <div class="kv-row"><span class="kv-key">Type I error (α)</span><span class="kv-val danger">False positive; reject true null hypothesis; p-value</span></div>
+      <div class="kv-row"><span class="kv-key">Type II error (β)</span><span class="kv-val danger">False negative; fail to reject false null hypothesis</span></div>
+      <div class="kv-row"><span class="kv-key">Power of study</span><span class="kv-val highlight">1 − β; probability of detecting true effect; want ≥80%</span></div>
+      <div class="kv-row"><span class="kv-key">p-value &lt;0.05</span><span class="kv-val green">Statistically significant (5% level); reject H0</span></div>
+    </div>
+
+    <div class="card sky">
+      <div class="card-title">🔬 ROC Curve &amp; Cut-off Points</div>
+      <div class="kv-row"><span class="kv-key">ROC curve axes</span><span class="kv-val highlight">Y-axis: Sensitivity; X-axis: 1 − Specificity (FPR)</span></div>
+      <div class="kv-row"><span class="kv-key">AUC = 0.5</span><span class="kv-val">Diagonal line; no discriminatory ability (chance)</span></div>
+      <div class="kv-row"><span class="kv-key">AUC = 1.0</span><span class="kv-val green">Perfect test; 100% sensitivity and specificity</span></div>
+      <div class="kv-row"><span class="kv-key">AUC &gt;0.7</span><span class="kv-val green">Acceptable; &gt;0.8 = good; &gt;0.9 = excellent</span></div>
+      <div class="kv-row"><span class="kv-key">Shift cut-off to LEFT</span><span class="kv-val danger">↑ Sensitivity, ↓ Specificity; more FP; used for screening</span></div>
+      <div class="kv-row"><span class="kv-key">Shift cut-off to RIGHT</span><span class="kv-val">↑ Specificity, ↓ Sensitivity; more FN; used for confirmation</span></div>
+      <div class="kv-row"><span class="kv-key">Best cut-off point on ROC</span><span class="kv-val highlight">Top-left corner (maximises Se + Sp); Youden's index</span></div>
+      <div class="kv-row"><span class="kv-key">Youden's index</span><span class="kv-val">Sensitivity + Specificity − 1; maximum = best cut-off</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🔬 Kappa Statistic &amp; Agreement</div>
+      <div class="kv-row"><span class="kv-key">Kappa (κ) &lt;0</span><span class="kv-val danger">Less than chance agreement</span></div>
+      <div class="kv-row"><span class="kv-key">Kappa 0.01–0.20</span><span class="kv-val">Slight agreement</span></div>
+      <div class="kv-row"><span class="kv-key">Kappa 0.21–0.40</span><span class="kv-val">Fair agreement</span></div>
+      <div class="kv-row"><span class="kv-key">Kappa 0.41–0.60</span><span class="kv-val orange">Moderate agreement</span></div>
+      <div class="kv-row"><span class="kv-key">Kappa 0.61–0.80</span><span class="kv-val green">Substantial agreement</span></div>
+      <div class="kv-row"><span class="kv-key">Kappa 0.81–1.00</span><span class="kv-val highlight">Almost perfect agreement</span></div>
+      <div class="kv-row"><span class="kv-key">Validity</span><span class="kv-val">Measures what it claims to measure (Se + Sp)</span></div>
+      <div class="kv-row"><span class="kv-key">Reliability (Reproducibility)</span><span class="kv-val">Consistency of results; Kappa; ICC (continuous data)</span></div>
+      <div class="kv-row"><span class="kv-key">Can a test be reliable but not valid?</span><span class="kv-val danger">YES — consistently wrong</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">📋 Meta-Analysis &amp; Systematic Review</div>
+      <div class="kv-row"><span class="kv-key">Forest plot</span><span class="kv-val highlight">Visual display of individual study results + pooled estimate</span></div>
+      <div class="kv-row"><span class="kv-key">Diamond in forest plot</span><span class="kv-val">Pooled estimate; width = 95% CI</span></div>
+      <div class="kv-row"><span class="kv-key">Heterogeneity test</span><span class="kv-val">Cochran's Q test; I² statistic</span></div>
+      <div class="kv-row"><span class="kv-key">I² &lt;25%</span><span class="kv-val green">Low heterogeneity (use fixed-effects model)</span></div>
+      <div class="kv-row"><span class="kv-key">I² &gt;75%</span><span class="kv-val danger">High heterogeneity (use random-effects model)</span></div>
+      <div class="kv-row"><span class="kv-key">Publication bias</span><span class="kv-val danger">Positive studies more likely to be published; funnel plot asymmetry</span></div>
+      <div class="kv-row"><span class="kv-key">Funnel plot</span><span class="kv-val">Asymmetric funnel → publication bias</span></div>
+      <div class="kv-row"><span class="kv-key">Egger's test</span><span class="kv-val">Statistical test for publication bias / funnel plot asymmetry</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NUTRITION -->
+<div class="section" id="nutrition">
+  <div class="section-title">Nutrition &amp; <span>Deficiencies</span></div>
+  <div class="section-sub">PEM, vitamin deficiencies, national programs, reference values</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">🍽️ Protein Energy Malnutrition</div>
+      <div class="kv-row"><span class="kv-key">Kwashiorkor</span><span class="kv-val danger">Protein deficiency; oedema; moon face; flaky paint dermatitis; fatty liver; hair changes (flag sign)</span></div>
+      <div class="kv-row"><span class="kv-key">Marasmus</span><span class="kv-val danger">Calorie deficiency; "old man" appearance; no oedema; muscle wasting; baggy pants</span></div>
+      <div class="kv-row"><span class="kv-key">Marasmic Kwashiorkor</span><span class="kv-val">Combined; oedema + wasting</span></div>
+      <div class="kv-row"><span class="kv-key">Waterlow classification</span><span class="kv-val highlight">Wasting = Wt/Ht; Stunting = Ht/Age</span></div>
+      <div class="kv-row"><span class="kv-key">Gomez classification</span><span class="kv-val">Weight for age: Grade I (&gt;75%), II (60-75%), III (&lt;60% of expected)</span></div>
+      <div class="kv-row"><span class="kv-key">IAP classification</span><span class="kv-val">Weight for age: Grade I (71-80%), II (61-70%), III (51-60%), IV (&lt;50%)</span></div>
+      <div class="kv-row"><span class="kv-key">MUAC cut-off (SAM)</span><span class="kv-val danger">&lt;115 mm (child 6-59 months) → severe acute malnutrition</span></div>
+      <div class="kv-row"><span class="kv-key">MUAC (MAM)</span><span class="kv-val">115–125 mm → moderate acute malnutrition</span></div>
+    </div>
+
+    <div class="card violet">
+      <div class="card-title">💊 Vitamin Deficiencies — High Yield</div>
+      <table class="comparison-table">
+        <tr><th>Vitamin</th><th>Deficiency Disease</th><th>Key Clinical Feature</th></tr>
+        <tr><td>Vitamin A</td><td>Xerophthalmia; Bitot's spots; Night blindness</td><td>Bitot's spots (conjunctival foamy patches); keratomalacia; measles complication</td></tr>
+        <tr><td>Vitamin D</td><td>Rickets (child); Osteomalacia (adult)</td><td>Craniotabes; rachitic rosary; Harrison's sulcus; Looser's zones (adult)</td></tr>
+        <tr><td>Vitamin C</td><td>Scurvy</td><td>Perifollicular haemorrhage; corkscrew hairs; bleeding gums; Frankel's line; Trümmerfeld zone</td></tr>
+        <tr><td>Vitamin B1 (Thiamine)</td><td>Beriberi; Wernicke's encephalopathy</td><td>Wet beriberi (cardiac); Dry beriberi (peripheral neuropathy); Wernicke's (triad: confusion, ataxia, ophthalmoplegia)</td></tr>
+        <tr><td>Vitamin B2 (Riboflavin)</td><td>Ariboflavinosis</td><td>Angular stomatitis; cheilosis; magenta tongue; corneal vascularisation</td></tr>
+        <tr><td>Vitamin B3 (Niacin)</td><td>Pellagra</td><td>4Ds: Dermatitis, Diarrhoea, Dementia, Death; Casal's necklace</td></tr>
+        <tr><td>Vitamin B6 (Pyridoxine)</td><td>Peripheral neuropathy; sideroblastic anaemia</td><td>Convulsions in infants; INH side effect; cheilosis</td></tr>
+        <tr><td>Vitamin B12</td><td>Megaloblastic anaemia; SCD</td><td>Subacute combined degeneration; methylmalonyl-CoA accumulation</td></tr>
+        <tr><td>Folic acid</td><td>Megaloblastic anaemia; NTD</td><td>Neural tube defects (no SCD); homocysteinaemia</td></tr>
+        <tr><td>Vitamin K</td><td>Bleeding diathesis</td><td>↑ PT; haemorrhagic disease of newborn; fat-soluble (bile salts needed)</td></tr>
+        <tr><td>Iron</td><td>Iron deficiency anaemia</td><td>Microcytic hypochromic; koilonychia (spoon nails); Plummer-Vinson syndrome</td></tr>
+        <tr><td>Iodine</td><td>Goitre; cretinism</td><td>MC preventable cause of intellectual disability; IDD; Himalayas high risk</td></tr>
+        <tr><td>Zinc</td><td>Growth retardation; dwarfism</td><td>Acrodermatitis enteropathica; poor wound healing; hypogonadism (Prasad's disease — Iran)</td></tr>
+        <tr><td>Fluoride (excess)</td><td>Fluorosis</td><td>Dental mottling; skeletal fluorosis; &gt;1.5 ppm water fluoride → toxicity</td></tr>
+      </table>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">📏 Reference Values — ICMR/WHO</div>
+      <div class="kv-row"><span class="kv-key">RDA calories (sedentary adult male)</span><span class="kv-val green">2110 kcal/day</span></div>
+      <div class="kv-row"><span class="kv-key">RDA calories (sedentary adult female)</span><span class="kv-val green">1660 kcal/day</span></div>
+      <div class="kv-row"><span class="kv-key">RDA protein (adult)</span><span class="kv-val green">0.8 g/kg/day (ICMR 2020: 0.83 g/kg/day)</span></div>
+      <div class="kv-row"><span class="kv-key">RDA protein (pregnancy)</span><span class="kv-val green">+22 g/day extra</span></div>
+      <div class="kv-row"><span class="kv-key">Vitamin A supplementation (child)</span><span class="kv-val highlight">6-11 months: 1 lakh IU; 1-5 years: 2 lakh IU every 6 months</span></div>
+      <div class="kv-row"><span class="kv-key">Iron supplementation (IFA) — child</span><span class="kv-val">Weekly IFA: 45 mg elemental iron + 400 mcg folic acid (5-10 yrs)</span></div>
+      <div class="kv-row"><span class="kv-key">Fluoride optimal level in water</span><span class="kv-val green">0.5–0.8 ppm (India); 1 ppm (WHO)</span></div>
+      <div class="kv-row"><span class="kv-key">Salt iodisation level (India)</span><span class="kv-val green">15 ppm at consumer level; 30 ppm at production</span></div>
+      <div class="kv-row"><span class="kv-key">BMI (WHO) — overweight</span><span class="kv-val danger">≥25 kg/m²; Obese ≥30; Asian cut-off: overweight ≥23</span></div>
+      <div class="kv-row"><span class="kv-key">BMI (India) — SAM child</span><span class="kv-val danger">WHZ &lt;−3 SD OR MUAC &lt;115 mm OR oedema</span></div>
+    </div>
+
+    <div class="card sky">
+      <div class="card-title">🍼 Infant &amp; Child Feeding</div>
+      <div class="kv-row"><span class="kv-key">Exclusive breastfeeding</span><span class="kv-val highlight">First 6 months; no water, no other food</span></div>
+      <div class="kv-row"><span class="kv-key">Complementary feeding starts</span><span class="kv-val">6 months (continue breastfeeding till 2 years)</span></div>
+      <div class="kv-row"><span class="kv-key">Colostrum</span><span class="kv-val green">Yellow; secretory IgA; higher protein/vitamin A; lactoferrin</span></div>
+      <div class="kv-row"><span class="kv-key">Breastmilk vs cow's milk</span><span class="kv-val">Breastmilk: ↑ whey (60:40); ↓ casein; ↑ lactalbumin; ↑ lactose; ↓ protein but higher bioavailability</span></div>
+      <div class="kv-row"><span class="kv-key">Foremilk vs Hindmilk</span><span class="kv-val">Foremilk: watery, ↑ lactose; Hindmilk: ↑ fat (more calories)</span></div>
+      <div class="kv-row"><span class="kv-key">WHO growth standards</span><span class="kv-val">Based on breastfed children; 6 countries; 2006</span></div>
+      <div class="kv-row"><span class="kv-key">IYCF indicators</span><span class="kv-val">Early initiation (&lt;1h), EBF rate, minimum dietary diversity (≥4 food groups), minimum meal frequency</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NATIONAL PROGRAMS -->
+<div class="section" id="programs">
+  <div class="section-title">National <span>Programs</span></div>
+  <div class="section-sub">Health programs, immunization schedule, targets, UHC, policies</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">💉 National Immunization Schedule (India 2024)</div>
+      <table class="comparison-table">
+        <tr><th>Age</th><th>Vaccine</th></tr>
+        <tr><td>At birth</td><td>BCG, OPV-0 (zero dose), Hepatitis B (birth dose)</td></tr>
+        <tr><td>6 weeks</td><td>OPV-1, Penta-1 (DPT+HepB+Hib), IPV-1, Rota-1, PCV-1</td></tr>
+        <tr><td>10 weeks</td><td>OPV-2, Penta-2, Rota-2, PCV-2</td></tr>
+        <tr><td>14 weeks</td><td>OPV-3, Penta-3, IPV-2, Rota-3, PCV-3</td></tr>
+        <tr><td>9 months</td><td>MR-1, Vitamin A-1 (1 lakh IU), JE-1 (endemic areas)</td></tr>
+        <tr><td>16–24 months</td><td>MR-2, OPV Booster, DPT Booster-1, JE-2, Vitamin A-2 (2 lakh IU), PCV Booster</td></tr>
+        <tr><td>5 years</td><td>DPT Booster-2</td></tr>
+        <tr><td>10 years</td><td>Td (Tetanus-diphtheria)</td></tr>
+        <tr><td>16 years</td><td>Td</td></tr>
+        <tr><td>Pregnancy</td><td>Td-1 (early), Td-2 (4 weeks later); TT if not vaccinated previously</td></tr>
+      </table>
+    </div>
+
+    <div class="card violet">
+      <div class="card-title">📋 Key National Health Programs</div>
+      <table class="comparison-table">
+        <tr><th>Program</th><th>Year / Key Feature</th></tr>
+        <tr><td>NHM (National Health Mission)</td><td>2013; merges NRHM (2005) + NUHM; umbrella mission</td></tr>
+        <tr><td>NRHM</td><td>2005; ASHA introduced; 18 per 1000 population</td></tr>
+        <tr><td>ASHA</td><td>1 per 1000 rural population; trained community health worker; Rs. 600/month incentive</td></tr>
+        <tr><td>Ayushman Bharat PM-JAY</td><td>2018; Rs. 5 lakh/family/year; 10.74 crore families; secondary + tertiary care</td></tr>
+        <tr><td>JSSK</td><td>Janani Shishu Suraksha Karyakram 2011; free delivery, C-section, drugs for mother + neonate</td></tr>
+        <tr><td>JSY</td><td>Janani Suraksha Yojana 2005; conditional cash transfer for institutional delivery</td></tr>
+        <tr><td>RBSK</td><td>Rashtriya Bal Swasthya Karyakram 2013; 4D screening: Defects, Deficiencies, Diseases, Developmental delays</td></tr>
+        <tr><td>RNTCP → NTP</td><td>Revised NTP now National TB Elimination Program (NTEP); NIKSHAY portal; 2025 target (earlier 2030)</td></tr>
+        <tr><td>NVBDCP</td><td>National Vector Borne Disease Control Program; Malaria, Dengue, Filaria, Kala-azar, JE, Chikungunya</td></tr>
+        <tr><td>NPCDCS</td><td>National Program for NCDs; cancer, cardiovascular, diabetes, stroke</td></tr>
+        <tr><td>Mission Indradhanush</td><td>2015; full immunization for children missed by routine UIP; Intensified MI 2017</td></tr>
+        <tr><td>Poshan Abhiyaan</td><td>2018; National Nutrition Mission; reduce stunting to 25% by 2022</td></tr>
+      </table>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🏥 Health System &amp; Infrastructure</div>
+      <div class="kv-row"><span class="kv-key">Sub-centre</span><span class="kv-val highlight">1 per 5000 plain / 3000 hilly; 1 ANM + 1 Male MPW; peripheral unit</span></div>
+      <div class="kv-row"><span class="kv-key">PHC (Primary Health Centre)</span><span class="kv-val">1 per 30,000 plain / 20,000 hilly; 1 Medical Officer + 14 paramedics; 4-6 beds</span></div>
+      <div class="kv-row"><span class="kv-key">CHC (Community Health Centre)</span><span class="kv-val">1 per 1,20,000 plain / 80,000 hilly; 4 specialists; 30 beds; FRU</span></div>
+      <div class="kv-row"><span class="kv-key">FRU criteria</span><span class="kv-val">First Referral Unit; 24×7 C-section, blood transfusion, obstetric care</span></div>
+      <div class="kv-row"><span class="kv-key">District hospital</span><span class="kv-val">1 per district (~5 lakh population); secondary level</span></div>
+      <div class="kv-row"><span class="kv-key">IPHS</span><span class="kv-val">Indian Public Health Standards — set by MoHFW</span></div>
+      <div class="kv-row"><span class="kv-key">Health &amp; Wellness Centres</span><span class="kv-val highlight">Upgraded sub-centres/PHCs; 1.5 lakh planned; ABHWCs; Comprehensive PHC</span></div>
+      <div class="kv-row"><span class="kv-key">Mid-level health provider (MLP)</span><span class="kv-val">Community Health Officer (CHO) at HWC; BAMS/BSc Community Health</span></div>
+    </div>
+
+    <div class="card sky">
+      <div class="card-title">🎯 Disease Elimination &amp; Eradication Targets</div>
+      <div class="kv-row"><span class="kv-key">Smallpox — eradicated</span><span class="kv-val green">1980 (India: 1975); WHO declared</span></div>
+      <div class="kv-row"><span class="kv-key">Guinea worm — near eradication</span><span class="kv-val green">2024 — &lt;15 cases globally; no vaccine/drug; only surveillance + health education</span></div>
+      <div class="kv-row"><span class="kv-key">Polio — India certified free</span><span class="kv-val green">2014 (last case: Jan 2011, UP); SEAR certified 2014</span></div>
+      <div class="kv-row"><span class="kv-key">Neonatal tetanus — eliminated</span><span class="kv-val green">India 2015 (&lt;1 per 1000 live births per district)</span></div>
+      <div class="kv-row"><span class="kv-key">Leprosy — eliminated India</span><span class="kv-val green">2005 (&lt;1 per 10,000 population at national level)</span></div>
+      <div class="kv-row"><span class="kv-key">Kala-azar elimination target</span><span class="kv-val highlight">&lt;1 per 10,000 at block level; India, Nepal, Bangladesh</span></div>
+      <div class="kv-row"><span class="kv-key">TB elimination target</span><span class="kv-val">India 2025 (5 years before global SDG 2030); incidence &lt;10/lakh</span></div>
+      <div class="kv-row"><span class="kv-key">Filaria elimination</span><span class="kv-val">2027 target; MDA (DEC + Albendazole ± Ivermectin)</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🏥 Reproductive &amp; Child Health</div>
+      <div class="kv-row"><span class="kv-key">MMR India (2018-20)</span><span class="kv-val green">97 per 1,00,000 live births (SRS)</span></div>
+      <div class="kv-row"><span class="kv-key">IMR India (2020)</span><span class="kv-val green">28 per 1000 live births</span></div>
+      <div class="kv-row"><span class="kv-key">U5MR India (2020)</span><span class="kv-val green">32 per 1000 live births</span></div>
+      <div class="kv-row"><span class="kv-key">NMR India (2020)</span><span class="kv-val green">20 per 1000 live births</span></div>
+      <div class="kv-row"><span class="kv-key">SDG target MMR by 2030</span><span class="kv-val danger">&lt;70 per 1,00,000 live births</span></div>
+      <div class="kv-row"><span class="kv-key">SDG target U5MR by 2030</span><span class="kv-val danger">&lt;25 per 1000 live births</span></div>
+      <div class="kv-row"><span class="kv-key">ANC visits (WHO 2016)</span><span class="kv-val highlight">Minimum 8 contacts (was 4 previously)</span></div>
+      <div class="kv-row"><span class="kv-key">Institutional delivery rate India</span><span class="kv-val green">~89% (NFHS-5 2019-21)</span></div>
+      <div class="kv-row"><span class="kv-key">PNDT Act</span><span class="kv-val danger">1994; prenatal sex determination prohibited; PC-PNDT 2003</span></div>
+      <div class="kv-row"><span class="kv-key">MTP Act 2021 amendment</span><span class="kv-val">Up to 20 weeks: 1 provider opinion; 20-24 weeks: 2 providers; special categories up to 24 weeks</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">📋 NFHS-5 Key Indicators (2019-21)</div>
+      <div class="kv-row"><span class="kv-key">Total fertility rate (TFR)</span><span class="kv-val green">2.0 (below replacement level of 2.1)</span></div>
+      <div class="kv-row"><span class="kv-key">Sex ratio at birth</span><span class="kv-val green">929 girls per 1000 boys</span></div>
+      <div class="kv-row"><span class="kv-key">Full immunization coverage</span><span class="kv-val green">76.4% (children 12-23 months)</span></div>
+      <div class="kv-row"><span class="kv-key">Stunting (Ht-for-age &lt;-2SD)</span><span class="kv-val danger">35.5%</span></div>
+      <div class="kv-row"><span class="kv-key">Wasting (Wt-for-Ht &lt;-2SD)</span><span class="kv-val danger">19.3%</span></div>
+      <div class="kv-row"><span class="kv-key">Anaemia in children (6-59 mo)</span><span class="kv-val danger">67.1%</span></div>
+      <div class="kv-row"><span class="kv-key">Anaemia in women (15-49 yrs)</span><span class="kv-val danger">57.0%</span></div>
+      <div class="kv-row"><span class="kv-key">Exclusive breastfeeding (&lt;6 mo)</span><span class="kv-val green">63.7%</span></div>
+      <div class="kv-row"><span class="kv-key">Contraceptive prevalence rate</span><span class="kv-val green">66.7% (any method); 56.5% (modern methods)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ENVIRONMENT & OCCUPATIONAL HEALTH -->
+<div class="section" id="environment">
+  <div class="section-title">Environment &amp; <span>Occupational Health</span></div>
+  <div class="section-sub">Water, air, soil, housing, occupational diseases, toxicology</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">💧 Water — Standards &amp; Treatment</div>
+      <div class="kv-row"><span class="kv-key">WHO turbidity standard</span><span class="kv-val green">≤1 NTU for drinking water; &lt;5 NTU acceptable</span></div>
+      <div class="kv-row"><span class="kv-key">Residual chlorine (piped)</span><span class="kv-val highlight">0.2 mg/L minimum at point of use; 0.5 mg/L at entry</span></div>
+      <div class="kv-row"><span class="kv-key">Chlorine demand</span><span class="kv-val">Chlorine added − Residual chlorine</span></div>
+      <div class="kv-row"><span class="kv-key">Breakpoint chlorination</span><span class="kv-val highlight">Point at which all oxidisable matter consumed; residual = free Cl2</span></div>
+      <div class="kv-row"><span class="kv-key">Coliform indicator organisms</span><span class="kv-val danger">E. coli — indicator of faecal contamination; MPN method</span></div>
+      <div class="kv-row"><span class="kv-key">MPN (WHO) — piped water</span><span class="kv-val green">Zero coliforms per 100 mL</span></div>
+      <div class="kv-row"><span class="kv-key">Water per capita (WHO)</span><span class="kv-val green">Minimum 50 L/person/day for basic needs</span></div>
+      <div class="kv-row"><span class="kv-key">Slow sand filtration</span><span class="kv-val highlight">Most effective; Schmutzdecke (biological layer); rate 0.1-0.4 m/h</span></div>
+      <div class="kv-row"><span class="kv-key">Rapid sand filtration</span><span class="kv-val">Rate 5-15 m/h; needs coagulation + flocculation (alum) first</span></div>
+      <div class="kv-row"><span class="kv-key">Coagulant used</span><span class="kv-val">Alum (aluminium sulfate) — most common; acts at pH 6.5-8.5</span></div>
+    </div>
+
+    <div class="card violet">
+      <div class="card-title">🏭 Air Pollution — Standards &amp; Effects</div>
+      <div class="kv-row"><span class="kv-key">NAAQS PM2.5 (India)</span><span class="kv-val green">Annual: 40 μg/m³; 24h: 60 μg/m³</span></div>
+      <div class="kv-row"><span class="kv-key">WHO PM2.5 guidelines (2021)</span><span class="kv-val green">Annual: 5 μg/m³; 24h: 15 μg/m³</span></div>
+      <div class="kv-row"><span class="kv-key">CO poisoning</span><span class="kv-val danger">Binds Hb (250× affinity); cherry-red skin; CO-oximetry diagnosis</span></div>
+      <div class="kv-row"><span class="kv-key">SO2 (sulfur dioxide)</span><span class="kv-val danger">Acid rain; mucous membrane irritant; coal burning; bronchospasm</span></div>
+      <div class="kv-row"><span class="kv-key">NO2 (nitrogen dioxide)</span><span class="kv-val danger">Pulmonary oedema; silo filler's disease; brown fumes</span></div>
+      <div class="kv-row"><span class="kv-key">Ozone (O3)</span><span class="kv-val">Photochemical smog; eye irritation; lung inflammation</span></div>
+      <div class="kv-row"><span class="kv-key">London smog (1952)</span><span class="kv-val danger">SO2 + fog + coal smoke; 4000+ deaths; COPD/bronchitis; winter</span></div>
+      <div class="kv-row"><span class="kv-key">Los Angeles smog</span><span class="kv-val">Photochemical; O3 + NO2 + PAN; summer; vehicles; eye irritation</span></div>
+      <div class="kv-row"><span class="kv-key">Sick building syndrome</span><span class="kv-val">Indoor air pollution; VOCs; poor ventilation; headache, eye irritation</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">⚙️ Occupational Diseases</div>
+      <table class="comparison-table">
+        <tr><th>Disease / Dust</th><th>Occupation</th><th>Feature</th></tr>
+        <tr><td>Silicosis</td><td>Mining, sandblasting, quarrying</td><td>Nodular fibrosis; "eggshell" calcification of hilar nodes; ↑ TB risk (silicotuberculosis)</td></tr>
+        <tr><td>Asbestosis</td><td>Shipbuilding, insulation, construction</td><td>Pleural plaques + effusion; mesothelioma (MC); lower lobe fibrosis; asbestos bodies (golden brown)</td></tr>
+        <tr><td>Coal workers' pneumoconiosis</td><td>Coal mining</td><td>Simple CWP → Progressive massive fibrosis; Caplan syndrome (RA + CWP)</td></tr>
+        <tr><td>Byssinosis</td><td>Cotton mill workers</td><td>Monday fever (worst Mondays; better through week); brown lung; cotton dust</td></tr>
+        <tr><td>Bagassosis</td><td>Sugar cane industry (bagasse)</td><td>Hypersensitivity pneumonitis; Thermoactinomyces</td></tr>
+        <tr><td>Farmer's lung</td><td>Mouldy hay; Micropolyspora faeni</td><td>Hypersensitivity pneumonitis; IgG precipitins</td></tr>
+        <tr><td>Berylliosis</td><td>Aerospace, fluorescent lamps</td><td>Granulomatous (like sarcoidosis); chronic beryllium disease; beryllium sensitization test (BeLPT)</td></tr>
+        <tr><td>Lead poisoning</td><td>Battery, painting, smelting</td><td>Basophilic stippling; Burton's line (blue); anaemia; wrist/foot drop; blood Pb &gt;10 μg/dL in children</td></tr>
+        <tr><td>Mercury poisoning</td><td>Chlor-alkali, thermometer, dentistry</td><td>Minamata disease (organic Hg); "Mad Hatter" disease; pink disease (acrodynia) in children</td></tr>
+        <tr><td>Mesothelioma</td><td>Asbestos (crocidolite most carcinogenic)</td><td>Latency 20-40 years; pleural effusion; no smoking synergy</td></tr>
+      </table>
+    </div>
+
+    <div class="card sky">
+      <div class="card-title">🏠 Housing &amp; Sanitation</div>
+      <div class="kv-row"><span class="kv-key">Overcrowding — definition</span><span class="kv-val highlight">More than 1.5 persons per room (WHO standard)</span></div>
+      <div class="kv-row"><span class="kv-key">Minimum space per person (sleeping)</span><span class="kv-val green">5.6 m² (60 sq ft) floor area per person</span></div>
+      <div class="kv-row"><span class="kv-key">Air space per person (Hutchinson)</span><span class="kv-val green">400 cubic feet (11.3 m³) minimum; 1000 cft ideal</span></div>
+      <div class="kv-row"><span class="kv-key">Ventilation standard</span><span class="kv-val">Window area ≥ 1/10th of floor area; glazed area ≥ 1/20th</span></div>
+      <div class="kv-row"><span class="kv-key">Open defecation free (ODF)</span><span class="kv-val green">India declared ODF October 2019 (SBM-Grameen)</span></div>
+      <div class="kv-row"><span class="kv-key">Sanitation coverage India (NFHS-5)</span><span class="kv-val green">~89% improved sanitation facility</span></div>
+      <div class="kv-row"><span class="kv-key">Septic tank</span><td></td></div>
+      <div class="kv-row"><span class="kv-key">Bore hole latrine</span><span class="kv-val">30 cm dia; 6-8 m deep; best for rural India</span></div>
+      <div class="kv-row"><span class="kv-key">Aqua privy</span><span class="kv-val">Suitable for low-water-table areas; self-contained; peri-urban</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🌡️ Radiation &amp; Noise Health Effects</div>
+      <div class="kv-row"><span class="kv-key">Ionising radiation — units</span><span class="kv-val highlight">Gray (Gy) = absorbed dose; Sievert (Sv) = effective dose</span></div>
+      <div class="kv-row"><span class="kv-key">Permissible dose (occupational)</span><span class="kv-val green">20 mSv/year (ICRP); 50 mSv in any single year</span></div>
+      <div class="kv-row"><span class="kv-key">Acute radiation syndrome</span><span class="kv-val danger">≥1 Gy; bone marrow syndrome (&gt;1 Gy), GI (&gt;6 Gy), CNS (&gt;20 Gy)</span></div>
+      <div class="kv-row"><span class="kv-key">Most radiosensitive cells</span><span class="kv-val danger">Lymphocytes &gt; Spermatogonia &gt; Erythroblasts &gt; GI epithelium (Bergonié-Tribondeau law)</span></div>
+      <div class="kv-row"><span class="kv-key">Non-ionising radiation</span><span class="kv-val">UV, IR, Microwaves, Lasers, Radiofrequency</span></div>
+      <div class="kv-row"><span class="kv-key">UV (290-320 nm)</span><span class="kv-val danger">Skin cancer; cataracts; photokeratitis; sunburn</span></div>
+      <div class="kv-row"><span class="kv-key">Noise-induced hearing loss</span><span class="kv-row"></span></div>
+      <div class="kv-row"><span class="kv-key">Permissible noise level (occupational)</span><span class="kv-val green">85 dB for 8 hours/day (OSHA); 90 dB (India factory)</span></div>
+      <div class="kv-row"><span class="kv-key">NIHL characteristic</span><span class="kv-val danger">4000 Hz dip (c5 dip) on audiogram; bilateral sensorineural</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- DEMOGRAPHY -->
+<div class="section" id="demography">
+  <div class="section-title">Demo<span>graphy</span></div>
+  <div class="section-sub">Census, vital statistics, mortality rates, fertility, India data</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">📊 Mortality Rates — Formulae</div>
+      <div class="formula-box">IMR = (Infant deaths &lt;1 yr / Live births) × 1000
+NMR = (Deaths &lt;28 days / Live births) × 1000
+PNMR = (Deaths 28d-1yr / Live births) × 1000
+MMR = (Maternal deaths / Live births) × 1,00,000
+U5MR = (Deaths &lt;5 yrs / Live births) × 1000
+CDR = (Total deaths / Mid-year population) × 1000
+ASMR = (Deaths in age group / Mid-year pop in age group) × 1000
+ASDR (standardised) used for valid international comparisons</div>
+      <div class="kv-row"><span class="kv-key">Perinatal mortality</span><span class="kv-val highlight">Stillbirths after 28w + Neonatal deaths &lt;7 days / (Live births + Stillbirths) × 1000</span></div>
+      <div class="kv-row"><span class="kv-key">Stillbirth rate</span><span class="kv-val">(Stillbirths / Stillbirths + Live births) × 1000</span></div>
+      <div class="kv-row"><span class="kv-key">Best indicator of health status</span><span class="kv-val highlight">IMR (sensitive, available, international comparison)</span></div>
+      <div class="kv-row"><span class="kv-key">Best indicator of MCH services</span><span class="kv-val">MMR</span></div>
+    </div>
+
+    <div class="card violet">
+      <div class="card-title">📊 Fertility Rates — Formulae</div>
+      <div class="formula-box">CBR = (Live births / Mid-year population) × 1000
+GFR = (Live births / Women 15-49 yrs) × 1000
+ASFR = (Live births to women of age group / Women in that age group) × 1000
+TFR = Sum of ASFRs × 5 (average children per woman lifetime)
+NRR = TFR × proportion female births × survival to reproductive age
+GRR = TFR × proportion of female births (without survival)</div>
+      <div class="kv-row"><span class="kv-key">Replacement level TFR</span><span class="kv-val green">2.1 (developed countries 2.0)</span></div>
+      <div class="kv-row"><span class="kv-key">India TFR (NFHS-5)</span><span class="kv-val green">2.0 — below replacement level</span></div>
+      <div class="kv-row"><span class="kv-key">NRR = 1</span><span class="kv-val">Stationary population (zero growth)</span></div>
+      <div class="kv-row"><span class="kv-key">Most sensitive fertility measure</span><span class="kv-val highlight">ASFR; TFR (most commonly used for comparison)</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">📊 India Census Data — Key Facts</div>
+      <div class="kv-row"><span class="kv-key">India Census 2011 population</span><span class="kv-val green">121.09 crore (1.21 billion)</span></div>
+      <div class="kv-row"><span class="kv-key">India Census 2011 sex ratio</span><span class="kv-val green">943 females per 1000 males</span></div>
+      <div class="kv-row"><span class="kv-key">Child sex ratio (0-6 yrs) 2011</span><span class="kv-val danger">919 girls per 1000 boys (improved to 929 per NFHS-5)</span></div>
+      <div class="kv-row"><span class="kv-key">Literacy rate 2011</span><span class="kv-val green">74.04% (male 82.1%; female 65.5%)</span></div>
+      <div class="kv-row"><span class="kv-key">Decadal growth rate 2001-2011</span><span class="kv-val green">17.64%</span></div>
+      <div class="kv-row"><span class="kv-key">Most populous state</span><span class="kv-val">Uttar Pradesh</span></div>
+      <div class="kv-row"><span class="kv-key">Most densely populated state</span><span class="kv-val">Bihar</span></div>
+      <div class="kv-row"><span class="kv-key">Highest sex ratio state</span><span class="kv-val green">Kerala (1084)</span></div>
+      <div class="kv-row"><span class="kv-key">Census of India</span><span class="kv-val">Every 10 years; 1881 onwards uninterrupted; de jure method</span></div>
+      <div class="kv-row"><span class="kv-key">SRS (Sample Registration System)</span><span class="kv-val">Continuous registration; provides birth/death rates; dual record system</span></div>
+    </div>
+
+    <div class="card sky">
+      <div class="card-title">📊 Demographic Transition Theory</div>
+      <table class="comparison-table">
+        <tr><th>Stage</th><th>CBR</th><th>CDR</th><th>Growth</th><th>Example</th></tr>
+        <tr><td>Stage 1 (Pre-transition)</td><td>High</td><td>High</td><td>Low / stable</td><td>Pre-industrial societies</td></tr>
+        <tr><td>Stage 2 (Early transition)</td><td>High</td><td>Falling</td><td>High (population explosion)</td><td>Developing countries 20th century</td></tr>
+        <tr><td>Stage 3 (Late transition)</td><td>Falling</td><td>Low</td><td>Moderate then declining</td><td>India currently</td></tr>
+        <tr><td>Stage 4 (Post-transition)</td><td>Low</td><td>Low</td><td>Low / stable / negative</td><td>Western Europe, Japan</td></tr>
+      </table>
+      <div class="info-box">India is in late Stage 3 — declining fertility with low mortality. TFR below replacement but demographic momentum continues growth.</div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">📊 Life Table &amp; Survival Analysis</div>
+      <div class="kv-row"><span class="kv-key">Life expectancy at birth — India</span><span class="kv-val green">70.19 years (2015-19, SRS); Male 68.2; Female 71</span></div>
+      <div class="kv-row"><span class="kv-key">Life table</span><span class="kv-val">Shows probability of dying/surviving at each age; lx = survivors at age x</span></div>
+      <div class="kv-row"><span class="kv-key">DALY</span><span class="kv-val highlight">Disability Adjusted Life Years = YLL + YLD; measure of disease burden</span></div>
+      <div class="kv-row"><span class="kv-key">YLL</span><span class="kv-val">Years of Life Lost due to premature mortality</span></div>
+      <div class="kv-row"><span class="kv-key">YLD</span><span class="kv-val">Years Lived with Disability</span></div>
+      <div class="kv-row"><span class="kv-key">QALY</span><span class="kv-val">Quality Adjusted Life Years; used in economic analysis; 1 QALY = 1 year perfect health</span></div>
+      <div class="kv-row"><span class="kv-key">Global burden of disease (MC)</span><span class="kv-val danger">CVD (cardiovascular disease) — leading cause of DALYs globally</span></div>
+      <div class="kv-row"><span class="kv-key">India leading cause of death</span><span class="kv-val danger">IHD (ischaemic heart disease) — GBD 2019</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SCREENING & VACCINES -->
+<div class="section" id="screening">
+  <div class="section-title">Screening &amp; <span>Prevention</span></div>
+  <div class="section-sub">Screening criteria, levels of prevention, cold chain, contraception</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">🔍 Screening — Wilson &amp; Jungner Criteria</div>
+      <div class="formula-box">Mnemonic: STOP IT
+S — Suitable test (safe, simple, acceptable, low cost)
+T — Treatment available
+O — Opinions agreed on diagnosis & treatment
+P — Prevalence high enough to justify screening
+I — Important health problem
+T — Treatable (early treatment better than late)</div>
+      <div class="kv-row"><span class="kv-key">Ideal screening test has</span><span class="kv-val highlight">High sensitivity (to not miss cases)</span></div>
+      <div class="kv-row"><span class="kv-key">Confirmatory test has</span><span class="kv-val">High specificity (to confirm true disease)</span></div>
+      <div class="kv-row"><span class="kv-key">Lead time bias</span><span class="kv-val danger">Screening appears to prolong survival but only advances diagnosis date</span></div>
+      <div class="kv-row"><span class="kv-key">Mass screening</span><span class="kv-val">Entire population</span></div>
+      <div class="kv-row"><span class="kv-key">Selective screening</span><span class="kv-val">High-risk groups only (more efficient)</span></div>
+      <div class="kv-row"><span class="kv-key">Multiphasic screening</span><span class="kv-val">Multiple tests simultaneously</span></div>
+      <div class="kv-row"><span class="kv-key">Serial testing</span><span class="kv-val">↑ Specificity; used for confirmation</span></div>
+      <div class="kv-row"><span class="kv-key">Parallel testing</span><span class="kv-val">↑ Sensitivity; used for screening (either test positive = positive)</span></div>
+    </div>
+
+    <div class="card violet">
+      <div class="card-title">🛡️ Levels of Prevention</div>
+      <table class="comparison-table">
+        <tr><th>Level</th><th>Stage</th><th>Activities</th><th>Example</th></tr>
+        <tr><td>Primordial</td><td>Pre-disease (before risk factor)</td><td>Prevent risk factor emergence; policy-level; social/environmental</td><td>Anti-tobacco legislation; reduce childhood obesity through school policies</td></tr>
+        <tr><td>Primary</td><td>Pre-disease (susceptible)</td><td>Reduce incidence; specific protection + health promotion</td><td>Vaccination; condom use; safe water; seat belts; iodised salt</td></tr>
+        <tr><td>Secondary</td><td>Early disease (presymptomatic)</td><td>Reduce prevalence; early diagnosis + prompt treatment; screening</td><td>Pap smear; mammography; PPD test; newborn screening</td></tr>
+        <tr><td>Tertiary</td><td>Established disease</td><td>Reduce disability; rehabilitation; prevent complications</td><td>Physiotherapy post-stroke; insulin for DM; dialysis for CKD; leprosy deformity correction</td></tr>
+      </table>
+      <div class="alert-box">Quaternary prevention = avoiding unnecessary medical interventions (over-medicalisation); concept by Marc Jamoulle</div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">❄️ Cold Chain — Vaccines</div>
+      <div class="kv-row"><span class="kv-key">Cold chain definition</span><span class="kv-val highlight">System of maintaining vaccine potency from manufacture to use</span></div>
+      <div class="kv-row"><span class="kv-key">ILR (Ice-lined refrigerator)</span><span class="kv-val">+2 to +8°C; district/PHC level; bulk storage</span></div>
+      <div class="kv-row"><span class="kv-key">Deep freezer</span><span class="kv-val">-15 to -25°C; OPV storage; district level</span></div>
+      <div class="kv-row"><span class="kv-key">OPV storage temperature</span><span class="kv-val danger">-15 to -25°C (can store up to +2 to +8°C for short term)</span></div>
+      <div class="kv-row"><span class="kv-key">Most heat sensitive vaccine</span><span class="kv-val danger">OPV (oral polio vaccine)</span></div>
+      <div class="kv-row"><span class="kv-key">Most freeze-sensitive vaccine</span><span class="kv-val danger">Hepatitis B (destroyed by freezing); Liquid DPT, Td</span></div>
+      <div class="kv-row"><span class="kv-key">VVM (Vaccine Vial Monitor)</span><span class="kv-val">Heat-sensitive label on vial; inner square lighter than outer circle = usable; darker = discard</span></div>
+      <div class="kv-row"><span class="kv-key">Shake test</span><span class="kv-val">For freeze-sensitive vaccines; flocculation → discard</span></div>
+      <div class="kv-row"><span class="kv-key">Diluent for vaccines</span><span class="kv-val">Must be at same temperature as vaccine; never use other diluents</span></div>
+    </div>
+
+    <div class="card sky">
+      <div class="card-title">💊 Contraception Methods</div>
+      <table class="comparison-table">
+        <tr><th>Method</th><th>Pearl Index (failures/100 WY)</th><th>Key Notes</th></tr>
+        <tr><td>No method</td><td>85</td><td>Natural fertility rate</td></tr>
+        <tr><td>LAM (Lactational amenorrhoea)</td><td>2</td><td>Effective only: EBF + amenorrhoeic + &lt;6 months postpartum</td></tr>
+        <tr><td>COC (Combined OCP)</td><td>0.3 (perfect); 8 (typical)</td><td>↑ risk DVT; contraindicated in smokers &gt;35y, migraine with aura, breastfeeding &lt;6w</td></tr>
+        <tr><td>POP (Progestin-only pill)</td><td>0.5 (perfect)</td><td>Safe in breastfeeding; must be taken same time daily</td></tr>
+        <tr><td>DMPA (Depo-Provera)</td><td>0.3</td><td>3-monthly injection; amenorrhoea common; delayed return to fertility</td></tr>
+        <tr><td>Cu-IUD (e.g. Cu-T 380A)</td><td>0.6–0.8</td><td>10 years; emergency contraception within 5 days; MC side effect: menorrhagia</td></tr>
+        <tr><td>LNG-IUS (Mirena)</td><td>0.1–0.2</td><td>5 years; oligomenorrhoea/amenorrhoea; pelvic pain reduced</td></tr>
+        <tr><td>Male condom</td><td>2 (perfect); 15 (typical)</td><td>Only method protecting against STIs</td></tr>
+        <tr><td>Male sterilisation (vasectomy)</td><td>0.1</td><td>No-scalpel vasectomy; contraception achieved after 20 ejaculations or 3 months; semen analysis needed</td></tr>
+        <tr><td>Female sterilisation (tubectomy)</td><td>0.5</td><td>Minilaparotomy or laparoscopy; Pomeroy's method; immediate effect</td></tr>
+        <tr><td>Emergency contraception (LNG)</td><td>—</td><td>Within 72h (up to 120h); 1.5 mg LNG single dose; does NOT cause abortion</td></tr>
+      </table>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🔬 Disease-Specific Screening Programs</div>
+      <div class="kv-row"><span class="kv-key">Cervical cancer — screening</span><span class="kv-val highlight">VIA (visual inspection with acetic acid) at primary level; Pap smear; HPV DNA test (gold standard)</span></div>
+      <div class="kv-row"><span class="kv-key">Pap smear — screening age</span><span class="kv-val">21-65 years; every 3 years (or every 5 years with HPV co-test)</span></div>
+      <div class="kv-row"><span class="kv-key">Breast cancer screening</span><span class="kv-val">Mammography (≥40 yrs, 2-yearly); BSE + CBE at primary level</span></div>
+      <div class="kv-row"><span class="kv-key">Newborn screening (NBS)</span><span class="kv-val">Guthrie test (PKU); congenital hypothyroidism; G6PD; CAH; heel prick at 48-72h</span></div>
+      <div class="kv-row"><span class="kv-key">TB screening</span><span class="kv-val">Mantoux (PPD) / IGRA; CXR; Xpert MTB/RIF (CBNAAT)</span></div>
+      <div class="kv-row"><span class="kv-key">Diabetes screening (ADA)</span><span class="kv-val">BMI ≥25 + risk factors; FBG ≥126 mg/dL on two occasions; HbA1c ≥6.5%</span></div>
+      <div class="kv-row"><span class="kv-key">Hypertension threshold (WHO 2023)</span><span class="kv-val danger">≥140/90 mmHg; JNC 8 same; ACC/AHA 2017: ≥130/80 mmHg</span></div>
+      <div class="kv-row"><span class="kv-key">Antenatal screening — Down syndrome</span><span class="kv-val">Double marker (10-13w), Triple marker (15-20w), Quadruple marker; NIPT (most accurate non-invasive)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🏥 Health Indices &amp; Indicators</div>
+      <div class="kv-row"><span class="kv-key">HDI (Human Development Index)</span><span class="kv-val highlight">Life expectancy + Education + GNI per capita; UNDP; India rank ~132 (2022)</span></div>
+      <div class="kv-row"><span class="kv-key">GBD (Global Burden of Disease)</span><span class="kv-val">DALYs; IHME; compares health loss across countries</span></div>
+      <div class="kv-row"><span class="kv-key">Lorenz curve</span><span class="kv-val">Wealth inequality; more bowed = more inequality</span></div>
+      <div class="kv-row"><span class="kv-key">Gini coefficient</span><span class="kv-val">0 = perfect equality; 1 = perfect inequality</span></div>
+      <div class="kv-row"><span class="kv-key">Proportional mortality ratio (PMR)</span><span class="kv-val">Deaths from a cause / Total deaths × 100</span></div>
+      <div class="kv-row"><span class="kv-key">Case fatality rate (CFR)</span><span class="kv-val">Deaths from disease / Cases × 100; measure of virulence</span></div>
+      <div class="kv-row"><span class="kv-key">Herd immunity threshold</span><span class="kv-val highlight">1 − 1/R0; measles R0=15 → HIT = 93%; polio R0=6 → HIT ≈ 83%</span></div>
+      <div class="kv-row"><span class="kv-key">Basic reproduction number (R0)</span><span class="kv-val">Average secondary cases from 1 case in fully susceptible population</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency PSM facts for rapid revision</div>
+  <div class="grid-2">
+    <div class="card violet">
+      <div class="card-title">⭐ PSM Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">Father of Epidemiology</span><span class="kv-val highlight">John Snow (Broad Street pump; cholera; 1854)</span></div>
+      <div class="kv-row"><span class="kv-key">Father of Medicine</span><span class="kv-val">Hippocrates; Father of Modern Medicine = Osler</span></div>
+      <div class="kv-row"><span class="kv-key">Father of Biostatistics</span><span class="kv-val">Karl Pearson; Francis Galton (coined "regression to mean")</span></div>
+      <div class="kv-row"><span class="kv-key">First RCT in history</span><span class="kv-val">Streptomycin for TB (1948; Bradford Hill; MRC)</span></div>
+      <div class="kv-row"><span class="kv-key">Alma Ata Declaration</span><span class="kv-val highlight">1978; PHC concept; "Health for All by 2000"; HFA 2000</span></div>
+      <div class="kv-row"><span class="kv-key">Ottawa Charter</span><span class="kv-val">1986; Health Promotion; "Enable, Mediate, Advocate"</span></div>
+      <div class="kv-row"><span class="kv-key">Millennium Development Goals</span><span class="kv-val">2000-2015; 8 goals; poverty, hunger, education, gender, child mortality, maternal health, HIV/AIDS, global partnership</span></div>
+      <div class="kv-row"><span class="kv-key">SDGs (Sustainable Development Goals)</span><span class="kv-val highlight">2015-2030; 17 goals; SDG 3 = Good Health and Well-being</span></div>
+      <div class="kv-row"><span class="kv-key">Universal Health Coverage (UHC)</span><span class="kv-val">All people have access to quality health services without financial hardship</span></div>
+      <div class="kv-row"><span class="kv-key">ASHA incentive</span><span class="kv-val">Accredited Social Health Activist; performance-based; Rs. 600 guaranteed (NRHM)</span></div>
+      <div class="kv-row"><span class="kv-key">PHC doctor-population ratio (IPHS)</span><span class="kv-val">1:30,000 (plain); 1:20,000 (hilly/tribal)</span></div>
+      <div class="kv-row"><span class="kv-key">Inverse care law</span><span class="kv-val danger">Tudor Hart: those who need health care most receive least (poor areas)</span></div>
+      <div class="kv-row"><span class="kv-key">Iceberg phenomenon</span><span class="kv-val">Tip = diagnosed cases; submerged = undiagnosed, carriers, subclinical infections</span></div>
+      <div class="kv-row"><span class="kv-key">Miasma theory vs Germ theory</span><span class="kv-val">Pasteur + Koch → Germ theory (1870s); ended miasma theory</span></div>
+      <div class="kv-row"><span class="kv-key">Epidemiological triad</span><span class="kv-val highlight">Agent + Host + Environment (Gordis); + Time in some models</span></div>
+      <div class="kv-row"><span class="kv-key">Web of causation</span><span class="kv-val">Brian MacMahon; multifactorial causation of disease; IHD model</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">⭐ PSM Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">Herd immunity — smallpox</span><span class="kv-val highlight">80-85% (R0 ≈ 5-7)</span></div>
+      <div class="kv-row"><span class="kv-key">Herd immunity — measles</span><span class="kv-val danger">92-95% (R0 ≈ 12-18; highest of common VPDs)</span></div>
+      <div class="kv-row"><span class="kv-key">Herd immunity — polio</span><span class="kv-val">80-85% (R0 ≈ 5-7)</span></div>
+      <div class="kv-row"><span class="kv-key">Epidemic threshold</span><span class="kv-val">Number of susceptibles needed for epidemic to start</span></div>
+      <div class="kv-row"><span class="kv-key">Pandemic vs Epidemic</span><span class="kv-val">Epidemic = country/region; Pandemic = worldwide; Endemic = always present</span></div>
+      <div class="kv-row"><span class="kv-key">Syndromic surveillance</span><span class="kv-val">Monitor symptom patterns before diagnosis; early warning; bioterrorism</span></div>
+      <div class="kv-row"><span class="kv-key">Sentinel surveillance</span><span class="kv-val">Selected sites/providers report specific diseases; e.g. HIV sentinel sites</span></div>
+      <div class="kv-row"><span class="kv-key">IDSP</span><span class="kv-val highlight">Integrated Disease Surveillance Programme; P (suspected), L (lab), C (clinical) reporting; W1/W2 weekly</span></div>
+      <div class="kv-row"><span class="kv-key">Notifiable diseases (India)</span><span class="kv-val danger">Cholera, Plague, Yellow fever, Smallpox (internationally notifiable); list varies by state</span></div>
+      <div class="kv-row"><span class="kv-key">IHR (International Health Regulations)</span><span class="kv-val">2005; PHEIC — Public Health Emergency of International Concern; WHO declares</span></div>
+      <div class="kv-row"><span class="kv-key">PHEIC examples</span><span class="kv-val danger">COVID-19 (2020), Mpox (2022&2024), Ebola, Zika, Polio (2014-ongoing), H1N1 (2009)</span></div>
+      <div class="kv-row"><span class="kv-key">Quarantine period (max)</span><span class="kv-val">Cholera 5 days; Plague 6 days; Yellow fever 6 days; Smallpox 17 days</span></div>
+      <div class="kv-row"><span class="kv-key">Fumigation disinfection</span><span class="kv-val">Formaldehyde (most used); 40 mL formalin + 20 g KMnO4 per 1000 cft room</span></div>
+      <div class="kv-row"><span class="kv-key">Passive surveillance</span><span class="kv-val">Health providers report to authorities (routine); Active = health workers seek out cases</span></div>
+      <div class="kv-row"><span class="kv-key">GIS in public health</span><span class="kv-val">Geographical Information System; maps disease distribution; disease clustering</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

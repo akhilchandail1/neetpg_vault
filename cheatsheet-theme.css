@@ -1,0 +1,84 @@
+/* Shared UI for every INI-CET cheatsheet — complements the landing page. */
+:root {
+  --bg: #f6f5f1 !important;
+  --surface: #fffefa !important;
+  --surface2: #eeeee8 !important;
+  --border: #dcded6 !important;
+  --text: #1d2823 !important;
+  --muted: #647068 !important;
+  --accent: #6c8224 !important;
+  --accent2: #16766c !important;
+  --accent3: #b65f30 !important;
+  --accent4: #a04b73 !important;
+  --accent5: #396e95 !important;
+  --danger: #ae3d3d !important;
+}
+
+body { background: var(--bg) !important; color: var(--text) !important; }
+.header {
+  background: rgba(246, 245, 241, .94) !important;
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: 0 1px 0 rgba(29, 40, 35, .03);
+  padding: 18px 32px 13px !important;
+  backdrop-filter: blur(10px);
+}
+.header-top { margin-bottom: 12px !important; }
+.logo { gap: 10px !important; }
+.logo-badge {
+  background: var(--lime, #d9ff71) !important;
+  border: 1px solid var(--text);
+  border-radius: 999px !important;
+  color: var(--text) !important;
+  font-size: 9px !important;
+  font-weight: 500 !important;
+  letter-spacing: .06em !important;
+}
+.logo h1 { color: var(--text) !important; font-size: 21px !important; letter-spacing: -.04em; }
+.logo h1 span { color: var(--accent) !important; }
+.exam-tag { border-color: var(--text) !important; color: var(--text) !important; border-radius: 0 !important; font-size: 10px !important; }
+.tabs, .tabs-wrapper { scrollbar-color: var(--border) transparent; }
+.tab { border-radius: 999px !important; color: var(--muted); font-family: "DM Mono", monospace; font-size: 10px !important; letter-spacing: .02em; }
+.tab:hover { border-color: var(--text) !important; background: var(--surface2) !important; color: var(--text); }
+.tab.active { background: var(--text) !important; color: var(--bg) !important; }
+
+.content { max-width: 1440px !important; padding: 34px 32px 60px !important; }
+.section-title { color: var(--text) !important; font-size: 31px !important; letter-spacing: -.05em; line-height: 1.05; }
+.section-title span { color: var(--accent) !important; }
+.section-sub { color: var(--muted) !important; font-size: 13px !important; font-weight: 400 !important; margin-bottom: 26px !important; }
+.grid-auto, .grid-2 { gap: 14px !important; }
+.card {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 18px !important;
+}
+.card::before { height: 2px !important; }
+.card-title { color: var(--text) !important; font-family: "DM Mono", monospace; font-size: 10px !important; letter-spacing: .06em !important; }
+.card.violet .card-title, .card.purple .card-title { color: var(--accent) !important; }
+.card.green .card-title { color: var(--accent2) !important; }
+.card.orange .card-title { color: var(--accent3) !important; }
+.card.pink .card-title { color: var(--accent4) !important; }
+.card.sky .card-title, .card.blue .card-title { color: var(--accent5) !important; }
+.card.red .card-title { color: var(--danger) !important; }
+.kv-row { border-bottom-color: var(--border) !important; padding: 7px 0 !important; }
+.kv-key { color: var(--muted) !important; }
+.kv-val { color: var(--text) !important; }
+.kv-val.highlight, .formula-box { color: var(--accent) !important; }
+.kv-val.green { color: var(--accent2) !important; }
+.kv-val.orange { color: var(--accent3) !important; }
+.kv-val.pink { color: var(--accent4) !important; }
+.kv-val.purple, .kv-val.sky, .kv-val.blue { color: var(--accent5) !important; }
+.kv-val.danger { color: var(--danger) !important; }
+.divider { background: var(--border) !important; }
+.formula-box { background: #f5f5ef !important; border-color: var(--border) !important; border-radius: 0 !important; }
+.alert-box, .info-box, .green-box, .mnemonic { border-radius: 0 !important; }
+.comparison-table th { background: var(--surface2) !important; color: var(--muted) !important; }
+.comparison-table td { border-bottom-color: var(--border) !important; color: var(--text) !important; }
+.comparison-table td:first-child { color: var(--accent) !important; }
+
+@media (max-width: 800px) {
+  .header { padding: 14px 16px 10px !important; }
+  .content { padding: 24px 14px 44px !important; }
+  .section-title { font-size: 26px !important; }
+}

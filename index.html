@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A focused collection of high-yield INI-CET 2026 cheatsheets.">
+  <meta name="theme-color" content="#f6f5f1">
+  <title>INI-CET Cheatsheets — Study the signal</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:opsz,wght@5..120,600;5..120,700;5..120,800&display=swap');
+
+    :root { --ink:#1d2823; --soft-ink:#5b675f; --paper:#f6f5f1; --line:#dcded6; --card:#fffefa; --lime:#d9ff71; --lavender:#ded3ff; --peach:#ffcfae; --sky:#bde7f7; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:"DM Sans",sans-serif; }
+    a { color:inherit; text-decoration:none; }
+    .wrap { width:min(1160px, calc(100% - 40px)); margin:auto; }
+    .nav { height:76px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
+    .brand { font-size:15px; font-weight:700; letter-spacing:-.3px; display:flex; align-items:center; gap:9px; }
+    .brand-mark { width:25px; height:25px; border:1.5px solid var(--ink); border-radius:50%; display:grid; place-items:center; font-size:13px; }
+    .nav-link,.eyebrow { font:500 11px "DM Mono",monospace; letter-spacing:.06em; text-transform:uppercase; }
+    .nav-link { border-bottom:1px solid var(--ink); padding-bottom:2px; }
+    .hero { min-height:468px; padding:78px 0 65px; display:grid; grid-template-columns:1fr 250px; gap:40px; position:relative; }
+    .eyebrow { color:var(--soft-ink); margin:0 0 22px; }
+    h1 { font-family:"Playfair Display",serif; font-size:clamp(52px,8vw,102px); line-height:.9; letter-spacing:-.07em; font-weight:700; max-width:800px; margin:0; }
+    h1 em { font-style:italic; font-weight:600; }
+    .intro { color:var(--soft-ink); max-width:430px; font-size:17px; line-height:1.55; margin:30px 0 0; }
+    .hero-note { align-self:end; border-top:1px solid var(--ink); padding-top:13px; font-size:13px; line-height:1.5; }
+    .hero-note strong { display:block; font:500 11px "DM Mono",monospace; letter-spacing:.06em; margin-bottom:8px; }
+    .ticker { border-top:1px solid var(--ink); border-bottom:1px solid var(--ink); overflow:hidden; white-space:nowrap; padding:11px 0; font:500 11px "DM Mono",monospace; letter-spacing:.06em; text-transform:uppercase; }
+    .ticker span { display:inline-block; animation:slide 26s linear infinite; }
+    @keyframes slide { to { transform:translateX(-50%); } }
+    .library { padding:76px 0 90px; }
+    .library-head { display:flex; justify-content:space-between; align-items:end; gap:25px; margin-bottom:28px; }
+    h2 { font-family:"Playfair Display",serif; font-size:clamp(35px,5vw,57px); letter-spacing:-.055em; line-height:1; margin:0; }
+    .count { font:500 11px "DM Mono",monospace; color:var(--soft-ink); white-space:nowrap; }
+    .filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+    .filter { background:transparent; border:1px solid var(--line); border-radius:99px; padding:8px 12px; color:var(--soft-ink); font:500 11px "DM Mono",monospace; cursor:pointer; transition:.18s ease; }
+    .filter:hover,.filter.active { border-color:var(--ink); background:var(--ink); color:var(--paper); }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--line); border-right:0; border-bottom:0; }
+    .sheet { min-height:190px; padding:20px; background:var(--card); border-right:1px solid var(--line); border-bottom:1px solid var(--line); display:flex; flex-direction:column; transition:transform .2s,background .2s; position:relative; }
+    .sheet:hover { transform:translate(-4px,-4px); background:var(--accent); box-shadow:5px 5px 0 var(--ink); z-index:1; }
+    .sheet[hidden] { display:none; }
+    .tag { font:500 10px "DM Mono",monospace; letter-spacing:.05em; text-transform:uppercase; color:var(--soft-ink); }
+    .sheet h3 { font-family:"Playfair Display",serif; font-size:27px; line-height:1; letter-spacing:-.045em; margin:17px 0 auto; }
+    .open { display:flex; justify-content:space-between; align-items:center; margin-top:28px; font:500 11px "DM Mono",monospace; letter-spacing:.03em; }
+    .arrow { font:20px Arial,sans-serif; line-height:10px; }
+    .footer { background:var(--ink); color:var(--paper); padding:45px 0 27px; }
+    .footer-top { display:flex; justify-content:space-between; gap:35px; padding-bottom:48px; }
+    .footer h2 { font-size:41px; max-width:400px; }
+    .footer h2 em { color:var(--lime); }
+    .github { align-self:end; color:var(--lime); font:500 12px "DM Mono",monospace; letter-spacing:.03em; border-bottom:1px solid var(--lime); padding-bottom:5px; }
+    .footer-bottom { border-top:1px solid #47534c; padding-top:18px; display:flex; justify-content:space-between; color:#b7c0ba; font:500 10px "DM Mono",monospace; letter-spacing:.04em; text-transform:uppercase; }
+    @media (max-width:760px) { .wrap { width:min(100% - 28px, 1160px); } .hero { min-height:0; padding:58px 0 48px; grid-template-columns:1fr; } .hero-note { max-width:260px; } .grid { grid-template-columns:repeat(2,1fr); } .sheet { min-height:165px; } .footer-top { flex-direction:column; } .github { align-self:start; } }
+    @media (max-width:460px) { .nav-link { display:none; } h1 { font-size:54px; } .library { padding:54px 0 65px; } .grid { grid-template-columns:1fr; } .sheet { min-height:145px; } .footer-bottom { flex-direction:column; gap:8px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="#top"><span class="brand-mark">+</span> INI-CET Cheatsheets</a>
+      <a class="nav-link" href="#library">Browse library ↓</a>
+    </nav>
+
+    <main id="top">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">INI-CET 2026 · High-yield revision</p>
+          <h1>Study the <em>signal.</em><br>Skip the noise.</h1>
+          <p class="intro">A calm, focused library of the facts worth keeping close before the exam.</p>
+        </div>
+        <aside class="hero-note"><strong>How to use</strong>Pick a subject. Find the pattern. Return when you need a rapid recall.</aside>
+      </section>
+    </main>
+  </div>
+
+  <div class="ticker" aria-hidden="true"><span>HIGH-YIELD NOTES &nbsp; ✦ &nbsp; QUICK RECALL &nbsp; ✦ &nbsp; EXAM FOCUS &nbsp; ✦ &nbsp; INI-CET 2026 &nbsp; ✦ &nbsp; HIGH-YIELD NOTES &nbsp; ✦ &nbsp; QUICK RECALL &nbsp; ✦ &nbsp; EXAM FOCUS &nbsp; ✦ &nbsp; INI-CET 2026 &nbsp; ✦ &nbsp;</span></div>
+
+  <section class="library wrap" id="library">
+    <div class="library-head"><h2>Your revision shelf.</h2><span class="count" id="count">19 CHEATSHEETS</span></div>
+    <div class="filters" aria-label="Filter cheatsheets">
+      <button class="filter active" data-filter="all">All</button>
+      <button class="filter" data-filter="pre">Pre-clinical</button>
+      <button class="filter" data-filter="para">Para-clinical</button>
+      <button class="filter" data-filter="clinical">Clinical</button>
+    </div>
+    <div class="grid">
+      <a class="sheet" style="--accent:var(--lavender)" data-group="pre" href="anatomy_inicet_2026_cheatsheet.html"><span class="tag">Pre-clinical · 01</span><h3>Anatomy</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--peach)" data-group="pre" href="biochemistry_inicet_2026_cheatsheet.html"><span class="tag">Pre-clinical · 02</span><h3>Biochemistry</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--lime)" data-group="para" href="pharma_inicet_2026_cheatsheet.html"><span class="tag">Para-clinical · 03</span><h3>Pharmacology</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--lavender)" data-group="para" href="microbiology_inicet_2026_cheatsheet.html"><span class="tag">Para-clinical · 04</span><h3>Microbiology</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--sky)" data-group="para" href="psm_inicet_2026_cheatsheet.html"><span class="tag">Para-clinical · 05</span><h3>Community Medicine</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--peach)" data-group="para" href="fmt_inicet_2026_cheatsheet.html"><span class="tag">Para-clinical · 06</span><h3>Forensic Medicine</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--sky)" data-group="clinical" href="surgery_inicet_2026_cheatsheet.html"><span class="tag">Clinical · 07</span><h3>Surgery</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--peach)" data-group="clinical" href="obs_inicet_2026_cheatsheet.html"><span class="tag">Clinical · 08</span><h3>Obstetrics</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--lime)" data-group="clinical" href="gynae_inicet_2026_cheatsheet.html"><span class="tag">Clinical · 09</span><h3>Gynaecology</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--lavender)" data-group="clinical" href="paediatrics_inicet_2026_cheatsheet.html"><span class="tag">Clinical · 10</span><h3>Paediatrics</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--sky)" data-group="clinical" href="ortho_inicet_2026_cheatsheet.html"><span class="tag">Clinical · 11</span><h3>Orthopaedics</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--peach)" data-group="clinical" href="ent_inicet_2026_cheatsheet.html"><span class="tag">Clinical · 12</span><h3>ENT</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--lime)" data-group="clinical" href="ophthalmology_inicet_2026_cheatsheet.html"><span class="tag">Clinical · 13</span><h3>Ophthalmology</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--lavender)" data-group="clinical" href="derma_inicet_2026_cheatsheet.html"><span class="tag">Clinical · 14</span><h3>Dermatology</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--sky)" data-group="clinical" href="psychiatry_inicet_2026_cheatsheet.html"><span class="tag">Clinical · 15</span><h3>Psychiatry</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--peach)" data-group="clinical" href="radiology_inicet_2026_cheatsheet.html"><span class="tag">Clinical · 16</span><h3>Radiology</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--lime)" data-group="clinical" href="anaesthesia_inicet_2026_cheatsheet.html"><span class="tag">Clinical · 17</span><h3>Anaesthesia</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--lavender)" data-group="clinical" href="integrated_systems_inicet_2026_cheatsheet.html"><span class="tag">Clinical · 18</span><h3>Integrated Systems</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+      <a class="sheet" style="--accent:var(--sky)" data-group="clinical" href="general_subjects_inicet_2026_cheatsheet.html"><span class="tag">Clinical · 19</span><h3>General Subjects</h3><span class="open">Open cheatsheet <b class="arrow">↗</b></span></a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-top"><h2>Keep the <em>useful</em> close.</h2><a class="github" href="https://github.com/your-username/inicet-cheatsheets" target="_blank" rel="noreferrer">View the project on GitHub ↗</a></div>
+      <div class="footer-bottom"><span>INI-CET Cheatsheets</span><span>Made for deliberate revision · 2026</span></div>
+    </div>
+  </footer>
+  <script>
+    const filters = document.querySelectorAll('.filter');
+    const sheets = document.querySelectorAll('.sheet');
+    const count = document.querySelector('#count');
+    filters.forEach(button => button.addEventListener('click', () => {
+      const group = button.dataset.filter;
+      filters.forEach(item => item.classList.toggle('active', item === button));
+      let visible = 0;
+      sheets.forEach(sheet => { const show = group === 'all' || sheet.dataset.group === group; sheet.hidden = !show; if (show) visible++; });
+      count.textContent = `${visible} CHEATSHEET${visible === 1 ? '' : 'S'}`;
+    }));
+  </script>
+</body>
+</html>

@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microbiology Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #05080f; --surface: #0c1120; --surface2: #131a2e; --border: #1a2540;
+    --accent: #a78bfa; --accent2: #34d399; --accent3: #fb923c; --accent4: #f9a8d4; --accent5: #38bdf8;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #05080f 0%, #0a0e1e 50%, #05080f 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent2); color: #05080f; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent2); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); border: 1px solid var(--accent); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent2); color: #05080f; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent2); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.violet::before { background: var(--accent); }
+  .card.green::before { background: var(--accent2); }
+  .card.orange::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.sky::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.violet .card-title { color: var(--accent); }
+  .card.green .card-title { color: var(--accent2); }
+  .card.orange .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.sky .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #131a2e; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.green { color: var(--accent2); }
+  .kv-val.orange { color: var(--accent3); }
+  .kv-val.sky { color: var(--accent5); }
+  .kv-val.danger { color: var(--danger); }
+  .kv-val.pink { color: var(--accent4); }
+  .formula-box { background: #070d1a; border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent2); margin: 6px 0; line-height: 1.8; }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(167,139,250,0.07); border: 1px solid rgba(167,139,250,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent); margin-top: 8px; line-height: 1.5; }
+  .green-box { background: rgba(52,211,153,0.07); border: 1px solid rgba(52,211,153,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent2); margin-top: 8px; line-height: 1.5; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent2); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  .mt-12 { margin-top: 12px; }
+  @media (max-width: 800px) { .grid-auto, .grid-2 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>Micro<span>biology</span> Cheatsheet</h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('bacteriology',this)">Bacteriology</div>
+    <div class="tab" onclick="showSection('virology',this)">Virology</div>
+    <div class="tab" onclick="showSection('mycology',this)">Mycology</div>
+    <div class="tab" onclick="showSection('parasitology',this)">Parasitology</div>
+    <div class="tab" onclick="showSection('immunology',this)">Immunology</div>
+    <div class="tab" onclick="showSection('sterilization',this)">Sterilization</div>
+    <div class="tab" onclick="showSection('antimicrobials',this)">Antimicrobials</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- BACTERIOLOGY -->
+<div class="section active" id="bacteriology">
+  <div class="section-title">Bacterio<span>logy</span></div>
+  <div class="section-sub">Gram stain, culture media, toxins, virulence factors, special bacteria</div>
+  <div class="grid-auto">
+    <div class="card green">
+      <div class="card-title">🔬 Gram Positive Cocci</div>
+      <div class="kv-row"><span class="kv-key">Staph aureus — coagulase</span><span class="kv-val green">Positive (differentiates from CoNS)</span></div>
+      <div class="kv-row"><span class="kv-key">Staph aureus — toxins</span><span class="kv-val danger">TSST-1 (superantigen), PVL, exfoliatin</span></div>
+      <div class="kv-row"><span class="kv-key">MRSA resistance mechanism</span><span class="kv-val">mecA gene → altered PBP2a</span></div>
+      <div class="kv-row"><span class="kv-key">Scalded skin syndrome</span><span class="kv-val danger">Exfoliatin A&B; split at stratum granulosum</span></div>
+      <div class="kv-row"><span class="kv-key">TSST-1 disease</span><span class="kv-val danger">Toxic Shock Syndrome; tampon-associated</span></div>
+      <div class="kv-row"><span class="kv-key">Strep pyogenes (Gr A)</span><span class="kv-val highlight">Beta-haemolytic; M protein (virulence)</span></div>
+      <div class="kv-row"><span class="kv-key">Strep pyogenes — ASO</span><span class="kv-val">Antistreptolysin O — rheumatic fever marker</span></div>
+      <div class="kv-row"><span class="kv-key">Strep agalactiae (Gr B)</span><span class="kv-val">Neonatal meningitis/sepsis; CAMP test +ve</span></div>
+      <div class="kv-row"><span class="kv-key">Strep pneumoniae</span><span class="kv-val highlight">Alpha-haemolytic; Quellung +ve; optochin sensitive</span></div>
+      <div class="kv-row"><span class="kv-key">Enterococcus</span><span class="kv-val">Group D; bile-esculin +ve; salt tolerant; VRE</span></div>
+    </div>
+    <div class="card violet">
+      <div class="card-title">🔬 Gram Negative Bacilli — Enterobacteriaceae</div>
+      <div class="kv-row"><span class="kv-key">E. coli — UTI</span><span class="kv-val green">MC cause; P-fimbriae for uropathogenic strains</span></div>
+      <div class="kv-row"><span class="kv-key">EHEC (O157:H7)</span><span class="kv-val danger">Shiga-like toxin → HUS; no antibiotics</span></div>
+      <div class="kv-row"><span class="kv-key">ETEC</span><span class="kv-val">Traveller's diarrhoea; LT & ST toxins</span></div>
+      <div class="kv-row"><span class="kv-key">Klebsiella</span><span class="kv-val">Currant jelly sputum; alcoholics; mucoid colonies</span></div>
+      <div class="kv-row"><span class="kv-key">Proteus mirabilis</span><span class="kv-val">Urease +ve; swarming motility; struvite stones</span></div>
+      <div class="kv-row"><span class="kv-key">Salmonella typhi</span><span class="kv-val highlight">Widal test; rose spots; stepladder fever</span></div>
+      <div class="kv-row"><span class="kv-key">Shigella</span><span class="kv-val danger">Bloody diarrhoea; Shiga toxin; ID = 10 organisms</span></div>
+      <div class="kv-row"><span class="kv-key">Yersinia pestis</span><span class="kv-val">Safety-pin appearance; plague; bipolar staining</span></div>
+      <div class="kv-row"><span class="kv-key">MacConkey agar</span><span class="kv-val">Lactose fermenters → pink colonies (E. coli)</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔬 Gram Negative Cocci &amp; Fastidious Organisms</div>
+      <div class="kv-row"><span class="kv-key">N. gonorrhoeae</span><span class="kv-val highlight">Oxidase +ve; Thayer-Martin medium; no capsule</span></div>
+      <div class="kv-row"><span class="kv-key">N. meningitidis</span><span class="kv-val highlight">Oxidase +ve; polysaccharide capsule; Waterhouse-Friderichsen</span></div>
+      <div class="kv-row"><span class="kv-key">Haemophilus influenzae</span><span class="kv-val">Chocolate agar; X (haemin) + V (NAD) factors</span></div>
+      <div class="kv-row"><span class="kv-key">Bordetella pertussis</span><span class="kv-val">Whooping cough; Bordet-Gengou; filamentous HA</span></div>
+      <div class="kv-row"><span class="kv-key">Brucella</span><span class="kv-val">Undulant fever; zoonosis; goat/cattle; Castaneda medium</span></div>
+      <div class="kv-row"><span class="kv-key">Pseudomonas aeruginosa</span><span class="kv-val danger">Oxidase +ve; pyocyanin; grape odour; CF patients</span></div>
+      <div class="kv-row"><span class="kv-key">Legionella pneumophila</span><span class="kv-val">BCYE agar; Pontiac fever; AC cooling towers</span></div>
+      <div class="kv-row"><span class="kv-key">Helicobacter pylori</span><span class="kv-val danger">Urease +ve; CLO test; peptic ulcer; MALT lymphoma</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🔬 Special Bacteria — Intracellular &amp; Atypical</div>
+      <table class="comparison-table">
+        <tr><th>Organism</th><th>Key Feature</th><th>Disease</th></tr>
+        <tr><td>Chlamydia trachomatis</td><td>Elementary body (infective); RB (replicative)</td><td>Trachoma (A-C), STI (D-K), LGV (L1-L3)</td></tr>
+        <tr><td>Rickettsia</td><td>Obligate intracellular; louse/tick vector</td><td>Weil-Felix +ve (most); spotted fevers</td></tr>
+        <tr><td>Mycoplasma</td><td>No cell wall; smallest; cholesterol membrane</td><td>Walking pneumonia; cold agglutinins</td></tr>
+        <tr><td>Coxiella burnetii</td><td>Spore-like; aerosol; Weil-Felix negative</td><td>Q fever; endocarditis</td></tr>
+        <tr><td>Treponema pallidum</td><td>Non-cultivable; darkfield microscopy</td><td>Syphilis; VDRL, FTA-ABS</td></tr>
+        <tr><td>Leptospira</td><td>Serovar icterohaemorrhagiae; rat urine</td><td>Weil's disease; conjunctival suffusion</td></tr>
+        <tr><td>Borrelia burgdorferi</td><td>Ixodes tick; Giemsa stain</td><td>Lyme disease; erythema migrans</td></tr>
+      </table>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🔬 Anaerobes &amp; Spore Formers</div>
+      <div class="kv-row"><span class="kv-key">C. tetani</span><span class="kv-val danger">Tetanospasmin → spastic paralysis; drumstick spore</span></div>
+      <div class="kv-row"><span class="kv-key">C. botulinum</span><span class="kv-val danger">Flaccid paralysis; blocks ACh release; honey infant</span></div>
+      <div class="kv-row"><span class="kv-key">C. perfringens</span><span class="kv-val danger">Alpha-toxin (lecithinase); gas gangrene; Nagler rxn</span></div>
+      <div class="kv-row"><span class="kv-key">C. difficile</span><span class="kv-val danger">Toxin A (enterotoxin) + B (cytotoxin); pseudomembranous colitis</span></div>
+      <div class="kv-row"><span class="kv-key">C. difficile Rx</span><span class="kv-val">Vancomycin oral / Fidaxomicin / Bezlotoxumab</span></div>
+      <div class="kv-row"><span class="kv-key">Bacillus anthracis</span><span class="kv-val">Non-motile; capsule (poly-D-glutamate); Medusa-head</span></div>
+      <div class="kv-row"><span class="kv-key">Anthrax toxin</span><span class="kv-val">PA + LF (lethal factor) / PA + EF (edema factor)</span></div>
+      <div class="kv-row"><span class="kv-key">Bacteroides fragilis</span><span class="kv-val">MC anaerobe in body; polysaccharide capsule; bile-resistant</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🧫 Important Culture Media</div>
+      <table class="comparison-table">
+        <tr><th>Medium</th><th>Used For</th></tr>
+        <tr><td>Lowenstein-Jensen</td><td>M. tuberculosis (malachite green inhibits others)</td></tr>
+        <tr><td>Thayer-Martin (VCN)</td><td>Neisseria gonorrhoeae / meningitidis</td></tr>
+        <tr><td>Bordet-Gengou</td><td>Bordetella pertussis (potato-blood-glycerol)</td></tr>
+        <tr><td>BCYE (Charcoal-Yeast)</td><td>Legionella (needs L-cysteine + iron)</td></tr>
+        <tr><td>Tellurite (CTBA)</td><td>Corynebacterium diphtheriae (black colonies)</td></tr>
+        <tr><td>TCBS</td><td>Vibrio cholerae (yellow colonies — sucrose fermenter)</td></tr>
+        <tr><td>MacConkey</td><td>Gram-negatives; lactose fermenters pink</td></tr>
+        <tr><td>Sabouraud's Dextrose</td><td>Fungi (low pH; cycloheximide added)</td></tr>
+        <tr><td>Blood agar</td><td>Haemolytic patterns; general purpose</td></tr>
+        <tr><td>Chocolate agar</td><td>Haemophilus, Neisseria (lysed RBCs)</td></tr>
+      </table>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔬 Mycobacterium Tuberculosis</div>
+      <div class="kv-row"><span class="kv-key">Stain</span><span class="kv-val highlight">Ziehl-Neelsen (AFB) — red on blue background</span></div>
+      <div class="kv-row"><span class="kv-key">Cell wall</span><span class="kv-val">Mycolic acid → acid-fast property</span></div>
+      <div class="kv-row"><span class="kv-key">Virulence factor</span><span class="kv-val highlight">Cord factor (trehalose dimycolate) → serpentine growth</span></div>
+      <div class="kv-row"><span class="kv-key">PPD (Mantoux) +ve</span><span class="kv-val green">≥10 mm (immunocompetent); ≥5 mm (HIV/close contact)</span></div>
+      <div class="kv-row"><span class="kv-key">Koch's phenomenon</span><span class="kv-val">Hypersensitivity (Type IV) in previously infected</span></div>
+      <div class="kv-row"><span class="kv-key">Primary TB</span><span class="kv-val">Ghon focus + hilar LN = Ghon complex</span></div>
+      <div class="kv-row"><span class="kv-key">M. leprae</span><span class="kv-val">Cannot be cultured; armadillo model; foot-pad of mouse</span></div>
+      <div class="kv-row"><span class="kv-key">Lepromin test +ve</span><span class="kv-val">Tuberculoid leprosy (good cell-mediated immunity)</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">⚠️ Toxins — High Yield</div>
+      <table class="comparison-table">
+        <tr><th>Organism</th><th>Toxin Type</th><th>Mechanism</th></tr>
+        <tr><td>V. cholerae</td><td>CT (AB5 type)</td><td>↑ cAMP → rice-water diarrhoea</td></tr>
+        <tr><td>ETEC</td><td>LT (↑cAMP), ST (↑cGMP)</td><td>Secretory diarrhoea; no inflammation</td></tr>
+        <tr><td>Bordetella</td><td>Pertussis toxin (PT)</td><td>ADP-ribosylation → ↑ cAMP → lymphocytosis</td></tr>
+        <tr><td>C. diphtheriae</td><td>Diphtheria toxin</td><td>ADP-ribosylates EF-2 → stops protein synthesis</td></tr>
+        <tr><td>P. aeruginosa</td><td>Exotoxin A</td><td>ADP-ribosylates EF-2 (same as diphtheria)</td></tr>
+        <tr><td>Anthrax</td><td>Lethal + Edema factor</td><td>LF = metalloprotease; EF = adenylyl cyclase</td></tr>
+        <tr><td>Shigella</td><td>Shiga toxin</td><td>Inhibits 60S ribosome (28S rRNA); AB5 type</td></tr>
+        <tr><td>TSST-1 / SEB</td><td>Superantigen</td><td>Non-specific TCR activation → cytokine storm</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- VIROLOGY -->
+<div class="section" id="virology">
+  <div class="section-title">Viro<span>logy</span></div>
+  <div class="section-sub">DNA viruses, RNA viruses, oncogenic viruses, viral diseases, diagnostics</div>
+  <div class="grid-auto">
+    <div class="card violet">
+      <div class="card-title">🧬 DNA Viruses — Classification</div>
+      <div class="formula-box">Mnemonic: HHAPPPy → Herpes, Hepadna, Adeno, Pox, Parvo, Papilloma, Polyoma</div>
+      <div class="kv-row"><span class="kv-key">All DNA viruses replicate in</span><span class="kv-val highlight">Nucleus (except Poxvirus — cytoplasm)</span></div>
+      <div class="kv-row"><span class="kv-key">Only ssDNA virus</span><span class="kv-val">Parvovirus B19 (smallest DNA virus)</span></div>
+      <div class="kv-row"><span class="kv-key">Parvovirus B19</span><span class="kv-val danger">Aplastic crisis (sickle cell); Slapped cheek; hydrops fetalis</span></div>
+      <div class="kv-row"><span class="kv-key">Adenovirus</span><span class="kv-val">Pharyngoconjunctival fever; military recruits; no envelope</span></div>
+      <div class="kv-row"><span class="kv-key">Poxvirus — largest DNA</span><span class="kv-val">Brick-shaped; Guarnieri bodies (smallpox)</span></div>
+      <div class="kv-row"><span class="kv-key">Molluscum contagiosum</span><span class="kv-val">Poxvirus; Henderson-Patterson bodies; umbilicated papules</span></div>
+      <div class="kv-row"><span class="kv-key">HBV — Dane particle</span><span class="kv-val highlight">Complete virion; HBsAg, HBeAg (infectivity)</span></div>
+      <div class="kv-row"><span class="kv-key">HBV — Cowdry type A</span><span class="kv-val">Intranuclear inclusions (herpes also)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🦠 Herpes Viruses — All 8 Types</div>
+      <table class="comparison-table">
+        <tr><th>Virus</th><th>Disease / Feature</th></tr>
+        <tr><td>HSV-1</td><td>Orolabial herpes; temporal lobe encephalitis; Cowdry A bodies</td></tr>
+        <tr><td>HSV-2</td><td>Genital herpes; neonatal herpes; aseptic meningitis</td></tr>
+        <tr><td>VZV (HHV-3)</td><td>Chickenpox; Zoster; Tzanck smear → multinucleated giant cells</td></tr>
+        <tr><td>EBV (HHV-4)</td><td>Infectious mono; Downey cells; Burkitt lymphoma; NPC</td></tr>
+        <tr><td>CMV (HHV-5)</td><td>Owl-eye inclusions; congenital (periventricular calcifications); immunocompromised</td></tr>
+        <tr><td>HHV-6</td><td>Roseola infantum (Exanthem subitum); febrile seizures</td></tr>
+        <tr><td>HHV-7</td><td>Also Roseola (less common); pityriasis rosea (association)</td></tr>
+        <tr><td>HHV-8</td><td>Kaposi's sarcoma (AIDS); KSHV; PEL (Primary Effusion Lymphoma)</td></tr>
+      </table>
+      <div class="info-box">EBV heterophile antibody test (Monospot) — detects IgM antibodies against horse/sheep/ox RBCs</div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔬 RNA Viruses — Classification</div>
+      <div class="formula-box">+ss RNA → Picorna, Flavi, Corona, Toga, Calici, Retro, Hepe
+-ss RNA → Orthomyxo, Paramyxo, Rhabdo, Filovirus, Arena, Bunya</div>
+      <div class="kv-row"><span class="kv-key">+ssRNA viruses</span><span class="kv-val green">Act directly as mRNA (infectious)</span></div>
+      <div class="kv-row"><span class="kv-key">-ssRNA viruses</span><span class="kv-val">Need RdRp to make mRNA first</span></div>
+      <div class="kv-row"><span class="kv-key">Retroviruses</span><span class="kv-val highlight">+ssRNA → DNA (reverse transcriptase)</span></div>
+      <div class="kv-row"><span class="kv-key">Only ambisense virus</span><span class="kv-val">Arenavirus (contains both + and - segments)</span></div>
+      <div class="kv-row"><span class="kv-key">Segmented genomes</span><span class="kv-val">BOAR: Bunya, Orthomyxo (8 seg), Arena, Reo (10-12)</span></div>
+      <div class="kv-row"><span class="kv-key">Influenza — antigenic drift</span><span class="kv-val">Point mutations → seasonal flu (gradual)</span></div>
+      <div class="kv-row"><span class="kv-key">Influenza — antigenic shift</span><span class="kv-val danger">Reassortment → pandemic (abrupt, new strain)</span></div>
+      <div class="kv-row"><span class="kv-key">Influenza — Haemagglutinin</span><span class="kv-val">Binds sialic acid; H1-H18 types</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🦠 HIV — Key Virology</div>
+      <div class="kv-row"><span class="kv-key">HIV type</span><span class="kv-val highlight">Lentivirus; +ssRNA; 2 copies per virion</span></div>
+      <div class="kv-row"><span class="kv-key">Receptor</span><span class="kv-val">CD4 + CCR5 (macrophage-tropic) / CXCR4 (T-cell tropic)</span></div>
+      <div class="kv-row"><span class="kv-key">Reverse transcriptase</span><span class="kv-val">Error-prone → rapid mutation → drug resistance</span></div>
+      <div class="kv-row"><span class="kv-key">Integrase</span><span class="kv-val">Integrates proviral DNA into host genome</span></div>
+      <div class="kv-row"><span class="kv-key">Protease</span><span class="kv-val">Cleaves polyproteins (Gag, Pol, Env)</span></div>
+      <div class="kv-row"><span class="kv-key">Window period</span><span class="kv-val">p24 antigen — 2-3 weeks; antibody — 3-12 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">AIDS-defining CD4</span><span class="kv-val danger">&lt;200 cells/μL or &lt;14%</span></div>
+      <div class="kv-row"><span class="kv-key">OI at CD4 &lt;200</span><span class="kv-val danger">PCP, Toxoplasma, Cryptococcus, MAC, CMV retinitis</span></div>
+      <div class="kv-row"><span class="kv-key">ELISA → confirmatory</span><span class="kv-val">Western blot (HIV antibody); NAAT (earliest)</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🔬 Oncogenic Viruses</div>
+      <table class="comparison-table">
+        <tr><th>Virus</th><th>Cancer</th><th>Mechanism</th></tr>
+        <tr><td>HPV 16,18</td><td>Cervical, oropharyngeal, anal Ca</td><td>E6 → degrades p53; E7 → blocks Rb</td></tr>
+        <tr><td>EBV</td><td>Burkitt lymphoma, NPC, Hodgkin's (mixed cellularity)</td><td>LMP-1 activates BCL-2; t(8;14) in Burkitt</td></tr>
+        <tr><td>HBV/HCV</td><td>Hepatocellular carcinoma</td><td>Chronic inflammation; HBx protein (HBV)</td></tr>
+        <tr><td>HHV-8</td><td>Kaposi sarcoma, PEL, Castleman</td><td>vIL-6; LANA protein</td></tr>
+        <tr><td>HTLV-1</td><td>Adult T-cell leukaemia/lymphoma</td><td>Tax protein → ↑NF-κB</td></tr>
+        <tr><td>MCV (Merkel cell)</td><td>Merkel cell carcinoma</td><td>ST antigen integrates into genome</td></tr>
+      </table>
+      <div class="alert-box">HPV types 6 & 11 → genital warts (condyloma acuminata) — NOT oncogenic (low risk)</div>
+    </div>
+    <div class="card red">
+      <div class="card-title">⚠️ Viral Inclusions — Must Know</div>
+      <table class="comparison-table">
+        <tr><th>Inclusion Body</th><th>Virus / Disease</th></tr>
+        <tr><td>Negri bodies (cytoplasmic)</td><td>Rabies (hippocampus, Purkinje cells)</td></tr>
+        <tr><td>Guarnieri bodies</td><td>Smallpox (cytoplasmic)</td></tr>
+        <tr><td>Henderson-Patterson</td><td>Molluscum contagiosum (cytoplasmic)</td></tr>
+        <tr><td>Owl-eye (intranuclear)</td><td>CMV</td></tr>
+        <tr><td>Cowdry type A</td><td>HSV, VZV, CMV (intranuclear)</td></tr>
+        <tr><td>Downey cells (atypical lymphocytes)</td><td>EBV (Infectious Mononucleosis)</td></tr>
+        <tr><td>Torres bodies</td><td>Yellow fever (councilman-like)</td></tr>
+        <tr><td>Warthin-Finkeldey giant cells</td><td>Measles (in lymph nodes)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MYCOLOGY -->
+<div class="section" id="mycology">
+  <div class="section-title">Myco<span>logy</span></div>
+  <div class="section-sub">Superficial, cutaneous, subcutaneous, systemic fungal infections</div>
+  <div class="grid-auto">
+    <div class="card green">
+      <div class="card-title">🍄 Candida Species</div>
+      <div class="kv-row"><span class="kv-key">C. albicans morphology</span><span class="kv-val highlight">Pseudohyphae + germ tube +ve (at 37°C)</span></div>
+      <div class="kv-row"><span class="kv-key">MC Candida — disseminated</span><span class="kv-val">C. albicans</span></div>
+      <div class="kv-row"><span class="kv-key">Most resistant Candida</span><span class="kv-val danger">C. krusei (intrinsic fluconazole resistant)</span></div>
+      <div class="kv-row"><span class="kv-key">Oral thrush</span><span class="kv-val">Pseudomembranous — white plaques; KOH mount → hyphae</span></div>
+      <div class="kv-row"><span class="kv-key">Neonatal oral thrush</span><span class="kv-val">From mother's vaginal flora during delivery</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment oral thrush</span><span class="kv-val">Nystatin (topical); Fluconazole (systemic)</span></div>
+      <div class="kv-row"><span class="kv-key">Candida — culture</span><span class="kv-val">Sabouraud agar; CHROMagar (speciation)</span></div>
+    </div>
+    <div class="card violet">
+      <div class="card-title">🍄 Cryptococcus neoformans</div>
+      <div class="kv-row"><span class="kv-key">Key feature</span><span class="kv-val highlight">Thick polysaccharide capsule (India ink — halo)</span></div>
+      <div class="kv-row"><span class="kv-key">Association</span><span class="kv-val danger">AIDS (CD4 &lt;100); pigeon droppings</span></div>
+      <div class="kv-row"><span class="kv-key">Disease</span><span class="kv-val">Meningitis; "soap-bubble" lesions on CT</span></div>
+      <div class="kv-row"><span class="kv-key">Diagnosis</span><span class="kv-val">Cryptococcal antigen in CSF; India ink (60% sensitive)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val">Amphotericin B + Flucytosine → Fluconazole maintenance</span></div>
+      <div class="kv-row"><span class="kv-key">C. gattii</span><span class="kv-val">Eucalyptus trees; immunocompetent host</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🍄 Aspergillus Species</div>
+      <div class="kv-row"><span class="kv-key">Morphology</span><span class="kv-val highlight">Septate hyphae at 45° angles; conidiophore with vesicle</span></div>
+      <div class="kv-row"><span class="kv-key">MC species</span><span class="kv-val">A. fumigatus (most pathogenic)</span></div>
+      <div class="kv-row"><span class="kv-key">Allergic bronchopulmonary aspergillosis</span><span class="kv-val danger">ABPA; central bronchiectasis; ↑ IgE; eosinophilia</span></div>
+      <div class="kv-row"><span class="kv-key">Aspergilloma</span><span class="kv-val">Fungus ball in old TB cavity; Monod sign on CXR</span></div>
+      <div class="kv-row"><span class="kv-key">Invasive aspergillosis</span><span class="kv-val danger">Neutropenia; halo sign on CT; angioinvasive</span></div>
+      <div class="kv-row"><span class="kv-key">Aflatoxin</span><span class="kv-val danger">A. flavus/parasiticus → contaminated peanuts; hepatocellular Ca</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val">Voriconazole (1st line); Ampho B (alternative)</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🍄 Dimorphic Fungi (Thermal Dimorphism)</div>
+      <div class="formula-box">Mold in cold (25°C) → Yeast in heat (37°C / body temp)
+Exception: Coccidioides → Spherule (not yeast) in tissue</div>
+      <table class="comparison-table">
+        <tr><th>Fungus</th><th>Geography</th><th>Tissue Form</th><th>Disease</th></tr>
+        <tr><td>Histoplasma capsulatum</td><td>Mississippi/Ohio River valleys; bat/bird droppings</td><td>Intracellular yeast (macrophages)</td><td>Pulmonary + disseminated (AIDS)</td></tr>
+        <tr><td>Coccidioides immitis</td><td>Southwest USA; dry soil; "desert fever"</td><td>Spherule with endospores</td><td>San Joaquin Valley fever; thin-walled cavities</td></tr>
+        <tr><td>Blastomyces dermatitidis</td><td>Eastern USA/Canada; rotting wood</td><td>Broad-based budding yeast</td><td>Pulmonary + skin + bone (lytic lesions)</td></tr>
+        <tr><td>Paracoccidioides</td><td>Latin America (MC endemic mycosis)</td><td>Captain's wheel / mariner's wheel</td><td>Oral ulcers; lymphadenopathy</td></tr>
+        <tr><td>Sporothrix schenckii</td><td>Rose thorn prick; gardeners</td><td>Cigar-shaped yeast</td><td>Lymphocutaneous sporotrichosis</td></tr>
+      </table>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🔬 Dermatophytes &amp; Superficial Infections</div>
+      <div class="kv-row"><span class="kv-key">Dermatophytes (3 genera)</span><span class="kv-val highlight">Trichophyton, Microsporum, Epidermophyton</span></div>
+      <div class="kv-row"><span class="kv-key">Tinea capitis — Wood's lamp</span><span class="kv-val green">Microsporum → yellow-green fluorescence</span></div>
+      <div class="kv-row"><span class="kv-key">Tinea versicolor (Pityriasis)</span><span class="kv-val">Malassezia furfur; spaghetti and meatballs KOH</span></div>
+      <div class="kv-row"><span class="kv-key">Mucormycosis</span><span class="kv-val danger">Rhizopus/Mucor; ribbon-like non-septate hyphae; right angles</span></div>
+      <div class="kv-row"><span class="kv-key">Mucormycosis — risk</span><span class="kv-val danger">Diabetics (DKA), iron overload, deferoxamine use</span></div>
+      <div class="kv-row"><span class="kv-key">Pneumocystis jirovecii</span><span class="kv-val">GMS stain; ground glass on HRCT; AIDS (CD4 &lt;200)</span></div>
+      <div class="kv-row"><span class="kv-key">PCP prophylaxis</span><span class="kv-val">TMP-SMX (CD4 &lt;200 or &lt;14%)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PARASITOLOGY -->
+<div class="section" id="parasitology">
+  <div class="section-title">Parasito<span>logy</span></div>
+  <div class="section-sub">Protozoa, helminths, vectors, life cycles, diagnostics</div>
+  <div class="grid-auto">
+    <div class="card green">
+      <div class="card-title">🦟 Malaria — High Yield</div>
+      <div class="kv-row"><span class="kv-key">Vector</span><span class="kv-val highlight">Female Anopheles mosquito</span></div>
+      <div class="kv-row"><span class="kv-key">P. falciparum</span><span class="kv-val danger">Most lethal; no dormant stage; ring forms + gametocytes only</span></div>
+      <div class="kv-row"><span class="kv-key">P. vivax/ovale</span><span class="kv-val danger">Hypnozoites → relapse; Schüffner's dots</span></div>
+      <div class="kv-row"><span class="kv-key">P. malariae</span><span class="kv-val">Quartan fever (72h); band form; no relapse; nephrotic syndrome</span></div>
+      <div class="kv-row"><span class="kv-key">P. knowlesi</span><span class="kv-val">Zoonotic (macaque); daily fever (24h cycle)</span></div>
+      <div class="kv-row"><span class="kv-key">Falciparum complication</span><span class="kv-val danger">Cerebral malaria; blackwater fever; ARDS</span></div>
+      <div class="kv-row"><span class="kv-key">Blackwater fever</span><span class="kv-val danger">Massive haemolysis + haemoglobinuria (P. falciparum)</span></div>
+      <div class="kv-row"><span class="kv-key">Diagnosis</span><span class="kv-val">Thick (detection) + Thin (speciation) blood film; RDT</span></div>
+      <div class="kv-row"><span class="kv-key">Vivax/ovale Rx</span><span class="kv-val">Chloroquine + Primaquine (kills hypnozoites)</span></div>
+    </div>
+    <div class="card violet">
+      <div class="card-title">🦠 Intestinal Protozoa</div>
+      <table class="comparison-table">
+        <tr><th>Parasite</th><th>Disease</th><th>Diagnosis</th></tr>
+        <tr><td>E. histolytica</td><td>Amoebic dysentery; liver abscess (anchovy sauce pus)</td><td>Stool: trophozoites with RBCs; serology (abscess)</td></tr>
+        <tr><td>Giardia lamblia</td><td>Traveller's diarrhoea; malabsorption; pear-shaped trophozoite</td><td>Stool antigen; trophozoite (2 nuclei, falling leaf)</td></tr>
+        <tr><td>Cryptosporidium</td><td>Watery diarrhoea; AIDS (CD4 &lt;100); self-limiting in immunocompetent</td><td>Modified AFB stain; antigen detection</td></tr>
+        <tr><td>Balantidium coli</td><td>Only ciliated protozoan pathogen; pig reservoir</td><td>Largest protozoan; macronucleus</td></tr>
+        <tr><td>Isospora belli</td><td>AIDS diarrhoea; Charcot-Leyden crystals; responds to TMP-SMX</td><td>Elliptical oocysts; modified ZN stain</td></tr>
+        <tr><td>Microsporidia</td><td>AIDS; keratoconjunctivitis; Calcofluor white stain</td><td>Intracellular spores; EM gold standard</td></tr>
+      </table>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🦠 Tissue &amp; Blood Protozoa</div>
+      <div class="kv-row"><span class="kv-key">Toxoplasma gondii</span><span class="kv-val highlight">Cat (definitive host); oocysts in cat faeces</span></div>
+      <div class="kv-row"><span class="kv-key">Toxo — congenital triad</span><span class="kv-val danger">Chorioretinitis, intracranial calcifications, hydrocephalus</span></div>
+      <div class="kv-row"><span class="kv-key">Toxo in AIDS</span><span class="kv-val danger">Ring-enhancing lesions on CT; CD4 &lt;100</span></div>
+      <div class="kv-row"><span class="kv-key">Leishmaniasis — VL vector</span><span class="kv-val">Female Phlebotomus (sandfly)</span></div>
+      <div class="kv-row"><span class="kv-key">Kala-azar (VL)</span><span class="kv-val danger">L. donovani; massive splenomegaly; pancytopenia; LD bodies</span></div>
+      <div class="kv-row"><span class="kv-key">Trypanosoma cruzi</span><span class="kv-val">Chagas disease; Reduviid bug; Romanã's sign; cardiomyopathy</span></div>
+      <div class="kv-row"><span class="kv-key">T. brucei</span><span class="kv-val">Sleeping sickness; Tsetse fly; Winterbottom's sign</span></div>
+      <div class="kv-row"><span class="kv-key">Babesia</span><span class="kv-val">Ixodes tick; Maltese cross (tetrad); NE USA; asplenia risk</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🔬 Nematodes (Round Worms)</div>
+      <table class="comparison-table">
+        <tr><th>Worm</th><th>Route of Infection</th><th>Key Feature</th></tr>
+        <tr><td>Ascaris lumbricoides</td><td>Ingestion of embryonated eggs</td><td>Largest intestinal nematode; Löffler syndrome (lung migration)</td></tr>
+        <tr><td>Enterobius vermicularis</td><td>Ingestion / autoinfection</td><td>Pinworm; perianal pruritus; Scotch tape test</td></tr>
+        <tr><td>Trichuris trichiura</td><td>Ingestion (soil)</td><td>Whipworm; rectal prolapse; barrel-shaped eggs</td></tr>
+        <tr><td>Hookworm (Ancylostoma)</td><td>Skin penetration (filariform larvae)</td><td>Iron deficiency anaemia; ground itch</td></tr>
+        <tr><td>Strongyloides</td><td>Skin penetration; autoinfection</td><td>Hyperinfection in immunosuppressed; rhabditiform larvae</td></tr>
+        <tr><td>Toxocara</td><td>Ingestion of eggs from dog/cat faeces</td><td>Visceral larva migrans; ocular larva migrans</td></tr>
+        <tr><td>Wuchereria bancrofti</td><td>Culex mosquito</td><td>Lymphatic filariasis; nocturnal periodicity; elephantiasis</td></tr>
+        <tr><td>Loa loa</td><td>Chrysops fly</td><td>Calabar swellings; migrating subconjunctival worm</td></tr>
+        <tr><td>Onchocerca volvulus</td><td>Simulium (blackfly)</td><td>River blindness; skin nodules; Mazzotti test</td></tr>
+        <tr><td>Dracunculus medinensis</td><td>Cyclops (water flea) ingestion</td><td>Guinea worm; blister on leg; wind around stick Rx</td></tr>
+        <tr><td>Trichinella spiralis</td><td>Undercooked pork</td><td>Periorbital oedema; eosinophilia; calcified cysts in muscle</td></tr>
+      </table>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🔬 Cestodes (Tapeworms) &amp; Trematodes (Flukes)</div>
+      <table class="comparison-table">
+        <tr><th>Parasite</th><th>Intermediate Host</th><th>Disease</th></tr>
+        <tr><td>Taenia solium (pork)</td><td>Pig</td><td>Intestinal tapeworm + Cysticercosis (ingesting eggs); neurocysticercosis</td></tr>
+        <tr><td>Taenia saginata (beef)</td><td>Cattle</td><td>Intestinal tapeworm only (no cysticercosis)</td></tr>
+        <tr><td>Echinococcus granulosus</td><td>Dog (definitive), Sheep</td><td>Hydatid cyst (liver); anaphylaxis on rupture; Casoni test</td></tr>
+        <tr><td>Diphyllobothrium latum</td><td>Crustacean + fish</td><td>Fish tapeworm; B12 deficiency; largest human tapeworm</td></tr>
+        <tr><td>Schistosoma haematobium</td><td>Snail (Bulinus)</td><td>Haematuria; bladder cancer; terminal-spined eggs</td></tr>
+        <tr><td>S. mansoni</td><td>Snail (Biomphalaria)</td><td>Hepatic fibrosis (pipe-stem); lateral-spined eggs</td></tr>
+        <tr><td>S. japonicum</td><td>Snail (Oncomelania)</td><td>Most pathogenic; small lateral spine; Katayama fever</td></tr>
+        <tr><td>Clonorchis sinensis</td><td>Freshwater fish</td><td>Liver fluke; biliary cirrhosis; cholangiocarcinoma</td></tr>
+        <tr><td>Paragonimus westermani</td><td>Crustaceans</td><td>Lung fluke; rusty sputum; simulates TB on CXR</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- IMMUNOLOGY -->
+<div class="section" id="immunology">
+  <div class="section-title">Immuno<span>logy</span></div>
+  <div class="section-sub">Innate, adaptive immunity, hypersensitivity, complement, immunodeficiency</div>
+  <div class="grid-auto">
+    <div class="card violet">
+      <div class="card-title">🛡️ Hypersensitivity — Gell &amp; Coombs</div>
+      <table class="comparison-table">
+        <tr><th>Type</th><th>Mechanism</th><th>Example</th></tr>
+        <tr><td>Type I (Immediate)</td><td>IgE → mast cell degranulation</td><td>Anaphylaxis, asthma, urticaria, hay fever</td></tr>
+        <tr><td>Type II (Cytotoxic)</td><td>IgG/IgM → cell destruction</td><td>AIHA, Goodpasture, Myasthenia gravis, ABO incompatibility</td></tr>
+        <tr><td>Type III (Immune complex)</td><td>Antigen-antibody complexes → complement</td><td>SLE, serum sickness, post-streptococcal GN, farmer's lung</td></tr>
+        <tr><td>Type IV (Delayed/Cell-mediated)</td><td>T-cell mediated (Th1, CTL); no antibody</td><td>TB (PPD test), contact dermatitis, graft rejection (acute), MS</td></tr>
+      </table>
+      <div class="info-box">Type I = FAST (minutes); Type IV = SLOW (48-72 hours) — classic exam distinction</div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔬 Immunodeficiency — Primary</div>
+      <table class="comparison-table">
+        <tr><th>Disease</th><th>Defect</th><th>Key Feature</th></tr>
+        <tr><td>X-linked Agammaglobulinaemia</td><td>BTK mutation → no B cells</td><td>Recurrent bacterial infections after 6 mo; no tonsils</td></tr>
+        <tr><td>CVID</td><td>↓ all Ig; B cells present but can't differentiate</td><td>Adult onset; Giardia; autoimmune</td></tr>
+        <tr><td>IgA deficiency</td><td>↓ IgA; MC primary ID</td><td>Anaphylaxis to blood products; mucosal infections</td></tr>
+        <tr><td>DiGeorge syndrome</td><td>22q11 deletion → absent thymus (T cell ↓)</td><td>CATCH-22; hypocalcaemia; conotruncal heart defects</td></tr>
+        <tr><td>SCID</td><td>ADA deficiency (AR) / γc chain defect (XL)</td><td>Failure to thrive; no T+B cells; Omenn syndrome</td></tr>
+        <tr><td>Wiskott-Aldrich</td><td>WASp mutation (X-linked)</td><td>Triad: thrombocytopenia + eczema + recurrent infections</td></tr>
+        <tr><td>Ataxia-Telangiectasia</td><td>ATM mutation; ↓ IgA, IgE; ↑ AFP</td><td>Cerebellar ataxia + telangiectasias + lymphoma risk</td></tr>
+        <tr><td>Hyper IgM syndrome</td><td>CD40L defect (X-linked)</td><td>↑ IgM; ↓ IgG, IgA, IgE; PCP, Cryptosporidium</td></tr>
+        <tr><td>CGD (Chronic Granulomatous)</td><td>NADPH oxidase defect → no respiratory burst</td><td>Catalase +ve organisms (S. aureus, Aspergillus, Klebsiella)</td></tr>
+      </table>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔬 Complement System</div>
+      <div class="kv-row"><span class="kv-key">Classical pathway trigger</span><span class="kv-val highlight">IgG/IgM + antigen (C1q, C1r, C1s)</span></div>
+      <div class="kv-row"><span class="kv-key">Lectin pathway trigger</span><span class="kv-val">MBL binds mannose on microbes</span></div>
+      <div class="kv-row"><span class="kv-key">Alternate pathway trigger</span><span class="kv-val">C3b deposits on microbial surfaces (no antibody)</span></div>
+      <div class="kv-row"><span class="kv-key">Common convergence point</span><span class="kv-val highlight">C3 convertase → C3b → C5 convertase → MAC (C5b-9)</span></div>
+      <div class="kv-row"><span class="kv-key">C3a, C5a</span><span class="kv-val danger">Anaphylatoxins → mast cell degranulation</span></div>
+      <div class="kv-row"><span class="kv-key">C5a</span><span class="kv-val">Most potent chemotaxin for neutrophils</span></div>
+      <div class="kv-row"><span class="kv-key">MAC (C5b-9)</span><span class="kv-val">Osmotic lysis; active against Neisseria</span></div>
+      <div class="kv-row"><span class="kv-key">C5-C9 deficiency</span><span class="kv-val danger">Recurrent Neisseria infections (meningococcal)</span></div>
+      <div class="kv-row"><span class="kv-key">C1-esterase inhibitor deficiency</span><span class="kv-val danger">Hereditary angioedema (HAE) — ↑ bradykinin</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🔬 Cytokines — Must Remember</div>
+      <table class="comparison-table">
+        <tr><th>Cytokine</th><th>Source</th><th>Key Function</th></tr>
+        <tr><td>IL-1</td><td>Macrophage</td><td>Fever, acute phase proteins, activates endothelium</td></tr>
+        <tr><td>IL-2</td><td>Th1 cells</td><td>T cell proliferation; NK cell activation</td></tr>
+        <tr><td>IL-4</td><td>Th2 cells</td><td>B cell class switch to IgE and IgG1; promotes Th2</td></tr>
+        <tr><td>IL-5</td><td>Th2 cells</td><td>Eosinophil production and activation</td></tr>
+        <tr><td>IL-6</td><td>Macrophage, Th2</td><td>Fever; acute phase reactants; promotes B cell maturation</td></tr>
+        <tr><td>IL-8</td><td>Macrophage</td><td>Neutrophil chemotaxis (CXCL8)</td></tr>
+        <tr><td>IL-10</td><td>Treg, Th2</td><td>Anti-inflammatory; inhibits macrophage/Th1</td></tr>
+        <tr><td>IL-12</td><td>Macrophage, DC</td><td>Th1 differentiation; NK activation</td></tr>
+        <tr><td>TNF-α</td><td>Macrophage</td><td>Fever; cachexia; septic shock; endothelial activation</td></tr>
+        <tr><td>IFN-γ</td><td>Th1, NK cells</td><td>Macrophage activation (most potent); ↑ MHC I and II</td></tr>
+        <tr><td>TGF-β</td><td>Treg</td><td>Immunosuppression; IgA switching; fibrosis</td></tr>
+      </table>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🔬 Vaccines — Live Attenuated vs Killed</div>
+      <div class="kv-row"><span class="kv-key">Live attenuated vaccines</span><span class="kv-val highlight">BCG, OPV, MMR, Varicella, Yellow fever, Rotavirus, Typhoid (Ty21a)</span></div>
+      <div class="kv-row"><span class="kv-key">Killed/inactivated vaccines</span><span class="kv-val">IPV, Hepatitis A, Influenza (injectable), Typhoid (Vi polysaccharide)</span></div>
+      <div class="kv-row"><span class="kv-key">Toxoid vaccines</span><span class="kv-val">Diphtheria, Tetanus (inactivated toxins)</span></div>
+      <div class="kv-row"><span class="kv-key">Recombinant vaccines</span><span class="kv-val">HBV, HPV (VLP), COVID-19 (mRNA, viral vector)</span></div>
+      <div class="kv-row"><span class="kv-key">Contraindicated in immunocompromised</span><span class="kv-val danger">Live attenuated vaccines (except VZV in some HIV)</span></div>
+      <div class="kv-row"><span class="kv-key">OPV → IPV switch in India</span><span class="kv-val">2016 (VAPP risk eliminated)</span></div>
+      <div class="kv-row"><span class="kv-key">Cold chain — most sensitive</span><span class="kv-val danger">OPV (most sensitive to heat); HBV (sensitive to freezing)</span></div>
+      <div class="kv-row"><span class="kv-key">Herd immunity threshold</span><span class="kv-val">Measles ~95%; Polio ~80-85%; Smallpox ~80-85%</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- STERILIZATION -->
+<div class="section" id="sterilization">
+  <div class="section-title">Sterilization &amp; <span>Disinfection</span></div>
+  <div class="section-sub">Methods, agents, sporicidal activity, hospital infection control</div>
+  <div class="grid-auto">
+    <div class="card green">
+      <div class="card-title">🧪 Definitions &amp; Hierarchy</div>
+      <div class="kv-row"><span class="kv-key">Sterilization</span><span class="kv-val highlight">Destruction of ALL forms including spores</span></div>
+      <div class="kv-row"><span class="kv-key">Disinfection</span><span class="kv-val">Kills pathogens but NOT all spores</span></div>
+      <div class="kv-row"><span class="kv-key">Antiseptic</span><span class="kv-val">Used on living tissue</span></div>
+      <div class="kv-row"><span class="kv-key">Bacteriostatic</span><span class="kv-val">Inhibits growth; reversible</span></div>
+      <div class="kv-row"><span class="kv-key">Bactericidal</span><span class="kv-val">Kills bacteria; irreversible</span></div>
+      <div class="kv-row"><span class="kv-key">Spaulding classification</span><span class="kv-val highlight">Critical → Semi-critical → Non-critical</span></div>
+      <div class="kv-row"><span class="kv-key">Critical items</span><span class="kv-val">Enter sterile tissue → STERILIZATION required (surgical instruments)</span></div>
+      <div class="kv-row"><span class="kv-key">Semi-critical</span><span class="kv-val">Contact mucous membrane → High-level disinfection (endoscopes)</span></div>
+      <div class="kv-row"><span class="kv-key">Non-critical</span><span class="kv-val">Contact intact skin → Low-level disinfection (BP cuffs)</span></div>
+    </div>
+    <div class="card violet">
+      <div class="card-title">🔥 Physical Methods of Sterilization</div>
+      <table class="comparison-table">
+        <tr><th>Method</th><th>Temp/Time</th><th>Use</th></tr>
+        <tr><td>Autoclave (moist heat)</td><td>121°C, 15 psi, 15 min OR 134°C, 3 min</td><td>Gold standard; surgical instruments, dressings</td></tr>
+        <tr><td>Hot air oven (dry heat)</td><td>160°C/1h OR 170°C/30 min OR 180°C/20 min</td><td>Glassware, oils, powders (cannot use moist heat)</td></tr>
+        <tr><td>Pasteurization</td><td>72°C/15s (HTST) or 63°C/30min (LTLT)</td><td>Milk; kills vegetative organisms; NOT spores</td></tr>
+        <tr><td>UV radiation</td><td>260 nm wavelength</td><td>Surface sterilization; OT air; NOT penetrating</td></tr>
+        <tr><td>Gamma radiation</td><td>Cobalt-60; 2.5 Mrads</td><td>Disposable syringes, catheters (cold sterilization)</td></tr>
+        <tr><td>Filtration</td><td>Seitz filter (0.22 μm)</td><td>Heat-labile substances (sera, antibiotics)</td></tr>
+        <tr><td>Incineration</td><td>850-1000°C</td><td>Biomedical waste, animal carcasses</td></tr>
+      </table>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🧴 Chemical Sterilization &amp; Disinfectants</div>
+      <table class="comparison-table">
+        <tr><th>Agent</th><th>Level</th><th>Notes</th></tr>
+        <tr><td>Glutaraldehyde (2%)</td><td>High-level / Sterilization (10h)</td><td>Activated alkaline; Cidex; endoscopes; sporicidal</td></tr>
+        <tr><td>Formaldehyde</td><td>High-level</td><td>Sterilization by fumigation; HCHO; toxic</td></tr>
+        <tr><td>Ethylene oxide (EO)</td><td>Sterilization</td><td>Heat-labile items; 12h exposure; ABCDE mnemonic</td></tr>
+        <tr><td>Hydrogen peroxide (6%)</td><td>High-level</td><td>Plasma sterilization; sporicidal at 30%</td></tr>
+        <tr><td>Hypochlorite (bleach)</td><td>Intermediate/High</td><td>Chlorine 0.5% (general); 1% (HIV spills); 5% (excreta)</td></tr>
+        <tr><td>Alcohol (70% ethanol/IPA)</td><td>Intermediate</td><td>Skin antisepsis; denatures proteins; NOT sporicidal</td></tr>
+        <tr><td>Povidone-iodine (Betadine)</td><td>Intermediate</td><td>Skin antisepsis; wound cleaning; thyroid caution</td></tr>
+        <tr><td>Chlorhexidine</td><td>Low-intermediate</td><td>Oral rinses; catheter care; residual activity</td></tr>
+        <tr><td>Quaternary ammonium compounds</td><td>Low-level</td><td>Floors, furniture; NOT sporicidal; inactivated by soap</td></tr>
+      </table>
+    </div>
+    <div class="card sky">
+      <div class="card-title">⚠️ Resistance to Sterilization</div>
+      <div class="kv-row"><span class="kv-key">Most resistant to chemical disinfectants</span><span class="kv-val danger">Prions → require autoclave 134°C/18 min or 1N NaOH</span></div>
+      <div class="kv-row"><span class="kv-key">Most heat resistant</span><span class="kv-val danger">Bacterial spores (Bacillus, Clostridium)</span></div>
+      <div class="kv-row"><span class="kv-key">Resistance hierarchy</span><span class="kv-val highlight">Prions > Spores > Mycobacteria > Fungi > Non-enveloped viruses > Gram-neg bacteria > Gram-pos bacteria > Enveloped viruses</span></div>
+      <div class="kv-row"><span class="kv-key">Alcohol ineffective against</span><span class="kv-val">Spores, non-enveloped viruses (Norovirus, HAV)</span></div>
+      <div class="kv-row"><span class="kv-key">Boiling (100°C/5 min)</span><span class="kv-val">Kills vegetative bacteria + most viruses; NOT spores</span></div>
+      <div class="kv-row"><span class="kv-key">Indicator for autoclave</span><span class="kv-val highlight">Bacillus stearothermophilus (biological); Bowie-Dick (physical)</span></div>
+      <div class="kv-row"><span class="kv-key">Indicator for EO gas</span><span class="kv-val">Bacillus subtilis var. niger</span></div>
+      <div class="kv-row"><span class="kv-key">Indicator for dry heat</span><span class="kv-val">Bacillus subtilis / browning strips</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ANTIMICROBIALS -->
+<div class="section" id="antimicrobials">
+  <div class="section-title">Anti<span>microbials</span></div>
+  <div class="section-sub">Mechanism of action, spectrum, side effects, resistance</div>
+  <div class="grid-auto">
+    <div class="card green">
+      <div class="card-title">💊 Antibiotic Mechanisms — Summary</div>
+      <table class="comparison-table">
+        <tr><th>Drug Class</th><th>Target</th><th>Examples</th></tr>
+        <tr><td>Beta-lactams</td><td>Cell wall (PBP inhibition)</td><td>Penicillins, Cephalosporins, Carbapenems, Aztreonam</td></tr>
+        <tr><td>Glycopeptides</td><td>Cell wall (D-Ala-D-Ala binding)</td><td>Vancomycin, Teicoplanin</td></tr>
+        <tr><td>Aminoglycosides</td><td>30S ribosome → misreading</td><td>Gentamicin, Amikacin, Tobramycin, Streptomycin</td></tr>
+        <tr><td>Tetracyclines</td><td>30S ribosome → blocks aminoacyl-tRNA</td><td>Doxycycline, Minocycline, Tigecycline</td></tr>
+        <tr><td>Macrolides</td><td>23S of 50S ribosome → blocks translocation</td><td>Erythromycin, Azithromycin, Clarithromycin</td></tr>
+        <tr><td>Chloramphenicol</td><td>50S → blocks peptidyl transferase</td><td>Broad spectrum; reserve drug</td></tr>
+        <tr><td>Linezolid</td><td>50S → blocks initiation (70S formation)</td><td>MRSA, VRE; MAO inhibitor — serotonin syndrome</td></tr>
+        <tr><td>Clindamycin</td><td>50S ribosome → blocks translocation</td><td>Anaerobes; C. diff risk; "Lincosamide"</td></tr>
+        <tr><td>Fluoroquinolones</td><td>DNA gyrase (Gr-) / Topoisomerase IV (Gr+)</td><td>Ciprofloxacin, Levofloxacin, Moxifloxacin</td></tr>
+        <tr><td>Rifampicin</td><td>RNA polymerase (β-subunit)</td><td>TB; Meningococcal prophylaxis; red-orange discoloration</td></tr>
+        <tr><td>Metronidazole</td><td>DNA strand breaks (anaerobes, protozoa)</td><td>Bacteroides, C. diff, Giardia, Entamoeba, Trichomonas</td></tr>
+        <tr><td>Polymyxins</td><td>Cell membrane (disrupts lipopolysaccharide)</td><td>Colistin (Polymyxin E); MDR Gram-negatives; last resort</td></tr>
+      </table>
+    </div>
+    <div class="card violet">
+      <div class="card-title">⚠️ Drug Side Effects — High Yield</div>
+      <table class="comparison-table">
+        <tr><th>Drug</th><th>Classic Side Effect</th></tr>
+        <tr><td>Aminoglycosides</td><td>Nephrotoxicity + Ototoxicity (irreversible; trough monitoring)</td></tr>
+        <tr><td>Vancomycin</td><td>Red man syndrome (histamine release; slow infusion); nephrotoxicity</td></tr>
+        <tr><td>Tetracyclines</td><td>Photosensitivity; teeth discoloration (children); anti-anabolic; Fanconi (demeclocycline)</td></tr>
+        <tr><td>Chloramphenicol</td><td>Grey baby syndrome; aplastic anaemia (idiosyncratic); reversible bone marrow suppression</td></tr>
+        <tr><td>Fluoroquinolones</td><td>Tendon rupture (Achilles); QT prolongation; photosensitivity; avoid &lt;18y</td></tr>
+        <tr><td>Rifampicin</td><td>Red-orange secretions; hepatotoxicity; potent CYP450 inducer → ↓ OCP efficacy</td></tr>
+        <tr><td>Isoniazid</td><td>Peripheral neuropathy (B6 def); hepatotoxicity; SLE-like; slow acetylators at risk</td></tr>
+        <tr><td>Ethambutol</td><td>Optic neuritis → red-green colour blindness; retrobulbar neuritis</td></tr>
+        <tr><td>Pyrazinamide</td><td>Hyperuricaemia → gout; hepatotoxicity</td></tr>
+        <tr><td>Metronidazole</td><td>Disulfiram-like reaction with alcohol; metallic taste; neurotoxicity (high dose)</td></tr>
+        <tr><td>Linezolid</td><td>Serotonin syndrome; MAO inhibition; thrombocytopenia; lactic acidosis</td></tr>
+        <tr><td>Colistin</td><td>Nephrotoxicity; neurotoxicity; last resort MDR organisms</td></tr>
+      </table>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔬 Antifungal Agents</div>
+      <div class="kv-row"><span class="kv-key">Amphotericin B</span><span class="kv-val highlight">Binds ergosterol → pores; Rx invasive fungal infections</span></div>
+      <div class="kv-row"><span class="kv-key">AmB side effects</span><span class="kv-val danger">Nephrotoxicity (dose-limiting); hypokalaemia; infusion rxn</span></div>
+      <div class="kv-row"><span class="kv-key">Liposomal AmB</span><span class="kv-val green">Less nephrotoxic; preferred in renal impairment</span></div>
+      <div class="kv-row"><span class="kv-key">Azoles (fluconazole)</span><span class="kv-val">Inhibit lanosterol 14α-demethylase → ↓ ergosterol synthesis</span></div>
+      <div class="kv-row"><span class="kv-key">Voriconazole</span><span class="kv-val highlight">1st line — Aspergillus, Fusarium; visual disturbances (photopsia)</span></div>
+      <div class="kv-row"><span class="kv-key">Echinocandins</span><span class="kv-val">Caspofungin, Micafungin; inhibit β-1,3-glucan synthase</span></div>
+      <div class="kv-row"><span class="kv-key">Echinocandin coverage</span><span class="kv-val">Candida + Aspergillus; NOT Cryptococcus (no glucan)</span></div>
+      <div class="kv-row"><span class="kv-key">Flucytosine (5-FC)</span><span class="kv-val">→ 5-FU → inhibits thymidylate synthase; always combine with AmB</span></div>
+      <div class="kv-row"><span class="kv-key">Griseofulvin</span><span class="kv-val">Dermatophytes only; microtubule disruption; teratogenic</span></div>
+      <div class="kv-row"><span class="kv-key">Terbinafine</span><span class="kv-val">Squalene epoxidase inhibitor; dermatophytes; onychomycosis</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">💊 Antiretrovirals (ART)</div>
+      <table class="comparison-table">
+        <tr><th>Class</th><th>Examples</th><th>Side Effects</th></tr>
+        <tr><td>NRTI</td><td>Zidovudine, Tenofovir, Emtricitabine, Lamivudine, Abacavir</td><td>Mitochondrial toxicity, lactic acidosis; ZDV → bone marrow suppression</td></tr>
+        <tr><td>NNRTI</td><td>Efavirenz, Nevirapine, Rilpivirine</td><td>CNS effects (efavirenz-vivid dreams); rash; Steven-Johnson; hepatotoxicity</td></tr>
+        <tr><td>PI</td><td>Lopinavir/r, Atazanavir, Darunavir</td><td>Lipodystrophy, hyperlipidaemia; GI; CYP450 inhibitors</td></tr>
+        <tr><td>INSTI</td><td>Raltegravir, Dolutegravir, Bictegravir</td><td>Well-tolerated; Dolutegravir → NTD risk if taken in 1st trimester</td></tr>
+        <tr><td>Entry inhibitors</td><td>Enfuvirtide (T-20); Maraviroc (CCR5 blocker)</td><td>Injection site rxns; tropism test required for Maraviroc</td></tr>
+      </table>
+      <div class="alert-box">First-line ART (India/WHO 2023): TDF + 3TC/FTC + DTG (Tenofovir + Lamivudine + Dolutegravir)</div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🔬 Antiparasitic Drugs</div>
+      <div class="kv-row"><span class="kv-key">Chloroquine</span><span class="kv-val">Inhibits heme polymerization; P. vivax / ovale (+ primaquine)</span></div>
+      <div class="kv-row"><span class="kv-key">Artemisinin-based</span><span class="kv-val highlight">ACT — 1st line for P. falciparum; free radical damage</span></div>
+      <div class="kv-row"><span class="kv-key">Primaquine</span><span class="kv-val">Kills hypnozoites (vivax/ovale relapse) + gametocytes</span></div>
+      <div class="kv-row"><span class="kv-key">Primaquine contraindication</span><span class="kv-val danger">G6PD deficiency → haemolytic anaemia</span></div>
+      <div class="kv-row"><span class="kv-key">Metronidazole</span><span class="kv-val">Giardia, E. histolytica, Trichomonas, anaerobes, C. diff</span></div>
+      <div class="kv-row"><span class="kv-key">Ivermectin</span><span class="kv-val">Strongyloides, Onchocerca (river blindness), Loa loa, scabies</span></div>
+      <div class="kv-row"><span class="kv-key">Praziquantel</span><span class="kv-val">Broad spectrum — all Schistosoma, all cestodes, liver flukes</span></div>
+      <div class="kv-row"><span class="kv-key">Albendazole</span><span class="kv-val">Broad nematodes; Echinococcus; Neurocysticercosis</span></div>
+      <div class="kv-row"><span class="kv-key">Diethylcarbamazine (DEC)</span><span class="kv-val">Lymphatic filariasis; Loa loa (Mazzotti with Oncho)</span></div>
+      <div class="kv-row"><span class="kv-key">Pentamidine</span><span class="kv-val">2nd line PCP; Visceral Leishmaniasis; African sleeping sickness</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency microbiology facts for rapid revision</div>
+  <div class="grid-2">
+    <div class="card violet">
+      <div class="card-title">⭐ Micro Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">Smallest bacteria</span><span class="kv-val highlight">Mycoplasma (0.3 μm); no cell wall</span></div>
+      <div class="kv-row"><span class="kv-key">Largest bacteria</span><span class="kv-val">Bacillus anthracis / Thiomargarita namibiensis</span></div>
+      <div class="kv-row"><span class="kv-key">Smallest virus</span><span class="kv-val">Parvovirus B19 (18-26 nm)</span></div>
+      <div class="kv-row"><span class="kv-key">Largest virus</span><span class="kv-val danger">Poxvirus (300 nm; visible under light microscope)</span></div>
+      <div class="kv-row"><span class="kv-key">Only obligate aerobe (exam)</span><span class="kv-val">M. tuberculosis, Pseudomonas</span></div>
+      <div class="kv-row"><span class="kv-key">Catalase +ve organisms</span><span class="kv-val">S. aureus, Klebsiella, Aspergillus, Candida, CGD organisms</span></div>
+      <div class="kv-row"><span class="kv-key">Urease +ve organisms</span><span class="kv-val highlight">H. pylori, Proteus, Klebsiella, Ureaplasma, Cryptococcus</span></div>
+      <div class="kv-row"><span class="kv-key">Oxidase +ve</span><span class="kv-val">Pseudomonas, Neisseria, Campylobacter, Vibrio, Helicobacter</span></div>
+      <div class="kv-row"><span class="kv-key">Coagulase +ve</span><span class="kv-val">S. aureus (and S. intermedius)</span></div>
+      <div class="kv-row"><span class="kv-key">Quellung rxn +ve</span><span class="kv-val">S. pneumoniae, Klebsiella, H. influenzae — capsule swelling</span></div>
+      <div class="kv-row"><span class="kv-key">V. cholerae — El Tor biotype</span><span class="kv-val">Currently circulating; more virulent; persists in environment</span></div>
+      <div class="kv-row"><span class="kv-key">Rice-water stool</span><span class="kv-val danger">V. cholerae (MC cause of non-bloody diarrhoea epidemic)</span></div>
+      <div class="kv-row"><span class="kv-key">Strawberry cervix</span><span class="kv-val">Trichomonas vaginalis; frothy yellow discharge</span></div>
+      <div class="kv-row"><span class="kv-key">Clue cells</span><span class="kv-val">Bacterial vaginosis (Gardnerella vaginalis); fishy odour</span></div>
+      <div class="kv-row"><span class="kv-key">Dog bite — Capnocytophaga</span><span class="kv-val danger">Septicaemia in asplenic patients</span></div>
+      <div class="kv-row"><span class="kv-key">Cat scratch disease</span><span class="kv-val">Bartonella henselae; stellate necrosis in LN</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">⭐ Micro Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">India ink preparation</span><span class="kv-val highlight">Cryptococcus neoformans (negative staining)</span></div>
+      <div class="kv-row"><span class="kv-key">KOH mount used for</span><span class="kv-val">Fungi (dissolves keratin; spores and hyphae visible)</span></div>
+      <div class="kv-row"><span class="kv-key">Darkfield microscopy</span><span class="kv-val">T. pallidum (syphilis); Leptospira</span></div>
+      <div class="kv-row"><span class="kv-key">Giemsa stain</span><span class="kv-val">Malaria, Rickettsia, Trypanosoma, Leishmania, Borrelia</span></div>
+      <div class="kv-row"><span class="kv-key">Silver stain (GMS)</span><span class="kv-val highlight">Pneumocystis jirovecii; Fungi; Helicobacter pylori</span></div>
+      <div class="kv-row"><span class="kv-key">PAS stain</span><span class="kv-val">Fungi, Tropheryma whipplei (Whipple disease)</span></div>
+      <div class="kv-row"><span class="kv-key">Weil-Felix test +ve</span><span class="kv-val">Rickettsia (except R. akari, Coxiella — Weil-Felix negative)</span></div>
+      <div class="kv-row"><span class="kv-key">Dengue NS1 antigen</span><span class="kv-val">Day 1-5; tourniquet test +ve; thrombocytopenia</span></div>
+      <div class="kv-row"><span class="kv-key">DHF — Dengue</span><span class="kv-val danger">Secondary infection (different serotype); ADE mechanism</span></div>
+      <div class="kv-row"><span class="kv-key">Japanese encephalitis</span><span class="kv-val">Culex mosquito; rice fields; Culex tritaeniorhynchus</span></div>
+      <div class="kv-row"><span class="kv-key">Rabies — Negri bodies</span><span class="kv-val highlight">Hippocampus, Purkinje cells; cytoplasmic</span></div>
+      <div class="kv-row"><span class="kv-key">Koplik spots</span><span class="kv-val">Measles (pathognomonic); buccal mucosa; prodrome</span></div>
+      <div class="kv-row"><span class="kv-key">Ramsay Hunt syndrome</span><span class="kv-val">VZV reactivation in geniculate ganglion; CN VII palsy</span></div>
+      <div class="kv-row"><span class="kv-key">Herpes zoster ophthalmicus</span><span class="kv-val danger">VZV in CN V1; Hutchinson's sign → ocular involvement</span></div>
+      <div class="kv-row"><span class="kv-key">Prion diseases (TSE)</span><span class="kv-val">PrPSc (abnormal folding); no nucleic acid; spongiform change</span></div>
+      <div class="kv-row"><span class="kv-key">CJD — 14-3-3 protein</span><span class="kv-val">CSF marker; rapidly progressive dementia; periodic EEG</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

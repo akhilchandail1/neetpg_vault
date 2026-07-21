@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Psychiatry Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #05080f; --surface: #0c1120; --surface2: #131a2e; --border: #1a2540;
+    --accent: #a78bfa; --accent2: #34d399; --accent3: #fb923c; --accent4: #f9a8d4; --accent5: #38bdf8;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #05080f 0%, #120a1e 50%, #05080f 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px 14px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-badge { background: var(--accent); color: #05080f; font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 700; padding: 3px 7px; border-radius: 4px; letter-spacing: 1px; white-space: nowrap; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: clamp(16px, 4vw, 20px); font-weight: 900; }
+  .logo h1 span { color: var(--accent); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent4); border: 1px solid var(--accent4); padding: 3px 10px; border-radius: 20px; letter-spacing: 1px; white-space: nowrap; }
+
+  /* ── TABS ── */
+  .tabs-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .tabs-wrapper::-webkit-scrollbar { display: none; }
+  .tabs { display: flex; gap: 4px; width: max-content; padding-bottom: 2px; }
+  .tab { padding: 6px 13px; border-radius: 6px; font-size: 11.5px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent); color: #05080f; font-weight: 700; }
+
+  /* ── CONTENT ── */
+  .content { padding: 20px 24px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(20px, 5vw, 24px); font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { color: var(--muted); font-size: 12px; margin-bottom: 20px; font-weight: 300; line-height: 1.5; }
+
+  /* ── GRIDS ── */
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .span-full { grid-column: 1 / -1; }
+
+  /* ── CARDS ── */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.violet::before { background: var(--accent); }
+  .card.green::before  { background: var(--accent2); }
+  .card.orange::before { background: var(--accent3); }
+  .card.pink::before   { background: var(--accent4); }
+  .card.sky::before    { background: var(--accent5); }
+  .card.red::before    { background: var(--danger); }
+  .card-title { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 11px; }
+  .card.violet .card-title { color: var(--accent); }
+  .card.green  .card-title { color: var(--accent2); }
+  .card.orange .card-title { color: var(--accent3); }
+  .card.pink   .card-title { color: var(--accent4); }
+  .card.sky    .card-title { color: var(--accent5); }
+  .card.red    .card-title { color: var(--danger); }
+
+  /* ── KV ROWS ── */
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #131a2e; font-size: 12px; gap: 8px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; min-width: 0; line-height: 1.4; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11px; flex-shrink: 0; max-width: 58%; word-break: break-word; line-height: 1.4; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.green  { color: var(--accent2); }
+  .kv-val.orange { color: var(--accent3); }
+  .kv-val.sky    { color: var(--accent5); }
+  .kv-val.danger { color: var(--danger); }
+  .kv-val.pink   { color: var(--accent4); }
+
+  /* ── BOXES ── */
+  .formula-box { background: #070d1a; border: 1px solid var(--border); border-radius: 8px; padding: 9px 11px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); margin: 6px 0; line-height: 1.8; word-break: break-word; }
+  .alert-box   { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 11px; font-size: 11.5px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box    { background: rgba(167,139,250,0.07); border: 1px solid rgba(167,139,250,0.2); border-radius: 8px; padding: 9px 11px; font-size: 11.5px; color: var(--accent); margin-top: 8px; line-height: 1.5; }
+  .green-box   { background: rgba(52,211,153,0.07); border: 1px solid rgba(52,211,153,0.2); border-radius: 8px; padding: 9px 11px; font-size: 11.5px; color: var(--accent2); margin-top: 8px; line-height: 1.5; }
+
+  /* ── TABLES ── */
+  .tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 6px; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 340px; }
+  .comparison-table th { background: var(--surface2); padding: 6px 9px; text-align: left; font-weight: 600; color: var(--muted); font-size: 9.5px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 6px 9px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; vertical-align: top; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent); font-weight: 600; white-space: nowrap; }
+  .mt-10 { margin-top: 10px; }
+
+  /* ── MOBILE BREAKPOINTS ── */
+  @media (max-width: 700px) {
+    .header { padding: 14px 16px 10px; }
+    .content { padding: 14px 12px; }
+    .grid-auto { grid-template-columns: 1fr; gap: 12px; }
+    .grid-2 { grid-template-columns: 1fr; gap: 12px; }
+    .span-full { grid-column: 1; }
+    .card { padding: 14px 13px; }
+    .kv-val { max-width: 55%; font-size: 10.5px; }
+    .kv-key { font-size: 11.5px; }
+    .formula-box { font-size: 10.5px; }
+  }
+  @media (min-width: 701px) and (max-width: 1000px) {
+    .grid-auto { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>Psych<span>iatry</span> Cheatsheet</h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs-wrapper">
+    <div class="tabs">
+      <div class="tab active" onclick="showSection('psychopathology',this)">Psychopathology</div>
+      <div class="tab" onclick="showSection('schizophrenia',this)">Schizophrenia</div>
+      <div class="tab" onclick="showSection('mood',this)">Mood Disorders</div>
+      <div class="tab" onclick="showSection('anxiety',this)">Anxiety &amp; OCD</div>
+      <div class="tab" onclick="showSection('substance',this)">Substance Use</div>
+      <div class="tab" onclick="showSection('psychopharm',this)">Psychopharmacology</div>
+      <div class="tab" onclick="showSection('child',this)">Child Psychiatry</div>
+      <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ═══════════════════════════════════════════ PSYCHOPATHOLOGY -->
+<div class="section active" id="psychopathology">
+  <div class="section-title">Psycho<span>pathology</span></div>
+  <div class="section-sub">Symptoms of mental illness — perception, thought, cognition, emotion, behaviour</div>
+  <div class="grid-auto">
+
+    <div class="card violet">
+      <div class="card-title">🧠 Disorders of Perception</div>
+      <div class="kv-row"><span class="kv-key">Hallucination</span><span class="kv-val highlight">Perception without stimulus; feels real to patient</span></div>
+      <div class="kv-row"><span class="kv-key">Illusion</span><span class="kv-val">Misperception of real external stimulus</span></div>
+      <div class="kv-row"><span class="kv-key">Pseudohallucination</span><span class="kv-val">In inner subjective space; patient knows it is not real</span></div>
+      <div class="kv-row"><span class="kv-key">Auditory hallucination (MC)</span><span class="kv-val danger">MC type overall; most common in schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Visual hallucination (MC)</span><span class="kv-val danger">Organic conditions (delirium, drugs, occipital lesions)</span></div>
+      <div class="kv-row"><span class="kv-key">Tactile hallucination</span><span class="kv-val">Formication (cocaine bugs); alcohol withdrawal</span></div>
+      <div class="kv-row"><span class="kv-key">Olfactory hallucination</span><span class="kv-val">Temporal lobe epilepsy; uncinate fits</span></div>
+      <div class="kv-row"><span class="kv-key">Hypnagogic</span><span class="kv-val highlight">On falling asleep; normal OR narcolepsy</span></div>
+      <div class="kv-row"><span class="kv-key">Hypnopompic</span><span class="kv-val">On waking; narcolepsy</span></div>
+      <div class="kv-row"><span class="kv-key">Lilliputian hallucination</span><span class="kv-val">Miniature figures; alcohol; organic (Lewy body dementia)</span></div>
+      <div class="kv-row"><span class="kv-key">Extracampine hallucination</span><span class="kv-val">Outside range of sensory field; schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Functional hallucination</span><span class="kv-val">Triggered by real stimulus in same modality</span></div>
+      <div class="kv-row"><span class="kv-key">Reflex hallucination</span><span class="kv-val">Stimulus in one modality triggers hallucination in another</span></div>
+      <div class="kv-row"><span class="kv-key">Autoscopy</span><span class="kv-val">Seeing one's own double (phantom mirror image)</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">💭 Disorders of Thought — Form</div>
+      <div class="kv-row"><span class="kv-key">Flight of ideas</span><span class="kv-val highlight">Rapid thought, loose connections, still traceable; mania</span></div>
+      <div class="kv-row"><span class="kv-key">Loosening of associations</span><span class="kv-val danger">Derailment; connections lost; schizophrenia (MC formal thought disorder)</span></div>
+      <div class="kv-row"><span class="kv-key">Tangentiality</span><span class="kv-val">Never reaches goal; goes off at tangent; schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Circumstantiality</span><span class="kv-val">Reaches goal eventually via tortuous route; OCD, anxiety, mania</span></div>
+      <div class="kv-row"><span class="kv-key">Thought blocking</span><span class="kv-val danger">Sudden stop; patient feels thoughts "withdrawn"; schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Pressure of speech</span><span class="kv-val">Rapid, hard to interrupt; mania</span></div>
+      <div class="kv-row"><span class="kv-key">Poverty of speech (Alogia)</span><span class="kv-val">Reduced quantity; schizophrenia (negative symptom)</span></div>
+      <div class="kv-row"><span class="kv-key">Perseveration</span><span class="kv-val">Repetition of same word/phrase; organic brain disease</span></div>
+      <div class="kv-row"><span class="kv-key">Neologism</span><span class="kv-val">New word with private meaning; schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Word salad (Schizophasia)</span><span class="kv-val danger">Complete incoherence; severe schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Clang associations</span><span class="kv-val">Rhyming / sound connections; mania</span></div>
+      <div class="kv-row"><span class="kv-key">Palilalia</span><span class="kv-val">Repetition of one's own words; Parkinsonism, Tourette's</span></div>
+      <div class="kv-row"><span class="kv-key">Echolalia</span><span class="kv-val">Repeating examiner's words; autism, schizophrenia</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🔐 Disorders of Thought — Content (Delusions)</div>
+      <div class="kv-row"><span class="kv-key">Delusion definition</span><span class="kv-val highlight">False, fixed, unshakeable belief not in keeping with culture</span></div>
+      <div class="kv-row"><span class="kv-key">Persecutory (MC delusion)</span><span class="kv-val danger">Being harmed/followed; schizophrenia, paranoid disorder</span></div>
+      <div class="kv-row"><span class="kv-key">Grandiose delusion</span><span class="kv-val">Special power/identity; mania, schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Delusion of reference</span><span class="kv-val">Events/objects have special personal significance; schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Delusion of control (passivity)</span><span class="kv-val highlight">Thoughts/feelings/actions controlled by external force; 1st rank Sx schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Thought insertion / withdrawal</span><span class="kv-val highlight">1st rank symptoms (Schneider); schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Thought broadcasting</span><span class="kv-val highlight">1st rank symptom; feels thoughts heard by others</span></div>
+      <div class="kv-row"><span class="kv-key">Nihilistic delusion (Cotard)</span><span class="kv-val">Body/world does not exist; severe depression</span></div>
+      <div class="kv-row"><span class="kv-key">Capgras syndrome</span><span class="kv-val">Familiar person replaced by impostor; schizophrenia, dementia</span></div>
+      <div class="kv-row"><span class="kv-key">Fregoli syndrome</span><span class="kv-val">Strangers are familiar people in disguise</span></div>
+      <div class="kv-row"><span class="kv-key">Erotomania (de Clérambault)</span><span class="kv-val">Famous person is in love with patient; stalking behaviour</span></div>
+      <div class="kv-row"><span class="kv-key">Folie à deux</span><span class="kv-val">Shared delusion between two people; shared psychotic disorder</span></div>
+      <div class="kv-row"><span class="kv-key">Othello syndrome</span><span class="kv-val">Morbid jealousy (delusional); alcohol, cocaine</span></div>
+      <div class="kv-row"><span class="kv-key">Primary delusion</span><span class="kv-val highlight">Arises de novo (no preceding event); delusional perception; pathognomonic schizophrenia</span></div>
+    </div>
+
+    <div class="card sky">
+      <div class="card-title">😶 Disorders of Emotion &amp; Affect</div>
+      <div class="kv-row"><span class="kv-key">Affect</span><span class="kv-val">Observable, short-lived emotional expression</span></div>
+      <div class="kv-row"><span class="kv-key">Mood</span><span class="kv-val">Pervasive subjective emotional state</span></div>
+      <div class="kv-row"><span class="kv-key">Flat affect</span><span class="kv-val danger">Absent emotional expression; schizophrenia (negative Sx)</span></div>
+      <div class="kv-row"><span class="kv-key">Blunted affect</span><span class="kv-val">Reduced emotional expression; schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Incongruent affect</span><span class="kv-val danger">Affect does not match content; schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Labile affect</span><span class="kv-val">Rapidly shifting emotions; mania, organic</span></div>
+      <div class="kv-row"><span class="kv-key">Anhedonia</span><span class="kv-val danger">Inability to feel pleasure; depression, schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Alexithymia</span><span class="kv-val">Cannot describe emotions; psychosomatic disorders</span></div>
+      <div class="kv-row"><span class="kv-key">Dysphoria</span><span class="kv-val">Unpleasant mood (irritable/restless); depression, substance use</span></div>
+      <div class="kv-row"><span class="kv-key">Euphoria</span><span class="kv-val">Elevated mood; mania, drugs</span></div>
+      <div class="kv-row"><span class="kv-key">Ecstasy</span><span class="kv-val">Extreme elation; mania, mystical states, drugs</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🧩 Cognitive Disorders</div>
+      <div class="kv-row"><span class="kv-key">Orientation (tested first)</span><span class="kv-val highlight">Time → Place → Person (lost in this order)</span></div>
+      <div class="kv-row"><span class="kv-key">Confabulation</span><span class="kv-val danger">Filling memory gaps with invented stories; Korsakoff psychosis</span></div>
+      <div class="kv-row"><span class="kv-key">Déjà vu</span><span class="kv-val">Unfamiliar feels familiar; TLE, normal, anxiety</span></div>
+      <div class="kv-row"><span class="kv-key">Jamais vu</span><span class="kv-val">Familiar feels unfamiliar; TLE</span></div>
+      <div class="kv-row"><span class="kv-key">Depersonalisation</span><span class="kv-val">Feels detached from self/body (unreal); anxiety, depression</span></div>
+      <div class="kv-row"><span class="kv-key">Derealisation</span><span class="kv-val">Environment feels unreal, dreamlike</span></div>
+      <div class="kv-row"><span class="kv-key">Agnosia</span><span class="kv-val">Cannot recognise despite intact sensation; cortical lesion</span></div>
+      <div class="kv-row"><span class="kv-key">Anosognosia</span><span class="kv-val">Lack of awareness of own illness; non-dominant parietal; dementia</span></div>
+      <div class="kv-row"><span class="kv-key">MMSE scoring</span><span class="kv-val highlight">30 points; &lt;24 = cognitive impairment; &lt;10 = severe</span></div>
+      <div class="kv-row"><span class="kv-key">MoCA</span><span class="kv-val">Montreal Cognitive Assessment; &lt;26 = impairment; better for MCI</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🔄 Schneider's 1st Rank Symptoms</div>
+      <div class="formula-box">Mnemonic: ABCDE
+Auditory hallucinations (3rd person, running commentary, echo)
+Broadcasting of thought
+Control / passivity phenomena
+Delusional perception (primary delusion)
+Experiences of thought: insertion, withdrawal, broadcasting</div>
+      <div class="kv-row"><span class="kv-key">3rd person auditory hallucination</span><span class="kv-val highlight">Voices discussing patient in 3rd person; 1st rank</span></div>
+      <div class="kv-row"><span class="kv-key">Running commentary</span><span class="kv-val highlight">Voice commenting on patient's actions; 1st rank</span></div>
+      <div class="kv-row"><span class="kv-key">Thought echo (Gedankenlautwerden)</span><span class="kv-val highlight">Hearing own thoughts aloud; 1st rank</span></div>
+      <div class="kv-row"><span class="kv-key">Diagnostic value</span><span class="kv-val danger">1st rank Sx NOT pathognomonic — can occur in bipolar, organic</span></div>
+      <div class="kv-row"><span class="kv-key">2nd rank symptoms</span><span class="kv-val">Other hallucinations, mood disorders, perplexity — less specific</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ SCHIZOPHRENIA -->
+<div class="section" id="schizophrenia">
+  <div class="section-title">Schizo<span>phrenia</span></div>
+  <div class="section-sub">Diagnosis, subtypes, positive/negative symptoms, prognosis, psychosis spectrum</div>
+  <div class="grid-auto">
+
+    <div class="card violet">
+      <div class="card-title">📋 DSM-5 Diagnostic Criteria — Schizophrenia</div>
+      <div class="formula-box">≥2 of: Delusions, Hallucinations, Disorganised speech,
+Disorganised/catatonic behaviour, Negative symptoms
+(at least 1 must be from first 3)
+Duration: ≥6 months (≥1 month active symptoms)
+Significant social/occupational dysfunction</div>
+      <div class="kv-row"><span class="kv-key">ICD-11 duration requirement</span><span class="kv-val highlight">≥1 month of Sx (shorter than DSM)</span></div>
+      <div class="kv-row"><span class="kv-key">Schizophreniform disorder</span><span class="kv-val">Sx 1-6 months; same criteria as schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Brief psychotic disorder</span><span class="kv-val">Sx &lt;1 month; full recovery; triggered by stress</span></div>
+      <div class="kv-row"><span class="kv-key">Schizoaffective disorder</span><span class="kv-val highlight">Schizophrenia + prominent mood episode; mood present &gt;50% of total duration</span></div>
+      <div class="kv-row"><span class="kv-key">Delusional disorder</span><span class="kv-val">Non-bizarre delusions ≥1 month; functioning relatively preserved; NO hallucinations</span></div>
+      <div class="kv-row"><span class="kv-key">Age of onset</span><span class="kv-val">Men: 18-25 yrs; Women: 25-35 yrs (bimodal)</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">➕➖ Positive vs Negative Symptoms</div>
+      <div class="tbl-wrap">
+      <table class="comparison-table">
+        <tr><th>Feature</th><th>Positive Symptoms</th><th>Negative Symptoms</th></tr>
+        <tr><td>Definition</td><td>Excess/distortion of normal function</td><td>Reduction/loss of normal function</td></tr>
+        <tr><td>Examples</td><td>Delusions, hallucinations, disorganised speech, catatonia</td><td>Alogia, Avolition, Anhedonia, Affective flattening, Asociality</td></tr>
+        <tr><td>Mnemonic</td><td>—</td><td>5 A's: Alogia, Avolition, Anhedonia, Affect (flat), Asociality</td></tr>
+        <tr><td>Treatment response</td><td>Respond well to antipsychotics</td><td>Poor response to typical APs; clozapine best</td></tr>
+        <tr><td>Prognosis</td><td>Better prognosis</td><td>Worse prognosis</td></tr>
+        <tr><td>Neurobiology</td><td>↑ D2 in mesolimbic pathway</td><td>↓ D1 in prefrontal cortex (DLPFC)</td></tr>
+      </table>
+      </div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">📈 Prognostic Factors</div>
+      <div class="tbl-wrap">
+      <table class="comparison-table">
+        <tr><th>Good Prognosis</th><th>Bad Prognosis</th></tr>
+        <tr><td>Acute onset</td><td>Insidious onset</td></tr>
+        <tr><td>Later age of onset</td><td>Early onset (especially male)</td></tr>
+        <tr><td>Female sex</td><td>Male sex</td></tr>
+        <tr><td>Married / good social support</td><td>Single / social isolation</td></tr>
+        <tr><td>Prominent affective symptoms</td><td>Prominent negative symptoms</td></tr>
+        <tr><td>Obvious precipitant</td><td>No precipitant</td></tr>
+        <tr><td>Good premorbid functioning</td><td>Poor premorbid functioning</td></tr>
+        <tr><td>Positive family hx of mood disorder</td><td>Family hx of schizophrenia</td></tr>
+        <tr><td>Developing country (better outcome)</td><td>Developed country (worse outcome)</td></tr>
+      </table>
+      </div>
+      <div class="info-box">Rule of thirds: 1/3 recover fully, 1/3 partially recover with relapses, 1/3 chronic deterioration</div>
+    </div>
+
+    <div class="card sky">
+      <div class="card-title">🧠 Neurobiology of Schizophrenia</div>
+      <div class="kv-row"><span class="kv-key">Dopamine hypothesis</span><span class="kv-val highlight">↑ mesolimbic D2 → positive Sx; ↓ mesocortical D1/D2 → negative Sx</span></div>
+      <div class="kv-row"><span class="kv-key">Mesolimbic pathway</span><span class="kv-val danger">VTA → nucleus accumbens; positive symptoms; reward</span></div>
+      <div class="kv-row"><span class="kv-key">Mesocortical pathway</span><span class="kv-val danger">VTA → prefrontal cortex; negative symptoms; cognition</span></div>
+      <div class="kv-row"><span class="kv-key">Glutamate hypothesis</span><span class="kv-val">↓ NMDA receptor activity → mimics schizophrenia (PCP, ketamine)</span></div>
+      <div class="kv-row"><span class="kv-key">Serotonin hypothesis</span><span class="kv-val">↑ 5-HT2A activity → negative/cognitive Sx; ATAPs block 5-HT2A</span></div>
+      <div class="kv-row"><span class="kv-key">Brain changes</span><span class="kv-val">↑ ventricular size; ↓ hippocampal/temporal lobe volume; ↓ frontal activity (hypofrontality)</span></div>
+      <div class="kv-row"><span class="kv-key">Genetics</span><span class="kv-val">Concordance: MZ twins ~50%; DZ ~15%; sibling ~10%; general population ~1%</span></div>
+      <div class="kv-row"><span class="kv-key">Dopamine pathways (4)</span><span class="kv-val highlight">Mesolimbic, Mesocortical, Nigrostriatal (EPS), Tuberoinfundibular (↑ prolactin)</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">😶 Catatonia — Features &amp; Types</div>
+      <div class="kv-row"><span class="kv-key">Catatonic stupor</span><span class="kv-val danger">Mutism + immobility; but aware</span></div>
+      <div class="kv-row"><span class="kv-key">Waxy flexibility (Cerea flexibilitas)</span><span class="kv-val highlight">Limbs maintain imposed posture like wax; schizophrenia</span></div>
+      <div class="kv-row"><span class="kv-key">Negativism</span><span class="kv-val">Active resistance to instructions (active) OR failure to comply (passive)</span></div>
+      <div class="kv-row"><span class="kv-key">Posturing</span><span class="kv-val">Voluntarily adopts bizarre posture for prolonged time</span></div>
+      <div class="kv-row"><span class="kv-key">Stereotypy</span><span class="kv-val">Repetitive, non-goal-directed movement; schizophrenia, autism</span></div>
+      <div class="kv-row"><span class="kv-key">Mannerism</span><span class="kv-val">Odd but goal-directed movement</span></div>
+      <div class="kv-row"><span class="kv-key">Echopraxia</span><span class="kv-val">Imitating examiner's movements; schizophrenia, autism</span></div>
+      <div class="kv-row"><span class="kv-key">Mitgehen</span><span class="kv-val">Extreme cooperation — moves with slightest touch</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment of catatonia</span><span class="kv-val highlight">Lorazepam (IV first line); ECT (if no response)</span></div>
+      <div class="kv-row"><span class="kv-key">Avoid in catatonia</span><span class="kv-val danger">Antipsychotics (can worsen or precipitate NMS)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">📊 Psychosis Spectrum — Comparison</div>
+      <div class="tbl-wrap">
+      <table class="comparison-table">
+        <tr><th>Disorder</th><th>Duration</th><th>Key Feature</th></tr>
+        <tr><td>Brief Psychotic Disorder</td><td>&lt;1 month</td><td>Acute onset; often post-stress; full recovery</td></tr>
+        <tr><td>Schizophreniform</td><td>1–6 months</td><td>Same Sx as schizophrenia; may fully recover</td></tr>
+        <tr><td>Schizophrenia</td><td>≥6 months</td><td>Chronic; impaired functioning; 1% lifetime prevalence</td></tr>
+        <tr><td>Schizoaffective</td><td>≥1 month psychosis + mood episodes</td><td>Better prognosis than schizophrenia; worse than mood disorder</td></tr>
+        <tr><td>Delusional Disorder</td><td>≥1 month delusions</td><td>Non-bizarre; NO hallucinations; functioning preserved</td></tr>
+        <tr><td>Substance-induced Psychosis</td><td>During/after intoxication</td><td>Resolves with abstinence; cocaine, cannabis, LSD, amphetamine</td></tr>
+      </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ MOOD DISORDERS -->
+<div class="section" id="mood">
+  <div class="section-title">Mood <span>Disorders</span></div>
+  <div class="section-sub">Depression, mania, bipolar, suicide, ECT</div>
+  <div class="grid-auto">
+
+    <div class="card violet">
+      <div class="card-title">😔 Major Depressive Episode — DSM-5 Criteria</div>
+      <div class="formula-box">Mnemonic: SIG E CAPS
+Sleep ↓ or ↑ | Interest ↓ (anhedonia) | Guilt / worthlessness
+Energy ↓ | Concentration ↓ | Appetite ↓ or ↑ | Psychomotor
+agitation/retardation | Suicidal ideation / death wishes</div>
+      <div class="kv-row"><span class="kv-key">Duration</span><span class="kv-val highlight">≥2 weeks; ≥5 symptoms; ≥1 must be depressed mood OR anhedonia</span></div>
+      <div class="kv-row"><span class="kv-key">Dysthymia (Persistent Depressive Disorder)</span><span class="kv-val">Depressed mood ≥2 years (adults); ≥1 year (children); subthreshold Sx</span></div>
+      <div class="kv-row"><span class="kv-key">Double depression</span><span class="kv-val">MDD superimposed on dysthymia</span></div>
+      <div class="kv-row"><span class="kv-key">Seasonal affective disorder</span><span class="kv-val">Winter depression; hypersomnia, hyperphagia; light therapy</span></div>
+      <div class="kv-row"><span class="kv-key">Atypical depression features</span><span class="kv-val highlight">Mood reactivity + hypersomnia + hyperphagia + leaden paralysis + rejection sensitivity; MAOIs best</span></div>
+      <div class="kv-row"><span class="kv-key">Melancholic depression</span><span class="kv-val">Anhedonia, diurnal variation (worse AM), psychomotor Δ; responds to TCAs/ECT</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🎭 Manic Episode — DSM-5 Criteria</div>
+      <div class="formula-box">Mnemonic: DIG FAST
+Distractibility | Insomnia (decreased need for sleep) | Grandiosity
+Flight of ideas | Activity ↑ (goal-directed) | Speech (pressured)
+Thoughtlessness (risky behaviour)</div>
+      <div class="kv-row"><span class="kv-key">Duration of mania</span><span class="kv-val highlight">≥7 days (or any duration if hospitalised); ≥3 of 7 symptoms (4 if mood is only irritable)</span></div>
+      <div class="kv-row"><span class="kv-key">Hypomania</span><span class="kv-val">Same criteria but ≥4 days; NOT severe enough to impair function or cause hospitalisation; NO psychosis</span></div>
+      <div class="kv-row"><span class="kv-key">Mixed episode (DSM-5)</span><span class="kv-val">≥3 symptoms of opposite pole during manic/depressive episode (mixed features specifier)</span></div>
+      <div class="kv-row"><span class="kv-key">Elation vs Euphoria</span><span class="kv-val">Elation = infectious; Euphoria = empty, hollow; Ecstasy = extreme</span></div>
+      <div class="kv-row"><span class="kv-key">Secondary mania causes</span><span class="kv-val danger">Steroids, L-DOPA, antidepressants, hyperthyroidism, SLE, TBI, right frontal lesion</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🔄 Bipolar Disorders — Classification</div>
+      <div class="tbl-wrap">
+      <table class="comparison-table">
+        <tr><th>Type</th><th>Episodes</th><th>Key Feature</th></tr>
+        <tr><td>Bipolar I</td><td>≥1 full manic episode (with or without depression)</td><td>Most severe; psychosis may occur; hospitalisation common</td></tr>
+        <tr><td>Bipolar II</td><td>Hypomanic + Major depressive episodes; NO full mania</td><td>Often misdiagnosed as MDD; antidepressants alone can trigger switch</td></tr>
+        <tr><td>Cyclothymia</td><td>Hypomania + subthreshold depression ≥2 years</td><td>Never symptom-free &gt;2 months; 15-50% progress to Bipolar I/II</td></tr>
+        <tr><td>Rapid cycling</td><td>≥4 mood episodes in 12 months</td><td>More common in women; often triggered by antidepressants; harder to treat</td></tr>
+      </table>
+      </div>
+      <div class="alert-box">Lithium is drug of choice for Bipolar disorder — mania (acute + prophylaxis) and suicide prevention. Valproate preferred in rapid cycling &amp; mixed states.</div>
+    </div>
+
+    <div class="card sky">
+      <div class="card-title">⚡ ECT — Electroconvulsive Therapy</div>
+      <div class="kv-row"><span class="kv-key">Absolute indications</span><span class="kv-val highlight">Severe depression with suicidal risk, psychotic depression, catatonia, treatment-resistant depression, NMS</span></div>
+      <div class="kv-row"><span class="kv-key">First-line indication</span><span class="kv-val highlight">Severe depression in pregnancy (safer than drugs)</span></div>
+      <div class="kv-row"><span class="kv-key">Mechanism</span><span class="kv-val">Generalised seizure; ↑ neurotrophic factors; ↓ HPA axis; monoamine changes</span></div>
+      <div class="kv-row"><span class="kv-key">Sessions (standard course)</span><span class="kv-val green">6-12 sessions; 3×/week (bilateral); 2×/week (unilateral)</span></div>
+      <div class="kv-row"><span class="kv-key">Electrode placement</span><span class="kv-val">Bilateral (BL) vs Right unilateral (RUL); BL more effective; RUL fewer cognitive SE</span></div>
+      <div class="kv-row"><span class="kv-key">Side effects</span><span class="kv-val danger">Retrograde + anterograde amnesia (transient); confusion; headache; muscle pain</span></div>
+      <div class="kv-row"><span class="kv-key">Only absolute contraindication</span><span class="kv-val danger">↑ Intracranial pressure (ICP)</span></div>
+      <div class="kv-row"><span class="kv-key">Relative contraindications</span><span class="kv-val">Recent MI, space-occupying lesion, pheochromocytoma, aortic aneurysm</span></div>
+      <div class="kv-row"><span class="kv-key">Pre-ECT workup</span><span class="kv-val">ECG, EEG, CBP, XRay spine, anaesthetic assessment; informed consent</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">⚠️ Suicide — Risk Assessment</div>
+      <div class="formula-box">SAD PERSONS Scale (risk factors):
+Sex (male), Age (&lt;19 or &gt;45), Depression, Previous attempt,
+Ethanol/substance use, Rational thinking loss, Social support ↓,
+Organised plan, No spouse, Sickness (chronic illness)</div>
+      <div class="kv-row"><span class="kv-key">MC method (worldwide)</span><span class="kv-val danger">Hanging (high lethality); women → poisoning</span></div>
+      <div class="kv-row"><span class="kv-key">Highest risk disorder</span><span class="kv-val danger">Schizophrenia &gt; Bipolar &gt; MDD (but MDD has highest absolute numbers)</span></div>
+      <div class="kv-row"><span class="kv-key">High-risk periods in depression</span><span class="kv-val danger">Early morning, early recovery phase (energy returns before mood)</span></div>
+      <div class="kv-row"><span class="kv-key">Suicidal ideation types</span><span class="kv-val">Passive (wish to die) → Active (plan) → Intent → Attempt</span></div>
+      <div class="kv-row"><span class="kv-key">Drug reducing suicide risk</span><span class="kv-val highlight">Lithium (best evidence) &gt; Clozapine (schizophrenia) &gt; SSRIs</span></div>
+      <div class="kv-row"><span class="kv-key">Parasuicide</span><span class="kv-val">Deliberate self-harm without intent to die; manipulative; personality disorder</span></div>
+      <div class="kv-row"><span class="kv-key">Shneidman's triad</span><span class="kv-val">Psychological pain + Perturbation + Lethality</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">📊 Depression — Frequently Confused</div>
+      <div class="tbl-wrap">
+      <table class="comparison-table">
+        <tr><th>Feature</th><th>Depression</th><th>Dementia</th><th>Delirium</th></tr>
+        <tr><td>Onset</td><td>Weeks-months</td><td>Months-years</td><td>Hours-days</td></tr>
+        <tr><td>Consciousness</td><td>Clear</td><td>Clear (early)</td><td>Clouded/fluctuating</td></tr>
+        <tr><td>Memory</td><td>Near &gt; remote affected; "don't know" answers</td><td>Remote &gt; recent; confabulates</td><td>Short-term impaired</td></tr>
+        <tr><td>Mood</td><td>Persistently low</td><td>Labile; apathy</td><td>Anxious, fearful</td></tr>
+        <tr><td>Depressive pseudodementia</td><td colspan="3">Depression mimics dementia; reversible with antidepressants; patient complains of memory loss</td></tr>
+      </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ ANXIETY & OCD -->
+<div class="section" id="anxiety">
+  <div class="section-title">Anxiety, OCD &amp; <span>Related</span></div>
+  <div class="section-sub">Panic, phobias, OCD, PTSD, somatic symptom disorders</div>
+  <div class="grid-auto">
+
+    <div class="card violet">
+      <div class="card-title">😰 Panic Disorder</div>
+      <div class="formula-box">Panic attack = Discrete period of intense fear/discomfort:
+≥4 of 13 symptoms, peaking within 10 minutes
+STUDENTS FEAR the 3 Cs:
+Sweating, Trembling, Unsteady, Depersonalisation, Excessive HR,
+Numbness, Tingling, Shortness of breath | Feeling of dying, Chest pain,
+Abdominal distress, Rigors, Chills</div>
+      <div class="kv-row"><span class="kv-key">Panic disorder diagnosis</span><span class="kv-val highlight">Recurrent unexpected panic attacks + anticipatory anxiety ≥1 month</span></div>
+      <div class="kv-row"><span class="kv-key">Agoraphobia</span><span class="kv-val">Fear of open/public places; often secondary to panic disorder</span></div>
+      <div class="kv-row"><span class="kv-key">First-line pharmacotherapy</span><span class="kv-val highlight">SSRIs (sertraline, escitalopram); SNRIs; avoid antidepressants precipitating anxiety early</span></div>
+      <div class="kv-row"><span class="kv-key">First-line psychotherapy</span><span class="kv-val highlight">CBT (most effective long-term)</span></div>
+      <div class="kv-row"><span class="kv-key">Biological challenge tests</span><span class="kv-val">Sodium lactate infusion, CO2 inhalation, yohimbine → can precipitate panic attack</span></div>
+      <div class="kv-row"><span class="kv-key">Neurobiology</span><span class="kv-val">Locus coeruleus (noradrenergic); amygdala; parabrachial nucleus</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🔄 OCD — Obsessive Compulsive Disorder</div>
+      <div class="kv-row"><span class="kv-key">Obsession</span><span class="kv-val highlight">Intrusive, ego-dystonic, recurrent thought/image/urge; patient resists</span></div>
+      <div class="kv-row"><span class="kv-key">Compulsion</span><span class="kv-val">Repetitive behaviour/mental act to neutralise obsession; ego-dystonic</span></div>
+      <div class="kv-row"><span class="kv-key">Ego-syntonic vs Ego-dystonic</span><span class="kv-val danger">OCD = ego-dystonic; Obsessive personality (OCPD) = ego-syntonic</span></div>
+      <div class="kv-row"><span class="kv-key">MC obsession</span><span class="kv-val">Contamination → washing compulsion (MC overall)</span></div>
+      <div class="kv-row"><span class="kv-key">MC compulsion</span><span class="kv-val">Checking (doors, locks, gas) → doubt obsession</span></div>
+      <div class="kv-row"><span class="kv-key">Y-BOCS scale</span><span class="kv-val">Yale-Brown Obsessive Compulsive Scale; 0-40; gold standard severity tool</span></div>
+      <div class="kv-row"><span class="kv-key">First-line pharmacotherapy</span><span class="kv-val highlight">SSRIs (high dose, ≥12 weeks trial); clomipramine (most potent but SE profile)</span></div>
+      <div class="kv-row"><span class="kv-key">First-line psychotherapy</span><span class="kv-val highlight">ERP — Exposure Response Prevention (most evidence)</span></div>
+      <div class="kv-row"><span class="kv-key">Neurobiology</span><span class="kv-val">Orbitofrontal-thalamo-striatal circuit hyperactivity; ↑ serotonin deficiency</span></div>
+      <div class="kv-row"><span class="kv-key">OCD-related disorders</span><span class="kv-val">BDD, Hoarding, Trichotillomania, Excoriation (skin picking), Body dysmorphic disorder</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">😱 PTSD &amp; Acute Stress Disorder</div>
+      <div class="formula-box">PTSD diagnostic clusters (DSM-5): BEAN
+B — Re-experiencing (flashbacks, nightmares, intrusions)
+E — Avoidance (stimuli, thoughts related to trauma)
+A — Alterations in cognition/mood (negative beliefs, guilt, anhedonia)
+N — Arousal/Reactivity ↑ (hypervigilance, sleep, irritability, reckless)</div>
+      <div class="kv-row"><span class="kv-key">PTSD onset</span><span class="kv-val highlight">Symptoms &gt;1 month after trauma; can have delayed expression (≥6 months)</span></div>
+      <div class="kv-row"><span class="kv-key">Acute Stress Disorder</span><span class="kv-val">Same Sx but 3 days–1 month after trauma; dissociation prominent</span></div>
+      <div class="kv-row"><span class="kv-key">First-line pharmacotherapy PTSD</span><span class="kv-val highlight">SSRIs (sertraline, paroxetine — FDA approved); venlafaxine</span></div>
+      <div class="kv-row"><span class="kv-key">Prazosin in PTSD</span><span class="kv-val">Alpha-1 blocker; reduces nightmares specifically</span></div>
+      <div class="kv-row"><span class="kv-key">First-line psychotherapy</span><span class="kv-val highlight">Trauma-focused CBT; EMDR (Eye Movement Desensitisation and Reprocessing)</span></div>
+      <div class="kv-row"><span class="kv-key">Debriefing (CISD)</span><span class="kv-val danger">Critical Incident Stress Debriefing — NOT recommended (may worsen PTSD)</span></div>
+    </div>
+
+    <div class="card sky">
+      <div class="card-title">😨 Phobias &amp; GAD</div>
+      <div class="tbl-wrap">
+      <table class="comparison-table">
+        <tr><th>Disorder</th><th>Key Feature</th><th>Treatment</th></tr>
+        <tr><td>Specific Phobia</td><td>Discrete feared object/situation; immediate anxiety; avoidance; insight preserved</td><td>Systematic desensitisation (behaviour therapy); in vivo exposure</td></tr>
+        <tr><td>Social Anxiety Disorder</td><td>Fear of social scrutiny/embarrassment; performance anxiety; blushing; palpitations</td><td>SSRIs; CBT; beta-blockers (performance anxiety only)</td></tr>
+        <tr><td>GAD (Generalised Anxiety)</td><td>Excessive worry ≥6 months about multiple domains; difficult to control; ≥3 Sx (insomnia, fatigue, irritability, concentration ↓, muscle tension)</td><td>SSRIs/SNRIs; Buspirone (non-habit-forming); CBT; Pregabalin</td></tr>
+        <tr><td>Agoraphobia</td><td>Fear of open/crowded places; often with panic disorder; severe avoidance</td><td>SSRIs; CBT; exposure therapy</td></tr>
+      </table>
+      </div>
+      <div class="green-box">Desensitisation hierarchy: Relaxation → Mental imagery (least feared → most feared) → In vivo exposure → Flooding (most intense — no gradual hierarchy)</div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🏥 Somatic Symptom &amp; Related Disorders</div>
+      <div class="tbl-wrap">
+      <table class="comparison-table">
+        <tr><th>Disorder</th><th>Key Feature</th></tr>
+        <tr><td>Somatic Symptom Disorder</td><td>≥1 physical Sx (pain MC) + disproportionate thoughts/feelings/behaviour ≥6 months; conscious</td></tr>
+        <tr><td>Illness Anxiety Disorder (Hypochondriasis)</td><td>Preoccupied with having serious illness; minimal physical Sx; high health anxiety ≥6 months</td></tr>
+        <tr><td>Functional Neurological Disorder (Conversion)</td><td>Motor/sensory neurological Sx; not explained by disease; "la belle indifférence" (indifference to symptom)</td></tr>
+        <tr><td>Factitious Disorder (Munchausen)</td><td>Intentionally produces Sx to assume sick role; NOT for external gain; intrinsic motivation</td></tr>
+        <tr><td>Malingering</td><td>Intentional feigning of Sx for external gain (money, avoiding work/military); NOT a mental disorder</td></tr>
+        <tr><td>Munchausen by Proxy</td><td>Caregiver induces illness in child for own sick-role; child abuse</td></tr>
+      </table>
+      </div>
+      <div class="alert-box">Key distinction: Factitious = conscious behaviour, unconscious motivation (sick role). Conversion = unconscious behaviour AND motivation. Malingering = conscious both.</div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">📋 Dissociative Disorders</div>
+      <div class="kv-row"><span class="kv-key">Dissociative amnesia</span><span class="kv-val highlight">Inability to recall important autobiographical info; usually trauma-related; retrograde</span></div>
+      <div class="kv-row"><span class="kv-key">Dissociative fugue</span><span class="kv-val">Amnesia + purposeful travel + new identity; resolves spontaneously</span></div>
+      <div class="kv-row"><span class="kv-key">DID (Dissociative Identity Disorder)</span><span class="kv-val danger">≥2 distinct personality states; amnesia between alters; most controversial; rare</span></div>
+      <div class="kv-row"><span class="kv-key">Depersonalisation / Derealisation disorder</span><span class="kv-val">Persistent; reality testing intact; no psychosis; SSRIs ± naltrexone</span></div>
+      <div class="kv-row"><span class="kv-key">Trance disorder</span><span class="kv-val">Dissociation common in India; culture-specific; possession trance</span></div>
+      <div class="kv-row"><span class="kv-key">Ganser syndrome</span><span class="kv-val">Approximate answers (Vorbeireden); "talking past the point"; prison; dissociative</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ SUBSTANCE USE -->
+<div class="section" id="substance">
+  <div class="section-title">Substance <span>Use Disorders</span></div>
+  <div class="section-sub">Alcohol, opioids, stimulants, withdrawal, dependence</div>
+  <div class="grid-auto">
+
+    <div class="card violet">
+      <div class="card-title">🍺 Alcohol — Acute Intoxication &amp; Withdrawal</div>
+      <div class="tbl-wrap">
+      <table class="comparison-table">
+        <tr><th>Phase</th><th>Timing</th><th>Features</th></tr>
+        <tr><td>Acute intoxication</td><td>During use</td><td>Disinhibition → incoordination → slurred speech → stupor → coma</td></tr>
+        <tr><td>Early withdrawal</td><td>6–24 hours</td><td>Tremor, anxiety, sweating, tachycardia, insomnia, nausea</td></tr>
+        <tr><td>Seizures</td><td>24–48 hours</td><td>Generalised tonic-clonic; CIWA-Ar guided; IV lorazepam/diazepam</td></tr>
+        <tr><td>Delirium Tremens (DTs)</td><td>48–72 hours (peak)</td><td>Life-threatening: confusion, fever, autonomic instability, vivid hallucinations (tactile/visual)</td></tr>
+        <tr><td>Mortality of DTs</td><td>—</td><td>5–15% if untreated; 1–5% with treatment</td></tr>
+      </table>
+      </div>
+      <div class="kv-row mt-10"><span class="kv-key">Management of withdrawal</span><span class="kv-val highlight">Benzodiazepines (diazepam/chlordiazepoxide) — drug of choice</span></div>
+      <div class="kv-row"><span class="kv-key">Thiamine (Vit B1)</span><span class="kv-val danger">Give BEFORE glucose — prevents Wernicke's encephalopathy</span></div>
+      <div class="kv-row"><span class="kv-key">CIWA-Ar scale</span><span class="kv-val">Clinical Institute Withdrawal Assessment — guides BZD dosing</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🍺 Alcohol — Chronic Complications</div>
+      <div class="kv-row"><span class="kv-key">Wernicke's encephalopathy</span><span class="kv-val danger">Triad: Confusion + Ataxia + Ophthalmoplegia; B1 deficiency; reversible</span></div>
+      <div class="kv-row"><span class="kv-key">Korsakoff's psychosis</span><span class="kv-val danger">Anterograde amnesia + confabulation + personality change; mammillary bodies; irreversible</span></div>
+      <div class="kv-row"><span class="kv-key">Wernicke-Korsakoff</span><span class="kv-val">Continuum; treat W's with IV thiamine → may prevent K's</span></div>
+      <div class="kv-row"><span class="kv-key">Alcoholic hallucinosis</span><span class="kv-val highlight">Auditory hallucinations during/after drinking; CLEAR consciousness (unlike DTs)</span></div>
+      <div class="kv-row"><span class="kv-key">Alcoholic jealousy (Othello)</span><span class="kv-val">Delusional jealousy; morbid; may lead to homicide</span></div>
+      <div class="kv-row"><span class="kv-key">Peripheral neuropathy</span><span class="kv-val">Thiamine def; stocking-glove distribution; predominantly sensory</span></div>
+      <div class="kv-row"><span class="kv-key">Fetal alcohol syndrome</span><span class="kv-val">Facial dysmorphia + growth restriction + CNS abnormalities; safe level = NONE</span></div>
+      <div class="kv-row"><span class="kv-key">AUDIT score</span><span class="kv-val">Alcohol Use Disorders Identification Test; ≥8 = hazardous; ≥13 (women)/≥15 (men) = dependence</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">💊 Alcohol — Treatment &amp; Aversion Therapy</div>
+      <div class="kv-row"><span class="kv-key">Disulfiram (Antabuse)</span><span class="kv-val highlight">Blocks ALDH → acetaldehyde accumulation → flushing, nausea, vomiting; aversion therapy</span></div>
+      <div class="kv-row"><span class="kv-key">Disulfiram-like reaction drugs</span><span class="kv-val danger">Metronidazole, Chlorpropamide, Cephalosporins, Tinidazole, Griseofulvin</span></div>
+      <div class="kv-row"><span class="kv-key">Naltrexone</span><span class="kv-val highlight">Opioid antagonist; ↓ craving and pleasure of alcohol; 50 mg OD; also for opioid dependence</span></div>
+      <div class="kv-row"><span class="kv-key">Acamprosate</span><span class="kv-val">NMDA antagonist + GABA agonist; ↓ craving; maintain abstinence; not metabolised by liver</span></div>
+      <div class="kv-row"><span class="kv-key">Nalmefene</span><span class="kv-val">Opioid antagonist; approved for harm reduction (not full abstinence) in Europe</span></div>
+      <div class="kv-row"><span class="kv-key">CAGE questionnaire</span><span class="kv-val">Cut down, Annoyed, Guilty, Eye-opener; ≥2 = likely dependence; screening tool</span></div>
+      <div class="kv-row"><span class="kv-key">Brief motivational interviewing</span><span class="kv-val">5 stages of change: Pre-contemplation → Contemplation → Preparation → Action → Maintenance</span></div>
+    </div>
+
+    <div class="card sky">
+      <div class="card-title">💉 Opioids — Intoxication, Withdrawal, Treatment</div>
+      <div class="formula-box">Opioid intoxication TRIAD:
+↓ Consciousness + Pinpoint pupils + Respiratory depression
+→ Naloxone (IV/IM/IN) — opioid antagonist; 0.4 mg repeated</div>
+      <div class="kv-row"><span class="kv-key">Opioid withdrawal onset</span><span class="kv-val highlight">Heroin: 6-12h; Morphine: 8-16h; Methadone: 36-48h (long acting)</span></div>
+      <div class="kv-row"><span class="kv-key">Withdrawal features</span><span class="kv-val">Yawning, lacrimation, rhinorrhoea, piloerection (gooseflesh), mydriasis, diarrhoea, restlessness, myalgia</span></div>
+      <div class="kv-row"><span class="kv-key">NOT life-threatening (unlike alcohol)</span><span class="kv-val danger">Opioid withdrawal is extremely uncomfortable but not fatal in healthy adults</span></div>
+      <div class="kv-row"><span class="kv-key">Opioid substitution therapy (OST)</span><span class="kv-val highlight">Methadone (full agonist) OR Buprenorphine/Naloxone (Suboxone — partial agonist)</span></div>
+      <div class="kv-row"><span class="kv-key">Buprenorphine advantage</span><span class="kv-val green">Ceiling effect on respiratory depression; safer; sublingual</span></div>
+      <div class="kv-row"><span class="kv-key">Clonidine in withdrawal</span><span class="kv-val">α2 agonist; suppresses autonomic symptoms of opioid withdrawal; not a controlled drug</span></div>
+      <div class="kv-row"><span class="kv-key">LAAM</span><span class="kv-val">Levo-alpha-acetylmethadol; 3×/week dosing; withdrawn due to cardiac toxicity</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">💊 Other Substances — Key Features</div>
+      <div class="tbl-wrap">
+      <table class="comparison-table">
+        <tr><th>Substance</th><th>Intoxication Features</th><th>Withdrawal / Notes</th></tr>
+        <tr><td>Cannabis</td><td>Euphoria, conjunctival injection, ↑ appetite, dry mouth, tachycardia, paranoia, amotivational syndrome</td><td>No significant physical withdrawal; psychological dependence; amotivational syndrome with chronic use</td></tr>
+        <tr><td>Cocaine/Crack</td><td>Euphoria, ↑ energy, ↓ appetite, paranoia, hallucinations (tactile — Magnan's symptom), chest pain, arrhythmias</td><td>Crash: hypersomnia, ↑ appetite, depression (dopamine depletion); no physical withdrawal; craving intense</td></tr>
+        <tr><td>Amphetamine/Methamphetamine</td><td>Similar to cocaine; longer duration; bruxism; hyperthermia</td><td>Prolonged sleep, depression, fatigue; meth mouth (dental decay)</td></tr>
+        <tr><td>Benzodiazepines</td><td>CNS depression; similar to alcohol; ↓ anxiety, sedation, anterograde amnesia</td><td>Similar to alcohol withdrawal (seizures, delirium); taper slowly; most dangerous withdrawal after alcohol</td></tr>
+        <tr><td>LSD/Hallucinogens</td><td>Perceptual distortions, synesthesia; NO memory loss; flashbacks (HPPD)</td><td>No physical withdrawal; HPPD — hallucinogen persisting perception disorder</td></tr>
+        <tr><td>PCP (Phencyclidine)</td><td>Dissociation, violence, nystagmus (vertical — pathognomonic), muscle rigidity, anaesthesia</td><td>Treatment: quiet room; diazepam; avoid antipsychotics (worsen dysphoria)</td></tr>
+        <tr><td>Inhalants (glue, petrol)</td><td>Euphoria, dizziness, slurred speech; lead poisoning; encephalopathy; "sudden sniffing death"</td><td>Most common in adolescents; paint on face/bag sign; no approved treatment</td></tr>
+        <tr><td>Nicotine</td><td>CNS stimulant; withdrawal: irritability, anxiety, ↑ appetite, craving, difficulty concentrating</td><td>NRT (first-line); Varenicline (most effective); Bupropion; most addictive substance</td></tr>
+        <tr><td>Caffeine</td><td>Nervousness, insomnia, tachycardia; intoxication at &gt;250 mg; no significant dependence</td><td>Withdrawal: headache (most specific), fatigue; mild and self-limited</td></tr>
+      </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ PSYCHOPHARMACOLOGY -->
+<div class="section" id="psychopharm">
+  <div class="section-title">Psycho<span>pharmacology</span></div>
+  <div class="section-sub">Antipsychotics, antidepressants, mood stabilisers, anxiolytics, side effects</div>
+  <div class="grid-auto">
+
+    <div class="card violet">
+      <div class="card-title">💊 Antipsychotics — Typical vs Atypical</div>
+      <div class="tbl-wrap">
+      <table class="comparison-table">
+        <tr><th>Feature</th><th>Typical (FGA)</th><th>Atypical (SGA)</th></tr>
+        <tr><td>Primary mechanism</td><td>D2 blockade (high selectivity)</td><td>D2 + 5-HT2A blockade (+ D1, H1, α1, M1)</td></tr>
+        <tr><td>EPS</td><td>High (especially high-potency)</td><td>Low (except risperidone &gt;6mg, amisulpride)</td></tr>
+        <tr><td>Tardive dyskinesia</td><td>High risk</td><td>Lower risk</td></tr>
+        <tr><td>Prolactin ↑</td><td>Yes (blocks tuberoinfundibular)</td><td>Less (except risperidone, amisulpride — highest)</td></tr>
+        <tr><td>Metabolic syndrome</td><td>Less (especially high-potency)</td><td>More (olanzapine, clozapine — most)</td></tr>
+        <tr><td>Negative symptoms</td><td>Poor response</td><td>Better response</td></tr>
+        <tr><td>Examples</td><td>Haloperidol, Chlorpromazine, Fluphenazine, Trifluoperazine</td><td>Clozapine, Olanzapine, Risperidone, Quetiapine, Aripiprazole, Ziprasidone</td></tr>
+      </table>
+      </div>
+      <div class="kv-row mt-10"><span class="kv-key">High-potency typical AP (less sedation)</span><span class="kv-val highlight">Haloperidol, Trifluoperazine, Fluphenazine</span></div>
+      <div class="kv-row"><span class="kv-key">Low-potency typical AP (more sedation)</span><span class="kv-val">Chlorpromazine, Thioridazine</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">⚠️ EPS — Extrapyramidal Side Effects</div>
+      <div class="tbl-wrap">
+      <table class="comparison-table">
+        <tr><th>EPS Type</th><th>Onset</th><th>Features</th><th>Treatment</th></tr>
+        <tr><td>Acute dystonia</td><td>Hours–days</td><td>Sustained muscle contraction; torticollis, oculogyric crisis, opisthotonos</td><td>IV/IM diphenhydramine or benztropine (immediate)</td></tr>
+        <tr><td>Akathisia</td><td>Days–weeks</td><td>Subjective restlessness; cannot sit still; may increase suicidal risk</td><td>Propranolol (best); BZD; reduce dose</td></tr>
+        <tr><td>Parkinsonism</td><td>Weeks</td><td>Tremor (pill-rolling), rigidity, bradykinesia, shuffling gait</td><td>Reduce dose; anticholinergics (benztropine, trihexyphenidyl)</td></tr>
+        <tr><td>Tardive dyskinesia (TD)</td><td>Months–years</td><td>Involuntary orofacial movements; lip smacking; tongue movements; buccolingual</td><td>Reduce/stop AP; switch to clozapine/quetiapine; Valbenazine, Deutetrabenazine (VMAT2 inhibitors)</td></tr>
+      </table>
+      </div>
+      <div class="alert-box">Tardive dyskinesia is often IRREVERSIBLE. Best prevention = lowest effective dose, shortest duration. AIMS scale used to monitor.</div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🚨 Neuroleptic Malignant Syndrome (NMS)</div>
+      <div class="formula-box">FEVER mnemonic:
+Fever (hyperthermia &gt;38°C), Encephalopathy,
+Vitals unstable (tachycardia, BP lability),
+Elevated CPK + rigidity, Rigidity (lead-pipe)</div>
+      <div class="kv-row"><span class="kv-key">Pathophysiology</span><span class="kv-val highlight">Sudden D2 blockade → hypothalamic temperature dysregulation + muscle rigidity</span></div>
+      <div class="kv-row"><span class="kv-key">Lab findings</span><span class="kv-val danger">↑ CPK (most important), leukocytosis, myoglobinuria, ↑ LFTs</span></div>
+      <div class="kv-row"><span class="kv-key">Management</span><span class="kv-val highlight">STOP antipsychotic → Supportive (cooling, hydration, monitoring) → Dantrolene + Bromocriptine</span></div>
+      <div class="kv-row"><span class="kv-key">Dantrolene MOA</span><span class="kv-val">Muscle relaxant; blocks Ca2+ release from SR; reduces rigidity and hyperthermia</span></div>
+      <div class="kv-row"><span class="kv-key">Bromocriptine MOA</span><span class="kv-val">D2 agonist; restores dopamine tone</span></div>
+      <div class="kv-row"><span class="kv-key">ECT in NMS</span><span class="kv-val">Used if pharmacotherapy fails; effective</span></div>
+      <div class="kv-row"><span class="kv-key">NMS vs Serotonin syndrome</span><span class="kv-val danger">NMS: bradykinesia, lead-pipe rigidity, slow onset. SS: hyperreflexia, clonus, tremor, rapid onset</span></div>
+    </div>
+
+    <div class="card sky">
+      <div class="card-title">💊 Clozapine — Unique Properties</div>
+      <div class="kv-row"><span class="kv-key">Indications</span><span class="kv-val highlight">Treatment-resistant schizophrenia; suicidality in schizophrenia; tardive dyskinesia</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment-resistant definition</span><span class="kv-val">Failure of ≥2 antipsychotics at adequate dose for ≥6 weeks each</span></div>
+      <div class="kv-row"><span class="kv-key">Mechanism</span><span class="kv-val">Weak D2; strong D4, 5-HT2A, H1, M1, α1 blockade; unique receptor profile</span></div>
+      <div class="kv-row"><span class="kv-key">Agranulocytosis risk</span><span class="kv-val danger">1–2%; mandatory ANC monitoring: weekly (first 6 months) → biweekly → monthly</span></div>
+      <div class="kv-row"><span class="kv-key">ANC threshold to stop</span><span class="kv-val danger">ANC &lt;1500/mm³ → stop clozapine; ANC &lt;1000 → never rechallenge</span></div>
+      <div class="kv-row"><span class="kv-key">Other SE of clozapine</span><span class="kv-val">Hypersalivation (nocturnal), sedation, weight gain, metabolic syndrome, myocarditis, seizures (dose-related)</span></div>
+      <div class="kv-row"><span class="kv-key">Most weight gain</span><span class="kv-val danger">Clozapine = Olanzapine &gt; Risperidone &gt; Quetiapine &gt; Aripiprazole (least)</span></div>
+      <div class="kv-row"><span class="kv-key">No prolactin elevation</span><span class="kv-val green">Clozapine &amp; Quetiapine — least prolactin elevation</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">💊 Antidepressants — Classes &amp; Side Effects</div>
+      <div class="tbl-wrap">
+      <table class="comparison-table">
+        <tr><th>Class</th><th>Examples</th><th>Key Side Effects / Notes</th></tr>
+        <tr><td>SSRIs (1st line)</td><td>Fluoxetine, Sertraline, Escitalopram, Paroxetine, Fluvoxamine, Citalopram</td><td>Sexual dysfunction, GI upset, insomnia, serotonin syndrome (if combined); SAFEST in OD</td></tr>
+        <tr><td>SNRIs</td><td>Venlafaxine, Duloxetine, Desvenlafaxine</td><td>↑ BP (venlafaxine); duloxetine for pain/DM neuropathy; both pathways</td></tr>
+        <tr><td>TCAs</td><td>Amitriptyline, Imipramine, Clomipramine, Nortriptyline</td><td>Anticholinergic (dry mouth, urinary retention, constipation), cardiotoxic (QTc ↑, arrhythmia); DANGEROUS in OD</td></tr>
+        <tr><td>MAOIs</td><td>Phenelzine, Tranylcypromine, Selegiline</td><td>Tyramine (cheese) reaction → hypertensive crisis; atypical depression; many drug interactions</td></tr>
+        <tr><td>Mirtazapine</td><td>NaSSA; α2 antagonist + 5-HT2/5-HT3 block</td><td>Sedation + weight gain (antihistamine); NO sexual dysfunction; useful in anorexia/insomnia</td></tr>
+        <tr><td>Bupropion</td><td>NDRI (norepinephrine-dopamine reuptake inhibitor)</td><td>NO sexual dysfunction; NO weight gain; ↓ seizure threshold; smoking cessation; activating</td></tr>
+        <tr><td>Trazodone</td><td>5-HT2 antagonist + SARI</td><td>Priapism (rare); sedating; used for insomnia; rarely used as AD alone</td></tr>
+        <tr><td>Vortioxetine</td><td>Multimodal serotonergic</td><td>Cognitive enhancement; GI upset; used in MDD with cognitive complaints</td></tr>
+      </table>
+      </div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">⚖️ Mood Stabilisers — Lithium</div>
+      <div class="kv-row"><span class="kv-key">Indication</span><span class="kv-val highlight">Bipolar I (acute mania + prophylaxis); augmentation in treatment-resistant depression; suicide prevention</span></div>
+      <div class="kv-row"><span class="kv-key">Therapeutic range</span><span class="kv-val green">0.6–1.2 mEq/L (acute mania up to 1.5); measured 12h post-dose</span></div>
+      <div class="kv-row"><span class="kv-key">Toxicity &gt;1.5 mEq/L</span><span class="kv-val danger">Coarse tremor, ataxia, confusion, nausea, diarrhoea</span></div>
+      <div class="kv-row"><span class="kv-key">Toxicity &gt;2.0 mEq/L</span><span class="kv-val danger">Seizures, cardiac arrhythmia, coma → life-threatening → haemodialysis</span></div>
+      <div class="kv-row"><span class="kv-key">Drugs ↑ lithium toxicity</span><span class="kv-val danger">NSAIDs, ACE-I, Thiazide diuretics (↓ renal clearance); dehydration, low Na diet</span></div>
+      <div class="kv-row"><span class="kv-key">Drugs ↓ lithium levels</span><span class="kv-val">Theophylline, carbonic anhydrase inhibitors (acetazolamide), loop diuretics</span></div>
+      <div class="kv-row"><span class="kv-key">Renal effects</span><span class="kv-val danger">Nephrogenic DI (most common long-term); tubulointerstitial nephritis</span></div>
+      <div class="kv-row"><span class="kv-key">Thyroid effects</span><span class="kv-val danger">Hypothyroidism (most common endocrine SE); goitre; blocks thyroid hormone synthesis</span></div>
+      <div class="kv-row"><span class="kv-key">Teratogenicity</span><span class="kv-val danger">Ebstein's anomaly (tricuspid valve); risk 1/1000 (relatively low; risk-benefit analysis)</span></div>
+      <div class="kv-row"><span class="kv-key">Valproate in bipolar</span><span class="kv-val highlight">Preferred: rapid cycling, mixed states, comorbid epilepsy; teratogen (NTD, hepatotoxicity)</span></div>
+      <div class="kv-row"><span class="kv-key">Lamotrigine in bipolar</span><span class="kv-val">Best for bipolar depression; Steven-Johnson syndrome risk (titrate slowly)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ CHILD PSYCHIATRY -->
+<div class="section" id="child">
+  <div class="section-title">Child <span>Psychiatry</span></div>
+  <div class="section-sub">ADHD, autism, intellectual disability, Tourette, childhood disorders</div>
+  <div class="grid-auto">
+
+    <div class="card violet">
+      <div class="card-title">🧒 ADHD — Attention Deficit Hyperactivity Disorder</div>
+      <div class="formula-box">DSM-5: ≥6 inattentive OR ≥6 hyperactive-impulsive symptoms
+(≥5 if ≥17 yrs); present in ≥2 settings; onset before 12 yrs;
+persists ≥6 months; impairs function</div>
+      <div class="kv-row"><span class="kv-key">3 presentations</span><span class="kv-val highlight">Predominantly inattentive, predominantly hyperactive-impulsive, combined (MC)</span></div>
+      <div class="kv-row"><span class="kv-key">Prevalence</span><span class="kv-val green">5-7% school-age children; Boys:Girls = 3:1 (clinical); 1.5:1 (community)</span></div>
+      <div class="kv-row"><span class="kv-key">First-line pharmacotherapy</span><span class="kv-val highlight">Methylphenidate (Ritalin) — stimulant; blocks DA+NE reuptake</span></div>
+      <div class="kv-row"><span class="kv-key">Alternative stimulant</span><span class="kv-val">Amphetamine (Adderall); Lisdexamfetamine (prodrug)</span></div>
+      <div class="kv-row"><span class="kv-key">Non-stimulant options</span><span class="kv-val">Atomoxetine (NE reuptake inhibitor); Guanfacine; Clonidine</span></div>
+      <div class="kv-row"><span class="kv-key">Psychotherapy (first-line in preschool)</span><span class="kv-val">Behavioural parent training; CBT; social skills training</span></div>
+      <div class="kv-row"><span class="kv-key">EEG finding</span><span class="kv-val">↑ Theta waves; ↓ Beta waves (cortical arousal ↓)</span></div>
+      <div class="kv-row"><span class="kv-key">Comorbidities</span><span class="kv-val danger">ODD (MC), conduct disorder, anxiety, depression, learning disabilities, tic disorders</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🧩 Autism Spectrum Disorder (ASD)</div>
+      <div class="kv-row"><span class="kv-key">DSM-5 criteria</span><span class="kv-val highlight">Deficits in social communication + restricted/repetitive behaviours; early developmental period</span></div>
+      <div class="kv-row"><span class="kv-key">Social communication deficits</span><span class="kv-val">Reduced eye contact, joint attention, facial expression, reciprocal conversation, social relationships</span></div>
+      <div class="kv-row"><span class="kv-key">Restricted repetitive behaviours</span><span class="kv-val">Stereotypies, insistence on sameness, restricted interests, sensory hyper/hyposensitivity</span></div>
+      <div class="kv-row"><span class="kv-key">Red flag age</span><span class="kv-val danger">No babbling by 12 months; no single words by 16 months; no 2-word phrases by 24 months; any regression</span></div>
+      <div class="kv-row"><span class="kv-key">Screening tool</span><span class="kv-val highlight">M-CHAT (Modified Checklist for Autism in Toddlers) at 18 and 24 months</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard diagnosis</span><span class="kv-val">ADOS-2 (Autism Diagnostic Observation Schedule); ADI-R</span></div>
+      <div class="kv-row"><span class="kv-key">Best treatment</span><span class="kv-val highlight">Early intensive behavioural intervention (ABA — Applied Behaviour Analysis)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug for irritability/aggression</span><span class="kv-val">Risperidone, Aripiprazole (FDA approved for ASD irritability)</span></div>
+      <div class="kv-row"><span class="kv-key">Associated conditions</span><span class="kv-val">Intellectual disability (30-50%), epilepsy (25%), ADHD, anxiety, GI problems</span></div>
+      <div class="kv-row"><span class="kv-key">Prevalence</span><span class="kv-val green">~1 in 36 children (CDC 2023); Boys:Girls = 4:1</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🧠 Intellectual Disability (ID)</div>
+      <div class="tbl-wrap">
+      <table class="comparison-table">
+        <tr><th>Severity</th><th>IQ Range</th><th>Mental Age</th><th>Adaptive Function</th></tr>
+        <tr><td>Mild</td><td>50–69</td><td>9–12 years</td><td>Can live independently with support; educable; 85% of ID</td></tr>
+        <tr><td>Moderate</td><td>35–49</td><td>6–9 years</td><td>Semi-independent; trainable; sheltered workshops</td></tr>
+        <tr><td>Severe</td><td>20–34</td><td>3–6 years</td><td>Close supervision; basic self-care possible; group homes</td></tr>
+        <tr><td>Profound</td><td>&lt;20</td><td>&lt;3 years</td><td>24-hour care; minimal communication; &lt;1% of ID</td></tr>
+      </table>
+      </div>
+      <div class="kv-row mt-10"><span class="kv-key">MC cause (preventable)</span><span class="kv-val danger">Iodine deficiency (worldwide); Foetal alcohol syndrome (developed countries)</span></div>
+      <div class="kv-row"><span class="kv-key">MC genetic cause</span><span class="kv-val danger">Down syndrome (Trisomy 21); Fragile X (MC inherited cause)</span></div>
+      <div class="kv-row"><span class="kv-key">Down syndrome IQ</span><span class="kv-val">Usually mild-moderate ID; maternal age ↑ risk; 47 chromosomes</span></div>
+      <div class="kv-row"><span class="kv-key">Fragile X features</span><span class="kv-val">Macroorchidism, elongated face, large ears, social anxiety; CGG repeat expansion in FMR1</span></div>
+      <div class="kv-row"><span class="kv-key">Phenylketonuria (PKU)</span><span class="kv-val">PAH deficiency; treatable with diet; Guthrie test at birth; musty odour</span></div>
+    </div>
+
+    <div class="card sky">
+      <div class="card-title">💊 Tourette Syndrome &amp; Tic Disorders</div>
+      <div class="kv-row"><span class="kv-key">Tourette syndrome diagnosis</span><span class="kv-val highlight">≥2 motor tics + ≥1 vocal tic; onset &lt;18 yrs; ≥1 year duration; not substance-related</span></div>
+      <div class="kv-row"><span class="kv-key">Coprolalia</span><span class="kv-val">Involuntary swearing; only 10-15% of Tourette (not required for diagnosis)</span></div>
+      <div class="kv-row"><span class="kv-key">Echolalia / Echopraxia</span><span class="kv-val">Repeating others' words/actions; Tourette</span></div>
+      <div class="kv-row"><span class="kv-key">Comorbidities (very common)</span><span class="kv-val danger">ADHD (50-60%), OCD (40%), anxiety, learning difficulties</span></div>
+      <div class="kv-row"><span class="kv-key">First-line pharmacotherapy</span><span class="kv-val highlight">Clonidine / Guanfacine (mild-moderate); Haloperidol / Pimozide (severe — most effective)</span></div>
+      <div class="kv-row"><span class="kv-key">CBIT (behavioural)</span><span class="kv-val">Comprehensive Behavioural Intervention for Tics; habit reversal training; evidence-based</span></div>
+      <div class="kv-row"><span class="kv-key">Prognosis</span><span class="kv-val green">70% improve significantly by early adulthood; peak severity around age 10-12</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">📋 Other Child Psychiatric Disorders</div>
+      <div class="tbl-wrap">
+      <table class="comparison-table">
+        <tr><th>Disorder</th><th>Key Feature</th><th>Treatment</th></tr>
+        <tr><td>Separation Anxiety</td><td>Excessive fear of separation from attachment figure; onset &lt;12 yrs; school refusal; most common anxiety in children</td><td>CBT; SSRIs (sertraline); family therapy; graduated school return</td></tr>
+        <tr><td>Selective Mutism</td><td>Consistent failure to speak in specific social situations despite speaking elsewhere; school-age; associated with social anxiety</td><td>SSRIs; CBT; behavioural shaping; school-based interventions</td></tr>
+        <tr><td>ODD (Oppositional Defiant)</td><td>Pattern of angry/irritable mood + argumentative/defiant behaviour + vindictiveness ≥6 months; ≥4 symptoms; towards ≥1 non-sibling</td><td>Parent management training; problem-solving skills; CBT</td></tr>
+        <tr><td>Conduct Disorder</td><td>Persistent pattern violating others' rights; aggression, property destruction, deceitfulness, rule violations; MC in antisocial PD precursor</td><td>Multisystemic therapy (MST); parent training; functional family therapy</td></tr>
+        <tr><td>Enuresis</td><td>Involuntary urination ≥2×/week for ≥3 months; ≥5 yrs; nocturnal MC</td><td>Bell-pad (moisture alarm — most effective); Desmopressin; Imipramine (if others fail)</td></tr>
+        <tr><td>Encopresis</td><td>Voluntary/involuntary defecation in inappropriate places ≥1×/month for ≥3 months; ≥4 yrs; retentive MC</td><td>Disimpaction; bowel training; fibre; biofeedback; treat constipation</td></tr>
+        <tr><td>Reactive Attachment Disorder</td><td>Inhibited, emotionally withdrawn behaviour; rarely seeks comfort; neglect/abuse history; &lt;5 yrs onset</td><td>Safe stable caregiving; parent-child therapy; no pharmacotherapy</td></tr>
+      </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency psychiatry facts for rapid revision</div>
+  <div class="grid-2">
+    <div class="card violet">
+      <div class="card-title">⭐ Psychiatry Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">Most common psychiatric disorder</span><span class="kv-val highlight">Depression (globally); Anxiety (in primary care)</span></div>
+      <div class="kv-row"><span class="kv-key">Most common psychosis worldwide</span><span class="kv-val">Schizophrenia; lifetime prevalence 1%</span></div>
+      <div class="kv-row"><span class="kv-key">MC anxiety disorder</span><span class="kv-val highlight">Specific phobia; Social anxiety disorder (second MC)</span></div>
+      <div class="kv-row"><span class="kv-key">DOC — Schizophrenia (acute)</span><span class="kv-val">Haloperidol (typical) / Olanzapine / Risperidone (atypical)</span></div>
+      <div class="kv-row"><span class="kv-key">DOC — Treatment-resistant schizophrenia</span><span class="kv-val danger">Clozapine (mandatory ANC monitoring)</span></div>
+      <div class="kv-row"><span class="kv-key">DOC — Bipolar mania (acute)</span><span class="kv-val highlight">Lithium OR Valproate ± antipsychotic</span></div>
+      <div class="kv-row"><span class="kv-key">DOC — Bipolar prophylaxis</span><span class="kv-val">Lithium (best evidence for both poles + suicide prevention)</span></div>
+      <div class="kv-row"><span class="kv-key">DOC — Bipolar depression</span><span class="kv-val">Lamotrigine; Quetiapine; avoid antidepressants alone</span></div>
+      <div class="kv-row"><span class="kv-key">DOC — OCD</span><span class="kv-val highlight">SSRIs (high dose + 12 weeks) + ERP; clomipramine if SSRI fails</span></div>
+      <div class="kv-row"><span class="kv-key">DOC — PTSD</span><span class="kv-val">Sertraline or Paroxetine (FDA-approved SSRIs)</span></div>
+      <div class="kv-row"><span class="kv-key">DOC — GAD</span><span class="kv-val">SSRIs/SNRIs; Buspirone (non-habit-forming, delayed onset)</span></div>
+      <div class="kv-row"><span class="kv-key">DOC — Alcohol withdrawal</span><span class="kv-val danger">Benzodiazepines (diazepam / chlordiazepoxide)</span></div>
+      <div class="kv-row"><span class="kv-key">DOC — Delirium tremens</span><span class="kv-val danger">IV lorazepam / diazepam; high-dose BZDs</span></div>
+      <div class="kv-row"><span class="kv-key">DOC — Opioid withdrawal</span><span class="kv-val">Methadone or Buprenorphine (OST); Clonidine (symptoms)</span></div>
+      <div class="kv-row"><span class="kv-key">DOC — NMS</span><span class="kv-val highlight">Stop AP → Dantrolene + Bromocriptine; supportive care</span></div>
+      <div class="kv-row"><span class="kv-key">DOC — Akathisia</span><span class="kv-val">Propranolol (best); Mirtazapine; BZDs</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">⭐ Psychiatry Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">Antipsychotic with NO EPS</span><span class="kv-val highlight">Clozapine, Quetiapine (lowest EPS); Aripiprazole (partial D2 agonist)</span></div>
+      <div class="kv-row"><span class="kv-key">Antipsychotic with MOST EPS</span><span class="kv-val danger">Haloperidol (high potency typical); Fluphenazine</span></div>
+      <div class="kv-row"><span class="kv-key">Highest prolactin elevation</span><span class="kv-val danger">Risperidone, Amisulpride (among atypicals)</span></div>
+      <div class="kv-row"><span class="kv-key">Most weight gain antipsychotic</span><span class="kv-val danger">Clozapine = Olanzapine (most); Aripiprazole, Ziprasidone (least)</span></div>
+      <div class="kv-row"><span class="kv-key">SSRI — safest in pregnancy</span><span class="kv-val green">Sertraline (most data); fluoxetine (longest track record)</span></div>
+      <div class="kv-row"><span class="kv-key">Antidepressant safest in OD</span><span class="kv-val green">SSRIs &gt; SNRIs &gt; Mirtazapine; TCAs most dangerous</span></div>
+      <div class="kv-row"><span class="kv-key">Antidepressant causing seizures</span><span class="kv-val danger">Bupropion (↓ seizure threshold); Clomipramine</span></div>
+      <div class="kv-row"><span class="kv-key">Serotonin syndrome triad</span><span class="kv-val danger">Mental status Δ + Autonomic instability + Neuromuscular abnormalities (clonus, hyperreflexia)</span></div>
+      <div class="kv-row"><span class="kv-key">Hunter criteria (serotonin syndrome)</span><span class="kv-val">Clonus (inducible/spontaneous/ocular) is key feature; agitation, diaphoresis, tremor</span></div>
+      <div class="kv-row"><span class="kv-key">Lithium DON'T combine</span><span class="kv-val danger">NSAIDs, ACEi, Thiazides (↑ lithium toxicity); Haloperidol (↑ neurotoxicity)</span></div>
+      <div class="kv-row"><span class="kv-key">Informed consent capacity requires</span><span class="kv-val highlight">Understanding + Appreciation + Reasoning + Expressing a choice (UARE)</span></div>
+      <div class="kv-row"><span class="kv-key">IPC Section 309</span><span class="kv-val danger">Attempt to suicide — now decriminalised (Mental Healthcare Act 2017)</span></div>
+      <div class="kv-row"><span class="kv-key">Mental Healthcare Act India</span><span class="kv-val highlight">2017; right to mental health care; advance directives; nominated representative; decriminalises suicide attempt</span></div>
+      <div class="kv-row"><span class="kv-key">DSMM diagnosis</span><span class="kv-val">Dimensional approach; no subtypes of schizophrenia in DSM-5</span></div>
+      <div class="kv-row"><span class="kv-key">Best prognosis psychosis</span><span class="kv-val green">Brief psychotic disorder; then schizophreniform; then schizophrenia</span></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

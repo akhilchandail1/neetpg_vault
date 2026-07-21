@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>OBS Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0e1a; --surface: #111827; --surface2: #1a2235; --border: #1e2d45;
+    --accent: #e8b86d; --accent2: #7dd3fc; --accent3: #86efac; --accent4: #f9a8d4; --accent5: #c4b5fd;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    border-bottom: 1px solid var(--border); padding: 24px 32px 16px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent); color: #0a0e1a; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent); color: #0a0e1a; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.gold::before { background: var(--accent); }
+  .card.blue::before { background: var(--accent2); }
+  .card.green::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.purple::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .card.gold .card-title { color: var(--accent); }
+  .card.blue .card-title { color: var(--accent2); }
+  .card.green .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.purple .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #1a2235; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.blue { color: var(--accent2); }
+  .kv-val.green { color: var(--accent3); }
+  .kv-val.pink { color: var(--accent4); }
+  .kv-val.danger { color: var(--danger); }
+  .formula-box { background: #0d1520; border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent3); margin: 6px 0; line-height: 1.6; }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .pill-group { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+  .pill { padding: 3px 9px; border-radius: 20px; font-size: 10.5px; font-weight: 500; }
+  .pill.red { background: rgba(248,113,113,0.12); color: var(--danger); border: 1px solid rgba(248,113,113,0.25); }
+  .stage-row { display: flex; gap: 8px; margin-bottom: 7px; align-items: flex-start; font-size: 12.5px; }
+  .stage-num { background: var(--accent2); color: #0a0e1a; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent); font-weight: 500; }
+  .mt-12 { margin-top: 12px; }
+  .span-full { grid-column: 1 / -1; }
+  @media (max-width: 800px) { .grid-auto, .grid-2 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>OBS <span>&amp;</span> GYN Cheatsheet</h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('antenatal',this)">Antenatal</div>
+    <div class="tab" onclick="showSection('labour',this)">Labour &amp; Delivery</div>
+    <div class="tab" onclick="showSection('complications',this)">Complications</div>
+    <div class="tab" onclick="showSection('hypertension',this)">HTN in Pregnancy</div>
+    <div class="tab" onclick="showSection('haemorrhage',this)">Haemorrhage</div>
+    <div class="tab" onclick="showSection('infections',this)">Infections</div>
+    <div class="tab" onclick="showSection('gynaecology',this)">Gynaecology</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ANTENATAL -->
+<div class="section active" id="antenatal">
+  <div class="section-title">Antenatal <span>Care</span></div>
+  <div class="section-sub">Normal pregnancy milestones, investigations &amp; fetal assessment</div>
+  <div class="grid-auto">
+    <div class="card gold">
+      <div class="card-title">⏱ Gestational Age Landmarks</div>
+      <div class="kv-row"><span class="kv-key">1st trimester</span><span class="kv-val">0–13+6 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">2nd trimester</span><span class="kv-val">14–27+6 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">3rd trimester</span><span class="kv-val">28–40 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">Term</span><span class="kv-val highlight">37–41+6 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">Post-term</span><span class="kv-val danger">≥42 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">Quickening (primi)</span><span class="kv-val">18–20 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Quickening (multi)</span><span class="kv-val">16–18 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Lightening (primi)</span><span class="kv-val">2–4 wks before term</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🔬 First-Trimester Screening</div>
+      <div class="kv-row"><span class="kv-key">Double marker</span><span class="kv-val blue">11–13+6 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Components</span><span class="kv-val">β-hCG + PAPP-A</span></div>
+      <div class="kv-row"><span class="kv-key">NT scan timing</span><span class="kv-val blue">11–14 wks</span></div>
+      <div class="kv-row"><span class="kv-key">NT cutoff</span><span class="kv-val danger">≥3.5 mm (Down's)</span></div>
+      <div class="kv-row"><span class="kv-key">Nasal bone absent</span><span class="kv-val danger">T21 risk ↑</span></div>
+      <div class="kv-row"><span class="kv-key">CVS timing</span><span class="kv-val">10–13 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Amniocentesis</span><span class="kv-val">15–20 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Cordocentesis</span><span class="kv-val">≥18 wks</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">📊 Quadruple Marker (2nd Trimester)</div>
+      <div class="kv-row"><span class="kv-key">Timing</span><span class="kv-val green">15–20 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Components</span><span class="kv-val">AFP, β-hCG, uE3, Inhibin-A</span></div>
+      <div class="kv-row"><span class="kv-key">Down syndrome (T21)</span><span class="kv-val">↑hCG ↑Inhibin, ↓AFP ↓uE3</span></div>
+      <div class="kv-row"><span class="kv-key">Trisomy 18</span><span class="kv-val danger">↓ all 4 markers</span></div>
+      <div class="kv-row"><span class="kv-key">Open NTD</span><span class="kv-val">↑↑ AFP</span></div>
+      <div class="kv-row"><span class="kv-key">Abdominal wall defect</span><span class="kv-val">↑↑ AFP</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">📏 Fundal Height</div>
+      <div class="kv-row"><span class="kv-key">12 wks</span><span class="kv-val">Just above symphysis pubis</span></div>
+      <div class="kv-row"><span class="kv-key">20 wks</span><span class="kv-val highlight">At umbilicus</span></div>
+      <div class="kv-row"><span class="kv-key">36 wks</span><span class="kv-val">At xiphisternum</span></div>
+      <div class="kv-row"><span class="kv-key">40 wks</span><span class="kv-val">Drops 2–4 cm below 36 wks level</span></div>
+      <div class="kv-row"><span class="kv-key">SFH = GA (weeks)</span><span class="kv-val">±3 cm from 20 wks</span></div>
+      <div class="formula-box">POG (weeks) = SFH (cm) × 8/7</div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🫀 Fetal Heart Rate</div>
+      <div class="kv-row"><span class="kv-key">FHR (Normal)</span><span class="kv-val green">110–160 bpm</span></div>
+      <div class="kv-row"><span class="kv-key">Bradycardia</span><span class="kv-val danger">&lt;110 bpm</span></div>
+      <div class="kv-row"><span class="kv-key">Tachycardia</span><span class="kv-val danger">&gt;160 bpm</span></div>
+      <div class="kv-row"><span class="kv-key">1st heard (Pinnard)</span><span class="kv-val">18–20 wks</span></div>
+      <div class="kv-row"><span class="kv-key">1st heard (Doppler)</span><span class="kv-val pink">10–12 wks</span></div>
+      <div class="kv-row"><span class="kv-key">NST reactive criteria</span><span class="kv-val green">2 accels in 20 min</span></div>
+      <div class="kv-row"><span class="kv-key">Accel: ≥15 bpm × 15 sec</span><span class="kv-val">(if &lt;32 wks: ≥10 bpm × 10 sec)</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🧬 Biophysical Profile (BPP)</div>
+      <div class="kv-row"><span class="kv-key">Reactive NST</span><span class="kv-val">2 pts</span></div>
+      <div class="kv-row"><span class="kv-key">Fetal breathing (≥30 sec)</span><span class="kv-val">2 pts</span></div>
+      <div class="kv-row"><span class="kv-key">Gross body movement (≥3)</span><span class="kv-val">2 pts</span></div>
+      <div class="kv-row"><span class="kv-key">Fetal tone</span><span class="kv-val">2 pts</span></div>
+      <div class="kv-row"><span class="kv-key">Amniotic fluid (MVP ≥2 cm)</span><span class="kv-val">2 pts</span></div>
+      <div class="kv-row"><span class="kv-key">Score 6 → deliver if</span><span class="kv-val danger">≥36 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Score ≤4</span><span class="kv-val danger">Deliver regardless of GA</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">💧 Amniotic Fluid &amp; Doppler</div>
+      <div class="kv-row"><span class="kv-key">Normal AFI</span><span class="kv-val green">8–24 cm</span></div>
+      <div class="kv-row"><span class="kv-key">Oligohydramnios</span><span class="kv-val danger">AFI &lt;5 cm</span></div>
+      <div class="kv-row"><span class="kv-key">Polyhydramnios</span><span class="kv-val danger">AFI &gt;24 cm</span></div>
+      <div class="kv-row"><span class="kv-key">Normal S/D ratio (UA)</span><span class="kv-val green">&lt;3</span></div>
+      <div class="kv-row"><span class="kv-key">Absent EDF</span><span class="kv-val danger">Severe FGR</span></div>
+      <div class="kv-row"><span class="kv-key">Reversed EDF</span><span class="kv-val danger">Imminent fetal death</span></div>
+      <div class="kv-row"><span class="kv-key">MCA PI ↓</span><span class="kv-val">Brain sparing effect</span></div>
+      <div class="kv-row"><span class="kv-key">Ductus venosus reversal</span><span class="kv-val danger">Deliver immediately</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- LABOUR -->
+<div class="section" id="labour">
+  <div class="section-title">Labour <span>&amp; Delivery</span></div>
+  <div class="section-sub">Stages, Bishop score, CTG interpretation, operative delivery</div>
+  <div class="grid-auto">
+    <div class="card gold">
+      <div class="card-title">⏳ Stages of Labour</div>
+      <div class="kv-row"><span class="kv-key">Latent phase (Primi)</span><span class="kv-val">&lt;20 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Latent phase (Multi)</span><span class="kv-val">&lt;14 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Active phase starts</span><span class="kv-val highlight">4 cm dilated</span></div>
+      <div class="kv-row"><span class="kv-key">Cervical dilatation rate</span><span class="kv-val">≥1 cm/hr (active phase)</span></div>
+      <div class="kv-row"><span class="kv-key">2nd Stage (Primi)</span><span class="kv-val danger">≤2 hrs (≤3 with epidural)</span></div>
+      <div class="kv-row"><span class="kv-key">2nd Stage (Multi)</span><span class="kv-val danger">≤1 hr (≤2 with epidural)</span></div>
+      <div class="kv-row"><span class="kv-key">Active 3rd stage</span><span class="kv-val">Oxytocin 10 IU IM</span></div>
+      <div class="kv-row"><span class="kv-key">PPH (vaginal delivery)</span><span class="kv-val danger">≥500 mL</span></div>
+      <div class="kv-row"><span class="kv-key">PPH (CS delivery)</span><span class="kv-val danger">≥1000 mL</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">📋 Bishop Score</div>
+      <table class="comparison-table">
+        <tr><th>Factor</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
+        <tr><td>Dilatation</td><td>Closed</td><td>1–2</td><td>3–4</td><td>≥5</td></tr>
+        <tr><td>Effacement</td><td>0–30%</td><td>40–50%</td><td>60–70%</td><td>≥80%</td></tr>
+        <tr><td>Station</td><td>-3</td><td>-2</td><td>-1/0</td><td>+1/+2</td></tr>
+        <tr><td>Consistency</td><td>Firm</td><td>Medium</td><td>Soft</td><td>—</td></tr>
+        <tr><td>Position</td><td>Posterior</td><td>Mid</td><td>Anterior</td><td>—</td></tr>
+      </table>
+      <div class="kv-row mt-12"><span class="kv-key">Favourable cervix</span><span class="kv-val green">Score ≥6</span></div>
+      <div class="kv-row"><span class="kv-key">Excellent prognosis</span><span class="kv-val">Score ≥8</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">📈 CTG Interpretation (FIGO 2015)</div>
+      <div class="kv-row"><span class="kv-key">Baseline FHR</span><span class="kv-val green">110–160 bpm</span></div>
+      <div class="kv-row"><span class="kv-key">Baseline variability</span><span class="kv-val green">5–25 bpm</span></div>
+      <div class="kv-row"><span class="kv-key">Reduced variability</span><span class="kv-val">&lt;5 bpm for &gt;50 min</span></div>
+      <div class="kv-row"><span class="kv-key">Early deceleration</span><span class="kv-val green">Mirrors UC — head compression (benign)</span></div>
+      <div class="kv-row"><span class="kv-key">Late deceleration</span><span class="kv-val danger">After UC peak — uteroplacental insuff.</span></div>
+      <div class="kv-row"><span class="kv-key">Variable deceleration</span><span class="kv-val">Cord compression</span></div>
+      <div class="kv-row"><span class="kv-key">Prolonged decel</span><span class="kv-val danger">&gt;3 min — emergency</span></div>
+      <div class="kv-row"><span class="kv-key">Sinusoidal pattern</span><span class="kv-val danger">Fetal anaemia (Rh disease)</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">⚠️ Shoulder Dystocia Manoeuvres</div>
+      <div class="stage-row"><div class="stage-num">1</div><span><strong>McRoberts</strong> — hyperflex maternal thighs (1st line)</span></div>
+      <div class="stage-row"><div class="stage-num">2</div><span><strong>Suprapubic pressure</strong> (NOT fundal)</span></div>
+      <div class="stage-row"><div class="stage-num">3</div><span><strong>Rubin II</strong> — posterior pressure on anterior shoulder</span></div>
+      <div class="stage-row"><div class="stage-num">4</div><span><strong>Woods screw</strong> — rotate posterior shoulder</span></div>
+      <div class="stage-row"><div class="stage-num">5</div><span><strong>Delivery of posterior arm</strong></span></div>
+      <div class="stage-row"><div class="stage-num">6</div><span><strong>All-fours</strong> (Gaskin manoeuvre)</span></div>
+      <div class="alert-box">Zavanelli manoeuvre = cephalic replacement before emergency CS</div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🔧 Operative Vaginal Delivery</div>
+      <div class="kv-row"><span class="kv-key">Kjelland's forceps</span><span class="kv-val">Rotation + deep transverse arrest</span></div>
+      <div class="kv-row"><span class="kv-key">Piper's forceps</span><span class="kv-val">After-coming head in breech</span></div>
+      <div class="kv-row"><span class="kv-key">Vacuum suction</span><span class="kv-val">0.6 kg/cm²</span></div>
+      <div class="kv-row"><span class="kv-key">Max pulls (vacuum)</span><span class="kv-val danger">3 pulls then abandon</span></div>
+      <div class="kv-row"><span class="kv-key">Vacuum CI</span><span class="kv-val danger">&lt;34 wks, face presentation</span></div>
+      <div class="kv-row"><span class="kv-key">Cord prolapse Rx</span><span class="kv-val danger">Relieve pressure + emergency CS</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPLICATIONS -->
+<div class="section" id="complications">
+  <div class="section-title">Obstetric <span>Complications</span></div>
+  <div class="section-sub">GDM, FGR, placenta praevia, abruption, preterm labour, PROM</div>
+  <div class="grid-auto">
+    <div class="card gold">
+      <div class="card-title">🍬 Gestational Diabetes (GDM)</div>
+      <div class="kv-row"><span class="kv-key">Screening</span><span class="kv-val">75g OGTT at 24–28 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Fasting cutoff (IADPSG)</span><span class="kv-val highlight">≥92 mg/dL</span></div>
+      <div class="kv-row"><span class="kv-key">1-hr cutoff</span><span class="kv-val">≥180 mg/dL</span></div>
+      <div class="kv-row"><span class="kv-key">2-hr cutoff</span><span class="kv-val highlight">≥153 mg/dL</span></div>
+      <div class="kv-row"><span class="kv-key">Fasting target</span><span class="kv-val green">&lt;95 mg/dL</span></div>
+      <div class="kv-row"><span class="kv-key">2-hr PP target</span><span class="kv-val green">&lt;120 mg/dL</span></div>
+      <div class="kv-row"><span class="kv-key">Safe oral agent</span><span class="kv-val">Metformin (NICE approved)</span></div>
+      <div class="kv-row"><span class="kv-key">AVOID</span><span class="kv-val danger">Glyburide (crosses placenta)</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">👶 Fetal Growth Restriction (FGR)</div>
+      <div class="kv-row"><span class="kv-key">Definition</span><span class="kv-val danger">EFW &lt;10th percentile</span></div>
+      <div class="kv-row"><span class="kv-key">Severe FGR</span><span class="kv-val danger">EFW &lt;3rd percentile</span></div>
+      <div class="kv-row"><span class="kv-key">Symmetric FGR</span><span class="kv-val">HC:AC normal — early onset</span></div>
+      <div class="kv-row"><span class="kv-key">Asymmetric FGR</span><span class="kv-val pink">HC:AC ↑ — brain sparing</span></div>
+      <div class="kv-row"><span class="kv-key">Best single USG parameter</span><span class="kv-val highlight">Abdominal circumference</span></div>
+      <div class="kv-row"><span class="kv-key">Absent/reversed EDF</span><span class="kv-val danger">Deliver if ≥34 wks</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🩹 Placenta Praevia</div>
+      <div class="kv-row"><span class="kv-key">Grade I (Low lying)</span><span class="kv-val">Lower segment, not reaching os</span></div>
+      <div class="kv-row"><span class="kv-key">Grade II (Marginal)</span><span class="kv-val">Reaches internal os</span></div>
+      <div class="kv-row"><span class="kv-key">Grade III (Partial)</span><span class="kv-val">Partially covers os</span></div>
+      <div class="kv-row"><span class="kv-key">Grade IV (Major)</span><span class="kv-val blue">Completely covers os</span></div>
+      <div class="kv-row"><span class="kv-key">Classic presentation</span><span class="kv-val highlight">Painless, bright red bleeding</span></div>
+      <div class="kv-row"><span class="kv-key">Diagnosis gold std</span><span class="kv-val">TVS ultrasound</span></div>
+      <div class="kv-row"><span class="kv-key">NEVER do</span><span class="kv-val danger">Digital PV examination</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🩸 Placental Abruption</div>
+      <div class="kv-row"><span class="kv-key">Presentation</span><span class="kv-val danger">Painful, dark bleeding</span></div>
+      <div class="kv-row"><span class="kv-key">Concealed type</span><span class="kv-val">No visible bleeding, tense uterus</span></div>
+      <div class="kv-row"><span class="kv-key">Risk factors</span><span class="kv-val">HTN, trauma, cocaine, PROM</span></div>
+      <div class="kv-row"><span class="kv-key">Couvelaire uterus</span><span class="kv-val danger">Massive retroplacental haematoma</span></div>
+      <div class="kv-row"><span class="kv-key">Complications</span><span class="kv-val">DIC, PPH, renal failure</span></div>
+      <div class="kv-row"><span class="kv-key">Kleihauer-Betke test</span><span class="kv-val">Detects fetal cells in maternal blood</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">⏰ Preterm Labour &amp; PPROM</div>
+      <div class="kv-row"><span class="kv-key">PTL definition</span><span class="kv-val danger">Labour 24–36+6 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Tocolysis 1st line</span><span class="kv-val green">Nifedipine</span></div>
+      <div class="kv-row"><span class="kv-key">Tocolysis 2nd line</span><span class="kv-val">Atosiban (oxytocin antagonist)</span></div>
+      <div class="kv-row"><span class="kv-key">Lung maturity</span><span class="kv-val highlight">Betamethasone 12mg IM × 2 doses</span></div>
+      <div class="kv-row"><span class="kv-key">Steroid timing</span><span class="kv-val">24–34 wks (effect in 24–48 hrs)</span></div>
+      <div class="kv-row"><span class="kv-key">MgSO4 for neuroprotection</span><span class="kv-val">&lt;32 wks (reduces cerebral palsy)</span></div>
+      <div class="kv-row"><span class="kv-key">PPROM antibiotic</span><span class="kv-val highlight">Erythromycin × 10 days</span></div>
+      <div class="kv-row"><span class="kv-key">Chorioamnionitis Rx</span><span class="kv-val danger">Deliver immediately</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- HTN -->
+<div class="section" id="hypertension">
+  <div class="section-title">Hypertension <span>in Pregnancy</span></div>
+  <div class="section-sub">Classification, Preeclampsia, Eclampsia, HELLP Syndrome</div>
+  <div class="grid-auto">
+    <div class="card gold">
+      <div class="card-title">📊 Classification</div>
+      <div class="kv-row"><span class="kv-key">Chronic HTN</span><span class="kv-val">Before 20 wks or pre-existing</span></div>
+      <div class="kv-row"><span class="kv-key">Gestational HTN</span><span class="kv-val">≥20 wks, no proteinuria</span></div>
+      <div class="kv-row"><span class="kv-key">Preeclampsia</span><span class="kv-val highlight">≥20 wks + proteinuria/features</span></div>
+      <div class="kv-row"><span class="kv-key">Eclampsia</span><span class="kv-val danger">PE + seizures</span></div>
+      <div class="kv-row"><span class="kv-key">BP cutoff</span><span class="kv-val danger">≥140/90 on 2 occasions</span></div>
+      <div class="kv-row"><span class="kv-key">Severe HTN</span><span class="kv-val danger">≥160/110 mmHg</span></div>
+      <div class="kv-row"><span class="kv-key">Proteinuria cutoff</span><span class="kv-val">≥300 mg/24hr or PCR ≥0.3</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🚨 Antihypertensives in Pregnancy</div>
+      <div class="kv-row"><span class="kv-key">Safe drugs</span><span class="kv-val green">Labetalol, Nifedipine, Methyldopa</span></div>
+      <div class="kv-row"><span class="kv-key">IV acute severe HTN</span><span class="kv-val danger">IV Labetalol or IV Hydralazine</span></div>
+      <div class="kv-row"><span class="kv-key">ABSOLUTELY AVOID</span><span class="kv-val danger">ACE inhibitors, ARBs, Atenolol</span></div>
+      <div class="kv-row"><span class="kv-key">Prevention (high risk)</span><span class="kv-val green">Aspirin 75–150 mg from 12–16 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Calcium supplementation</span><span class="kv-val">1.5–2 g/day (low Ca diet)</span></div>
+      <div class="kv-row"><span class="kv-key">Delivery (mild PE)</span><span class="kv-val">37 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Delivery (severe PE)</span><span class="kv-val danger">≥34 wks — deliver</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">⚡ Eclampsia &amp; MgSO4</div>
+      <div class="kv-row"><span class="kv-key">Loading dose</span><span class="kv-val blue">4g IV over 10–15 min</span></div>
+      <div class="kv-row"><span class="kv-key">Maintenance</span><span class="kv-val">1–2 g/hr IV infusion</span></div>
+      <div class="kv-row"><span class="kv-key">Zuspan regimen</span><span class="kv-val">4g IV load + 1g/hr</span></div>
+      <div class="kv-row"><span class="kv-key">Pritchard regimen</span><span class="kv-val">4g IV + 5g IM each buttock</span></div>
+      <div class="kv-row"><span class="kv-key">Therapeutic range</span><span class="kv-val green">4–7 mEq/L</span></div>
+      <div class="kv-row"><span class="kv-key">Loss of patellar reflex</span><span class="kv-val danger">7–10 mEq/L — STOP infusion</span></div>
+      <div class="kv-row"><span class="kv-key">Respiratory arrest</span><span class="kv-val danger">&gt;15 mEq/L</span></div>
+      <div class="kv-row"><span class="kv-key">Antidote</span><span class="kv-val">Calcium gluconate 1g IV (10 mL of 10%)</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🔴 HELLP Syndrome</div>
+      <div class="kv-row"><span class="kv-key">H</span><span class="kv-val">Haemolysis (↑LDH, schistocytes)</span></div>
+      <div class="kv-row"><span class="kv-key">EL</span><span class="kv-val">Elevated Liver enzymes</span></div>
+      <div class="kv-row"><span class="kv-key">LP</span><span class="kv-val danger">Low Platelets (&lt;100,000)</span></div>
+      <div class="kv-row"><span class="kv-key">Class I (Tennessee)</span><span class="kv-val danger">Plt &lt;50,000 — worst prognosis</span></div>
+      <div class="kv-row"><span class="kv-key">Class II</span><span class="kv-val">Plt 50–100k</span></div>
+      <div class="kv-row"><span class="kv-key">Class III</span><span class="kv-val">Plt 100–150k</span></div>
+      <div class="kv-row"><span class="kv-key">Presentation</span><span class="kv-val">RUQ/epigastric pain, malaise</span></div>
+      <div class="kv-row"><span class="kv-key">Management</span><span class="kv-val danger">Stabilize → Deliver</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- HAEMORRHAGE -->
+<div class="section" id="haemorrhage">
+  <div class="section-title">Obstetric <span>Haemorrhage</span></div>
+  <div class="section-sub">PPH — 4 T's, uterotonics, surgical options, placenta accreta</div>
+  <div class="grid-auto">
+    <div class="card red">
+      <div class="card-title">🩸 PPH — The 4 T's</div>
+      <div class="kv-row"><span class="kv-key">Tone (70%)</span><span class="kv-val danger">Uterine atony — MC cause</span></div>
+      <div class="kv-row"><span class="kv-key">Tissue (10%)</span><span class="kv-val">Retained placenta/products</span></div>
+      <div class="kv-row"><span class="kv-key">Trauma (20%)</span><span class="kv-val">Lacerations, uterine rupture</span></div>
+      <div class="kv-row"><span class="kv-key">Thrombin (&lt;1%)</span><span class="kv-val">Coagulopathy, DIC</span></div>
+      <div class="alert-box">PRIMARY = within 24 hrs | SECONDARY = 24 hrs–12 wks (usually infection)</div>
+    </div>
+    <div class="card gold">
+      <div class="card-title">💊 Uterotonic Drugs</div>
+      <div class="kv-row"><span class="kv-key">1st Line</span><span class="kv-val highlight">Oxytocin 10 IU IV/IM</span></div>
+      <div class="kv-row"><span class="kv-key">Ergometrine</span><span class="kv-val">0.25 mg IV (CI: Hypertension)</span></div>
+      <div class="kv-row"><span class="kv-key">Misoprostol</span><span class="kv-val">800–1000 mcg PR/SL</span></div>
+      <div class="kv-row"><span class="kv-key">Carboprost (PGF2α)</span><span class="kv-val">250 mcg IM q15 min (CI: Asthma)</span></div>
+      <div class="kv-row"><span class="kv-key">Tranexamic acid</span><span class="kv-val green">1g IV — within 3 hrs of PPH</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🔪 Surgical Steps PPH</div>
+      <div class="stage-row"><div class="stage-num">1</div><span>Bimanual uterine compression</span></div>
+      <div class="stage-row"><div class="stage-num">2</div><span>Bakri balloon tamponade</span></div>
+      <div class="stage-row"><div class="stage-num">3</div><span>B-Lynch compression suture</span></div>
+      <div class="stage-row"><div class="stage-num">4</div><span>Uterine artery ligation</span></div>
+      <div class="stage-row"><div class="stage-num">5</div><span>Internal iliac artery ligation (↓50% pulse pressure)</span></div>
+      <div class="stage-row"><div class="stage-num">6</div><span>Hysterectomy (last resort)</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🩺 Placenta Accreta Spectrum</div>
+      <div class="kv-row"><span class="kv-key">Accreta</span><span class="kv-val">Superficial myometrium (75%)</span></div>
+      <div class="kv-row"><span class="kv-key">Increta</span><span class="kv-val">Into myometrium</span></div>
+      <div class="kv-row"><span class="kv-key">Percreta</span><span class="kv-val danger">Through serosa / bladder</span></div>
+      <div class="kv-row"><span class="kv-key">Top risk factor</span><span class="kv-val danger">Previous CS + anterior PP</span></div>
+      <div class="kv-row"><span class="kv-key">Management</span><span class="kv-val danger">Planned CS-hysterectomy at 34–36 wks</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- INFECTIONS -->
+<div class="section" id="infections">
+  <div class="section-title">Infections <span>in Pregnancy</span></div>
+  <div class="section-sub">TORCH, GBS, HIV, Hepatitis B, Malaria</div>
+  <div class="grid-auto">
+    <div class="card gold span-full">
+      <div class="card-title">🧫 TORCH Complex</div>
+      <table class="comparison-table">
+        <tr><th>Infection</th><th>Key Features</th><th>Treatment</th></tr>
+        <tr><td>Toxoplasma</td><td>Cat litter; periventricular intracranial calcification, hydrocephalus</td><td>Spiramycin / Pyrimethamine+Sulfadiazine</td></tr>
+        <tr><td>Rubella</td><td>PDA, cataracts, deafness (triad); 1st trimester = worst; live vaccine CI</td><td>Supportive; MMR vaccine postpartum</td></tr>
+        <tr><td>CMV</td><td>MC congenital infection; periventricular calcification, SNHL</td><td>Ganciclovir (severe cases)</td></tr>
+        <tr><td>HSV</td><td>Skin/eye/mouth or CNS in neonate; active lesion = CS</td><td>Acyclovir; C-section if active lesion</td></tr>
+        <tr><td>Syphilis</td><td>Saddle nose, Hutchinson teeth, periostitis; VDRL screen</td><td>Penicillin G</td></tr>
+      </table>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🦠 GBS &amp; Hepatitis B</div>
+      <div class="kv-row"><span class="kv-key">GBS screen timing</span><span class="kv-val blue">35–37 wks</span></div>
+      <div class="kv-row"><span class="kv-key">IAP drug of choice</span><span class="kv-val">Penicillin G (or Ampicillin)</span></div>
+      <div class="kv-row"><span class="kv-key">IAP effectiveness if ≥</span><span class="kv-val">4 hrs before delivery</span></div>
+      <div class="kv-row"><span class="kv-key">Hep B: Tenofovir if</span><span class="kv-val">HBV DNA &gt;200,000 IU</span></div>
+      <div class="kv-row"><span class="kv-key">Neonatal prophylaxis</span><span class="kv-val">HBIG + HepB vaccine at birth</span></div>
+      <div class="kv-row"><span class="kv-key">HBeAg +ve MTCT risk</span><span class="kv-val danger">~90%</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">💉 HIV in Pregnancy</div>
+      <div class="kv-row"><span class="kv-key">MTCT risk (untreated)</span><span class="kv-val danger">15–45%</span></div>
+      <div class="kv-row"><span class="kv-key">ART</span><span class="kv-val">All HIV+ pregnant women</span></div>
+      <div class="kv-row"><span class="kv-key">Preferred regimen</span><span class="kv-val">TDF + 3TC + DTG</span></div>
+      <div class="kv-row"><span class="kv-key">VL &lt;50 at 36 wks</span><span class="kv-val green">Vaginal delivery allowed</span></div>
+      <div class="kv-row"><span class="kv-key">VL &gt;400 at 36 wks</span><span class="kv-val danger">Elective CS at 38 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Breastfeeding</span><span class="kv-val">Allowed if on effective ART</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- GYN -->
+<div class="section" id="gynaecology">
+  <div class="section-title">High-Yield <span>Gynaecology</span></div>
+  <div class="section-sub">Fibroids, PCOS, Endometriosis, Cervical Ca, Ovarian Tumours, Ectopic</div>
+  <div class="grid-auto">
+    <div class="card gold">
+      <div class="card-title">🌺 Menstrual Cycle</div>
+      <div class="kv-row"><span class="kv-key">Normal cycle</span><span class="kv-val green">21–35 days</span></div>
+      <div class="kv-row"><span class="kv-key">Normal duration</span><span class="kv-val green">3–7 days</span></div>
+      <div class="kv-row"><span class="kv-key">Normal blood loss</span><span class="kv-val green">20–80 mL</span></div>
+      <div class="kv-row"><span class="kv-key">HMB definition</span><span class="kv-val danger">&gt;80 mL/cycle</span></div>
+      <div class="kv-row"><span class="kv-key">Oligomenorrhoea</span><span class="kv-val">Cycle &gt;35 days</span></div>
+      <div class="kv-row"><span class="kv-key">Polymenorrhoea</span><span class="kv-val">Cycle &lt;21 days</span></div>
+      <div class="kv-row"><span class="kv-key">Ovulation (28-day)</span><span class="kv-val highlight">Day 14</span></div>
+      <div class="kv-row"><span class="kv-key">LH surge</span><span class="kv-val">24–36 hrs before ovulation</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🔴 Fibroid Quick Facts</div>
+      <div class="kv-row"><span class="kv-key">MC benign uterine tumour</span><span class="kv-val highlight">Leiomyoma (fibroid)</span></div>
+      <div class="kv-row"><span class="kv-key">Most symptomatic type</span><span class="kv-val danger">Submucous — HMB</span></div>
+      <div class="kv-row"><span class="kv-key">Degeneration in pregnancy</span><span class="kv-val">Red (carneous) degeneration</span></div>
+      <div class="kv-row"><span class="kv-key">Degeneration Rx</span><span class="kv-val">Conservative (rest + analgesics)</span></div>
+      <div class="kv-row"><span class="kv-key">Preoperative shrinkage</span><span class="kv-val">GnRH agonist</span></div>
+      <div class="kv-row"><span class="kv-key">Postmenopausal growth</span><span class="kv-val danger">Suspect sarcomatous change</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔬 Cervical Ca Screening</div>
+      <div class="kv-row"><span class="kv-key">Pap smear start</span><span class="kv-val green">Age 21 yrs</span></div>
+      <div class="kv-row"><span class="kv-key">21–29 yrs</span><span class="kv-val">Pap every 3 years</span></div>
+      <div class="kv-row"><span class="kv-key">30–65 yrs</span><span class="kv-val">Pap + HPV every 5 years</span></div>
+      <div class="kv-row"><span class="kv-key">HPV high-risk</span><span class="kv-val highlight">Types 16, 18 (MC cause)</span></div>
+      <div class="kv-row"><span class="kv-key">Gardasil 9 covers</span><span class="kv-val">6,11,16,18,31,33,45,52,58</span></div>
+      <div class="kv-row"><span class="kv-key">Ideal vaccination age</span><span class="kv-val">11–12 yrs</span></div>
+      <div class="kv-row"><span class="kv-key">CIN 3 treatment</span><span class="kv-val">LLETZ / cone biopsy</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🌸 Endometriosis</div>
+      <div class="kv-row"><span class="kv-key">Classic triad</span><span class="kv-val pink">Dysmenorrhoea, Dyspareunia, Infertility</span></div>
+      <div class="kv-row"><span class="kv-key">Chocolate cyst</span><span class="kv-val">Ovarian endometrioma</span></div>
+      <div class="kv-row"><span class="kv-key">Gold std diagnosis</span><span class="kv-val highlight">Laparoscopy + biopsy</span></div>
+      <div class="kv-row"><span class="kv-key">Medical treatment</span><span class="kv-val">COCP, Progestogens, GnRH-a</span></div>
+      <div class="kv-row"><span class="kv-key">Theory (MC)</span><span class="kv-val">Retrograde menstruation (Sampson's)</span></div>
+      <div class="kv-row"><span class="kv-key">CA-125</span><span class="kv-val">Elevated but not diagnostic</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🥚 PCOS (Rotterdam Criteria — 2/3)</div>
+      <div class="kv-row"><span class="kv-key">Criterion 1</span><span class="kv-val">Oligo/anovulation</span></div>
+      <div class="kv-row"><span class="kv-key">Criterion 2</span><span class="kv-val">Clinical/biochemical hyperandrogenism</span></div>
+      <div class="kv-row"><span class="kv-key">Criterion 3</span><span class="kv-val">Polycystic ovaries on USG (≥12 follicles 2–9mm)</span></div>
+      <div class="kv-row"><span class="kv-key">LH:FSH ratio</span><span class="kv-val highlight">&gt;2 or 3:1</span></div>
+      <div class="kv-row"><span class="kv-key">1st-line infertility Rx</span><span class="kv-val">Clomiphene citrate</span></div>
+      <div class="kv-row"><span class="kv-key">Metformin role</span><span class="kv-val">Insulin sensitizer; promotes ovulation</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🥚 Ovarian Tumours (Key Facts)</div>
+      <div class="kv-row"><span class="kv-key">MC benign ovarian tumour</span><span class="kv-val">Serous cystadenoma</span></div>
+      <div class="kv-row"><span class="kv-key">MC ovarian cancer</span><span class="kv-val danger">Serous cystadenocarcinoma</span></div>
+      <div class="kv-row"><span class="kv-key">Pseudomyxoma peritonei</span><span class="kv-val">Mucinous tumour rupture</span></div>
+      <div class="kv-row"><span class="kv-key">Meig's syndrome</span><span class="kv-val">Fibroma + ascites + R pleural effusion</span></div>
+      <div class="kv-row"><span class="kv-key">Krukenberg tumour</span><span class="kv-val">Gastric Ca mets to ovary (bilateral)</span></div>
+      <div class="kv-row"><span class="kv-key">Alpha-fetoprotein</span><span class="kv-val">Yolk sac (Endodermal sinus) tumour</span></div>
+      <div class="kv-row"><span class="kv-key">Dysgerminoma markers</span><span class="kv-val">LDH + β-hCG</span></div>
+      <div class="kv-row"><span class="kv-key">CA-125</span><span class="kv-val">Epithelial ovarian tumours</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ONE LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency single-answer facts for rapid revision</div>
+  <div class="grid-2">
+    <div class="card gold">
+      <div class="card-title">⭐ OBS Favourites</div>
+      <div class="kv-row"><span class="kv-key">MC presentation at term</span><span class="kv-val highlight">LOA</span></div>
+      <div class="kv-row"><span class="kv-key">Face presentation denominator</span><span class="kv-val">Mentum</span></div>
+      <div class="kv-row"><span class="kv-key">Breech denominator</span><span class="kv-val">Sacrum</span></div>
+      <div class="kv-row"><span class="kv-key">Mentoposterior face</span><span class="kv-val danger">Always CS</span></div>
+      <div class="kv-row"><span class="kv-key">Bandl's ring</span><span class="kv-val danger">Impending uterine rupture</span></div>
+      <div class="kv-row"><span class="kv-key">Hegar's sign</span><span class="kv-val">Isthmus softening (6–8 wks)</span></div>
+      <div class="kv-row"><span class="kv-key">Goodell's sign</span><span class="kv-val">Cervical softening</span></div>
+      <div class="kv-row"><span class="kv-key">Chadwick's sign</span><span class="kv-val">Bluish discolouration (vagina/cervix)</span></div>
+      <div class="kv-row"><span class="kv-key">Piskacek's sign</span><span class="kv-val">Asymmetric uterine enlargement</span></div>
+      <div class="kv-row"><span class="kv-key">GFR in pregnancy</span><span class="kv-val green">Increases by 50%</span></div>
+      <div class="kv-row"><span class="kv-key">Blood volume increase</span><span class="kv-val green">45–50% (plasma &gt; RBC)</span></div>
+      <div class="kv-row"><span class="kv-key">Hb cutoff (anaemia in pregnancy)</span><span class="kv-val danger">&lt;11 g/dL (1st/3rd tri)</span></div>
+      <div class="kv-row"><span class="kv-key">AF volume peak</span><span class="kv-val">34 wks (~800 mL)</span></div>
+      <div class="kv-row"><span class="kv-key">Complete mole karyotype</span><span class="kv-val">46XX (androgenetic)</span></div>
+      <div class="kv-row"><span class="kv-key">Partial mole karyotype</span><span class="kv-val">69XXX or 69XXY (triploid)</span></div>
+      <div class="kv-row"><span class="kv-key">Snowstorm appearance USG</span><span class="kv-val">Complete hydatidiform mole</span></div>
+      <div class="kv-row"><span class="kv-key">GTN chemo (low risk)</span><span class="kv-val highlight">Methotrexate</span></div>
+      <div class="kv-row"><span class="kv-key">GTN chemo (high risk)</span><span class="kv-val">EMA-CO regimen</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">⭐ GYN Favourites</div>
+      <div class="kv-row"><span class="kv-key">MC ectopic site</span><span class="kv-val highlight">Ampulla of fallopian tube (70%)</span></div>
+      <div class="kv-row"><span class="kv-key">Earliest rupturing ectopic</span><span class="kv-val danger">Isthmic ectopic</span></div>
+      <div class="kv-row"><span class="kv-key">Medical Rx ectopic</span><span class="kv-val">Methotrexate (MTX)</span></div>
+      <div class="kv-row"><span class="kv-key">MTX CI</span><span class="kv-val danger">Haemoperitoneum / rupture</span></div>
+      <div class="kv-row"><span class="kv-key">Discriminatory zone</span><span class="kv-val">β-hCG 1500–2000 mIU/mL (TVS)</span></div>
+      <div class="kv-row"><span class="kv-key">Asherman syndrome</span><span class="kv-val">Intrauterine adhesions post D&amp;C</span></div>
+      <div class="kv-row"><span class="kv-key">Ovulation confirmation (gold)</span><span class="kv-val">Serum progesterone day 21</span></div>
+      <div class="kv-row"><span class="kv-key">Fern test positive</span><span class="kv-val">Oestrogen phase (preovulatory)</span></div>
+      <div class="kv-row"><span class="kv-key">Spinnbarkeit peak</span><span class="kv-val">Ovulation (&gt;10 cm)</span></div>
+      <div class="kv-row"><span class="kv-key">1st infertility investigation</span><span class="kv-val">Semen analysis</span></div>
+      <div class="kv-row"><span class="kv-key">Clomiphene MOA</span><span class="kv-val">Anti-oestrogen → ↑ FSH/LH</span></div>
+      <div class="kv-row"><span class="kv-key">Clomiphene CI</span><span class="kv-val danger">Ovarian failure, liver disease</span></div>
+      <div class="kv-row"><span class="kv-key">OHSS management (severe)</span><span class="kv-val danger">Albumin + drain ascites + anticoag</span></div>
+      <div class="kv-row"><span class="kv-key">MC gynaec Ca (India)</span><span class="kv-val danger">Cervical cancer</span></div>
+      <div class="kv-row"><span class="kv-key">Endometrial Ca risk #1</span><span class="kv-val">Unopposed oestrogen</span></div>
+      <div class="kv-row"><span class="kv-key">AUB classification</span><span class="kv-val">PALM-COEIN</span></div>
+      <div class="kv-row"><span class="kv-key">DUB (now called)</span><span class="kv-val">AUB-O (ovulatory dysfunction)</span></div>
+      <div class="kv-row"><span class="kv-key">Turner syndrome karyotype</span><span class="kv-val">45 XO</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

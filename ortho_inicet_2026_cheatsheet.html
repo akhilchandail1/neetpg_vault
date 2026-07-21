@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Orthopaedics Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0e1a; --surface: #111827; --surface2: #1a2235; --border: #1e2d45;
+    --accent: #fb923c; --accent2: #7dd3fc; --accent3: #86efac; --accent4: #f9a8d4; --accent5: #c4b5fd;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #0f172a 0%, #1c0f05 50%, #0f172a 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent); color: #0a0e1a; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent); color: #0a0e1a; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.orange::before { background: var(--accent); }
+  .card.blue::before { background: var(--accent2); }
+  .card.green::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.purple::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.orange .card-title { color: var(--accent); }
+  .card.blue .card-title { color: var(--accent2); }
+  .card.green .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.purple .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #1a2235; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.blue { color: var(--accent2); }
+  .kv-val.green { color: var(--accent3); }
+  .kv-val.pink { color: var(--accent4); }
+  .kv-val.danger { color: var(--danger); }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(125,211,252,0.06); border: 1px solid rgba(125,211,252,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent2); margin-top: 8px; line-height: 1.5; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .stage-row { display: flex; gap: 8px; margin-bottom: 7px; align-items: flex-start; font-size: 12.5px; }
+  .stage-num { background: var(--accent); color: #0a0e1a; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent); font-weight: 500; }
+  .mt-12 { margin-top: 12px; }
+  .span-full { grid-column: 1 / -1; }
+  @media (max-width: 800px) { .grid-auto, .grid-2 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>Ortho<span>paedics</span> Cheatsheet</h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('fractures',this)">Fractures</div>
+    <div class="tab" onclick="showSection('spine',this)">Spine</div>
+    <div class="tab" onclick="showSection('joints',this)">Joints & Arthritis</div>
+    <div class="tab" onclick="showSection('tumours',this)">Bone Tumours</div>
+    <div class="tab" onclick="showSection('infections',this)">Infections</div>
+    <div class="tab" onclick="showSection('paeds',this)">Paediatric Ortho</div>
+    <div class="tab" onclick="showSection('nerves',this)">Nerves & Tendons</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- FRACTURES -->
+<div class="section active" id="fractures">
+  <div class="section-title">Fractures <span>&amp; Dislocations</span></div>
+  <div class="section-sub">Classifications, complications, and management essentials</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🦴 Colles' vs Smith's Fracture</div>
+      <div class="kv-row"><span class="kv-key">Colles' fracture</span><span class="kv-val highlight">Dorsal displacement — Dinner fork deformity</span></div>
+      <div class="kv-row"><span class="kv-key">Mechanism (Colles')</span><span class="kv-val">FOOSH (fall on outstretched hand)</span></div>
+      <div class="kv-row"><span class="kv-key">Smith's fracture</span><span class="kv-val">Volar (garden spade) deformity</span></div>
+      <div class="kv-row"><span class="kv-key">Mechanism (Smith's)</span><span class="kv-val">Fall on flexed wrist</span></div>
+      <div class="kv-row"><span class="kv-key">Barton's fracture</span><span class="kv-val">Intra-articular distal radius</span></div>
+      <div class="kv-row"><span class="kv-key">Chauffeur's fracture</span><span class="kv-val">Radial styloid fracture</span></div>
+      <div class="kv-row"><span class="kv-key">MC complication Colles'</span><span class="kv-val danger">Malunion</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🦴 Femur Neck Fractures</div>
+      <div class="kv-row"><span class="kv-key">Garden I</span><span class="kv-val green">Incomplete / valgus impacted</span></div>
+      <div class="kv-row"><span class="kv-key">Garden II</span><span class="kv-val green">Complete, undisplaced</span></div>
+      <div class="kv-row"><span class="kv-key">Garden III</span><span class="kv-val danger">Partial displacement</span></div>
+      <div class="kv-row"><span class="kv-key">Garden IV</span><span class="kv-val danger">Complete displacement</span></div>
+      <div class="kv-row"><span class="kv-key">Garden I &amp; II Rx</span><span class="kv-val">Cannulated screws</span></div>
+      <div class="kv-row"><span class="kv-key">Garden III &amp; IV Rx</span><span class="kv-val highlight">Hemiarthroplasty (elderly) / THR</span></div>
+      <div class="kv-row"><span class="kv-key">AVN risk</span><span class="kv-val danger">15–35% (displaced)</span></div>
+      <div class="kv-row"><span class="kv-key">Blood supply femoral head</span><span class="kv-val">Medial circumflex femoral artery</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🦴 Open Fracture (Gustilo-Anderson)</div>
+      <div class="kv-row"><span class="kv-key">Grade I</span><span class="kv-val green">&lt;1 cm wound, clean</span></div>
+      <div class="kv-row"><span class="kv-key">Grade II</span><span class="kv-val">1–10 cm, moderate contamination</span></div>
+      <div class="kv-row"><span class="kv-key">Grade IIIA</span><span class="kv-val">&gt;10 cm, adequate soft tissue cover</span></div>
+      <div class="kv-row"><span class="kv-key">Grade IIIB</span><span class="kv-val danger">Periosteal stripping, needs flap</span></div>
+      <div class="kv-row"><span class="kv-key">Grade IIIC</span><span class="kv-val danger">Vascular injury requiring repair</span></div>
+      <div class="kv-row"><span class="kv-key">Antibiotic (all grades)</span><span class="kv-val highlight">Cefazolin (1st gen cephalosporin)</span></div>
+      <div class="kv-row"><span class="kv-key">IIIB/C add</span><span class="kv-val">Aminoglycoside + Penicillin</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🦴 Scaphoid &amp; Wrist Fractures</div>
+      <div class="kv-row"><span class="kv-key">MC carpal bone fractured</span><span class="kv-val highlight">Scaphoid</span></div>
+      <div class="kv-row"><span class="kv-key">Tender anatomical snuff box</span><span class="kv-val">Suspect scaphoid # (even if X-ray –ve)</span></div>
+      <div class="kv-row"><span class="kv-key">AVN risk site</span><span class="kv-val danger">Proximal pole scaphoid</span></div>
+      <div class="kv-row"><span class="kv-key">Best imaging</span><span class="kv-val">MRI (within 24–48 hrs)</span></div>
+      <div class="kv-row"><span class="kv-key">Undisplaced Rx</span><span class="kv-val">Thumb spica cast × 8–12 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Displaced Rx</span><span class="kv-val">Headless compression screw (Herbert)</span></div>
+      <div class="kv-row"><span class="kv-key">MC carpal dislocation</span><span class="kv-val">Perilunate dislocation</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">⚠️ Compartment Syndrome</div>
+      <div class="kv-row"><span class="kv-key">Classic 6 P's</span><span class="kv-val danger">Pain, Pressure, Paralysis, Paraesthesia, Pallor, Pulselessness</span></div>
+      <div class="kv-row"><span class="kv-key">Earliest sign</span><span class="kv-val danger">Pain on passive stretch</span></div>
+      <div class="kv-row"><span class="kv-key">Compartment pressure cutoff</span><span class="kv-val danger">&gt;30 mmHg (or within 30 of DBP)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val danger">Emergency fasciotomy</span></div>
+      <div class="kv-row"><span class="kv-key">MC site</span><span class="kv-val">Leg (4 compartments)</span></div>
+      <div class="kv-row"><span class="kv-key">Volkmann's contracture</span><span class="kv-val danger">Late compartment syndrome (forearm)</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🦴 Hip Dislocation</div>
+      <div class="kv-row"><span class="kv-key">Posterior dislocation (90%)</span><span class="kv-val danger">Flexion + adduction + IR</span></div>
+      <div class="kv-row"><span class="kv-key">Anterior dislocation</span><span class="kv-val">Extension + abduction + ER</span></div>
+      <div class="kv-row"><span class="kv-key">Associated injury (posterior)</span><span class="kv-val">Sciatic nerve palsy</span></div>
+      <div class="kv-row"><span class="kv-key">Reduce within</span><span class="kv-val highlight">6 hrs (prevent AVN)</span></div>
+      <div class="kv-row"><span class="kv-key">Allis manoeuvre</span><span class="kv-val">Posterior hip reduction</span></div>
+      <div class="kv-row"><span class="kv-key">Stimson's technique</span><span class="kv-val">Prone, gravity-assisted reduction</span></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-auto">
+    <div class="card blue span-full">
+      <div class="card-title">📊 Important Fracture Classifications</div>
+      <table class="comparison-table">
+        <tr><th>Fracture</th><th>Classification</th><th>Key Point</th></tr>
+        <tr><td>Intertrochanteric #</td><td>Evans classification</td><td>Stable vs unstable; Rx: DHS (dynamic hip screw)</td></tr>
+        <tr><td>Subtrochanteric #</td><td>Seinsheimer / Russell-Taylor</td><td>High energy; Rx: Intramedullary nail</td></tr>
+        <tr><td>Tibial plateau #</td><td>Schatzker I–VI</td><td>Schatzker VI = bicondylar — worst</td></tr>
+        <tr><td>Calcaneum #</td><td>Essex-Lopresti / Sanders</td><td>Bohler's angle &lt;20° = # (normal 20–40°)</td></tr>
+        <tr><td>Monteggia</td><td>Bado I–IV</td><td>Ulna # + radial head dislocation</td></tr>
+        <tr><td>Galeazzi</td><td>—</td><td>Radius # + distal radioulnar dislocation</td></tr>
+        <tr><td>Pelvic ring</td><td>Tile / Young-Burgess</td><td>APC III — open book; Rx: External fixator → ORIF</td></tr>
+        <tr><td>Vertebral compression</td><td>AO / TLICS</td><td>Burst # = middle column involved</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SPINE -->
+<div class="section" id="spine">
+  <div class="section-title">Spine <span>Disorders</span></div>
+  <div class="section-sub">IVDP, cord injuries, deformities, spondylolisthesis</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🦴 IVDP (Disc Prolapse)</div>
+      <div class="kv-row"><span class="kv-key">MC level lumbar</span><span class="kv-val highlight">L4–L5, L5–S1</span></div>
+      <div class="kv-row"><span class="kv-key">MC level cervical</span><span class="kv-val">C5–C6, C6–C7</span></div>
+      <div class="kv-row"><span class="kv-key">L4–L5 disc → root</span><span class="kv-val">L5 (foot drop, big toe ext. weakness)</span></div>
+      <div class="kv-row"><span class="kv-key">L5–S1 disc → root</span><span class="kv-val">S1 (ankle jerk loss, plantar flexion)</span></div>
+      <div class="kv-row"><span class="kv-key">SLR test</span><span class="kv-val">+ve if pain &lt;60° (L4–S1)</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard imaging</span><span class="kv-val highlight">MRI spine</span></div>
+      <div class="kv-row"><span class="kv-key">Conservative Rx</span><span class="kv-val">6 wks (physio, NSAIDs)</span></div>
+      <div class="kv-row"><span class="kv-key">Cauda equina syndrome</span><span class="kv-val danger">Emergency surgery</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🦴 Spinal Cord Injury (ASIA)</div>
+      <div class="kv-row"><span class="kv-key">ASIA A</span><span class="kv-val danger">Complete — no motor/sensory below</span></div>
+      <div class="kv-row"><span class="kv-key">ASIA B</span><span class="kv-val">Sensory only below level</span></div>
+      <div class="kv-row"><span class="kv-key">ASIA C</span><span class="kv-val">Motor &lt;3/5 below level</span></div>
+      <div class="kv-row"><span class="kv-key">ASIA D</span><span class="kv-val">Motor ≥3/5 below level</span></div>
+      <div class="kv-row"><span class="kv-key">ASIA E</span><span class="kv-val green">Normal</span></div>
+      <div class="kv-row"><span class="kv-key">Spinal shock</span><span class="kv-val danger">Flaccid paralysis — up to 4–6 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Neurogenic shock</span><span class="kv-val danger">Hypotension + bradycardia</span></div>
+      <div class="kv-row"><span class="kv-key">C3–C5</span><span class="kv-val">Diaphragm (phrenic nerve)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🦴 Spinal Cord Syndromes</div>
+      <div class="kv-row"><span class="kv-key">Central cord</span><span class="kv-val">Arms &gt; legs weakness; MC in elderly</span></div>
+      <div class="kv-row"><span class="kv-key">Anterior cord</span><span class="kv-val danger">Motor loss + pain/temp loss; proprioception spared</span></div>
+      <div class="kv-row"><span class="kv-key">Brown-Séquard</span><span class="kv-val">Ipsilateral motor + contralateral pain/temp loss</span></div>
+      <div class="kv-row"><span class="kv-key">Posterior cord</span><span class="kv-val">Proprioception loss (vibration, position)</span></div>
+      <div class="kv-row"><span class="kv-key">Best prognosis</span><span class="kv-val green">Brown-Séquard</span></div>
+      <div class="kv-row"><span class="kv-key">Worst prognosis</span><span class="kv-val danger">Anterior cord syndrome</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🦴 Spondylolisthesis</div>
+      <div class="kv-row"><span class="kv-key">Meyerding Grade I</span><span class="kv-val green">0–25% slip</span></div>
+      <div class="kv-row"><span class="kv-key">Meyerding Grade II</span><span class="kv-val">25–50% slip</span></div>
+      <div class="kv-row"><span class="kv-key">Meyerding Grade III</span><span class="kv-val">50–75% slip</span></div>
+      <div class="kv-row"><span class="kv-key">Meyerding Grade IV</span><span class="kv-val danger">75–100% slip</span></div>
+      <div class="kv-row"><span class="kv-key">Spondyloptosis</span><span class="kv-val danger">Grade V — complete slip</span></div>
+      <div class="kv-row"><span class="kv-key">MC type</span><span class="kv-val">Isthmic (pars interarticularis defect)</span></div>
+      <div class="kv-row"><span class="kv-key">MC level</span><span class="kv-val">L5–S1</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">⚡ Cervical Spine Injuries</div>
+      <div class="kv-row"><span class="kv-key">Hangman's fracture</span><span class="kv-val danger">C2 pedicle # (hyperextension)</span></div>
+      <div class="kv-row"><span class="kv-key">Jefferson fracture</span><span class="kv-val danger">Burst fracture C1 (atlas) — axial load</span></div>
+      <div class="kv-row"><span class="kv-key">Odontoid (dens) fracture</span><span class="kv-val">Anderson-D'Alonzo I/II/III</span></div>
+      <div class="kv-row"><span class="kv-key">Type II odontoid Rx</span><span class="kv-val">Surgery (non-union risk)</span></div>
+      <div class="kv-row"><span class="kv-key">NEXUS criteria</span><span class="kv-val">C-spine clearance without X-ray</span></div>
+      <div class="kv-row"><span class="kv-key">Rheumatoid atlantoaxial</span><span class="kv-val danger">ADI &gt;3 mm (adult) — surgical fusion</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- JOINTS -->
+<div class="section" id="joints">
+  <div class="section-title">Joints <span>&amp; Arthritis</span></div>
+  <div class="section-sub">OA, RA, septic arthritis, gout, joint replacements</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🦵 Osteoarthritis</div>
+      <div class="kv-row"><span class="kv-key">MC joint affected</span><span class="kv-val highlight">Knee (medial compartment)</span></div>
+      <div class="kv-row"><span class="kv-key">X-ray features</span><span class="kv-val">LOSS: Loss of joint space, Osteophytes, Subchondral sclerosis, Subchondral cysts</span></div>
+      <div class="kv-row"><span class="kv-key">Kellgren-Lawrence Grade</span><span class="kv-val">0–4 (IV = severe)</span></div>
+      <div class="kv-row"><span class="kv-key">Heberden's nodes</span><span class="kv-val">DIP joints (OA)</span></div>
+      <div class="kv-row"><span class="kv-key">Bouchard's nodes</span><span class="kv-val">PIP joints (OA)</span></div>
+      <div class="kv-row"><span class="kv-key">Medical Rx</span><span class="kv-val">Paracetamol (1st line), NSAIDs</span></div>
+      <div class="kv-row"><span class="kv-key">Surgical Rx</span><span class="kv-val">TKR (total knee replacement)</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🦵 Rheumatoid Arthritis</div>
+      <div class="kv-row"><span class="kv-key">X-ray features</span><span class="kv-val">Periarticular osteopenia, erosions, joint space loss</span></div>
+      <div class="kv-row"><span class="kv-key">Deformities</span><span class="kv-val">Swan neck, Boutonnière, Z-thumb, ulnar drift</span></div>
+      <div class="kv-row"><span class="kv-key">Boutonnière</span><span class="kv-val">PIP flexion + DIP hyperextension</span></div>
+      <div class="kv-row"><span class="kv-key">Swan neck</span><span class="kv-val">PIP hyperextension + DIP flexion</span></div>
+      <div class="kv-row"><span class="kv-key">DMARD of choice</span><span class="kv-val highlight">Methotrexate</span></div>
+      <div class="kv-row"><span class="kv-key">Biological agents</span><span class="kv-val">Anti-TNF (Infliximab, Etanercept)</span></div>
+      <div class="kv-row"><span class="kv-key">Felty's syndrome</span><span class="kv-val">RA + splenomegaly + neutropenia</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔴 Septic Arthritis</div>
+      <div class="kv-row"><span class="kv-key">MC organism (all ages)</span><span class="kv-val danger">S. aureus</span></div>
+      <div class="kv-row"><span class="kv-key">Neonates</span><span class="kv-val">Group B Strep / S. aureus</span></div>
+      <div class="kv-row"><span class="kv-key">Young adults (sexually active)</span><span class="kv-val">N. gonorrhoeae</span></div>
+      <div class="kv-row"><span class="kv-key">Kocher's criteria</span><span class="kv-val">Fever, non-weight bearing, ESR &gt;40, WBC &gt;12k</span></div>
+      <div class="kv-row"><span class="kv-key">4/4 Kocher's criteria</span><span class="kv-val danger">99.6% probability septic arthritis</span></div>
+      <div class="kv-row"><span class="kv-key">Synovial fluid WBC</span><span class="kv-val danger">&gt;50,000 (septic)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val danger">Emergency washout + IV antibiotics</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🔮 Gout &amp; Pseudogout</div>
+      <div class="kv-row"><span class="kv-key">Gout crystal</span><span class="kv-val highlight">Monosodium urate (MSU) — needle-shaped</span></div>
+      <div class="kv-row"><span class="kv-key">Gout crystal appearance</span><span class="kv-val">Negatively birefringent (yellow parallel)</span></div>
+      <div class="kv-row"><span class="kv-key">Pseudogout crystal</span><span class="kv-val">Calcium pyrophosphate (CPPD) — rhomboid</span></div>
+      <div class="kv-row"><span class="kv-key">CPPD birefringence</span><span class="kv-val">Positively birefringent (blue parallel)</span></div>
+      <div class="kv-row"><span class="kv-key">Chondrocalcinosis</span><span class="kv-val">Pseudogout on X-ray</span></div>
+      <div class="kv-row"><span class="kv-key">MC joint gout</span><span class="kv-val">1st MTP (podagra)</span></div>
+      <div class="kv-row"><span class="kv-key">Acute gout Rx</span><span class="kv-val">Colchicine / NSAIDs / Steroids</span></div>
+      <div class="kv-row"><span class="kv-key">Prophylaxis</span><span class="kv-val">Allopurinol (after acute settles)</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🦿 Knee Injuries</div>
+      <div class="kv-row"><span class="kv-key">ACL tear test</span><span class="kv-val">Anterior drawer, Lachman's test</span></div>
+      <div class="kv-row"><span class="kv-key">PCL tear test</span><span class="kv-val">Posterior drawer test</span></div>
+      <div class="kv-row"><span class="kv-key">MCL test</span><span class="kv-val">Valgus stress test</span></div>
+      <div class="kv-row"><span class="kv-key">LCL test</span><span class="kv-val">Varus stress test</span></div>
+      <div class="kv-row"><span class="kv-key">Meniscus test</span><span class="kv-val">McMurray's, Apley's grinding</span></div>
+      <div class="kv-row"><span class="kv-key">Unhappy triad</span><span class="kv-val danger">ACL + MCL + Medial meniscus</span></div>
+      <div class="kv-row"><span class="kv-key">ACL Rx</span><span class="kv-val">Arthroscopic reconstruction (young/active)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- BONE TUMOURS -->
+<div class="section" id="tumours">
+  <div class="section-title">Bone <span>Tumours</span></div>
+  <div class="section-sub">Benign vs malignant, X-ray patterns, management</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🔬 Benign Bone Tumours</div>
+      <table class="comparison-table">
+        <tr><th>Tumour</th><th>Age/Site</th><th>X-ray/Key Feature</th></tr>
+        <tr><td>Osteochondroma</td><td>MC benign; metaphysis long bones</td><td>Bony exostosis, cartilage cap; risk of malignancy if cap &gt;2 cm</td></tr>
+        <tr><td>Enchondroma</td><td>Short tubular bones (hands)</td><td>Stippled calcification; Ollier's = multiple</td></tr>
+        <tr><td>Giant Cell Tumour</td><td>20–40 yrs, epiphysis</td><td>Soap bubble / eccentric lytic lesion; ends at articular surface</td></tr>
+        <tr><td>Osteoid Osteoma</td><td>&lt;30 yrs; cortex long bones</td><td>Nidus (&lt;2 cm) + periosteal reaction; night pain relieved by aspirin</td></tr>
+        <tr><td>Aneurysmal Bone Cyst</td><td>&lt;20 yrs; metaphysis</td><td>Eccentric expansile lytic; fluid-fluid levels on MRI</td></tr>
+        <tr><td>Simple Bone Cyst</td><td>Child; proximal humerus/femur</td><td>Central lytic, fallen fragment sign on fracture</td></tr>
+      </table>
+    </div>
+    <div class="card red">
+      <div class="card-title">☠️ Malignant Bone Tumours</div>
+      <table class="comparison-table">
+        <tr><th>Tumour</th><th>Age/Site</th><th>Key Feature</th></tr>
+        <tr><td>Osteosarcoma</td><td>10–20 yrs, distal femur/proximal tibia</td><td>Sunburst pattern, Codman's triangle; Rx: chemo + limb salvage</td></tr>
+        <tr><td>Ewing's Sarcoma</td><td>5–20 yrs, diaphysis (femur)</td><td>Onion-peel periosteal reaction; translocation t(11;22); small round blue cells</td></tr>
+        <tr><td>Chondrosarcoma</td><td>&gt;40 yrs, pelvis/proximal femur</td><td>Chemo-resistant; Rx: wide excision only</td></tr>
+        <tr><td>Multiple Myeloma</td><td>&gt;50 yrs, axial skeleton</td><td>Punched-out lytic lesions; MC primary malignant bone tumour overall</td></tr>
+        <tr><td>Giant Cell Tumour (malignant)</td><td>20–40 yrs</td><td>Locally aggressive; lung mets</td></tr>
+      </table>
+      <div class="alert-box">MC bone tumour overall = Metastasis (breast, lung, prostate, thyroid, kidney)</div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">📊 Tumour Staging (Enneking)</div>
+      <div class="kv-row"><span class="kv-key">Stage IA</span><span class="kv-val green">Low grade, intracompartmental</span></div>
+      <div class="kv-row"><span class="kv-key">Stage IB</span><span class="kv-val green">Low grade, extracompartmental</span></div>
+      <div class="kv-row"><span class="kv-key">Stage IIA</span><span class="kv-val">High grade, intracompartmental</span></div>
+      <div class="kv-row"><span class="kv-key">Stage IIB</span><span class="kv-val danger">High grade, extracompartmental</span></div>
+      <div class="kv-row"><span class="kv-key">Stage III</span><span class="kv-val danger">Any grade with metastasis</span></div>
+      <div class="kv-row"><span class="kv-key">Limb salvage indication</span><span class="kv-val">Stage IIA/IIB (most cases)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- INFECTIONS -->
+<div class="section" id="infections">
+  <div class="section-title">Orthopaedic <span>Infections</span></div>
+  <div class="section-sub">Osteomyelitis, TB bone, septic arthritis</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🦠 Acute Osteomyelitis</div>
+      <div class="kv-row"><span class="kv-key">MC organism</span><span class="kv-val danger">S. aureus (all ages)</span></div>
+      <div class="kv-row"><span class="kv-key">Neonates</span><span class="kv-val">Group B Strep, S. aureus, Gram –ve</span></div>
+      <div class="kv-row"><span class="kv-key">Sickle cell disease</span><span class="kv-val highlight">Salmonella (MC), then S. aureus</span></div>
+      <div class="kv-row"><span class="kv-key">IV drug users</span><span class="kv-val">Pseudomonas + S. aureus</span></div>
+      <div class="kv-row"><span class="kv-key">Most sensitive imaging</span><span class="kv-val">MRI (earliest changes)</span></div>
+      <div class="kv-row"><span class="kv-key">X-ray changes appear</span><span class="kv-val">After 10–14 days</span></div>
+      <div class="kv-row"><span class="kv-key">Involucrum</span><span class="kv-val">New bone formation (chronic)</span></div>
+      <div class="kv-row"><span class="kv-key">Sequestrum</span><span class="kv-val danger">Dead bone (chronic osteomyelitis)</span></div>
+      <div class="kv-row"><span class="kv-key">Cloaca</span><span class="kv-val">Opening in involucrum</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🦠 TB Spine (Pott's Disease)</div>
+      <div class="kv-row"><span class="kv-key">MC site</span><span class="kv-val highlight">Thoracolumbar junction (T10–L2)</span></div>
+      <div class="kv-row"><span class="kv-key">Mechanism</span><span class="kv-val">Haematogenous spread</span></div>
+      <div class="kv-row"><span class="kv-key">Disc involvement</span><span class="kv-val danger">Early disc destruction (unlike pyogenic)</span></div>
+      <div class="kv-row"><span class="kv-key">Paravertebral abscess</span><span class="kv-val">Fusiform on X-ray</span></div>
+      <div class="kv-row"><span class="kv-key">Psoas abscess</span><span class="kv-val">Tracks down to groin</span></div>
+      <div class="kv-row"><span class="kv-key">Gibbus deformity</span><span class="kv-val">Angular kyphosis — Pott's spine</span></div>
+      <div class="kv-row"><span class="kv-key">Pott's paraplegia</span><span class="kv-val danger">Surgical emergency — decompression</span></div>
+      <div class="kv-row"><span class="kv-key">ATT duration</span><span class="kv-val">9–12 months</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🦠 TB Joint / Chronic OM</div>
+      <div class="kv-row"><span class="kv-key">MC joint TB</span><span class="kv-val highlight">Hip &gt; Knee</span></div>
+      <div class="kv-row"><span class="kv-key">Kissing sequestra</span><span class="kv-val">TB of joint (both articular surfaces)</span></div>
+      <div class="kv-row"><span class="kv-key">Brodie's abscess</span><span class="kv-val">Chronic localised osteomyelitis (S. aureus)</span></div>
+      <div class="kv-row"><span class="kv-key">Brodie's X-ray</span><span class="kv-val">Lytic lesion + sclerotic rim, metaphysis</span></div>
+      <div class="kv-row"><span class="kv-key">Garre's osteomyelitis</span><span class="kv-val">Sclerosing type — no pus</span></div>
+      <div class="kv-row"><span class="kv-key">Chronic OM Rx</span><span class="kv-val">Sequestrectomy + antibiotics</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAEDS ORTHO -->
+<div class="section" id="paeds">
+  <div class="section-title">Paediatric <span>Orthopaedics</span></div>
+  <div class="section-sub">DDH, SCFE, Perthes, CTEV, fractures in children</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">👶 DDH (Developmental Dysplasia of Hip)</div>
+      <div class="kv-row"><span class="kv-key">Risk factors</span><span class="kv-val">Female, breech, oligohydramnios, family Hx</span></div>
+      <div class="kv-row"><span class="kv-key">Clinical test (infant)</span><span class="kv-val highlight">Ortolani (reduces) + Barlow (dislocates)</span></div>
+      <div class="kv-row"><span class="kv-key">Imaging &lt;6 months</span><span class="kv-val">Ultrasound hip (Graf classification)</span></div>
+      <div class="kv-row"><span class="kv-key">Imaging &gt;6 months</span><span class="kv-val">X-ray (Hilgenreiner's line, Perkin's line)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment &lt;6 months</span><span class="kv-val highlight">Pavlik harness</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment 6–18 months</span><span class="kv-val">Closed reduction + spica cast</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment &gt;18 months</span><span class="kv-val">Open reduction + pelvic osteotomy</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">👶 Perthes Disease</div>
+      <div class="kv-row"><span class="kv-key">Pathology</span><span class="kv-val">AVN of femoral head in child</span></div>
+      <div class="kv-row"><span class="kv-key">Age</span><span class="kv-val">4–10 years (boys MC)</span></div>
+      <div class="kv-row"><span class="kv-key">M:F ratio</span><span class="kv-val">5:1</span></div>
+      <div class="kv-row"><span class="kv-key">Earliest X-ray sign</span><span class="kv-val">Widened joint space</span></div>
+      <div class="kv-row"><span class="kv-key">Later X-ray</span><span class="kv-val">Crescent sign, flattened femoral head</span></div>
+      <div class="kv-row"><span class="kv-key">Best imaging</span><span class="kv-val">MRI or Bone scan (earliest)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val">Containment (abduction orthosis)</span></div>
+      <div class="kv-row"><span class="kv-key">Catterall classification</span><span class="kv-val">I–IV (I = &lt;25% head involved)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">👶 SCFE &amp; CTEV</div>
+      <div class="kv-row"><span class="kv-key">SCFE age</span><span class="kv-val">10–16 yrs (obese males)</span></div>
+      <div class="kv-row"><span class="kv-key">SCFE presentation</span><span class="kv-val">Hip pain + obligatory ER on flexion</span></div>
+      <div class="kv-row"><span class="kv-key">SCFE X-ray sign</span><span class="kv-val highlight">Ice cream falling off cone; Klein's line</span></div>
+      <div class="kv-row"><span class="kv-key">SCFE treatment</span><span class="kv-val danger">In situ pinning (DO NOT REDUCE)</span></div>
+      <div class="kv-row"><span class="kv-key">CTEV components</span><span class="kv-val highlight">CAVE: Cavus, Adductus, Varus, Equinus</span></div>
+      <div class="kv-row"><span class="kv-key">CTEV treatment</span><span class="kv-val">Ponseti method (serial casting)</span></div>
+      <div class="kv-row"><span class="kv-key">Ponseti order</span><span class="kv-val">CAVE correction then tenotomy</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">👶 Fractures in Children</div>
+      <div class="kv-row"><span class="kv-key">Salter-Harris I</span><span class="kv-val green">Through physis (growth plate)</span></div>
+      <div class="kv-row"><span class="kv-key">Salter-Harris II</span><span class="kv-val green">Physis + metaphysis (MC type)</span></div>
+      <div class="kv-row"><span class="kv-key">Salter-Harris III</span><span class="kv-val">Physis + epiphysis (intra-articular)</span></div>
+      <div class="kv-row"><span class="kv-key">Salter-Harris IV</span><span class="kv-val danger">Metaphysis + physis + epiphysis</span></div>
+      <div class="kv-row"><span class="kv-key">Salter-Harris V</span><span class="kv-val danger">Crush injury — worst prognosis</span></div>
+      <div class="kv-row"><span class="kv-key">Greenstick fracture</span><span class="kv-val">Cortex breaks one side only</span></div>
+      <div class="kv-row"><span class="kv-key">Torus (buckle) fracture</span><span class="kv-val">Cortex buckling — stable</span></div>
+      <div class="kv-row"><span class="kv-key">Pulled elbow</span><span class="kv-val">Radial head sublux (1–4 yrs)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- NERVES -->
+<div class="section" id="nerves">
+  <div class="section-title">Nerves <span>&amp; Tendons</span></div>
+  <div class="section-sub">Nerve injuries, peripheral nerve palsy, tendon injuries</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🧠 Nerve Injury Classification (Seddon)</div>
+      <div class="kv-row"><span class="kv-key">Neuropraxia</span><span class="kv-val green">Conduction block; complete recovery</span></div>
+      <div class="kv-row"><span class="kv-key">Axonotmesis</span><span class="kv-val">Axon disrupted; endoneurium intact; recovers</span></div>
+      <div class="kv-row"><span class="kv-key">Neurotmesis</span><span class="kv-val danger">Complete division; no recovery without surgery</span></div>
+      <div class="kv-row"><span class="kv-key">Axon regeneration rate</span><span class="kv-val">1 mm/day (Sunderland)</span></div>
+      <div class="kv-row"><span class="kv-key">Tinel's sign</span><span class="kv-val">Tingling on percussion = nerve regenerating</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🦾 Upper Limb Nerve Palsies</div>
+      <div class="kv-row"><span class="kv-key">Radial nerve palsy</span><span class="kv-val danger">Wrist drop; loss of finger extension</span></div>
+      <div class="kv-row"><span class="kv-key">Radial nerve injury site</span><span class="kv-val">Mid-shaft humerus #</span></div>
+      <div class="kv-row"><span class="kv-key">Ulnar nerve palsy</span><span class="kv-val danger">Claw hand (4th, 5th digits)</span></div>
+      <div class="kv-row"><span class="kv-key">Ulnar nerve injury site</span><span class="kv-val">Medial epicondyle # / cubital tunnel</span></div>
+      <div class="kv-row"><span class="kv-key">Median nerve palsy</span><span class="kv-val danger">Ape thumb / CTS (wrist)</span></div>
+      <div class="kv-row"><span class="kv-key">Median nerve injury site</span><span class="kv-val">Supracondylar # (children), CTS</span></div>
+      <div class="kv-row"><span class="kv-key">Anterior interosseous</span><span class="kv-val">No pinch (FDP index + FPL)</span></div>
+      <div class="kv-row"><span class="kv-key">Axillary nerve</span><span class="kv-val">Shoulder dislocation → deltoid paralysis</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🦵 Lower Limb Nerve Injuries</div>
+      <div class="kv-row"><span class="kv-key">Common peroneal palsy</span><span class="kv-val danger">Foot drop; loss of dorsiflexion + eversion</span></div>
+      <div class="kv-row"><span class="kv-key">Peroneal injury site</span><span class="kv-val">Fibular neck # (MC)</span></div>
+      <div class="kv-row"><span class="kv-key">Sciatic nerve palsy</span><span class="kv-val danger">Posterior hip dislocation</span></div>
+      <div class="kv-row"><span class="kv-key">Femoral nerve</span><span class="kv-val">Quadriceps weakness; loss of knee jerk</span></div>
+      <div class="kv-row"><span class="kv-key">Obturator nerve</span><span class="kv-val">Hip adductor weakness</span></div>
+      <div class="kv-row"><span class="kv-key">Meralgia paraesthetica</span><span class="kv-val">Lateral femoral cutaneous nerve compression</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">💪 Tendon Injuries</div>
+      <div class="kv-row"><span class="kv-key">Achilles tendon rupture</span><span class="kv-val">Simmond's test (Thompson's test)</span></div>
+      <div class="kv-row"><span class="kv-key">Mallet finger</span><span class="kv-val">Extensor tendon avulsion at DIP joint</span></div>
+      <div class="kv-row"><span class="kv-key">Mallet finger Rx</span><span class="kv-val">Extension splint × 6–8 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">Rotator cuff MC tear</span><span class="kv-val highlight">Supraspinatus</span></div>
+      <div class="kv-row"><span class="kv-key">Painful arc</span><span class="kv-val">60–120° (supraspinatus impingement)</span></div>
+      <div class="kv-row"><span class="kv-key">Carpal tunnel Rx</span><span class="kv-val">Splint → steroids → surgical release</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency single-answer facts for rapid revision</div>
+  <div class="grid-2">
+    <div class="card orange">
+      <div class="card-title">⭐ Ortho Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">MC bone tumour</span><span class="kv-val highlight">Metastasis</span></div>
+      <div class="kv-row"><span class="kv-key">MC primary malignant bone tumour</span><span class="kv-val">Multiple Myeloma</span></div>
+      <div class="kv-row"><span class="kv-key">MC benign bone tumour</span><span class="kv-val">Osteochondroma</span></div>
+      <div class="kv-row"><span class="kv-key">Osteosarcoma translocations</span><span class="kv-val">None (Ewing's: t11;22)</span></div>
+      <div class="kv-row"><span class="kv-key">Sunburst appearance</span><span class="kv-val">Osteosarcoma</span></div>
+      <div class="kv-row"><span class="kv-key">Onion peel periosteal reaction</span><span class="kv-val">Ewing's sarcoma</span></div>
+      <div class="kv-row"><span class="kv-key">Soap bubble lytic</span><span class="kv-val">GCT (giant cell tumour)</span></div>
+      <div class="kv-row"><span class="kv-key">Fallen leaf/fragment sign</span><span class="kv-val">Simple bone cyst</span></div>
+      <div class="kv-row"><span class="kv-key">Night pain relieved by aspirin</span><span class="kv-val">Osteoid osteoma</span></div>
+      <div class="kv-row"><span class="kv-key">Codman's triangle</span><span class="kv-val">Osteosarcoma / aggressive tumours</span></div>
+      <div class="kv-row"><span class="kv-key">MC paediatric bone tumour</span><span class="kv-val">Ewing's sarcoma (diaphysis)</span></div>
+      <div class="kv-row"><span class="kv-key">AVN femoral head (non-traumatic) #1 cause</span><span class="kv-val">Steroids</span></div>
+      <div class="kv-row"><span class="kv-key">Earliest AVN on MRI</span><span class="kv-val">Double-line sign</span></div>
+      <div class="kv-row"><span class="kv-key">Earliest AVN on X-ray</span><span class="kv-val">Crescent sign</span></div>
+      <div class="kv-row"><span class="kv-key">Bohler's angle normal</span><span class="kv-val">20–40° (calcaneum)</span></div>
+      <div class="kv-row"><span class="kv-key">Normal neck-shaft angle</span><span class="kv-val">120–135°</span></div>
+      <div class="kv-row"><span class="kv-key">Coxa vara</span><span class="kv-val">&lt;120° neck-shaft angle</span></div>
+      <div class="kv-row"><span class="kv-key">Coxa valga</span><span class="kv-val">&gt;135° neck-shaft angle</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">⭐ Ortho Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">MC fracture in elderly</span><span class="kv-val highlight">Femoral neck (osteoporosis)</span></div>
+      <div class="kv-row"><span class="kv-key">MC fracture in children</span><span class="kv-val">Clavicle</span></div>
+      <div class="kv-row"><span class="kv-key">MC childhood fracture at elbow</span><span class="kv-val">Supracondylar humerus</span></div>
+      <div class="kv-row"><span class="kv-key">Supracondylar Rx (Gartland III)</span><span class="kv-val danger">K-wire fixation</span></div>
+      <div class="kv-row"><span class="kv-key">Anterior interosseous syndrome</span><span class="kv-val">No OK sign (thumb-index pinch)</span></div>
+      <div class="kv-row"><span class="kv-key">Saturday night palsy</span><span class="kv-val">Radial nerve (spiral groove)</span></div>
+      <div class="kv-row"><span class="kv-key">Honeymoon palsy</span><span class="kv-val">Radial nerve (spiral groove)</span></div>
+      <div class="kv-row"><span class="kv-key">Carpal tunnel contents</span><span class="kv-val">Median nerve + 9 tendons (FDP×4, FDS×4, FPL)</span></div>
+      <div class="kv-row"><span class="kv-key">MC nerve in CTS</span><span class="kv-val">Median nerve</span></div>
+      <div class="kv-row"><span class="kv-key">Phalen's test</span><span class="kv-val">CTS (wrist flexion 60 sec)</span></div>
+      <div class="kv-row"><span class="kv-key">DEXA scan T-score</span><span class="kv-val">-1 to -2.5 = osteopenia; &lt;-2.5 = osteoporosis</span></div>
+      <div class="kv-row"><span class="kv-key">Bisphosphonate MOA</span><span class="kv-val">Inhibit osteoclasts</span></div>
+      <div class="kv-row"><span class="kv-key">Volkmann's ischemic contracture</span><span class="kv-val">Forearm compartment syndrome sequela</span></div>
+      <div class="kv-row"><span class="kv-key">Tennis elbow</span><span class="kv-val">Lateral epicondylitis (ECRB)</span></div>
+      <div class="kv-row"><span class="kv-key">Golfer's elbow</span><span class="kv-val">Medial epicondylitis (FCR, pronator teres)</span></div>
+      <div class="kv-row"><span class="kv-key">De Quervain's</span><span class="kv-val">APL + EPB tenosynovitis; Finkelstein's +ve</span></div>
+      <div class="kv-row"><span class="kv-key">Trigger finger</span><span class="kv-val">A1 pulley stenosis</span></div>
+      <div class="kv-row"><span class="kv-key">Dupuytren's contracture</span><span class="kv-val">Palmar fascia fibrosis; ring/little finger</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

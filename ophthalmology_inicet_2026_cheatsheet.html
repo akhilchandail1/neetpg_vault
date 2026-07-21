@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ophthalmology Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0e1a; --surface: #111827; --surface2: #1a2235; --border: #1e2d45;
+    --accent: #fb923c; --accent2: #7dd3fc; --accent3: #86efac; --accent4: #f9a8d4; --accent5: #c4b5fd;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #0f172a 0%, #0a0f1f 50%, #0f172a 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent); color: #0a0e1a; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent); color: #0a0e1a; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.orange::before { background: var(--accent); }
+  .card.blue::before { background: var(--accent2); }
+  .card.green::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.purple::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.orange .card-title { color: var(--accent); }
+  .card.blue .card-title { color: var(--accent2); }
+  .card.green .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.purple .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #1a2235; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.blue { color: var(--accent2); }
+  .kv-val.green { color: var(--accent3); }
+  .kv-val.pink { color: var(--accent4); }
+  .kv-val.danger { color: var(--danger); }
+  .kv-val.purple { color: var(--accent5); }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(125,211,252,0.06); border: 1px solid rgba(125,211,252,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent2); margin-top: 8px; line-height: 1.5; }
+  .green-box { background: rgba(134,239,172,0.06); border: 1px solid rgba(134,239,172,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent3); margin-top: 8px; line-height: 1.5; }
+  .mnemonic { background: rgba(196,181,253,0.07); border-left: 3px solid var(--accent5); border-radius: 0 8px 8px 0; padding: 8px 12px; margin-top: 8px; font-size: 12px; color: var(--accent5); line-height: 1.6; }
+  .mnemonic b { color: var(--accent); }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  @media (max-width: 800px) { .grid-auto, .grid-2 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>Ophthalmology <span>Cheatsheet</span></h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('anatomy',this)">Anatomy &amp; Optics</div>
+    <div class="tab" onclick="showSection('cornea',this)">Cornea &amp; Conjunctiva</div>
+    <div class="tab" onclick="showSection('glaucoma',this)">Glaucoma</div>
+    <div class="tab" onclick="showSection('lens',this)">Lens &amp; Uvea</div>
+    <div class="tab" onclick="showSection('retina',this)">Retina &amp; Vitreous</div>
+    <div class="tab" onclick="showSection('neuro',this)">Neuro-ophthalmology</div>
+    <div class="tab" onclick="showSection('lids',this)">Lids, Orbit &amp; Lacrimal</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- ANATOMY & OPTICS -->
+<div class="section active" id="anatomy">
+  <div class="section-title">Anatomy <span>&amp; Optics</span></div>
+  <div class="section-sub">Ocular anatomy, refractive errors, visual acuity, optics essentials</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">👁️ Ocular Anatomy — Key Numbers</div>
+      <div class="kv-row"><span class="kv-key">Axial length of eye (emmetropic)</span><span class="kv-val highlight">24 mm</span></div>
+      <div class="kv-row"><span class="kv-key">Corneal diameter</span><span class="kv-val">11–12 mm (horizontal); 10–11 mm (vertical)</span></div>
+      <div class="kv-row"><span class="kv-key">Corneal thickness (central)</span><span class="kv-val">0.5–0.55 mm (500–550 µm)</span></div>
+      <div class="kv-row"><span class="kv-key">Corneal refractive power</span><span class="kv-val highlight">+43 D (contributes most to total refraction)</span></div>
+      <div class="kv-row"><span class="kv-key">Total refractive power of eye</span><span class="kv-val">+60 D</span></div>
+      <div class="kv-row"><span class="kv-key">Crystalline lens power</span><span class="kv-val">+20 D (varies with accommodation)</span></div>
+      <div class="kv-row"><span class="kv-key">Fovea centralis — location</span><span class="kv-val">3.5 mm temporal + 0.5 mm inferior to optic disc</span></div>
+      <div class="kv-row"><span class="kv-key">Foveola (fovea floor)</span><span class="kv-val">0.35 mm; only cones; maximum visual acuity</span></div>
+      <div class="kv-row"><span class="kv-key">Optic disc diameter</span><span class="kv-val">1.5 mm; no photoreceptors (blind spot)</span></div>
+      <div class="kv-row"><span class="kv-key">Normal cup:disc ratio</span><span class="kv-val highlight">≤0.4; asymmetry &gt;0.2 = suspicious</span></div>
+      <div class="kv-row"><span class="kv-key">IOP normal range</span><span class="kv-val">10–21 mmHg (Goldmann applanation)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🔭 Refractive Errors</div>
+      <div class="kv-row"><span class="kv-key">Myopia (short-sightedness)</span><span class="kv-val danger">Image falls anterior to retina; long axial length; concave (–ve) lens corrects</span></div>
+      <div class="kv-row"><span class="kv-key">Hypermetropia (long-sightedness)</span><span class="kv-val">Image falls posterior to retina; short axial length; convex (+ve) lens corrects</span></div>
+      <div class="kv-row"><span class="kv-key">Astigmatism</span><span class="kv-val">Unequal curvature of cornea; cylindrical lens corrects</span></div>
+      <div class="kv-row"><span class="kv-key">Presbyopia</span><span class="kv-val">Loss of accommodation; onset ~40–45 yrs; reading glasses (+ve lens)</span></div>
+      <div class="kv-row"><span class="kv-key">Anisometropia</span><span class="kv-val">&gt;2.5 D difference between eyes; amblyopia risk</span></div>
+      <div class="kv-row"><span class="kv-key">Amblyopia — definition</span><span class="kv-val danger">Reduced vision despite optical correction; critical period &lt;7–8 yrs; Rx: patch better eye</span></div>
+      <div class="kv-row"><span class="kv-key">High myopia — risk</span><span class="kv-val danger">Retinal detachment, POAG, CNVM, vitreous degeneration; &gt;–6 D</span></div>
+      <div class="kv-row"><span class="kv-key">LASIK — principle</span><span class="kv-val">Excimer laser reshapes corneal stroma; flap raised with microkeratome</span></div>
+      <div class="kv-row"><span class="kv-key">LASIK contraindication</span><span class="kv-val danger">Keratoconus, thin cornea (&lt;500 µm), progressive myopia, dry eye</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">📐 Visual Acuity &amp; Fields</div>
+      <div class="kv-row"><span class="kv-key">Snellen chart distance</span><span class="kv-val">6 metres (20 feet)</span></div>
+      <div class="kv-row"><span class="kv-key">Normal visual acuity</span><span class="kv-val highlight">6/6 (20/20)</span></div>
+      <div class="kv-row"><span class="kv-key">Legal blindness (India)</span><span class="kv-val danger">VA &lt;6/60 in better eye OR visual field &lt;20° in better eye</span></div>
+      <div class="kv-row"><span class="kv-key">Economic blindness (WHO)</span><span class="kv-val danger">VA &lt;6/60 in better eye</span></div>
+      <div class="kv-row"><span class="kv-key">Social blindness</span><span class="kv-val">&lt;6/24 in better eye</span></div>
+      <div class="kv-row"><span class="kv-key">Colour blindness — MC type</span><span class="kv-val highlight">Deuteranomaly (green deficiency); X-linked recessive</span></div>
+      <div class="kv-row"><span class="kv-key">Ishihara plates</span><span class="kv-val">Test red-green colour vision deficiency</span></div>
+      <div class="kv-row"><span class="kv-key">Normal horizontal visual field</span><span class="kv-val">150° (monocular); 180° (binocular)</span></div>
+      <div class="kv-row"><span class="kv-key">Perimetry gold standard</span><span class="kv-val">Humphrey automated perimetry (for glaucoma)</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🔬 Layers of Cornea &amp; Retina</div>
+      <div class="kv-row"><span class="kv-key">Corneal layers (anterior→posterior)</span><span class="kv-val highlight">Epithelium → Bowman's → Stroma → Descemet's → Endothelium</span></div>
+      <div class="kv-row"><span class="kv-key">Corneal endothelium — special</span><span class="kv-val danger">Cannot regenerate (post-mitotic); critical cell density &gt;1000 cells/mm²</span></div>
+      <div class="kv-row"><span class="kv-key">Bowman's layer</span><span class="kv-val">Cannot regenerate if destroyed → scarring</span></div>
+      <div class="kv-row"><span class="kv-key">Descemet's membrane</span><span class="kv-val">Can regenerate; thickens with age</span></div>
+      <div class="kv-row"><span class="kv-key">Retinal layers (vitreous→choroid)</span><span class="kv-val">ILM → Nerve Fibre → Ganglion cell → IPL → INL → OPL → ONL → IS/OS → RPE</span></div>
+      <div class="kv-row"><span class="kv-key">Blood-retinal barrier (inner)</span><span class="kv-val">Retinal capillary endothelium (tight junctions)</span></div>
+      <div class="kv-row"><span class="kv-key">Blood-retinal barrier (outer)</span><span class="kv-val">RPE (retinal pigment epithelium) tight junctions</span></div>
+      <div class="kv-row"><span class="kv-key">Macula — definition</span><span class="kv-val">5 mm area with &gt;2 layers of ganglion cells; temporal to disc</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">💡 Optics Essentials</div>
+      <div class="kv-row"><span class="kv-key">Concave lens — image</span><span class="kv-val">Virtual, erect, diminished (diverging)</span></div>
+      <div class="kv-row"><span class="kv-key">Convex lens — image (beyond F)</span><span class="kv-val">Real, inverted, variable size (converging)</span></div>
+      <div class="kv-row"><span class="kv-key">Plane mirror — image</span><span class="kv-val">Virtual, erect, same size, behind mirror</span></div>
+      <div class="kv-row"><span class="kv-key">Concave mirror — image</span><span class="kv-val">Real inverted (beyond C); virtual erect (within F)</span></div>
+      <div class="kv-row"><span class="kv-key">Direct ophthalmoscope</span><span class="kv-val highlight">Erect virtual image; magnification ×15; small field of view</span></div>
+      <div class="kv-row"><span class="kv-key">Indirect ophthalmoscope</span><span class="kv-val">Inverted real image; magnification ×5; wide field; used with +20D lens</span></div>
+      <div class="kv-row"><span class="kv-key">Slit lamp biomicroscopy</span><span class="kv-val">Binocular; ×10–40 magnification; illuminated slit beam</span></div>
+      <div class="kv-row"><span class="kv-key">Keratometer (ophthalmometer)</span><span class="kv-val">Measures corneal curvature (for IOL power calculation)</span></div>
+      <div class="kv-row"><span class="kv-key">IOL power — SRK formula</span><span class="kv-val">P = A – 0.9K – 2.5L (A = constant; K = keratometry; L = axial length)</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🎯 Squint (Strabismus)</div>
+      <div class="kv-row"><span class="kv-key">Esotropia</span><span class="kv-val">Convergent squint (inward deviation); MC childhood squint</span></div>
+      <div class="kv-row"><span class="kv-key">Exotropia</span><span class="kv-val">Divergent squint (outward deviation)</span></div>
+      <div class="kv-row"><span class="kv-key">Accommodative esotropia</span><span class="kv-val highlight">Hypermetropia → excessive accommodation → convergence; Rx: correct hypermetropia</span></div>
+      <div class="kv-row"><span class="kv-key">Hirschberg test</span><span class="kv-val">Corneal light reflex; 1 mm decentration = 7° (15 prism diopters)</span></div>
+      <div class="kv-row"><span class="kv-key">Cover-uncover test</span><span class="kv-val highlight">Gold standard; detects tropia (manifest) vs phoria (latent)</span></div>
+      <div class="kv-row"><span class="kv-key">Alternating cover test</span><span class="kv-val">Detects total deviation (phoria + tropia)</span></div>
+      <div class="kv-row"><span class="kv-key">Prism cover test</span><span class="kv-val">Measures angle of deviation in prism diopters</span></div>
+      <div class="kv-row"><span class="kv-key">Amblyopia treatment age limit</span><span class="kv-val danger">Critical period up to 7–8 years; patching of better eye</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CORNEA & CONJUNCTIVA -->
+<div class="section" id="cornea">
+  <div class="section-title">Cornea <span>&amp; Conjunctiva</span></div>
+  <div class="section-sub">Conjunctivitis, keratitis, corneal dystrophies, dry eye, degenerations</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🔴 Conjunctivitis — Comparison</div>
+      <table class="comparison-table">
+        <tr><th>Type</th><th>Discharge</th><th>Key Feature</th><th>Treatment</th></tr>
+        <tr><td>Bacterial (S. aureus / Pneumococcus)</td><td>Mucopurulent</td><td>Papillae; lid stuck in morning; no follicles</td><td>Topical chloramphenicol / moxifloxacin</td></tr>
+        <tr><td>Viral (Adenovirus — MC)</td><td>Watery</td><td>Follicles; preauricular LN; epidemic keratoconjunctivitis (EKC)</td><td>Supportive; antiviral if HSV</td></tr>
+        <tr><td>Allergic (VKC)</td><td>Mucoid (ropy)</td><td>Giant papillae (cobblestone); Horner-Trantas dots; shield ulcer</td><td>Topical antihistamine + mast cell stabiliser + steroids</td></tr>
+        <tr><td>Chlamydial (Trachoma)</td><td>Mucopurulent</td><td>Follicles (superior tarsal); Herbert's pits; pannus; Arlt's line</td><td>Oral azithromycin 1 g single dose (SAFE strategy)</td></tr>
+        <tr><td>Gonococcal</td><td>Copious purulent (hyperacute)</td><td>Severe chemosis; lid oedema; risk of corneal perforation in 24–48 hrs</td><td>IV/IM ceftriaxone; eye irrigation</td></tr>
+        <tr><td>Neonatal (Ophthalmia neonatorum)</td><td>Purulent (gonococcal) or mucopurulent (chlamydial)</td><td>Within 28 days of birth; gonoccal = day 2–5; chlamydial = day 5–14</td><td>Topical + systemic antibiotics; prophylaxis: 1% AgNO₃ (Credé) or erythromycin</td></tr>
+      </table>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🦠 Trachoma (WHO Classification)</div>
+      <div class="kv-row"><span class="kv-key">Causative organism</span><span class="kv-val highlight">Chlamydia trachomatis serotypes A, B, Ba, C</span></div>
+      <div class="kv-row"><span class="kv-key">TF — Trachomatous Inflammation Follicular</span><span class="kv-val">≥5 follicles on upper tarsal plate</span></div>
+      <div class="kv-row"><span class="kv-key">TI — Trachomatous Inflammation Intense</span><span class="kv-val danger">Intense inflammation; &gt;50% upper tarsal vessels obscured</span></div>
+      <div class="kv-row"><span class="kv-key">TS — Trachomatous Scarring</span><span class="kv-val">White fibrous lines/bands on upper tarsal conjunctiva (Arlt's line)</span></div>
+      <div class="kv-row"><span class="kv-key">TT — Trachomatous Trichiasis</span><span class="kv-val danger">In-turned lashes touching globe</span></div>
+      <div class="kv-row"><span class="kv-key">CO — Corneal Opacity</span><span class="kv-val danger">Opacity over pupil; visual impairment</span></div>
+      <div class="kv-row"><span class="kv-key">Herbert's pits</span><span class="kv-val highlight">Scarred superior limbal follicles (pathognomonic of trachoma)</span></div>
+      <div class="kv-row"><span class="kv-key">Pannus</span><span class="kv-val">Fibrovascular membrane from superior limbus over cornea</span></div>
+      <div class="kv-row"><span class="kv-key">MC preventable cause of blindness</span><span class="kv-val highlight">Trachoma (worldwide)</span></div>
+      <div class="kv-row"><span class="kv-key">SAFE strategy</span><span class="kv-val">Surgery (trichiasis), Antibiotics, Facial cleanliness, Environmental improvement</div></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🦠 Keratitis (Corneal Ulcer)</div>
+      <div class="kv-row"><span class="kv-key">Bacterial — MC organism</span><span class="kv-val highlight">Pseudomonas aeruginosa (contact lens wearers, MC overall)</span></div>
+      <div class="kv-row"><span class="kv-key">Pseudomonas ulcer feature</span><span class="kv-val danger">Rapid progression; liquefactive necrosis; ring abscess; perforation risk</span></div>
+      <div class="kv-row"><span class="kv-key">Hypopyon ulcer MC cause</span><span class="kv-val">Pneumococcal (Streptococcus pneumoniae)</span></div>
+      <div class="kv-row"><span class="kv-key">Serpiginous (creeping) ulcer</span><span class="kv-val">Pneumococcal; edge undermined like serrated knife</span></div>
+      <div class="kv-row"><span class="kv-key">Acanthamoeba keratitis</span><span class="kv-val danger">Contact lens; severe pain disproportionate to signs; ring infiltrate; Rx: PHMB + propamidine</span></div>
+      <div class="kv-row"><span class="kv-key">Fungal keratitis — MC organism (India)</span><span class="kv-val highlight">Fusarium (trauma with vegetative matter — paddy husk)</span></div>
+      <div class="kv-row"><span class="kv-key">Fungal ulcer features</span><span class="kv-val">Dry, rough surface; feathery margins; satellite lesions; immune ring</span></div>
+      <div class="kv-row"><span class="kv-key">HSV dendritic ulcer</span><span class="kv-val">Linear branching ulcer with terminal bulbs; fluorescein stains</span></div>
+      <div class="kv-row"><span class="kv-key">HSV keratitis treatment</span><span class="kv-val highlight">Topical acyclovir 3% ointment; avoid steroids (worsen)</span></div>
+      <div class="kv-row"><span class="kv-key">Interstitial keratitis (IK)</span><span class="kv-val danger">Congenital syphilis MC cause; deep stromal vascularisation; ghost vessels; salmon-patch</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🔬 Corneal Dystrophies</div>
+      <table class="comparison-table">
+        <tr><th>Dystrophy</th><th>Layer</th><th>Key Feature</th></tr>
+        <tr><td>Map-dot-fingerprint (Cogan)</td><td>Epithelial</td><td>Recurrent erosions; AD; bilateral; most common epithelial dystrophy</td></tr>
+        <tr><td>Reis-Bücklers</td><td>Bowman's</td><td>Honeycomb opacity; recurrent erosions; early onset; AD</td></tr>
+        <tr><td>Granular</td><td>Anterior stroma</td><td>Discrete breadcrumb white deposits; clear between; AD; Arg555Trp (TGFBI)</td></tr>
+        <tr><td>Lattice</td><td>Stroma</td><td>Refractile lines + dots (amyloid); recurrent erosions; AD; TGFBI</td></tr>
+        <tr><td>Macular</td><td>Full stroma</td><td>Diffuse clouding (most severe); AR; keratan sulfate metabolism</td></tr>
+        <tr><td>Fuchs' endothelial</td><td>Endothelium</td><td>Cornea guttata; stromal oedema; worst in morning; females; Rx: DMEK/DSAEK</td></tr>
+      </table>
+      <div class="mnemonic"><b>Corneal dystrophies severity (superficial→deep):</b> Epithelial (mildest) → Bowman's → Stromal → Endothelial (most severe, needs transplant)</div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🔶 Keratoconus &amp; Degenerations</div>
+      <div class="kv-row"><span class="kv-key">Keratoconus — definition</span><span class="kv-val highlight">Non-inflammatory ectasia; progressive corneal thinning + conical protrusion</span></div>
+      <div class="kv-row"><span class="kv-key">Munson's sign</span><span class="kv-val">V-shaped indentation of lower lid on downgaze</span></div>
+      <div class="kv-row"><span class="kv-key">Fleischer ring</span><span class="kv-val">Iron (haemosiderin) ring at base of cone; slit lamp</span></div>
+      <div class="kv-row"><span class="kv-key">Vogt's striae</span><span class="kv-val">Vertical stress lines in stroma; disappear on pressure</span></div>
+      <div class="kv-row"><span class="kv-key">Hydrops</span><span class="kv-val danger">Acute break in Descemet's → stromal oedema → sudden vision loss</span></div>
+      <div class="kv-row"><span class="kv-key">Keratoconus treatment</span><span class="kv-val">RGP contact lens → corneal cross-linking (CXL) → PKP (penetrating keratoplasty)</span></div>
+      <div class="kv-row"><span class="kv-key">Arcus senilis</span><span class="kv-val">Peripheral lipid deposition; &gt;50 yrs = normal; &lt;45 yrs = hyperlipidaemia (arcus juvenilis)</span></div>
+      <div class="kv-row"><span class="kv-key">Band keratopathy</span><span class="kv-val">Calcium in Bowman's layer; horizontal band; chronic uveitis, hyperCa, renal failure; Rx: EDTA chelation</span></div>
+      <div class="kv-row"><span class="kv-key">Pterygium</span><span class="kv-val">Fibrovascular tissue from conjunctiva onto cornea; nasal side; UV exposure; Stocker's line (iron)</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">💧 Dry Eye Disease</div>
+      <div class="kv-row"><span class="kv-key">Definition</span><span class="kv-val">Multifactorial disease of tear film; osmolarity ↑; inflammation; symptoms &gt; signs</span></div>
+      <div class="kv-row"><span class="kv-key">MC type</span><span class="kv-val highlight">Aqueous deficient dry eye (Sjögren's syndrome — MC secondary cause)</span></div>
+      <div class="kv-row"><span class="kv-key">Evaporative dry eye — cause</span><span class="kv-val">Meibomian gland dysfunction (MGD) — MC overall cause</span></div>
+      <div class="kv-row"><span class="kv-key">Schirmer's test I</span><span class="kv-val danger">&lt;10 mm wetting in 5 min = dry eye</span></div>
+      <div class="kv-row"><span class="kv-key">BUT (Break-up time)</span><span class="kv-val danger">&lt;10 seconds = abnormal</span></div>
+      <div class="kv-row"><span class="kv-key">Rose Bengal staining</span><span class="kv-val">Stains devitalised epithelial cells (3 and 9 o'clock — interpalpebral zone)</span></div>
+      <div class="kv-row"><span class="kv-key">Lissamine green</span><span class="kv-val">Stains mucus-devoid cells; better tolerated than Rose Bengal</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val">Preservative-free artificial tears → cyclosporine 0.05% → punctal plugs → autologous serum</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- GLAUCOMA -->
+<div class="section" id="glaucoma">
+  <div class="section-title">Glaucoma <span>Disorders</span></div>
+  <div class="section-sub">POAG, PACG, secondary glaucoma, medical and surgical management</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🔵 Primary Open-Angle Glaucoma (POAG)</div>
+      <div class="kv-row"><span class="kv-key">MC type worldwide</span><span class="kv-val highlight">POAG (chronic simple glaucoma)</span></div>
+      <div class="kv-row"><span class="kv-key">Aqueous outflow obstruction</span><span class="kv-val">Trabecular meshwork dysfunction (angle is OPEN)</span></div>
+      <div class="kv-row"><span class="kv-key">Presentation</span><span class="kv-val danger">Asymptomatic (insidious); painless; peripheral field loss first</span></div>
+      <div class="kv-row"><span class="kv-key">IOP in POAG</span><span class="kv-val">Usually &gt;21 mmHg but 1/3 have normal-tension glaucoma</span></div>
+      <div class="kv-row"><span class="kv-key">Risk factors</span><span class="kv-val">Age, family history, African descent, high myopia, thin cornea, disc hemorrhage</span></div>
+      <div class="kv-row"><span class="kv-key">Early field defect</span><span class="kv-val highlight">Bjerrüm scotoma (arcuate) → nasal step → tubular vision → blindness</span></div>
+      <div class="kv-row"><span class="kv-key">Cup:disc ratio significance</span><span class="kv-val danger">&gt;0.6 or asymmetry &gt;0.2 = suspicious; vertical elongation of cup</span></div>
+      <div class="kv-row"><span class="kv-key">ISNT rule</span><span class="kv-val">Normal: Inferior &gt; Superior &gt; Nasal &gt; Temporal rim; reversal = glaucoma</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard for IOP</span><span class="kv-val highlight">Goldmann applanation tonometry</span></div>
+      <div class="kv-row"><span class="kv-key">1st line treatment</span><span class="kv-val highlight">Prostaglandin analogue (latanoprost, bimatoprost) — once daily, most effective</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">⚡ Acute Angle Closure Glaucoma (PACG)</div>
+      <div class="kv-row"><span class="kv-key">Mechanism</span><span class="kv-val danger">Pupil block → iris pushed forward → angle closes → aqueous outflow blocked</span></div>
+      <div class="kv-row"><span class="kv-key">Risk factors</span><span class="kv-val">Hypermetropia, shallow AC, female, Asian, age, dark room / stress (pupil dilation)</span></div>
+      <div class="kv-row"><span class="kv-key">Classic presentation</span><span class="kv-val danger">Sudden severe eye pain + headache + nausea/vomiting + halos around lights + blurred vision</span></div>
+      <div class="kv-row"><span class="kv-key">Signs</span><span class="kv-val danger">Corneal oedema (steamy); mid-dilated fixed pupil; very high IOP (&gt;50 mmHg); ciliary flush</span></div>
+      <div class="kv-row"><span class="kv-key">AC depth</span><span class="kv-val danger">Very shallow anterior chamber</span></div>
+      <div class="kv-row"><span class="kv-key">Immediate treatment</span><span class="kv-val danger">IV acetazolamide 500 mg + topical timolol + pilocarpine 2% + IV mannitol</span></div>
+      <div class="kv-row"><span class="kv-key">Definitive treatment</span><span class="kv-val highlight">Laser peripheral iridotomy (YAG-PI) in BOTH eyes</span></div>
+      <div class="kv-row"><span class="kv-key">Plateau iris syndrome</span><span class="kv-val">Angle closure despite patent PI; peripheral iris obstructs angle; Rx: laser iridoplasty</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">💊 Glaucoma Medications</div>
+      <table class="comparison-table">
+        <tr><th>Drug Class</th><th>Examples</th><th>MOA</th><th>Side Effects</th></tr>
+        <tr><td>Prostaglandin analogues</td><td>Latanoprost, Bimatoprost, Travoprost</td><td>↑ Uveoscleral outflow</td><td>Iris pigmentation, hypertrichosis, CMO (aphakic)</td></tr>
+        <tr><td>Beta-blockers</td><td>Timolol (0.5%), Betaxolol</td><td>↓ Aqueous production</td><td>Bronchospasm (avoid in asthma), bradycardia; betaxolol = cardioselective</td></tr>
+        <tr><td>Alpha-2 agonists</td><td>Brimonidine, Apraclonidine</td><td>↓ Aqueous production + ↑ uveoscleral outflow</td><td>Allergy, fatigue, dry mouth; apraclonidine — tachyphylaxis</td></tr>
+        <tr><td>CAIs (Carbonic anhydrase inhibitors)</td><td>Dorzolamide (topical); Acetazolamide (oral)</td><td>↓ Aqueous production</td><td>Acetazolamide: Stevens-Johnson, renal stones, metabolic acidosis, paresthesia</td></tr>
+        <tr><td>Miotics (Cholinergics)</td><td>Pilocarpine (2–4%)</td><td>↑ Trabecular outflow (pupil constriction)</td><td>Myopia, dim vision, brow ache, cataract; used in angle-closure</td></tr>
+        <tr><td>Rho kinase inhibitors</td><td>Netarsudil</td><td>↑ Trabecular outflow</td><td>Conjunctival hyperaemia; newer agent</td></tr>
+      </table>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🔬 Secondary Glaucomas</div>
+      <div class="kv-row"><span class="kv-key">Neovascular glaucoma (NVG)</span><span class="kv-val danger">New vessels on iris/angle (rubeosis iridis); PDR, CRVO, OIS; 100-day glaucoma after CRVO</span></div>
+      <div class="kv-row"><span class="kv-key">NVG treatment</span><span class="kv-val danger">Anti-VEGF (bevacizumab) + pan-retinal photocoagulation + trabeculectomy/drainage implant</span></div>
+      <div class="kv-row"><span class="kv-key">Pigmentary glaucoma</span><span class="kv-val">Iris pigment deposits on trabecular meshwork; Krukenberg spindle (corneal endothelium); exercise ↑ IOP</span></div>
+      <div class="kv-row"><span class="kv-key">Pseudoexfoliation (PXF) glaucoma</span><span class="kv-val">MC identifiable cause of secondary OAG; dandruff-like deposits on lens; weak zonules; risk of subluxation</span></div>
+      <div class="kv-row"><span class="kv-key">Steroid-induced glaucoma</span><span class="kv-val danger">Topical &gt; periocular &gt; systemic; trabecular meshwork dysfunction; appears 3–6 weeks post-steroids</span></div>
+      <div class="kv-row"><span class="kv-key">Phacolytic glaucoma</span><span class="kv-val">Hypermature cataract → lens proteins leak → macrophage-clogged trabeculum; OAG</span></div>
+      <div class="kv-row"><span class="kv-key">Phacomorphic glaucoma</span><span class="kv-val">Swollen intumescent lens → secondary angle-closure; PACG mechanism</span></div>
+      <div class="kv-row"><span class="kv-key">Congenital glaucoma (buphthalmos)</span><span class="kv-val highlight">Trabeculodysgenesis; Haab's striae (horizontal breaks in Descemet's); Rx: goniotomy / trabeculotomy</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🔧 Glaucoma Surgery</div>
+      <div class="kv-row"><span class="kv-key">Trabeculectomy</span><span class="kv-val highlight">Gold standard filtration surgery; creates fistula + bleb; antimetabolites (MMC, 5-FU) to prevent scarring</span></div>
+      <div class="kv-row"><span class="kv-key">Laser trabeculoplasty (SLT/ALT)</span><span class="kv-val">Burns trabecular meshwork → ↑ outflow; POAG; SLT = selective (repeatable)</span></div>
+      <div class="kv-row"><span class="kv-key">Glaucoma drainage devices</span><span class="kv-val">Ahmed valve, Molteno implant, Baerveldt; for failed trabeculectomy or NVG</span></div>
+      <div class="kv-row"><span class="kv-key">Cycloablation (cyclophotocoagulation)</span><span class="kv-val">Destroys ciliary body → ↓ aqueous production; end-stage / refractory glaucoma</span></div>
+      <div class="kv-row"><span class="kv-key">Post-trabeculectomy complications</span><span class="kv-val danger">Hypotony + flat AC; bleb failure (fibrosis); endophthalmitis (blebitis); cataract</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LENS & UVEA -->
+<div class="section" id="lens">
+  <div class="section-title">Lens <span>&amp; Uvea</span></div>
+  <div class="section-sub">Cataract, uveitis, IOL, lens-induced conditions</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🔍 Cataract — Classification &amp; Types</div>
+      <div class="kv-row"><span class="kv-key">MC type worldwide</span><span class="kv-val highlight">Age-related (senile) — Nuclear sclerosis MC</span></div>
+      <div class="kv-row"><span class="kv-key">Nuclear cataract</span><span class="kv-val">Central lens; yellow-brown; myopic shift (index myopia); better near vision initially</span></div>
+      <div class="kv-row"><span class="kv-key">Cortical cataract</span><span class="kv-val">Spoke-like opacities; cortex; vacuoles; cuneiform shape</span></div>
+      <div class="kv-row"><span class="kv-key">Posterior subcapsular (PSC)</span><span class="kv-val danger">Most visually disabling; steroid use, diabetes, trauma, radiation; glare in bright light</span></div>
+      <div class="kv-row"><span class="kv-key">Diabetic (snowflake) cataract</span><span class="kv-val">Subcapsular; young diabetics; rapid bilateral; due to sorbitol accumulation</span></div>
+      <div class="kv-row"><span class="kv-key">Electric cataract</span><span class="kv-val">Anterior subcapsular; from electrical injury; typically bilateral</span></div>
+      <div class="kv-row"><span class="kv-key">Sunflower cataract</span><span class="kv-val highlight">Wilson's disease; axial anterior + posterior subcapsular deposits; copper</span></div>
+      <div class="kv-row"><span class="kv-key">Rubella cataract</span><span class="kv-val">Dense white (pearlescent); nuclear; congenital; DO NOT OPERATE (virus in lens!)</span></div>
+      <div class="kv-row"><span class="kv-key">Morgagnian cataract</span><span class="kv-val">Hypermature; liquefied cortex; nucleus sinks to bottom; risk of phacolytic glaucoma</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🔧 Cataract Surgery</div>
+      <div class="kv-row"><span class="kv-key">ECCE (Extracapsular)</span><span class="kv-val">Nucleus expressed whole; large incision (10–12 mm); posterior capsule preserved for IOL</span></div>
+      <div class="kv-row"><span class="kv-key">Phacoemulsification</span><span class="kv-val highlight">Gold standard; 2.8–3 mm incision; ultrasound fragmentation; foldable IOL; fastest recovery</span></div>
+      <div class="kv-row"><span class="kv-key">MSICS (Manual Small Incision)</span><span class="kv-val">5–6 mm; no sutures; scleral tunnel; good for hard nuclei; ECCE equivalent outcomes</span></div>
+      <div class="kv-row"><span class="kv-key">Posterior capsule tear — complication</span><span class="kv-val danger">MC intraoperative complication; vitreous loss; IOL in sulcus/ACIOL; endophthalmitis risk</span></div>
+      <div class="kv-row"><span class="kv-key">PCO (Posterior capsule opacification)</span><span class="kv-val highlight">MC late complication; Elschnig's pearls (lens epithelial cells); Rx: YAG laser capsulotomy</span></div>
+      <div class="kv-row"><span class="kv-key">Endophthalmitis — MC organism</span><span class="kv-val danger">Staphylococcus epidermidis (post-operative); Bacillus cereus (post-traumatic)</span></div>
+      <div class="kv-row"><span class="kv-key">Endophthalmitis treatment</span><span class="kv-val danger">Intravitreal vancomycin + ceftazidime; vitrectomy if severe</span></div>
+      <div class="kv-row"><span class="kv-key">IOL power for emmetropia</span><span class="kv-val">~21 D (varies with axial length and corneal power)</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🔥 Uveitis — Classification</div>
+      <table class="comparison-table">
+        <tr><th>Location</th><th>Name</th><th>Key Associations</th></tr>
+        <tr><td>Anterior uveitis (iritis/iridocyclitis)</td><td>Iritis / Iridocyclitis</td><td>HLA-B27 conditions (AS, Reiter's, IBD, psoriatic arthritis); JIA; herpes; most common uveitis</td></tr>
+        <tr><td>Intermediate uveitis</td><td>Pars planitis</td><td>MS, sarcoidosis; snowball/snowbank vitreous opacities; young adults</td></tr>
+        <tr><td>Posterior uveitis</td><td>Choroiditis / Chorioretinitis</td><td>Toxoplasma (MC), TB, CMV (AIDS), toxocara, syphilis</td></tr>
+        <tr><td>Pan-uveitis</td><td>Diffuse</td><td>VKH syndrome, Behçet's disease, sarcoidosis, sympathetic ophthalmia</td></tr>
+      </table>
+      <div class="info-box">Anterior uveitis: Keratic precipitates (KPs) — mutton-fat KPs = granulomatous (sarcoidosis, TB); fine stellate = non-granulomatous (HLA-B27)</div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🔥 Specific Uveitis Syndromes</div>
+      <div class="kv-row"><span class="kv-key">Vogt-Koyanagi-Harada (VKH)</span><span class="kv-val danger">Pan-uveitis + poliosis + vitiligo + alopecia + meningism; Asian/pigmented races; Rx: systemic steroids</span></div>
+      <div class="kv-row"><span class="kv-key">Sympathetic ophthalmia</span><span class="kv-val danger">Penetrating injury of one eye → bilateral granulomatous uveitis; Dalen-Fuchs nodules; prevent with enucleation within 2 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">Behçet's disease</span><span class="kv-val danger">Occlusive retinal vasculitis; hypopyon uveitis; oral + genital ulcers; pathergy; HLA-B51</span></div>
+      <div class="kv-row"><span class="kv-key">Toxoplasma chorioretinitis</span><span class="kv-val highlight">MC posterior uveitis; "headlight in fog" (active lesion adjacent to old scar); Rx: pyrimethamine + sulfadiazine + folinic acid</span></div>
+      <div class="kv-row"><span class="kv-key">CMV retinitis</span><span class="kv-val danger">AIDS (CD4 &lt;50); "pizza-pie" appearance (hemorrhage + necrosis); brushfire border; Rx: IV ganciclovir</span></div>
+      <div class="kv-row"><span class="kv-key">Fuchs' heterochromic iridocyclitis</span><span class="kv-val">Unilateral; heterochromia; diffuse fine KPs; no synechiae; complicated cataract; glaucoma</span></div>
+      <div class="kv-row"><span class="kv-key">Sarcoid uveitis</span><span class="kv-val">Mutton-fat KPs; iris nodules (Koeppe at pupil margin / Busacca in stroma); AC flare; BHL on CXR</span></div>
+      <div class="kv-row"><span class="kv-key">Rubeosis iridis</span><span class="kv-val danger">New vessels on iris; DM, CRVO, OIS → neovascular glaucoma</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- RETINA & VITREOUS -->
+<div class="section" id="retina">
+  <div class="section-title">Retina <span>&amp; Vitreous</span></div>
+  <div class="section-sub">Diabetic retinopathy, ARMD, RVO, RD, retinoblastoma</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🩸 Diabetic Retinopathy (DR)</div>
+      <div class="kv-row"><span class="kv-key">Earliest change</span><span class="kv-val highlight">Microaneurysms (earliest ophthalmoscopic sign)</span></div>
+      <div class="kv-row"><span class="kv-key">NPDR features</span><span class="kv-val">Microaneurysms, dot-blot haemorrhages, hard exudates, cotton wool spots, venous beading/looping</span></div>
+      <div class="kv-row"><span class="kv-key">4-2-1 rule (severe NPDR)</span><span class="kv-val danger">4 quadrant haemorrhages OR 2 quadrant venous beading OR 1 quadrant IRMA → PDR within 1 year (50%)</span></div>
+      <div class="kv-row"><span class="kv-key">PDR — high-risk characteristics (HRC)</span><span class="kv-val danger">NVD ≥1/3 disc area OR any NVD with vitreous haemorrhage OR NVE ≥1/2 disc area with VH</span></div>
+      <div class="kv-row"><span class="kv-key">Clinically Significant Macular Oedema (CSMO)</span><span class="kv-val danger">Hard exudate within 500 µm of fovea; any retinal thickening within 500 µm; zone ≥1 disc area within 1 DD of fovea</span></div>
+      <div class="kv-row"><span class="kv-key">CSMO treatment</span><span class="kv-val highlight">Intravitreal anti-VEGF (1st line); focal laser (2nd line)</span></div>
+      <div class="kv-row"><span class="kv-key">PDR treatment</span><span class="kv-val highlight">Pan-retinal photocoagulation (PRP / scatter laser)</span></div>
+      <div class="kv-row"><span class="kv-key">Vitreous haemorrhage in PDR</span><span class="kv-val danger">Intravitreal anti-VEGF + pars plana vitrectomy (PPV)</span></div>
+      <div class="kv-row"><span class="kv-key">Ghost cell glaucoma</span><span class="kv-val">Old VH → degenerated RBCs (ghost cells) → trabecular blockage</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">👁️ Age-Related Macular Degeneration (ARMD)</div>
+      <div class="kv-row"><span class="kv-key">Drusen</span><span class="kv-val">Deposits between Bruch's membrane and RPE; early/intermediate ARMD</span></div>
+      <div class="kv-row"><span class="kv-key">Dry (non-exudative) ARMD</span><span class="kv-val">85–90%; geographic atrophy (central RPE loss); gradual vision loss</span></div>
+      <div class="kv-row"><span class="kv-key">Wet (exudative) ARMD</span><span class="kv-val danger">10–15%; CNV (choroidal neovascularisation); rapid severe vision loss; subretinal fluid/blood</span></div>
+      <div class="kv-row"><span class="kv-key">Amsler grid</span><span class="kv-val danger">Detects metamorphopsia (distorted vision) — key symptom of wet ARMD</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard diagnosis</span><span class="kv-val highlight">OCT (optical coherence tomography); FFA for CNV characterisation</span></div>
+      <div class="kv-row"><span class="kv-key">Wet ARMD treatment</span><span class="kv-val highlight">Intravitreal anti-VEGF (ranibizumab, bevacizumab, aflibercept) — mainstay</span></div>
+      <div class="kv-row"><span class="kv-key">Dry ARMD — prevention</span><span class="kv-val">AREDS2 formula: vitamin C + E + lutein/zeaxanthin + zinc (reduces progression)</span></div>
+      <div class="kv-row"><span class="kv-key">Disciform scar</span><span class="kv-val danger">End-stage wet ARMD; fibrovascular scar replaces macula; severe irreversible loss</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🔴 Retinal Vascular Occlusions</div>
+      <div class="kv-row"><span class="kv-key">CRVO — appearance</span><span class="kv-val highlight">"Blood and thunder" fundus: flame haemorrhages in all 4 quadrants; disc oedema; tortuous veins</span></div>
+      <div class="kv-row"><span class="kv-key">CRVO — types</span><span class="kv-val">Ischaemic (NVG risk 40% — 100-day glaucoma) vs Non-ischaemic</span></div>
+      <div class="kv-row"><span class="kv-key">BRVO — MC site</span><span class="kv-val">Superotemporal branch (MC); AV crossing → flame haemorrhages in sector</span></div>
+      <div class="kv-row"><span class="kv-key">CRVO treatment</span><span class="kv-val highlight">Intravitreal anti-VEGF / dexamethasone implant (Ozurdex); treat NVG with PRP</span></div>
+      <div class="kv-row"><span class="kv-key">CRAO — appearance</span><span class="kv-val danger">Pale oedematous retina + cherry red spot at fovea (choroidal circulation intact)</span></div>
+      <div class="kv-row"><span class="kv-key">Cherry red spot — causes</span><span class="kv-val danger">CRAO, Tay-Sachs disease, Niemann-Pick disease, Gaucher's, CO poisoning</span></div>
+      <div class="kv-row"><span class="kv-key">CRAO treatment (within 90 min)</span><span class="kv-val">IOP reduction, ocular massage, carbogen, AC paracentesis; thrombolysis if within 4.5 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Hollenhorst plaque</span><span class="kv-val">Cholesterol embolus at bifurcation; glistening yellow; carotid artery source</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🔺 Retinal Detachment (RD)</div>
+      <div class="kv-row"><span class="kv-key">Rhegmatogenous RD (RRD)</span><span class="kv-val highlight">MC type; break/tear in retina → fluid entry; painless flashes + floaters + curtain shadow</span></div>
+      <div class="kv-row"><span class="kv-key">RRD — risk factors</span><span class="kv-val">High myopia, aphakia, trauma, lattice degeneration, post-cataract surgery</span></div>
+      <div class="kv-row"><span class="kv-key">Traction RD (TRD)</span><span class="kv-val">Fibrovascular membrane pulls retina; PDR (MC cause), trauma, PVR</span></div>
+      <div class="kv-row"><span class="kv-key">Exudative RD</span><span class="kv-val">Fluid under retina; no break; choroidal tumour, VKH, Coats' disease; shifting fluid</span></div>
+      <div class="kv-row"><span class="kv-key">Lattice degeneration</span><span class="kv-val">Peripheral retinal thinning + white lines (lattice); snail-track; RRD risk</span></div>
+      <div class="kv-row"><span class="kv-key">RD surgery — pneumatic retinopexy</span><span class="kv-val">Gas bubble + laser; superior breaks; office procedure</span></div>
+      <div class="kv-row"><span class="kv-key">Scleral buckling</span><span class="kv-val">Silicone band/sponge to indent sclera; closes break; RRD</span></div>
+      <div class="kv-row"><span class="kv-key">Pars plana vitrectomy (PPV)</span><span class="kv-val highlight">Gold standard for complex RD, TRD, PVR; removes vitreous; tamponade with gas/silicone oil</span></div>
+      <div class="kv-row"><span class="kv-key">Macula-on vs macula-off RD</span><span class="kv-val danger">Macula-off = urgent surgery within 24 hrs; each day delay → worse prognosis</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🔴 Retinoblastoma</div>
+      <div class="kv-row"><span class="kv-key">MC intraocular tumour in children</span><span class="kv-val highlight">Retinoblastoma</span></div>
+      <div class="kv-row"><span class="kv-key">MC presentation</span><span class="kv-val highlight">Leukocoria (white pupillary reflex / "cat's eye" reflex)</span></div>
+      <div class="kv-row"><span class="kv-key">2nd MC presentation</span><span class="kv-val">Strabismus (squint)</span></div>
+      <div class="kv-row"><span class="kv-key">Gene mutation</span><span class="kv-val highlight">RB1 gene (chromosome 13q14); tumour suppressor; "two-hit hypothesis" (Knudson)</span></div>
+      <div class="kv-row"><span class="kv-key">Bilateral retinoblastoma</span><span class="kv-val danger">Always hereditary; germline mutation; risk of trilateral RB (pinealoblastoma)</span></div>
+      <div class="kv-row"><span class="kv-key">Unilateral</span><span class="kv-val">15% hereditary; 85% sporadic somatic mutation</span></div>
+      <div class="kv-row"><span class="kv-key">Flexner-Wintersteiner rosettes</span><span class="kv-val highlight">Pathognomonic of retinoblastoma on histology</span></div>
+      <div class="kv-row"><span class="kv-key">Calcification on imaging</span><span class="kv-val">Calcified mass on CT/B-scan; pathognomonic feature</span></div>
+      <div class="kv-row"><span class="kv-key">International Classification (IIRC)</span><span class="kv-val">Groups A–E; Group E = enucleation; Groups A–D = globe-salvage therapies</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val danger">Enucleation (large tumour); intra-arterial chemotherapy (IAC); focal therapy (laser, cryotherapy)</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🔵 Other Retinal Conditions</div>
+      <div class="kv-row"><span class="kv-key">Coats' disease</span><span class="kv-val">Telangiectasia + exudative RD; young males; unilateral; lipid exudates; no systemic assoc.</span></div>
+      <div class="kv-row"><span class="kv-key">ROP (Retinopathy of Prematurity)</span><span class="kv-val danger">Premature + low birth weight + excessive O₂; Zone I worst; Stage 5 = total RD; Rx: laser photocoagulation; anti-VEGF</span></div>
+      <div class="kv-row"><span class="kv-key">PLUS disease (ROP)</span><span class="kv-val danger">Venous dilation + arteriolar tortuosity at posterior pole = worse prognosis; indicates treatment needed</span></div>
+      <div class="kv-row"><span class="kv-key">Central serous chorioretinopathy (CSCR)</span><span class="kv-val">Young males; stress/steroids; serous detachment of macula; Rx: observe (resolve in 3 months); PDT if chronic</span></div>
+      <div class="kv-row"><span class="kv-key">Macular hole</span><span class="kv-val">Full-thickness defect at fovea; elderly females; Watzke-Allen test +ve; Rx: PPV + ILM peel + gas tamponade</span></div>
+      <div class="kv-row"><span class="kv-key">Vitreous haemorrhage — causes</span><span class="kv-val">PDR (MC), posterior vitreous detachment (PVD), trauma, RD, Terson's syndrome (SAH)</span></div>
+      <div class="kv-row"><span class="kv-key">Eales' disease</span><span class="kv-val">Idiopathic perivasculitis; young Indian males; peripheral VH; TB association</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NEURO-OPHTHALMOLOGY -->
+<div class="section" id="neuro">
+  <div class="section-title">Neuro-<span>ophthalmology</span></div>
+  <div class="section-sub">Visual field defects, pupil disorders, optic nerve, ocular motility</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">👁️ Visual Field Defects — Localisation</div>
+      <table class="comparison-table">
+        <tr><th>Lesion Site</th><th>Visual Field Defect</th><th>Cause</th></tr>
+        <tr><td>Optic nerve (monocular)</td><td>Monocular blindness / central scotoma</td><td>Optic neuritis, AION, CRAO</td></tr>
+        <tr><td>Optic chiasm (central)</td><td>Bitemporal hemianopia</td><td>Pituitary adenoma (MC), craniopharyngioma</td></tr>
+        <tr><td>Optic chiasm (lateral)</td><td>Binasal hemianopia</td><td>Bilateral carotid aneurysm, hydrocephalus</td></tr>
+        <tr><td>Optic tract</td><td>Contralateral homonymous hemianopia (incongruous)</td><td>Vascular, tumour</td></tr>
+        <tr><td>Temporal lobe (Meyer's loop)</td><td>Contralateral superior homonymous quadrantanopia ("pie in the sky")</td><td>Temporal lobe lesion</td></tr>
+        <tr><td>Parietal lobe</td><td>Contralateral inferior homonymous quadrantanopia ("pie on the floor")</td><td>Parietal lobe lesion</td></tr>
+        <tr><td>Occipital cortex</td><td>Congruent homonymous hemianopia with macular sparing</td><td>PCA stroke (macular sparing = dual blood supply)</td></tr>
+      </table>
+      <div class="mnemonic"><b>Bitemporal hemianopia = chiasm compression:</b> Most common cause = Pituitary adenoma pressing from below (inferior chiasm = lower fibres = superior temporal field first)</div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">⚫ Pupil Abnormalities</div>
+      <div class="kv-row"><span class="kv-key">RAPD (Relative Afferent Pupillary Defect)</span><span class="kv-val highlight">Swinging flashlight test; paradoxical dilation of affected eye; optic nerve / retinal lesion</span></div>
+      <div class="kv-row"><span class="kv-key">Horner's syndrome triad</span><span class="kv-val danger">Ptosis (partial) + Miosis + Anhidrosis (enophthalmos is apparent, not real)</span></div>
+      <div class="kv-row"><span class="kv-key">Horner's — cocaine test</span><span class="kv-val">Fails to dilate in Horner's (no NE release)</span></div>
+      <div class="kv-row"><span class="kv-key">Horner's — apraclonidine test</span><span class="kv-val">Reversal of anisocoria (denervation supersensitivity)</span></div>
+      <div class="kv-row"><span class="kv-key">CN III palsy — pupil</span><span class="kv-val danger">Dilated pupil (mydriasis); complete ptosis; eye down and out; surgical CN III (compressive) → pupil involved first</span></div>
+      <div class="kv-row"><span class="kv-key">Medical CN III palsy</span><span class="kv-val">Diabetic mononeuropathy; pupil SPARED (ischaemic core spares outer pupillomotor fibres)</span></div>
+      <div class="kv-row"><span class="kv-key">Argyll Robertson pupil</span><span class="kv-val highlight">Accommodates but does not react (LIGHT-NEAR DISSOCIATION); syphilis; small, irregular</span></div>
+      <div class="kv-row"><span class="kv-key">Adie's tonic pupil</span><span class="kv-val">Dilated; slow response; light-near dissociation; cholinergic supersensitivity; young females; benign</span></div>
+      <div class="kv-row"><span class="kv-key">Marcus Gunn pupil</span><span class="kv-val">= RAPD; unilateral optic nerve lesion</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🧠 Optic Nerve Disorders</div>
+      <div class="kv-row"><span class="kv-key">Optic neuritis</span><span class="kv-val highlight">Painful vision loss; RAPD +ve; dyschromatopsia (red desaturation); associated with MS (50%)</span></div>
+      <div class="kv-row"><span class="kv-key">Optic neuritis — treatment</span><span class="kv-val">IV methylprednisolone (speeds recovery but doesn't improve final VA)</span></div>
+      <div class="kv-row"><span class="kv-key">AION (Anterior Ischaemic Optic Neuropathy)</span><span class="kv-val danger">Sudden painless visual loss; altitudinal field defect; swollen pale disc; no pain</span></div>
+      <div class="kv-row"><span class="kv-key">Arteritic AION</span><span class="kv-val danger">GCA (Giant cell arteritis); ESR↑↑; urgent systemic steroids; jaw claudication; temporal artery biopsy</span></div>
+      <div class="kv-row"><span class="kv-key">Non-arteritic AION</span><span class="kv-val">Small disc (crowded disc); HTN, DM, hyperlipidaemia; "disc at risk"</span></div>
+      <div class="kv-row"><span class="kv-key">Papilloedema</span><span class="kv-val danger">Bilateral disc swelling due to ↑ICP; no vision loss initially; enlarged blind spot; transient visual obscurations</span></div>
+      <div class="kv-row"><span class="kv-key">Papilloedema vs papillitis</span><span class="kv-val">Papilloedema = bilateral, no RAPD, vision preserved initially; Papillitis = unilateral, RAPD, vision loss</span></div>
+      <div class="kv-row"><span class="kv-key">Leber's hereditary optic neuropathy (LHON)</span><span class="kv-val">Mitochondrial inheritance; young males; bilateral sequential vision loss; mt-DNA mutations (11778, 3460, 14484)</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">👁️ Ocular Motility &amp; CN Palsies</div>
+      <div class="kv-row"><span class="kv-key">CN III (oculomotor) palsy</span><span class="kv-val danger">All EOMs except LR + SO; ptosis; eye "down and out"; dilated pupil (surgical)</span></div>
+      <div class="kv-row"><span class="kv-key">CN IV (trochlear) palsy</span><span class="kv-val">SO palsy; superior oblique = intorter; head tilt to opposite side; vertical diplopia; longest intracranial course</span></div>
+      <div class="kv-row"><span class="kv-key">CN VI (abducens) palsy</span><span class="kv-val highlight">LR palsy; convergent squint; horizontal diplopia; worse on ipsilateral gaze; MC CN palsy (false localising sign ↑ICP)</span></div>
+      <div class="kv-row"><span class="kv-key">INO (Internuclear Ophthalmoplegia)</span><span class="kv-val danger">MLF lesion; failure of adduction ipsilateral eye + nystagmus contralateral abducting eye; bilateral = MS</span></div>
+      <div class="kv-row"><span class="kv-key">Parinaud's syndrome</span><span class="kv-val danger">Dorsal midbrain syndrome; upgaze palsy + convergence-retraction nystagmus + lid retraction (Collier's sign); pineal tumour</span></div>
+      <div class="kv-row"><span class="kv-key">Cavernous sinus syndrome</span><span class="kv-val danger">CN III, IV, VI + V1 (+ V2) + sympathetics; multiple CN palsies; proptosis; carotid-cavernous fistula</span></div>
+      <div class="kv-row"><span class="kv-key">Superior orbital fissure syndrome</span><span class="kv-val">CN III + IV + VI + V1 (ophthalmic branch); no proptosis</span></div>
+      <div class="kv-row"><span class="kv-key">Orbital apex syndrome</span><span class="kv-val">SOF + optic nerve = CN II + III + IV + VI + V1; vision loss</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🧠 Nystagmus &amp; Special Topics</div>
+      <div class="kv-row"><span class="kv-key">Jerk nystagmus — direction named</span><span class="kv-val">By direction of fast phase (compensatory saccade)</span></div>
+      <div class="kv-row"><span class="kv-key">Pendular nystagmus</span><span class="kv-val">Equal velocity both phases; acquired (MS, albinism, visual loss)</span></div>
+      <div class="kv-row"><span class="kv-key">Downbeat nystagmus</span><span class="kv-val danger">Cervicomedullary junction pathology (Chiari malformation, MS); worse on lateral gaze + downgaze</span></div>
+      <div class="kv-row"><span class="kv-key">Upbeat nystagmus</span><span class="kv-val">Medulla/vermis lesion; Wernicke's encephalopathy (thiamine)</span></div>
+      <div class="kv-row"><span class="kv-key">See-saw nystagmus</span><span class="kv-val">Parachiasmal lesion; one eye rises + intorts while other falls + extorts</span></div>
+      <div class="kv-row"><span class="kv-key">Myasthenia gravis — ocular</span><span class="kv-val">Variable ptosis + diplopia; Cogan's lid twitch; ice-pack test; Tensilon test (edrophonium)</span></div>
+      <div class="kv-row"><span class="kv-key">Thyroid eye disease (TED/TAO)</span><span class="kv-val">Most common cause of unilateral/bilateral proptosis in adults; inferior rectus MC (upgaze restriction); exophthalmos; lid retraction (Dalrymple's)</span></div>
+      <div class="kv-row"><span class="kv-key">Pseudotumour cerebri (IIH)</span><span class="kv-val danger">Obese young females; headache + papilloedema + CN VI palsy; normal imaging; LP → ↑CSF pressure; Rx: acetazolamide, weight loss</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LIDS, ORBIT & LACRIMAL -->
+<div class="section" id="lids">
+  <div class="section-title">Lids, Orbit <span>&amp; Lacrimal</span></div>
+  <div class="section-sub">Eyelid disorders, orbital disease, lacrimal system, trauma</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">👁️ Eyelid Disorders</div>
+      <div class="kv-row"><span class="kv-key">Ptosis classification</span><span class="kv-val">Neurogenic (CN III, Horner's), Myogenic (MG, CPEO), Aponeurotic (involutional), Mechanical (mass)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause ptosis in adults</span><span class="kv-val highlight">Aponeurotic (involutional/senile) — levator dehiscence</span></div>
+      <div class="kv-row"><span class="kv-key">Pseudoptosis</span><span class="kv-val">Microphthalmos, phthisis bulbi, enophthalmos, contralateral lid retraction, hypotropia</span></div>
+      <div class="kv-row"><span class="kv-key">Chalazion (Meibomian cyst)</span><span class="kv-val highlight">Chronic granulomatous inflammation of Meibomian gland; painless; tarsal plate; Rx: I&amp;C (incision &amp; curettage)</span></div>
+      <div class="kv-row"><span class="kv-key">Hordeolum (stye)</span><span class="kv-val">Acute infection; external (Zeis gland) = stye; internal (Meibomian gland) = internal hordeolum; S. aureus; hot compresses</span></div>
+      <div class="kv-row"><span class="kv-key">Entropion</span><span class="kv-val">Lid turns inward; lashes touch globe; senile (involutional) MC; Rx: everting sutures / surgery</span></div>
+      <div class="kv-row"><span class="kv-key">Ectropion</span><span class="kv-val">Lid turns outward; epiphora; exposure keratopathy; senile MC; CN VII palsy; Rx: surgery</span></div>
+      <div class="kv-row"><span class="kv-key">Trichiasis</span><span class="kv-val">Normal lid position but lashes turned inward; trachoma, SJS; epilation / electrolysis / laser</span></div>
+      <div class="kv-row"><span class="kv-key">Distichiasis</span><span class="kv-val">Accessory row of lashes from Meibomian gland orifices; congenital or acquired (SJS, cicatricial)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🌐 Orbital Disorders</div>
+      <div class="kv-row"><span class="kv-key">Proptosis — MC cause (adults)</span><span class="kv-val highlight">Thyroid eye disease (Graves' ophthalmopathy)</span></div>
+      <div class="kv-row"><span class="kv-key">Proptosis — MC cause (children)</span><span class="kv-val highlight">Orbital cellulitis (from ethmoid sinusitis)</span></div>
+      <div class="kv-row"><span class="kv-key">Axial proptosis</span><span class="kv-val">Intraconal mass; optic nerve glioma, meningioma; thyroid eye disease</span></div>
+      <div class="kv-row"><span class="kv-key">Non-axial (eccentric) proptosis</span><span class="kv-val">Extraconal; lacrimal gland tumour (superolateral), dermoid cyst</span></div>
+      <div class="kv-row"><span class="kv-key">Optic nerve glioma</span><span class="kv-val">Children; proptosis + vision loss; NF-1 association; "kinking" of optic nerve on MRI</span></div>
+      <div class="kv-row"><span class="kv-key">Optic nerve meningioma</span><span class="kv-val danger">Optociliary shunt vessels on disc; "tram-track" calcification on CT; vision loss</span></div>
+      <div class="kv-row"><span class="kv-key">Carotid-cavernous fistula (CCF)</span><span class="kv-val danger">Pulsatile proptosis + bruit + chemosis + high IOP; trauma (direct); spontaneous (indirect — dural)</span></div>
+      <div class="kv-row"><span class="kv-key">Orbital cellulitis management</span><span class="kv-val danger">IV antibiotics (co-amoxiclav + metronidazole); CT scan; drain if abscess; ophthalmology + ENT</span></div>
+      <div class="kv-row"><span class="kv-key">Dermoid cyst</span><span class="kv-val">Superotemporal (frontozygomatic suture); MC benign orbital tumour in children; well-defined on CT</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">💧 Lacrimal System Disorders</div>
+      <div class="kv-row"><span class="kv-key">Epiphora — MC cause in neonates</span><span class="kv-val highlight">Congenital NLDO (nasolacrimal duct obstruction) — membranous obstruction at valve of Hasner</span></div>
+      <div class="kv-row"><span class="kv-key">Congenital NLDO treatment</span><span class="kv-val">Crigler's massage (lacrimal sac massage) → syringing → probing at 12–18 months</span></div>
+      <div class="kv-row"><span class="kv-key">Dacryocystitis — MC organism</span><span class="kv-val highlight">S. aureus (acute); Staphylococcus epidermidis / Streptococcus (chronic)</span></div>
+      <div class="kv-row"><span class="kv-key">Acute dacryocystitis</span><span class="kv-val danger">Tender swelling below medial canthus; regurgitation on pressure; Rx: systemic antibiotics; DCR after acute settles</span></div>
+      <div class="kv-row"><span class="kv-key">Dacryocystorhinostomy (DCR)</span><span class="kv-val highlight">Gold standard for NLDO in adults; creates fistula between lacrimal sac and nasal cavity</span></div>
+      <div class="kv-row"><span class="kv-key">Canaliculitis</span><span class="kv-val">Actinomyces israelii (MC); "pouting" punctum; concretions (sulphur granules); Rx: syringing + curettage + penicillin</span></div>
+      <div class="kv-row"><span class="kv-key">Dacryoadenitis</span><span class="kv-val">Lacrimal gland inflammation; S-shaped ptosis; superolateral swelling; mumps, EBV, sarcoidosis</span></div>
+      <div class="kv-row"><span class="kv-key">Lacrimal gland tumour</span><span class="kv-val">50% epithelial (pleomorphic adenoma MC benign; adenoid cystic MC malignant); 50% lymphoid</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">💥 Ocular Trauma</div>
+      <div class="kv-row"><span class="kv-key">Chemical injury — 1st aid</span><span class="kv-val danger">Immediate copious irrigation with water / saline (30 min); check pH; BEFORE any examination</span></div>
+      <div class="kv-row"><span class="kv-key">Alkali vs acid injury</span><span class="kv-val danger">Alkali = worse (liquefactive necrosis — penetrates deeper); Acid = coagulative (self-limiting barrier)</span></div>
+      <div class="kv-row"><span class="kv-key">Hyphema</span><span class="kv-val">Blood in AC; trauma (MC); classify by layers: Grade I (&lt;1/3 AC) → Grade IV (total/8-ball)</span></div>
+      <div class="kv-row"><span class="kv-key">Hyphema — complication</span><span class="kv-val danger">Rebleed day 3–5; IOP spike; corneal bloodstaining; sickle cell (sickling → angle occlusion)</span></div>
+      <div class="kv-row"><span class="kv-key">Vitreous haemorrhage — B-scan</span><span class="kv-val">To assess retinal status when fundus view obscured by VH</span></div>
+      <div class="kv-row"><span class="kv-key">Open globe injury</span><span class="kv-val danger">Fox shield (do NOT patch); no topical drops; NPO; IV antibiotics; surgery within 24 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Siderosis bulbi</span><span class="kv-val danger">Retained iron IOFB → rusty staining; pupil dilation, cataract, retinal degeneration; ERG: reduced b-wave</span></div>
+      <div class="kv-row"><span class="kv-key">Chalcosis</span><span class="kv-val">Retained copper IOFB; sunflower cataract; Kayser-Fleischer ring; retinal degeneration</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🔶 Eyelid Tumours</div>
+      <div class="kv-row"><span class="kv-key">MC malignant lid tumour</span><span class="kv-val highlight">Basal cell carcinoma (BCC) — 90% of all malignant lid tumours; lower lid MC site</span></div>
+      <div class="kv-row"><span class="kv-key">BCC — rodent ulcer</span><span class="kv-val">Pearly rolled border + central ulceration; rarely metastasises; Rx: Mohs surgery</span></div>
+      <div class="kv-row"><span class="kv-key">Sebaceous gland carcinoma</span><span class="kv-val danger">Upper lid (Meibomian glands); masquerades as chalazion; pagetoid spread; high mortality if missed</span></div>
+      <div class="kv-row"><span class="kv-key">Sebaceous Ca — biopsy</span><span class="kv-val danger">Fat stain (Oil Red O) on fresh tissue; not formalin-fixed; pagetoid intraepithelial spread</span></div>
+      <div class="kv-row"><span class="kv-key">SCC of lid</span><span class="kv-val">Can metastasise (unlike BCC); sun damage; lower lid; Muir-Torre syndrome association</span></div>
+      <div class="kv-row"><span class="kv-key">Kaposi sarcoma — lids</span><span class="kv-val">AIDS; purple/red nodule; HHV-8; MC periocular tumour in AIDS</span></div>
+      <div class="kv-row"><span class="kv-key">Xanthelasma</span><span class="kv-val">Yellow cholesterol plaques; medial canthi; associated with hyperlipidaemia (50%); cosmetic excision</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency single-answer facts for rapid Ophthalmology revision</div>
+  <div class="grid-2">
+    <div class="card orange">
+      <div class="card-title">⭐ Ophthalmology Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">MC cause of blindness in India</span><span class="kv-val highlight">Cataract</span></div>
+      <div class="kv-row"><span class="kv-key">MC preventable cause of blindness (world)</span><span class="kv-val highlight">Trachoma</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause of irreversible blindness (world)</span><span class="kv-val danger">Glaucoma</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause of childhood blindness (India)</span><span class="kv-val">Vitamin A deficiency (xerophthalmia)</span></div>
+      <div class="kv-row"><span class="kv-key">Bitot's spots</span><span class="kv-val highlight">Foamy triangular spots on conjunctiva; vitamin A deficiency</span></div>
+      <div class="kv-row"><span class="kv-key">Keratomalacia</span><span class="kv-val danger">Corneal necrosis/melting; vitamin A deficiency; emergency Vit A</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause of uveitis in India</span><span class="kv-val">Tuberculosis</span></div>
+      <div class="kv-row"><span class="kv-key">MC posterior uveitis worldwide</span><span class="kv-val">Toxoplasmosis</span></div>
+      <div class="kv-row"><span class="kv-key">Cherry red spot (fovea)</span><span class="kv-val danger">CRAO, Tay-Sachs, Niemann-Pick, Gaucher's, CO poisoning</span></div>
+      <div class="kv-row"><span class="kv-key">Disc oedema without ↑ ICP</span><span class="kv-val">Papillitis (optic neuritis), AION, malignant HTN, CRVO</span></div>
+      <div class="kv-row"><span class="kv-key">Kayser-Fleischer ring</span><span class="kv-val highlight">Wilson's disease; copper in Descemet's membrane; golden-brown</span></div>
+      <div class="kv-row"><span class="kv-key">Fleischer ring</span><span class="kv-val">Keratoconus; iron at base of cone</span></div>
+      <div class="kv-row"><span class="kv-key">Stocker's line</span><span class="kv-val">Iron line at leading edge of pterygium</span></div>
+      <div class="kv-row"><span class="kv-key">Hudson-Stähli line</span><span class="kv-val">Horizontal iron line at junction of upper 2/3 and lower 1/3 of cornea; normal</span></div>
+      <div class="kv-row"><span class="kv-key">Vortex keratopathy (cornea verticillata)</span><span class="kv-val">Amiodarone, chloroquine, Fabry disease; whorl pattern</span></div>
+      <div class="kv-row"><span class="kv-key">Haab's striae</span><span class="kv-val highlight">Horizontal breaks in Descemet's membrane — congenital glaucoma (buphthalmos)</span></div>
+      <div class="kv-row"><span class="kv-key">Krukenberg spindle</span><span class="kv-val">Vertical pigment on corneal endothelium — pigmentary glaucoma</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">⭐ Ophthalmology Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">Retinitis pigmentosa</span><span class="kv-val highlight">Night blindness + bone-spicule pigmentation + waxy disc + arteriolar attenuation; AR MC</span></div>
+      <div class="kv-row"><span class="kv-key">Usher syndrome</span><span class="kv-val">RP + SNHL; AR; MC syndromic RP</span></div>
+      <div class="kv-row"><span class="kv-key">Laurence-Moon-Biedl syndrome</span><span class="kv-val">RP + obesity + polydactyly + hypogonadism + intellectual disability</span></div>
+      <div class="kv-row"><span class="kv-key">Phakomatoses — ocular signs</span><span class="kv-val">NF-1: Lisch nodules (iris hamartomas); NF-2: posterior subcapsular cataract; TS: retinal astrocytomas; VHL: retinal haemangioblastoma (Von Hippel)</span></div>
+      <div class="kv-row"><span class="kv-key">Lisch nodules</span><span class="kv-val highlight">Iris melanocytic hamartomas; NF-1 (neurofibromatosis type 1); pathognomonic</span></div>
+      <div class="kv-row"><span class="kv-key">Angioid streaks</span><span class="kv-val danger">Breaks in Bruch's membrane; PXE (pseudoxanthoma elasticum) MC, sickle cell, Paget's disease; risk of CNVM</span></div>
+      <div class="kv-row"><span class="kv-key">Bull's eye maculopathy</span><span class="kv-val danger">Chloroquine / hydroxychloroquine toxicity; central RPE loss with intact fovea</span></div>
+      <div class="kv-row"><span class="kv-key">Asteroid hyalosis</span><span class="kv-val">Calcium-phosphate deposits in vitreous; unilateral; elderly; asymptomatic; no Rx needed</span></div>
+      <div class="kv-row"><span class="kv-key">Synchysis scintillans</span><span class="kv-val">Cholesterol crystals in vitreous (bilateral usually); settles with gravity; pathological (old VH)</span></div>
+      <div class="kv-row"><span class="kv-key">Coloboma</span><span class="kv-val">Keyhole pupil inferonasally; failure of optic fissure closure; CHARGE syndrome</span></div>
+      <div class="kv-row"><span class="kv-key">Leukocoria — causes</span><span class="kv-val danger">Retinoblastoma (MC), PHPV, ROP, Coats', cataract, RD, toxocara endophthalmitis</span></div>
+      <div class="kv-row"><span class="kv-key">MC intraocular tumour in adults</span><span class="kv-val danger">Metastasis (breast MC in females, lung MC in males)</span></div>
+      <div class="kv-row"><span class="kv-key">MC primary intraocular tumour in adults</span><span class="kv-val">Uveal melanoma (choroidal melanoma)</span></div>
+      <div class="kv-row"><span class="kv-key">Choroidal melanoma — investigation</span><span class="kv-val">B-scan ultrasound (low internal reflectivity); liver imaging (metastasis)</span></div>
+      <div class="kv-row"><span class="kv-key">Stargardt disease</span><span class="kv-val">AR; ABCA4 mutation; juvenile macular dystrophy; "beaten bronze" macula; pisciform flecks</span></div>
+      <div class="kv-row"><span class="kv-key">Best disease (vitelliform dystrophy)</span><span class="kv-val">AD; BEST1 (bestrophin) mutation; "egg-yolk" macular lesion; EOG markedly reduced (Arden ratio)</span></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-auto">
+    <div class="card green">
+      <div class="card-title">🏆 High-Yield Mnemonics</div>
+      <div class="mnemonic"><b>Corneal layers — "EABSDE":</b> Epithelium, Anterior limiting (Bowman's), Bowman's, Stroma, Descemet's (posterior limiting), Endothelium</div>
+      <div class="mnemonic"><b>ISNT rule (glaucoma):</b> In a normal disc, Inferior rim &gt; Superior rim &gt; Nasal rim &gt; Temporal rim. Violation of ISNT = glaucomatous rim loss</div>
+      <div class="mnemonic"><b>Cherry red spot causes — "TGCNO":</b> Tay-Sachs, Gaucher's, CRAO, Niemann-Pick, Other (CO poisoning)</div>
+      <div class="mnemonic"><b>Pupil-sparing CN III:</b> Medical (diabetic/ischaemic) CN III palsy SPARES pupil — blood vessels penetrate from outside in; ischaemia hits core motor fibres first, spares outer pupillomotor fibres</div>
+      <div class="mnemonic"><b>Horner's syndrome — "PAM":</b> Ptosis (partial), Anhidrosis, Miosis — plus apparent enophthalmos and upside ptosis (lower lid elevation)</div>
+      <div class="mnemonic"><b>Vitamin A deficiency stages:</b> Night blindness → Conjunctival xerosis → Bitot's spots → Corneal xerosis → Keratomalacia (emergency) → Corneal scarring</div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">⚡ Drug–Eye Associations</div>
+      <div class="kv-row"><span class="kv-key">Chloroquine / hydroxychloroquine</span><span class="kv-val danger">Bull's eye maculopathy; vortex keratopathy; screen with OCT annually after 5 yrs</span></div>
+      <div class="kv-row"><span class="kv-key">Amiodarone</span><span class="kv-val">Vortex keratopathy (cornea verticillata); optic neuropathy; photophobia</span></div>
+      <div class="kv-row"><span class="kv-key">Ethambutol</span><span class="kv-val danger">Optic neuritis; loss of red-green colour vision; central scotoma; dose-dependent; reversible</span></div>
+      <div class="kv-row"><span class="kv-key">Steroids (topical/systemic)</span><span class="kv-val danger">PSC cataract; steroid-induced glaucoma (trabecular); IOP rise 3–6 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Rifampicin</span><span class="kv-val">Orange-red discolouration of tears/contact lenses</span></div>
+      <div class="kv-row"><span class="kv-key">Sildenafil (PDE5 inhibitors)</span><span class="kv-val">Blue-tinged vision; AION risk (avoid in pre-existing optic neuropathy)</span></div>
+      <div class="kv-row"><span class="kv-key">Tamoxifen</span><span class="kv-val">Crystalline maculopathy; whorl keratopathy; optic neuritis</span></div>
+      <div class="kv-row"><span class="kv-key">Vigabatrin</span><span class="kv-val danger">Irreversible visual field constriction (peripheral); monitor with perimetry</span></div>
+      <div class="kv-row"><span class="kv-key">Latanoprost (prostaglandins)</span><span class="kv-val">Iris pigmentation (increased brown pigment); hypertrichosis of lashes; CMO in aphakia</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🔥 Exam Traps &amp; Frequently Confused</div>
+      <div class="kv-row"><span class="kv-key">Papilloedema vs papillitis</span><span class="kv-val danger">Papilloedema = bilateral, ↑ICP, vision preserved early, no RAPD; Papillitis = unilateral, RAPD, painful, vision lost</span></div>
+      <div class="kv-row"><span class="kv-key">POAG vs PACG</span><span class="kv-val danger">POAG = painless, open angle, slow; PACG = painful acute, closed angle, emergency</span></div>
+      <div class="kv-row"><span class="kv-key">Surgical vs medical CN III palsy</span><span class="kv-val danger">Surgical (compressive = aneurysm) = pupil INVOLVED; Medical (ischaemic/diabetic) = pupil SPARED</span></div>
+      <div class="kv-row"><span class="kv-key">Chalazion vs hordeolum</span><span class="kv-val">Chalazion = chronic, painless, Meibomian, I&amp;C; Hordeolum = acute, painful, infected, hot compresses</span></div>
+      <div class="kv-row"><span class="kv-key">Dry ARMD vs wet ARMD</span><span class="kv-val danger">Dry = 85%, slow, geographic atrophy; Wet = 15%, fast, CNV, metamorphopsia, anti-VEGF treatment</span></div>
+      <div class="kv-row"><span class="kv-key">Asteroid hyalosis vs synchysis scintillans</span><span class="kv-val">Asteroid = calcium-phosphate, unilateral, stays suspended, benign; Synchysis = cholesterol, settles, pathological</span></div>
+      <div class="kv-row"><span class="kv-key">Argyll Robertson vs Adie's pupil</span><span class="kv-val danger">Both = light-near dissociation (near &gt; light); AR = small irregular bilateral (syphilis); Adie's = large, slow, unilateral, benign</span></div>
+      <div class="kv-row"><span class="kv-key">Rubella cataract — do NOT operate early</span><span class="kv-val danger">Live virus persists in lens for months; operation releases virus → endophthalmitis</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

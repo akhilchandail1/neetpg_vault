@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ENT Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0e1a; --surface: #111827; --surface2: #1a2235; --border: #1e2d45;
+    --accent: #fb923c; --accent2: #7dd3fc; --accent3: #86efac; --accent4: #f9a8d4; --accent5: #c4b5fd;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #0f172a 0%, #0f1a0f 50%, #0f172a 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent); color: #0a0e1a; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent); color: #0a0e1a; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.orange::before { background: var(--accent); }
+  .card.blue::before { background: var(--accent2); }
+  .card.green::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.purple::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.orange .card-title { color: var(--accent); }
+  .card.blue .card-title { color: var(--accent2); }
+  .card.green .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.purple .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #1a2235; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.blue { color: var(--accent2); }
+  .kv-val.green { color: var(--accent3); }
+  .kv-val.pink { color: var(--accent4); }
+  .kv-val.danger { color: var(--danger); }
+  .kv-val.purple { color: var(--accent5); }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(125,211,252,0.06); border: 1px solid rgba(125,211,252,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent2); margin-top: 8px; line-height: 1.5; }
+  .green-box { background: rgba(134,239,172,0.06); border: 1px solid rgba(134,239,172,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent3); margin-top: 8px; line-height: 1.5; }
+  .orange-box { background: rgba(251,146,60,0.08); border: 1px solid rgba(251,146,60,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent); margin-top: 8px; line-height: 1.5; }
+  .mnemonic { background: rgba(196,181,253,0.07); border-left: 3px solid var(--accent5); border-radius: 0 8px 8px 0; padding: 8px 12px; margin-top: 8px; font-size: 12px; color: var(--accent5); line-height: 1.6; }
+  .mnemonic b { color: var(--accent); }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  @media (max-width: 800px) { .grid-auto, .grid-2 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>ENT <span>Cheatsheet</span></h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('ear',this)">Ear</div>
+    <div class="tab" onclick="showSection('hearing',this)">Hearing &amp; Audiology</div>
+    <div class="tab" onclick="showSection('nose',this)">Nose &amp; Sinuses</div>
+    <div class="tab" onclick="showSection('throat',this)">Throat &amp; Larynx</div>
+    <div class="tab" onclick="showSection('head_neck',this)">Head &amp; Neck</div>
+    <div class="tab" onclick="showSection('paeds_ent',this)">Paediatric ENT</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- EAR -->
+<div class="section active" id="ear">
+  <div class="section-title">Ear <span>Disorders</span></div>
+  <div class="section-sub">Otitis media, otitis externa, cholesteatoma, tympanic membrane, facial nerve</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">👂 Otitis Media — Acute (ASOM)</div>
+      <div class="kv-row"><span class="kv-key">MC organism (all ages)</span><span class="kv-val danger">Streptococcus pneumoniae</span></div>
+      <div class="kv-row"><span class="kv-key">2nd MC organism</span><span class="kv-val">Haemophilus influenzae</span></div>
+      <div class="kv-row"><span class="kv-key">Neonates / infants</span><span class="kv-val">Gram-negative organisms</span></div>
+      <div class="kv-row"><span class="kv-key">Antibiotic of choice</span><span class="kv-val highlight">Amoxicillin (first line)</span></div>
+      <div class="kv-row"><span class="kv-key">Penicillin allergy</span><span class="kv-val">Azithromycin / Clarithromycin</span></div>
+      <div class="kv-row"><span class="kv-key">Mastoiditis — MC complication</span><span class="kv-val danger">Subperiosteal abscess</span></div>
+      <div class="kv-row"><span class="kv-key">Bezold's abscess</span><span class="kv-val danger">Pus tracks below SCM along neck</span></div>
+      <div class="kv-row"><span class="kv-key">Citelli's abscess</span><span class="kv-val danger">Pus in posterior belly of digastric</span></div>
+      <div class="kv-row"><span class="kv-key">Gradenigo's syndrome</span><span class="kv-val danger">Otitis media + VI nerve palsy + retro-orbital pain (petrous apex)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment mastoiditis</span><span class="kv-val danger">IV antibiotics + cortical mastoidectomy</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">👂 Otitis Media with Effusion (OME / Glue Ear)</div>
+      <div class="kv-row"><span class="kv-key">Definition</span><span class="kv-val">Non-purulent fluid in middle ear &gt;3 months; no acute signs</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause of hearing loss in children</span><span class="kv-val highlight">OME (glue ear)</span></div>
+      <div class="kv-row"><span class="kv-key">Type of hearing loss</span><span class="kv-val">Conductive (CHL)</span></div>
+      <div class="kv-row"><span class="kv-key">Tympanogram</span><span class="kv-val danger">Type B (flat) — no peak</span></div>
+      <div class="kv-row"><span class="kv-key">Watchful waiting</span><span class="kv-val">3 months (most resolve spontaneously)</span></div>
+      <div class="kv-row"><span class="kv-key">Surgical treatment</span><span class="kv-val highlight">Grommet (ventilation tube) insertion ± adenoidectomy</span></div>
+      <div class="kv-row"><span class="kv-key">Autoinflation</span><span class="kv-val">Otovent balloon — first-line non-surgical</span></div>
+      <div class="kv-row"><span class="kv-key">Rhinitis / adenoid hypertrophy — association</span><span class="kv-val">Strong (Eustachian tube dysfunction)</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🦠 Chronic Suppurative Otitis Media (CSOM)</div>
+      <div class="kv-row"><span class="kv-key">Tubotympanic (safe) CSOM</span><span class="kv-val green">Central perforation; mucopurulent discharge; no cholesteatoma</span></div>
+      <div class="kv-row"><span class="kv-key">Atticoantral (unsafe) CSOM</span><span class="kv-val danger">Attic/marginal perforation; cholesteatoma; bone erosion</span></div>
+      <div class="kv-row"><span class="kv-key">MC organism CSOM</span><span class="kv-val">Pseudomonas aeruginosa</span></div>
+      <div class="kv-row"><span class="kv-key">2nd MC organism</span><span class="kv-val">Staphylococcus aureus</span></div>
+      <div class="kv-row"><span class="kv-key">Tubotympanic treatment</span><span class="kv-val">Aural toilet + topical antibiotics (ciprofloxacin); myringoplasty</span></div>
+      <div class="kv-row"><span class="kv-key">Atticoantral treatment</span><span class="kv-val danger">Surgery — modified radical mastoidectomy</span></div>
+      <div class="kv-row"><span class="kv-key">Cholesteatoma — definition</span><span class="kv-val">Keratinising squamous epithelium in middle ear; erodes bone</span></div>
+      <div class="kv-row"><span class="kv-key">Cholesteatoma X-ray sign</span><span class="kv-val danger">Scutum erosion on Schuller's view</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🔥 Otitis Externa</div>
+      <div class="kv-row"><span class="kv-key">MC organism</span><span class="kv-val highlight">Pseudomonas aeruginosa</span></div>
+      <div class="kv-row"><span class="kv-key">2nd MC organism</span><span class="kv-val">Staphylococcus aureus</span></div>
+      <div class="kv-row"><span class="kv-key">Otomycosis — MC fungus</span><span class="kv-val">Aspergillus niger (black spores)</span></div>
+      <div class="kv-row"><span class="kv-key">Otomycosis — 2nd MC fungus</span><span class="kv-val">Candida</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment acute OE</span><span class="kv-val highlight">Topical ciprofloxacin + steroid drops; aural toilet</span></div>
+      <div class="kv-row"><span class="kv-key">Malignant (necrotising) OE</span><span class="kv-val danger">Pseudomonas; elderly diabetics; invades skull base</span></div>
+      <div class="kv-row"><span class="kv-key">Malignant OE — treatment</span><span class="kv-val danger">IV ciprofloxacin (6–8 weeks); debridement</span></div>
+      <div class="kv-row"><span class="kv-key">Ramsay Hunt syndrome</span><span class="kv-val danger">VZV (herpes zoster oticus): vesicles in EAC + facial palsy + sensorineural loss</span></div>
+      <div class="kv-row"><span class="kv-key">Ramsay Hunt treatment</span><span class="kv-val">Acyclovir + prednisolone</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">⚡ Facial Nerve (VII) — ENT Points</div>
+      <div class="kv-row"><span class="kv-key">Facial nerve segments</span><span class="kv-val">Meatal → Labyrinthine → Tympanic → Mastoid → Parotid</span></div>
+      <div class="kv-row"><span class="kv-key">Narrowest segment</span><span class="kv-val highlight">Labyrinthine (meatal foramen) — most vulnerable to oedema</span></div>
+      <div class="kv-row"><span class="kv-key">Bell's palsy — cause</span><span class="kv-val">Idiopathic (HSV-1 reactivation); LMN facial palsy</span></div>
+      <div class="kv-row"><span class="kv-key">Bell's palsy — treatment</span><span class="kv-val highlight">Prednisolone within 72 hrs; eye care</span></div>
+      <div class="kv-row"><span class="kv-key">Bell's palsy — recovery</span><span class="kv-val green">85% complete recovery; rest partial</span></div>
+      <div class="kv-row"><span class="kv-key">Chorda tympani — function</span><span class="kv-val">Taste anterior 2/3 tongue + submandibular/sublingual gland secretion</span></div>
+      <div class="kv-row"><span class="kv-key">Nerve to stapedius</span><span class="kv-val">Facial nerve (VII); damage → hyperacusis</span></div>
+      <div class="kv-row"><span class="kv-key">House-Brackmann Grade I</span><span class="kv-val green">Normal function</span></div>
+      <div class="kv-row"><span class="kv-key">House-Brackmann Grade VI</span><span class="kv-val danger">Total paralysis — no movement</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🌀 Vestibular Disorders</div>
+      <div class="kv-row"><span class="kv-key">BPPV — MC cause vertigo</span><span class="kv-val highlight">Canalith (otoconia) in posterior semicircular canal (MC)</span></div>
+      <div class="kv-row"><span class="kv-key">BPPV diagnosis test</span><span class="kv-val highlight">Dix-Hallpike test — upbeat + torsional nystagmus</span></div>
+      <div class="kv-row"><span class="kv-key">BPPV treatment</span><span class="kv-val">Epley manoeuvre (canalith repositioning)</span></div>
+      <div class="kv-row"><span class="kv-key">Ménière's disease — triad</span><span class="kv-val danger">Episodic vertigo + fluctuating SNHL + tinnitus (± aural fullness)</span></div>
+      <div class="kv-row"><span class="kv-key">Ménière's — pathology</span><span class="kv-val">Endolymphatic hydrops</span></div>
+      <div class="kv-row"><span class="kv-key">Ménière's — acute Rx</span><span class="kv-val">Prochlorperazine / betahistine</span></div>
+      <div class="kv-row"><span class="kv-key">Vestibular neuritis</span><span class="kv-val">Sudden severe vertigo; no hearing loss; post-viral (HSV-1)</span></div>
+      <div class="kv-row"><span class="kv-key">Vestibular neuritis — test</span><span class="kv-val">Head impulse test positive (VOR failure)</span></div>
+      <div class="kv-row"><span class="kv-key">Acoustic neuroma — nerve</span><span class="kv-val highlight">Vestibular division of VIII (superior vestibular nerve MC)</span></div>
+      <div class="kv-row"><span class="kv-key">Acoustic neuroma — triad</span><span class="kv-val">Unilateral SNHL + tinnitus + imbalance; at CPA angle</span></div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-auto">
+    <div class="card blue span-full">
+      <div class="card-title">📊 Tympanogram Types</div>
+      <table class="comparison-table">
+        <tr><th>Type</th><th>Peak</th><th>Compliance</th><th>Diagnosis</th></tr>
+        <tr><td>Type A</td><td>0 daPa (normal)</td><td>Normal (0.3–1.6 mL)</td><td>Normal middle ear</td></tr>
+        <tr><td>Type As</td><td>Normal peak</td><td>↓ Compliance (shallow)</td><td>Otosclerosis, tympanosclerosis, ossicular fixation</td></tr>
+        <tr><td>Type Ad</td><td>Normal peak</td><td>↑ Compliance (deep)</td><td>Ossicular discontinuity, thin/scarred TM, monomeric TM</td></tr>
+        <tr><td>Type B</td><td>No peak (flat)</td><td>Very low</td><td>OME (glue ear), TM perforation, wax occluding canal</td></tr>
+        <tr><td>Type C</td><td>Negative pressure (&lt;–100 daPa)</td><td>Normal/low</td><td>Eustachian tube dysfunction, early OME</td></tr>
+      </table>
+      <div class="mnemonic"><b>BPPV vs Ménière's vs Vestibular Neuritis:</b> BPPV = positional, brief (&lt;1 min), no hearing loss | Ménière's = episodic, SNHL + tinnitus | Vestibular neuritis = prolonged, no hearing loss</div>
+    </div>
+  </div>
+</div>
+
+<!-- HEARING & AUDIOLOGY -->
+<div class="section" id="hearing">
+  <div class="section-title">Hearing <span>&amp; Audiology</span></div>
+  <div class="section-sub">Tuning fork tests, audiometry, hearing loss classification, otosclerosis, SNHL</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🎵 Tuning Fork Tests (512 Hz)</div>
+      <table class="comparison-table">
+        <tr><th>Test</th><th>Normal</th><th>CHL</th><th>SNHL</th></tr>
+        <tr><td>Rinne's test</td><td>AC &gt; BC (Rinne positive)</td><td>BC &gt; AC (Rinne negative)</td><td>AC &gt; BC (Rinne positive — false positive if severe)</td></tr>
+        <tr><td>Weber's test</td><td>Midline / equal bilaterally</td><td>Lateralises to AFFECTED ear</td><td>Lateralises to BETTER (unaffected) ear</td></tr>
+        <tr><td>Absolute Bone Conduction (ABC)</td><td>Patient = examiner</td><td>Patient = examiner (BC preserved)</td><td>Patient &lt; examiner (BC reduced)</td></tr>
+        <tr><td>Schwabach test</td><td>Equal to normal</td><td>Prolonged (BC better than examiner)</td><td>Shortened (BC worse than examiner)</td></tr>
+        <tr><td>Bing test</td><td>Occlusion → louder (positive)</td><td>No change on occlusion (negative/Bing –ve)</td><td>Occlusion → louder (positive)</td></tr>
+      </table>
+      <div class="alert-box">False-negative Rinne: Severe SNHL — bone conduction (BC) heard in opposite ear via transcranial conduction; BC seems better than AC → mimics CHL. Use masking!</div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">📊 Audiogram Patterns</div>
+      <div class="kv-row"><span class="kv-key">Normal hearing threshold</span><span class="kv-val green">&lt;25 dB HL</span></div>
+      <div class="kv-row"><span class="kv-key">Mild hearing loss</span><span class="kv-val">26–40 dB HL</span></div>
+      <div class="kv-row"><span class="kv-key">Moderate hearing loss</span><span class="kv-val">41–55 dB HL</span></div>
+      <div class="kv-row"><span class="kv-key">Moderately severe</span><span class="kv-val">56–70 dB HL</span></div>
+      <div class="kv-row"><span class="kv-key">Severe</span><span class="kv-val danger">71–90 dB HL</span></div>
+      <div class="kv-row"><span class="kv-key">Profound / Deaf</span><span class="kv-val danger">&gt;90 dB HL</span></div>
+      <div class="kv-row"><span class="kv-key">ABG (Air-Bone Gap)</span><span class="kv-val highlight">&gt;10 dB = CHL component</span></div>
+      <div class="kv-row"><span class="kv-key">Carhart's notch</span><span class="kv-val">BC dip at 2000 Hz — otosclerosis (mechanical artefact)</span></div>
+      <div class="kv-row"><span class="kv-key">4 kHz notch</span><span class="kv-val danger">Noise-induced hearing loss (NIHL)</span></div>
+      <div class="kv-row"><span class="kv-key">Flat audiogram + tinnitus</span><span class="kv-val">Ménière's disease (low-frequency loss early)</span></div>
+      <div class="kv-row"><span class="kv-key">Downsloping high-frequency SNHL</span><span class="kv-val">Presbyacusis (age-related; bilateral symmetric)</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🦻 Otosclerosis</div>
+      <div class="kv-row"><span class="kv-key">Pathology</span><span class="kv-val">Abnormal remodelling — spongy bone fixates stapedial footplate</span></div>
+      <div class="kv-row"><span class="kv-key">MC site</span><span class="kv-val highlight">Fissula ante fenestram (anterior to oval window)</span></div>
+      <div class="kv-row"><span class="kv-key">Type of hearing loss</span><span class="kv-val">CHL (initially); mixed if cochlear involvement (cochlear otosclerosis)</span></div>
+      <div class="kv-row"><span class="kv-key">Paracusis Willisii</span><span class="kv-val highlight">Hears better in noisy environments (pathognomonic)</span></div>
+      <div class="kv-row"><span class="kv-key">Schwartze sign</span><span class="kv-val">Flamingo-pink blush on promontory (active vascular otosclerosis)</span></div>
+      <div class="kv-row"><span class="kv-key">Tympanogram</span><span class="kv-val">Type As (shallow peak)</span></div>
+      <div class="kv-row"><span class="kv-key">Absent stapedial reflex</span><span class="kv-val danger">Key finding in otosclerosis</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment — surgical</span><span class="kv-val highlight">Stapedectomy / Stapedotomy (gold standard)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment — medical</span><span class="kv-val">Sodium fluoride (slows progression); hearing aid</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">📡 Special Auditory Tests</div>
+      <div class="kv-row"><span class="kv-key">OAE (Otoacoustic Emissions)</span><span class="kv-val highlight">Tests outer hair cell function; newborn screening</span></div>
+      <div class="kv-row"><span class="kv-key">OAE — absent in</span><span class="kv-val danger">SNHL &gt;30 dB; also absent in CHL</span></div>
+      <div class="kv-row"><span class="kv-key">BERA / ABR</span><span class="kv-val">Brainstem Evoked Response Audiometry; objective; not affected by consciousness</span></div>
+      <div class="kv-row"><span class="kv-key">BERA — Wave I origin</span><span class="kv-val">Cochlear nerve (VIII)</span></div>
+      <div class="kv-row"><span class="kv-key">BERA — Wave V origin</span><span class="kv-val">Inferior colliculus; most prominent wave</span></div>
+      <div class="kv-row"><span class="kv-key">BERA — acoustic neuroma finding</span><span class="kv-val danger">Prolonged I–V interpeak latency</span></div>
+      <div class="kv-row"><span class="kv-key">SISI test (Short Increment Sensitivity Index)</span><span class="kv-val">Score &gt;70% = cochlear pathology (recruitment)</span></div>
+      <div class="kv-row"><span class="kv-key">Tone decay test</span><span class="kv-val">Retrocochlear lesion (acoustic neuroma) — rapid adaptation</span></div>
+      <div class="kv-row"><span class="kv-key">Speech discrimination score ↓ disproportionately</span><span class="kv-val danger">Retrocochlear (VIII nerve) lesion</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">⚡ Sudden SNHL &amp; Noise-Induced HL</div>
+      <div class="kv-row"><span class="kv-key">Sudden SNHL — definition</span><span class="kv-val">≥30 dB SNHL over ≥3 contiguous frequencies within 72 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Sudden SNHL — MC cause</span><span class="kv-val highlight">Idiopathic (viral cochleitis suspected)</span></div>
+      <div class="kv-row"><span class="kv-key">Sudden SNHL — treatment</span><span class="kv-val danger">High-dose oral steroids within 2 weeks (prednisolone); intratympanic if fails</span></div>
+      <div class="kv-row"><span class="kv-key">NIHL — hallmark</span><span class="kv-val danger">4 kHz notch on audiogram; bilateral symmetric; outer hair cells affected first</span></div>
+      <div class="kv-row"><span class="kv-key">Safe noise limit</span><span class="kv-val">85 dB for 8 hrs/day (OSHA)</span></div>
+      <div class="kv-row"><span class="kv-key">TTS (Temporary Threshold Shift)</span><span class="kv-val">Recovers within 24–48 hrs post-noise exposure</span></div>
+      <div class="kv-row"><span class="kv-key">PTS (Permanent Threshold Shift)</span><span class="kv-val danger">Irreversible; hair cell destruction</span></div>
+      <div class="kv-row"><span class="kv-key">Presbyacusis — MC type</span><span class="kv-val">Sensory (outer hair cell loss at basal turn — high frequency)</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🎧 Cochlear Implants</div>
+      <div class="kv-row"><span class="kv-key">Indication (children)</span><span class="kv-val highlight">Bilateral profound SNHL; &lt;3 years (best outcomes)</span></div>
+      <div class="kv-row"><span class="kv-key">Indication (adults)</span><span class="kv-val">Bilateral severe-to-profound SNHL; inadequate HA benefit</span></div>
+      <div class="kv-row"><span class="kv-key">Contraindication</span><span class="kv-val danger">Absent VIII nerve; cochlear aplasia (Michel deformity)</span></div>
+      <div class="kv-row"><span class="kv-key">Cochlear implant — stimulates</span><span class="kv-val">Spiral ganglion cells directly (bypasses hair cells)</span></div>
+      <div class="kv-row"><span class="kv-key">BAHA (Bone-Anchored Hearing Aid)</span><span class="kv-val">For CHL / mixed HL; transcutaneous bone conduction</span></div>
+      <div class="kv-row"><span class="kv-key">Cortical Mastoidectomy vs Radical</span><span class="kv-val">Cortical = preserves TM + ossicles; Radical = removes all</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NOSE & SINUSES -->
+<div class="section" id="nose">
+  <div class="section-title">Nose <span>&amp; Sinuses</span></div>
+  <div class="section-sub">Epistaxis, sinusitis, polyps, deviated septum, nasal tumours</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🩸 Epistaxis</div>
+      <div class="kv-row"><span class="kv-key">MC site — anterior</span><span class="kv-val highlight">Little's area (Kiesselbach's plexus) — anterior septum</span></div>
+      <div class="kv-row"><span class="kv-key">Kiesselbach's plexus — vessels</span><span class="kv-val">Sphenopalatine + greater palatine + anterior ethmoidal + superior labial arteries</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause (overall)</span><span class="kv-val">Idiopathic / local trauma (nose picking)</span></div>
+      <div class="kv-row"><span class="kv-key">Posterior epistaxis — vessel</span><span class="kv-val danger">Sphenopalatine artery (branch of maxillary artery)</span></div>
+      <div class="kv-row"><span class="kv-key">Posterior epistaxis — significance</span><span class="kv-val danger">More severe; older patients; harder to control</span></div>
+      <div class="kv-row"><span class="kv-key">First aid</span><span class="kv-val">Pinch soft part of nose × 10–15 min; lean forward</span></div>
+      <div class="kv-row"><span class="kv-key">Management steps</span><span class="kv-val">Cautery (silver nitrate / electrocautery) → anterior pack → posterior pack → surgical ligation / embolisation</span></div>
+      <div class="kv-row"><span class="kv-key">Hereditary Haemorrhagic Telangiectasia (HHT / Osler-Weber-Rendu)</span><span class="kv-val danger">Recurrent epistaxis + telangiectasia + AVM; autosomal dominant</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🦠 Rhinosinusitis</div>
+      <div class="kv-row"><span class="kv-key">Acute rhinosinusitis duration</span><span class="kv-val">&lt;12 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">Chronic rhinosinusitis duration</span><span class="kv-val">&gt;12 weeks with ≥2 symptoms</span></div>
+      <div class="kv-row"><span class="kv-key">MC organism acute sinusitis</span><span class="kv-val highlight">S. pneumoniae → H. influenzae → M. catarrhalis</span></div>
+      <div class="kv-row"><span class="kv-key">MC sinus involved (acute)</span><span class="kv-val">Maxillary sinus (MC affected); Ethmoid (MC in children)</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard imaging</span><span class="kv-val">CT sinuses (coronal view)</span></div>
+      <div class="kv-row"><span class="kv-key">Antibiotic — uncomplicated</span><span class="kv-val">Amoxicillin-clavulanate (7–10 days)</span></div>
+      <div class="kv-row"><span class="kv-key">Orbital complication — MC</span><span class="kv-val danger">Orbital cellulitis (from ethmoid sinusitis)</span></div>
+      <div class="kv-row"><span class="kv-key">Chandler classification</span><span class="kv-val">I = Preseptal cellulitis → V = Cavernous sinus thrombosis</span></div>
+      <div class="kv-row"><span class="kv-key">Pott's puffy tumour</span><span class="kv-val danger">Frontal sinusitis → subperiosteal abscess → forehead oedema</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🌸 Nasal Polyps</div>
+      <div class="kv-row"><span class="kv-key">MC origin site</span><span class="kv-val highlight">Middle meatus (ethmoid sinuses)</span></div>
+      <div class="kv-row"><span class="kv-key">Appearance</span><span class="kv-val">Pale grey, gelatinous, insensate, bilateral</span></div>
+      <div class="kv-row"><span class="kv-key">MC association</span><span class="kv-val">Allergic rhinitis + asthma (Samter's triad)</span></div>
+      <div class="kv-row"><span class="kv-key">Samter's triad</span><span class="kv-val highlight">Nasal polyps + Asthma + Aspirin sensitivity</span></div>
+      <div class="kv-row"><span class="kv-key">Cystic fibrosis — polyps</span><span class="kv-val">Children with nasal polyps → rule out CF</span></div>
+      <div class="kv-row"><span class="kv-key">Medical treatment</span><span class="kv-val">Intranasal corticosteroids (1st line); short course oral steroids</span></div>
+      <div class="kv-row"><span class="kv-key">Surgical treatment</span><span class="kv-val">FESS (Functional Endoscopic Sinus Surgery)</span></div>
+      <div class="kv-row"><span class="kv-key">Antrochoanal polyp</span><span class="kv-val">Unilateral; origin = maxillary sinus; extends to choana; children</span></div>
+      <div class="kv-row"><span class="kv-key">Antrochoanal polyp treatment</span><span class="kv-val">Surgical removal (FESS or Caldwell-Luc)</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🧱 Deviated Nasal Septum &amp; Turbinates</div>
+      <div class="kv-row"><span class="kv-key">DNS — MC deviated side</span><span class="kv-val">Left (no clinical significance)</span></div>
+      <div class="kv-row"><span class="kv-key">Nasal cycle</span><span class="kv-val">Alternating congestion every 2–7 hrs; physiological</span></div>
+      <div class="kv-row"><span class="kv-key">Killian's operation</span><span class="kv-val">Submucous resection of septum (SMR) — older technique</span></div>
+      <div class="kv-row"><span class="kv-key">Septoplasty</span><span class="kv-val highlight">Modern preferred surgery for DNS; preserves cartilage</span></div>
+      <div class="kv-row"><span class="kv-key">Inferior turbinate hypertrophy Rx</span><span class="kv-val">Submucous diathermy / turbinoplasty / radiofrequency</span></div>
+      <div class="kv-row"><span class="kv-key">Rhinitis medicamentosa</span><span class="kv-val danger">Rebound congestion from oxymetazoline overuse (&gt;3–5 days)</span></div>
+      <div class="kv-row"><span class="kv-key">Atrophic rhinitis (ozaena)</span><span class="kv-val">Klebsiella ozaenae; crusting; foetor; paradoxical nasal obstruction</span></div>
+      <div class="kv-row"><span class="kv-key">Wegener's granulomatosis — nasal</span><span class="kv-val danger">Saddle-nose deformity; septal perforation; cANCA +ve</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🦠 Nasal Tumours</div>
+      <div class="kv-row"><span class="kv-key">MC benign nasal tumour</span><span class="kv-val highlight">Inverted papilloma (Schneiderian papilloma)</span></div>
+      <div class="kv-row"><span class="kv-key">Inverted papilloma — association</span><span class="kv-val danger">HPV 6 &amp; 11; 10% malignant transformation; inverted growth pattern</span></div>
+      <div class="kv-row"><span class="kv-key">Inverted papilloma treatment</span><span class="kv-val">Medial maxillectomy (wide local excision)</span></div>
+      <div class="kv-row"><span class="kv-key">Juvenile nasopharyngeal angiofibroma</span><span class="kv-val danger">Adolescent males; epistaxis + nasal obstruction; very vascular; NEVER biopsy</span></div>
+      <div class="kv-row"><span class="kv-key">JNA — imaging sign</span><span class="kv-val">Holman-Miller sign (anterior bowing of posterior wall of maxillary sinus)</span></div>
+      <div class="kv-row"><span class="kv-key">JNA — treatment</span><span class="kv-val">Pre-op embolisation + surgical excision</span></div>
+      <div class="kv-row"><span class="kv-key">MC malignant nasal tumour</span><span class="kv-val highlight">Squamous cell carcinoma</span></div>
+      <div class="kv-row"><span class="kv-key">Esthesioneuroblastoma (Olfactory)</span><span class="kv-val">Kadish staging; arises from olfactory epithelium; cribriform plate</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- THROAT & LARYNX -->
+<div class="section" id="throat">
+  <div class="section-title">Throat <span>&amp; Larynx</span></div>
+  <div class="section-sub">Tonsils, pharynx, larynx, voice disorders, dysphagia, stridor</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🔴 Tonsillitis &amp; Peritonsillar Abscess</div>
+      <div class="kv-row"><span class="kv-key">MC organism acute tonsillitis</span><span class="kv-val highlight">Group A β-haemolytic Streptococcus (GABHS)</span></div>
+      <div class="kv-row"><span class="kv-key">Viral tonsillitis — MC cause</span><span class="kv-val">Adenovirus (most common overall)</span></div>
+      <div class="kv-row"><span class="kv-key">Centor criteria (GABHS score)</span><span class="kv-val">Tonsillar exudate, tender anterior cervical LN, fever, no cough (each = 1 pt)</span></div>
+      <div class="kv-row"><span class="kv-key">Antibiotic of choice</span><span class="kv-val highlight">Phenoxymethylpenicillin (penicillin V) × 10 days</span></div>
+      <div class="kv-row"><span class="kv-key">Avoid amoxicillin if</span><span class="kv-val danger">EBV suspected — rash (90% maculopapular rash)</span></div>
+      <div class="kv-row"><span class="kv-key">Peritonsillar abscess (quinsy)</span><span class="kv-val">Pus between tonsil capsule and superior constrictor; uvula displaced to opposite side</span></div>
+      <div class="kv-row"><span class="kv-key">Quinsy treatment</span><span class="kv-val danger">Needle aspiration / incision &amp; drainage + IV antibiotics</span></div>
+      <div class="kv-row"><span class="kv-key">Tonsillectomy indications</span><span class="kv-val">Paradise criteria: ≥7 episodes/yr OR ≥5/yr × 2 yrs OR ≥3/yr × 3 yrs</span></div>
+      <div class="kv-row"><span class="kv-key">Post-tonsillectomy haemorrhage</span><span class="kv-val danger">Primary = within 24 hrs; Reactionary = 6–12 hrs; Secondary = 5–10 days (infection)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🦷 Deep Neck Space Infections</div>
+      <div class="kv-row"><span class="kv-key">Retropharyngeal abscess</span><span class="kv-val danger">Children &lt;5 yrs; dysphagia + neck stiffness + bulging posterior pharyngeal wall</span></div>
+      <div class="kv-row"><span class="kv-key">Retropharyngeal abscess — imaging</span><span class="kv-val">Lateral neck X-ray: widened prevertebral space</span></div>
+      <div class="kv-row"><span class="kv-key">Ludwig's angina</span><span class="kv-val danger">Submandibular + submental + sublingual spaces (dental origin); floor of mouth oedema; airway emergency</span></div>
+      <div class="kv-row"><span class="kv-key">Ludwig's angina — MC cause</span><span class="kv-val">2nd/3rd lower molar tooth infection (dental abscess)</span></div>
+      <div class="kv-row"><span class="kv-key">Ludwig's treatment</span><span class="kv-val danger">Airway first (tracheostomy may be needed) + IV penicillin/metronidazole + drainage</span></div>
+      <div class="kv-row"><span class="kv-key">Parapharyngeal abscess</span><span class="kv-val">Peritonsillitis / dental infection; ICA erosion risk (Earnest syndrome)</span></div>
+      <div class="kv-row"><span class="kv-key">Lemierre's syndrome</span><span class="kv-val danger">Fusobacterium necrophorum → internal jugular vein thrombophlebitis → septic emboli</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🎙️ Laryngeal Disorders</div>
+      <div class="kv-row"><span class="kv-key">Hoarseness — MC cause</span><span class="kv-val">Acute laryngitis (viral)</span></div>
+      <div class="kv-row"><span class="kv-key">Vocal cord nodules</span><span class="kv-val">Singers/teachers; bilateral at ant 1/3–mid junction; Rx: voice rest + therapy</span></div>
+      <div class="kv-row"><span class="kv-key">Vocal cord polyp</span><span class="kv-val">Usually unilateral; smokers; Rx: surgical removal</span></div>
+      <div class="kv-row"><span class="kv-key">Laryngeal papillomatosis</span><span class="kv-val danger">HPV 6 &amp; 11 (benign); HPV 16 &amp; 18 (malignant transformation risk); recurrent; children + adults</span></div>
+      <div class="kv-row"><span class="kv-key">Laryngeal papilloma treatment</span><span class="kv-val">CO₂ laser excision; cidofovir for resistant cases</span></div>
+      <div class="kv-row"><span class="kv-key">Reinke's oedema</span><span class="kv-val">Smokers; bilateral; Reinke's space oedema; low-pitched voice</span></div>
+      <div class="kv-row"><span class="kv-key">Contact granuloma</span><span class="kv-val">Posterior arytenoids; GERD + voice abuse; Rx: PPI + voice therapy</span></div>
+      <div class="kv-row"><span class="kv-key">Laryngeal carcinoma — MC type</span><span class="kv-val highlight">Squamous cell carcinoma; glottic (MC site)</span></div>
+      <div class="kv-row"><span class="kv-key">Best prognosis laryngeal Ca</span><span class="kv-val green">Glottic (early hoarseness, minimal LN drainage)</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🌬️ Stridor</div>
+      <div class="kv-row"><span class="kv-key">Inspiratory stridor</span><span class="kv-val danger">Supraglottic / glottic obstruction (extrathoracic)</span></div>
+      <div class="kv-row"><span class="kv-key">Expiratory stridor</span><span class="kv-val">Intrathoracic / lower tracheal obstruction</span></div>
+      <div class="kv-row"><span class="kv-key">Biphasic stridor</span><span class="kv-val danger">Subglottic / tracheal; severe obstruction</span></div>
+      <div class="kv-row"><span class="kv-key">Croup (laryngotracheobronchitis)</span><span class="kv-val">Parainfluenza virus (MC); barking cough; Steeple sign on X-ray; 6 months–3 yrs</span></div>
+      <div class="kv-row"><span class="kv-key">Croup treatment</span><span class="kv-val highlight">Nebulised adrenaline (acute) + oral/IM dexamethasone</span></div>
+      <div class="kv-row"><span class="kv-key">Epiglottitis — organism</span><span class="kv-val danger">H. influenzae type B (HiB); also GABHS in adults</span></div>
+      <div class="kv-row"><span class="kv-key">Epiglottitis — X-ray sign</span><span class="kv-val danger">Thumb sign (thickened epiglottis) on lateral neck</span></div>
+      <div class="kv-row"><span class="kv-key">Epiglottitis — do NOT</span><span class="kv-val danger">Examine throat / lay supine; secure airway first</span></div>
+      <div class="kv-row"><span class="kv-key">Laryngomalacia</span><span class="kv-val">MC congenital cause of stridor; inspiratory; worse supine; improves prone; self-limiting</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🍽️ Dysphagia &amp; Pharyngeal</div>
+      <div class="kv-row"><span class="kv-key">Pharyngeal pouch (Zenker's diverticulum)</span><span class="kv-val">Pulsion diverticulum at Killian's dehiscence; regurgitation of undigested food</span></div>
+      <div class="kv-row"><span class="kv-key">Killian's dehiscence</span><span class="kv-val">Triangular gap between thyropharyngeus and cricopharyngeus</span></div>
+      <div class="kv-row"><span class="kv-key">Pharyngeal pouch treatment</span><span class="kv-val">Endoscopic stapling (Dohlman's procedure) / external surgery</span></div>
+      <div class="kv-row"><span class="kv-key">Plummer-Vinson syndrome</span><span class="kv-val highlight">Post-cricoid dysphagia + iron-deficiency anaemia + post-cricoid web; pre-malignant</span></div>
+      <div class="kv-row"><span class="kv-key">Patterson-Kelly-Brown</span><span class="kv-val">= Plummer-Vinson syndrome (other name)</span></div>
+      <div class="kv-row"><span class="kv-key">Post-cricoid carcinoma — association</span><span class="kv-val danger">Plummer-Vinson syndrome; females; SCC</span></div>
+      <div class="kv-row"><span class="kv-key">Nasopharyngeal carcinoma — virus</span><span class="kv-val danger">EBV; WHO Type III = undifferentiated (MC); S.E. Asian</span></div>
+      <div class="kv-row"><span class="kv-key">NPC — marker</span><span class="kv-val">EBV-VCA IgA; EBV-EA IgA</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- HEAD & NECK -->
+<div class="section" id="head_neck">
+  <div class="section-title">Head <span>&amp; Neck</span></div>
+  <div class="section-sub">Neck swellings, thyroid, salivary glands, lymph nodes, head and neck cancer</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🏷️ Neck Swellings — Classification</div>
+      <table class="comparison-table">
+        <tr><th>Position</th><th>Swelling</th><th>Key Feature</th></tr>
+        <tr><td>Midline — moves with swallowing AND protrusion of tongue</td><td>Thyroglossal cyst (MC midline)</td><td>Remnant of thyroglossal duct; Rx: Sistrunk's operation</td></tr>
+        <tr><td>Midline — moves with swallowing only</td><td>Thyroid swelling / subhyoid bursa</td><td>—</td></tr>
+        <tr><td>Midline — does not move</td><td>Dermoid cyst / lipoma / sebaceous cyst</td><td>—</td></tr>
+        <tr><td>Anterior triangle</td><td>Branchial cyst (MC lateral neck cyst)</td><td>2nd branchial cleft; anterior to SCM at junction upper-middle 1/3; fluctuant</td></tr>
+        <tr><td>Posterior triangle</td><td>Cystic hygroma / lymphangioma</td><td>Transilluminant; children; Rx: sclerotherapy / surgery</td></tr>
+        <tr><td>Pulsatile lateral neck</td><td>Carotid body tumour (paraganglioma)</td><td>Splays carotid bifurcation (lyre sign); mobile laterally but not vertically</td></tr>
+        <tr><td>Along SCM</td><td>Sternomastoid tumour / cervical rib / cystic hygroma</td><td>—</td></tr>
+      </table>
+      <div class="mnemonic"><b>Branchial cyst:</b> Found at anterior border of SCM at junction of upper and middle 1/3 — lined by squamous epithelium with lymphoid tissue</div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🦷 Salivary Gland Disorders</div>
+      <div class="kv-row"><span class="kv-key">MC salivary gland tumour site</span><span class="kv-val highlight">Parotid gland (80%)</span></div>
+      <div class="kv-row"><span class="kv-key">MC benign parotid tumour</span><span class="kv-val highlight">Pleomorphic adenoma (mixed tumour)</span></div>
+      <div class="kv-row"><span class="kv-key">Pleomorphic adenoma — risk</span><span class="kv-val danger">Malignant transformation (carcinoma ex pleomorphic adenoma) if untreated</span></div>
+      <div class="kv-row"><span class="kv-key">Pleomorphic adenoma treatment</span><span class="kv-val">Superficial parotidectomy (with facial nerve preservation)</span></div>
+      <div class="kv-row"><span class="kv-key">Warthin's tumour (cystadenolymphoma)</span><span class="kv-val">Bilateral (10%); males; smokers; lymphoid stroma + oncocytes</span></div>
+      <div class="kv-row"><span class="kv-key">MC malignant parotid tumour</span><span class="kv-val danger">Mucoepidermoid carcinoma</span></div>
+      <div class="kv-row"><span class="kv-key">Facial nerve palsy + parotid mass</span><span class="kv-val danger">Malignant parotid tumour until proven otherwise</span></div>
+      <div class="kv-row"><span class="kv-key">MC salivary calculus (sialolithiasis) site</span><span class="kv-val highlight">Submandibular gland / Wharton's duct (80%)</span></div>
+      <div class="kv-row"><span class="kv-key">Sialadenitis — MC cause</span><span class="kv-val">S. aureus (ascending bacterial); also Mumps (viral)</span></div>
+      <div class="kv-row"><span class="kv-key">Frey's syndrome</span><span class="kv-val">Gustatory sweating post-parotidectomy (auriculotemporal nerve)</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🎗️ Head &amp; Neck Cancer</div>
+      <div class="kv-row"><span class="kv-key">MC head and neck malignancy</span><span class="kv-val highlight">Squamous cell carcinoma (SCC)</span></div>
+      <div class="kv-row"><span class="kv-key">Risk factors</span><span class="kv-val">Tobacco + alcohol (synergistic); HPV 16/18 (oropharyngeal SCC)</span></div>
+      <div class="kv-row"><span class="kv-key">HPV-positive oropharyngeal SCC</span><span class="kv-val green">Better prognosis; base of tongue + tonsillar (lingual/palatine)</span></div>
+      <div class="kv-row"><span class="kv-key">Neck node staging (N)</span><span class="kv-val">N0 = no nodes; N1 = single ≤3 cm ipsilateral; N2 = 3–6 cm or bilateral; N3 = &gt;6 cm</span></div>
+      <div class="kv-row"><span class="kv-key">Nasopharyngeal Ca — type MC</span><span class="kv-val">WHO III — undifferentiated (lymphoepithelioma)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment — early laryngeal Ca</span><span class="kv-val">Radiotherapy (voice preservation) OR laser cordectomy</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment — advanced laryngeal Ca</span><span class="kv-val danger">Total laryngectomy + neck dissection + post-op RT</span></div>
+      <div class="kv-row"><span class="kv-key">Neck dissection — radical (RND)</span><span class="kv-val">Removes SCM + IJV + accessory nerve (XI) + all LN levels I–V</span></div>
+      <div class="kv-row"><span class="kv-key">Modified radical neck dissection (MRND)</span><span class="kv-val highlight">Preserves ≥1 of: SCM, IJV, XI — preferred</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🔵 Cervical Lymphadenopathy</div>
+      <div class="kv-row"><span class="kv-key">Level I</span><span class="kv-val">Submental + submandibular (drain oral cavity, lips)</span></div>
+      <div class="kv-row"><span class="kv-key">Level II</span><span class="kv-val">Upper jugular (drain nasopharynx, oropharynx, parotid)</span></div>
+      <div class="kv-row"><span class="kv-key">Level III</span><span class="kv-val">Mid jugular (drain oropharynx, hypopharynx)</span></div>
+      <div class="kv-row"><span class="kv-key">Level IV</span><span class="kv-val">Lower jugular (drain hypopharynx, thyroid, cervical oesophagus)</span></div>
+      <div class="kv-row"><span class="kv-key">Level V</span><span class="kv-val">Posterior triangle (drain nasopharynx, scalp)</span></div>
+      <div class="kv-row"><span class="kv-key">Virchow's node</span><span class="kv-val danger">Left supraclavicular LN → intra-abdominal malignancy (gastric Ca)</span></div>
+      <div class="kv-row"><span class="kv-key">Delphian node</span><span class="kv-val">Pre-tracheal node → thyroid / laryngeal malignancy</span></div>
+      <div class="kv-row"><span class="kv-key">Scalene node biopsy (Daniels)</span><span class="kv-val">For mediastinal staging; left side preferred (thoracic duct)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">⚡ Thyroglossal &amp; Branchial Anomalies</div>
+      <div class="kv-row"><span class="kv-key">Thyroglossal cyst</span><span class="kv-val highlight">MC congenital neck swelling; moves with tongue protrusion</span></div>
+      <div class="kv-row"><span class="kv-key">Thyroglossal cyst — level</span><span class="kv-val">Usually at hyoid bone level or just below (subhyoid MC)</span></div>
+      <div class="kv-row"><span class="kv-key">Sistrunk's operation</span><span class="kv-val">Removes cyst + tract + central part of hyoid bone (prevents recurrence)</span></div>
+      <div class="kv-row"><span class="kv-key">Thyroglossal Ca</span><span class="kv-val">Papillary thyroid Ca (MC); Rx: Sistrunk's + thyroidectomy</span></div>
+      <div class="kv-row"><span class="kv-key">1st branchial cleft cyst</span><span class="kv-val">Preauricular / parotid region; Work type I (ectoderm only) or Type II</span></div>
+      <div class="kv-row"><span class="kv-key">2nd branchial cleft cyst (MC)</span><span class="kv-val highlight">Anterior to SCM upper-middle 1/3 junction; Bailey's classification I–IV</span></div>
+      <div class="kv-row"><span class="kv-key">3rd/4th branchial pouch</span><span class="kv-val">Piriform fossa sinus tracts; recurrent suppurative thyroiditis (left &gt; right)</span></div>
+      <div class="kv-row"><span class="kv-key">Cystic hygroma</span><span class="kv-val">Lymphangioma; posterior triangle; transilluminant; Rx: sclerotherapy (bleomycin/OK-432)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PAEDIATRIC ENT -->
+<div class="section" id="paeds_ent">
+  <div class="section-title">Paediatric <span>ENT</span></div>
+  <div class="section-sub">Neonatal hearing screening, congenital disorders, adenoids, paediatric airway</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">👶 Neonatal Hearing Screening</div>
+      <div class="kv-row"><span class="kv-key">Universal Newborn Hearing Screening (UNHS)</span><span class="kv-val highlight">OAE (first line) → AABR if OAE fails</span></div>
+      <div class="kv-row"><span class="kv-key">Age at confirmation</span><span class="kv-val">By 3 months</span></div>
+      <div class="kv-row"><span class="kv-key">Age at intervention (HA / CI)</span><span class="kv-val highlight">By 6 months (critical period for speech development)</span></div>
+      <div class="kv-row"><span class="kv-key">1–3–6 rule</span><span class="kv-val">Screen by 1 month → diagnose by 3 months → intervene by 6 months</span></div>
+      <div class="kv-row"><span class="kv-key">MC genetic cause SNHL</span><span class="kv-val highlight">GJB2 mutation (connexin 26); autosomal recessive</span></div>
+      <div class="kv-row"><span class="kv-key">Pendred syndrome</span><span class="kv-val">SNHL + euthyroid goitre; SLC26A4 gene; enlarged vestibular aqueduct</span></div>
+      <div class="kv-row"><span class="kv-key">Usher syndrome</span><span class="kv-val">SNHL + retinitis pigmentosa; autosomal recessive</span></div>
+      <div class="kv-row"><span class="kv-key">Alport syndrome</span><span class="kv-val">SNHL + nephritis + ocular anomalies; X-linked; COL4A gene</span></div>
+      <div class="kv-row"><span class="kv-key">TORCH — SNHL cause</span><span class="kv-val danger">CMV (MC congenital SNHL); also rubella, toxoplasmosis</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">👶 Adenoids &amp; Obstructive Sleep Apnoea</div>
+      <div class="kv-row"><span class="kv-key">Adenoid hypertrophy — symptoms</span><span class="kv-val">Nasal obstruction, mouth breathing, snoring, hyponasal speech, OME</span></div>
+      <div class="kv-row"><span class="kv-key">Adenoid face</span><span class="kv-val">Open mouth, elongated face, high arched palate, retrognathia</span></div>
+      <div class="kv-row"><span class="kv-key">Diagnosis</span><span class="kv-val">Lateral soft tissue X-ray neck; nasopharyngoscopy</span></div>
+      <div class="kv-row"><span class="kv-key">Adenoidectomy indication</span><span class="kv-val">Nasal obstruction + snoring; recurrent OME; recurrent otitis media</span></div>
+      <div class="kv-row"><span class="kv-key">OSA — paediatric diagnosis</span><span class="kv-val highlight">Polysomnography (sleep study — gold standard)</span></div>
+      <div class="kv-row"><span class="kv-key">Paediatric OSA — AHI ≥1</span><span class="kv-val danger">Abnormal in children (unlike adults AHI ≥5)</span></div>
+      <div class="kv-row"><span class="kv-key">Paediatric OSA — 1st line Rx</span><span class="kv-val highlight">Adenotonsillectomy</span></div>
+      <div class="kv-row"><span class="kv-key">OSA — complications</span><span class="kv-val danger">Pulmonary hypertension, cor pulmonale, growth retardation, behavioural problems, ADHD</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">👶 Congenital Nasal &amp; Airway Disorders</div>
+      <div class="kv-row"><span class="kv-key">Choanal atresia</span><span class="kv-val danger">Bony (90%) or membranous (10%) obstruction of posterior choanae</span></div>
+      <div class="kv-row"><span class="kv-key">Choanal atresia — presentation</span><span class="kv-val danger">Bilateral: neonatal respiratory distress; cyclical cyanosis relieved by crying; cannot pass NG tube</span></div>
+      <div class="kv-row"><span class="kv-key">Bilateral choanal atresia — emergency</span><span class="kv-val danger">Oral airway (McGovern nipple) immediately; obligate nasal breathers</span></div>
+      <div class="kv-row"><span class="kv-key">CHARGE syndrome</span><span class="kv-val highlight">Coloboma, Heart defects, Atresia choanae, Retardation, Genital, Ear; CHD7 gene</span></div>
+      <div class="kv-row"><span class="kv-key">Subglottic stenosis</span><span class="kv-val">MC cause chronic stridor in children; idiopathic or post-intubation</span></div>
+      <div class="kv-row"><span class="kv-key">Subglottic stenosis treatment</span><span class="kv-val">Laryngotracheal reconstruction / cricotracheal resection</span></div>
+      <div class="kv-row"><span class="kv-key">Vascular ring</span><span class="kv-val">Double aortic arch / aberrant subclavian; biphasic stridor; Rx: surgical division</span></div>
+      <div class="kv-row"><span class="kv-key">Tracheomalacia</span><span class="kv-val">Expiratory stridor / wheeze; floppy trachea; improves prone; usually self-resolving</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">👶 Foreign Bodies in Children</div>
+      <div class="kv-row"><span class="kv-key">Nasal foreign body — sign</span><span class="kv-val danger">Unilateral foul-smelling purulent nasal discharge</span></div>
+      <div class="kv-row"><span class="kv-key">Button battery — nasal/ear</span><span class="kv-val danger">Emergency: liquefactive necrosis within hours; immediate removal</span></div>
+      <div class="kv-row"><span class="kv-key">Aural foreign body — most dangerous</span><span class="kv-val danger">Button battery (liquefactive necrosis); also live insects (olive oil first)</span></div>
+      <div class="kv-row"><span class="kv-key">Inhaled foreign body — MC site</span><span class="kv-val highlight">Right main bronchus (more vertical, wider)</span></div>
+      <div class="kv-row"><span class="kv-key">MC inhaled foreign body</span><span class="kv-val">Groundnut (peanut) — causes arachidic bronchitis</span></div>
+      <div class="kv-row"><span class="kv-key">Inhaled FB — X-ray signs</span><span class="kv-val">Unilateral hyperinflation (ball-valve); mediastinal shift AWAY from affected side on expiration</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val danger">Rigid bronchoscopy under GA (never blind finger sweep)</span></div>
+      <div class="kv-row"><span class="kv-key">Oesophageal FB — MC site</span><span class="kv-val">Cricopharyngeus (at pharyngo-oesophageal junction) — C6 level</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency single-answer facts for rapid ENT revision</div>
+  <div class="grid-2">
+    <div class="card orange">
+      <div class="card-title">⭐ ENT Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">MC cause conductive hearing loss (overall)</span><span class="kv-val highlight">Wax (cerumen)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause CHL in children</span><span class="kv-val highlight">OME (Glue ear)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause vertigo (overall)</span><span class="kv-val highlight">BPPV</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause unilateral SNHL in adults</span><span class="kv-val">Acoustic neuroma</span></div>
+      <div class="kv-row"><span class="kv-key">Tinnitus MC cause</span><span class="kv-val">NIHL / acoustic trauma</span></div>
+      <div class="kv-row"><span class="kv-key">Pulsatile tinnitus — rule out</span><span class="kv-val danger">Glomus jugulare tumour / carotid disease</span></div>
+      <div class="kv-row"><span class="kv-key">Glomus jugulare — sign on otoscopy</span><span class="kv-val danger">Rising sun (pulsatile red mass behind TM)</span></div>
+      <div class="kv-row"><span class="kv-key">MC site epistaxis</span><span class="kv-val">Little's area (anterior septum)</span></div>
+      <div class="kv-row"><span class="kv-key">MC sinus to fracture (facial trauma)</span><span class="kv-val">Maxillary sinus</span></div>
+      <div class="kv-row"><span class="kv-key">Blow-out fracture — entrapment</span><span class="kv-val danger">Inferior rectus / inferior oblique → diplopia on upward gaze</span></div>
+      <div class="kv-row"><span class="kv-key">CSF rhinorrhoea — test</span><span class="kv-val">Beta-2 transferrin (most specific); halo/ring sign (non-specific)</span></div>
+      <div class="kv-row"><span class="kv-key">Saddle nose deformity — causes</span><span class="kv-val danger">Trauma, syphilis, Wegener's, relapsing polychondritis, cocaine</span></div>
+      <div class="kv-row"><span class="kv-key">Nasal septal haematoma — risk</span><span class="kv-val danger">Avascular necrosis of cartilage → saddle nose if not drained</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause laryngeal Ca</span><span class="kv-val">Smoking (tobacco)</span></div>
+      <div class="kv-row"><span class="kv-key">Earliest symptom glottic Ca</span><span class="kv-val highlight">Hoarseness</span></div>
+      <div class="kv-row"><span class="kv-key">Supraglottic Ca — symptom</span><span class="kv-val">Dysphagia (late hoarseness); high risk nodal metastasis</span></div>
+      <div class="kv-row"><span class="kv-key">Emergency airway in children — preferred</span><span class="kv-val danger">Tracheostomy (NOT cricothyrotomy in children)</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">⭐ ENT Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">Parotid — which nerve runs through</span><span class="kv-val danger">Facial nerve (VII) — does NOT supply parotid</span></div>
+      <div class="kv-row"><span class="kv-key">Parotid secretomotor nerve</span><span class="kv-val">Auriculo-temporal nerve (branch of V3) via IX → otic ganglion</span></div>
+      <div class="kv-row"><span class="kv-key">Submandibular gland — nerve</span><span class="kv-val">Chorda tympani → lingual nerve → submandibular ganglion</span></div>
+      <div class="kv-row"><span class="kv-key">MC complication parotidectomy</span><span class="kv-val danger">Temporary facial nerve weakness</span></div>
+      <div class="kv-row"><span class="kv-key">Recurrent laryngeal nerve — path</span><span class="kv-val">Left RLN loops around aortic arch; Right around subclavian</span></div>
+      <div class="kv-row"><span class="kv-key">Non-recurrent laryngeal nerve</span><span class="kv-val danger">Right side only (associated with aberrant right subclavian artery)</span></div>
+      <div class="kv-row"><span class="kv-key">Voice change post-thyroidectomy</span><span class="kv-val danger">RLN injury → hoarseness (unilateral) or aphonia + stridor (bilateral)</span></div>
+      <div class="kv-row"><span class="kv-key">Superior laryngeal nerve injury</span><span class="kv-val">Loss of high-pitched phonation; anesthesia of supraglottis; aspiration risk</span></div>
+      <div class="kv-row"><span class="kv-key">Trotter's triad</span><span class="kv-val">Conductive HL + palatal palsy + ipsilateral V3 neuralgia (nasopharyngeal Ca)</span></div>
+      <div class="kv-row"><span class="kv-key">Eagle syndrome</span><span class="kv-val">Elongated styloid process → throat pain + dysphagia</span></div>
+      <div class="kv-row"><span class="kv-key">Bezold's abscess — note</span><span class="kv-val danger">Pus from mastoid → tracks along digastric → lateral neck swelling</span></div>
+      <div class="kv-row"><span class="kv-key">Haemotympanum — cause</span><span class="kv-val danger">Basal skull fracture (temporal bone) → blood behind TM</span></div>
+      <div class="kv-row"><span class="kv-key">Battle's sign</span><span class="kv-val">Bruising over mastoid → temporal bone fracture</span></div>
+      <div class="kv-row"><span class="kv-key">Transverse temporal bone #</span><span class="kv-val danger">SNHL + facial palsy + vestibular disruption (more severe)</span></div>
+      <div class="kv-row"><span class="kv-key">Longitudinal temporal bone #</span><span class="kv-val">CHL + haemotympanum (MC type; 80%); facial nerve less affected</span></div>
+      <div class="kv-row"><span class="kv-key">TMJ disorder — MC cause pain</span><span class="kv-val">Myofascial pain dysfunction; referred otalgia</span></div>
+      <div class="kv-row"><span class="kv-key">Referred otalgia — nerve V</span><span class="kv-val">Teeth / TMJ / anterior tongue pain</span></div>
+      <div class="kv-row"><span class="kv-key">Referred otalgia — nerve IX</span><span class="kv-val">Tonsil / tongue base / hypopharynx pain</span></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-auto">
+    <div class="card green">
+      <div class="card-title">🏆 High-Yield Mnemonics</div>
+      <div class="mnemonic"><b>CSOM Unsafe (Atticoantral) vs Safe (Tubotympanic):</b> Unsafe = "ABCDE" — Attic/posterior marginal perforation, Bone erosion, Cholesteatoma, Dangerous complications, Erosion requires surgery</div>
+      <div class="mnemonic"><b>Salivary Stone site:</b> "Sub-WAY" — Submandibular gland = Wharton's duct (most stones); PARot = PARotid = Stensen's duct (less common)</div>
+      <div class="mnemonic"><b>Laryngeal cartilages (paired):</b> "ACCA" — Arytenoid, Cuneiform, Corniculate, (Aryepiglottic is a fold, not cartilage)</div>
+      <div class="mnemonic"><b>Cholesteatoma complications — BOAF:</b> Brain abscess, Ossicular erosion, Aural polyp, Facial palsy; also: labyrinthine fistula, meningitis, sigmoid sinus thrombosis</div>
+      <div class="mnemonic"><b>CHARGE syndrome:</b> Coloboma, Heart defects, Atresia choanae, Retardation (growth), Genital abnormalities, Ear anomalies</div>
+      <div class="mnemonic"><b>Neck dissection levels — "Some Surgeons Obtain Money Passionately":</b> Submental, Submandibular (I), Superior jugular (II), Mid jugular (III), Omohyoid (IV), Posterior triangle (V)</div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">⚡ Must-Know Classifications</div>
+      <div class="kv-row"><span class="kv-key">Chandler classification (orbital complications)</span><span class="kv-val">I=Preseptal cellulitis, II=Orbital cellulitis, III=Subperiosteal abscess, IV=Orbital abscess, V=Cavernous sinus thrombosis</span></div>
+      <div class="kv-row"><span class="kv-key">Bailey's classification (branchial cyst)</span><span class="kv-val">I=Deep to SCM, II=Anterior to SCM (MC), III=Between carotid vessels, IV=Pharyngeal wall</span></div>
+      <div class="kv-row"><span class="kv-key">Holmgren-Plester classification (otosclerosis surgery)</span><span class="kv-val">Stapedotomy vs Stapedectomy</span></div>
+      <div class="kv-row"><span class="kv-key">Cottle classification (DNS)</span><span class="kv-val">5 areas of nasal septum (I–V from anterior to posterior)</span></div>
+      <div class="kv-row"><span class="kv-key">House-Brackmann grade (facial nerve)</span><span class="kv-val">I=Normal → VI=Total paralysis</span></div>
+      <div class="kv-row"><span class="kv-key">Meyerhoff classification (cholesteatoma)</span><span class="kv-val">Congenital vs acquired (primary vs secondary)</span></div>
+      <div class="kv-row"><span class="kv-key">Schucknecht classification (presbyacusis)</span><span class="kv-val">Sensory, Neural, Metabolic (strial), Mechanical (cochlear conductive)</span></div>
+      <div class="kv-row"><span class="kv-key">Fisch classification (glomus tumour)</span><span class="kv-val">A=Middle ear, B=Tympanomastoid, C=Infralabyrinthine, D=Intracranial</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🔥 Exam Traps &amp; Frequently Confused</div>
+      <div class="kv-row"><span class="kv-key">Rinne –ve BUT SNHL (false negative)</span><span class="kv-val danger">Profound unilateral SNHL — crossover to better ear via BC; Weber lateralises to BETTER ear</span></div>
+      <div class="kv-row"><span class="kv-key">Cholesteatoma — SAFE vs UNSAFE</span><span class="kv-val danger">Tubotympanic (central perf) = SAFE; Atticoantral (attic/marginal perf) = UNSAFE</span></div>
+      <div class="kv-row"><span class="kv-key">Acoustic neuroma — nerve of origin</span><span class="kv-val danger">Vestibular nerve (NOT cochlear/acoustic nerve) — hence better called vestibular schwannoma</span></div>
+      <div class="kv-row"><span class="kv-key">Epiglottitis — do NOT examine throat</span><span class="kv-val danger">Risk of complete airway obstruction; secure airway first in theatre</span></div>
+      <div class="kv-row"><span class="kv-key">JNA — do NOT biopsy</span><span class="kv-val danger">Extremely vascular; life-threatening haemorrhage</span></div>
+      <div class="kv-row"><span class="kv-key">Amoxicillin + EBV</span><span class="kv-val danger">90% develop maculopapular rash — do not give; use macrolide instead</span></div>
+      <div class="kv-row"><span class="kv-key">Parotid mass + facial nerve palsy</span><span class="kv-val danger">Malignant until proven otherwise</span></div>
+      <div class="kv-row"><span class="kv-key">Button battery — nasal/ear</span><span class="kv-val danger">Remove IMMEDIATELY; liquefactive necrosis within 1–2 hours</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

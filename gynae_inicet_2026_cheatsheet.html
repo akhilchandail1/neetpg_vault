@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Gynaecology Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0e1a; --surface: #111827; --surface2: #1a2235; --border: #1e2d45;
+    --accent: #fb923c; --accent2: #7dd3fc; --accent3: #86efac; --accent4: #f9a8d4; --accent5: #c4b5fd;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #0f172a 0%, #1a0a1a 50%, #0f172a 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent4); color: #0a0e1a; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent4); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent4); color: #0a0e1a; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent4); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.orange::before { background: var(--accent); }
+  .card.blue::before { background: var(--accent2); }
+  .card.green::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.purple::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.orange .card-title { color: var(--accent); }
+  .card.blue .card-title { color: var(--accent2); }
+  .card.green .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.purple .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #1a2235; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.blue { color: var(--accent2); }
+  .kv-val.green { color: var(--accent3); }
+  .kv-val.pink { color: var(--accent4); }
+  .kv-val.purple { color: var(--accent5); }
+  .kv-val.danger { color: var(--danger); }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(125,211,252,0.06); border: 1px solid rgba(125,211,252,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent2); margin-top: 8px; line-height: 1.5; }
+  .pink-box { background: rgba(249,168,212,0.06); border: 1px solid rgba(249,168,212,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent4); margin-top: 8px; line-height: 1.5; }
+  .green-box { background: rgba(134,239,172,0.06); border: 1px solid rgba(134,239,172,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent3); margin-top: 8px; line-height: 1.5; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent4); font-weight: 500; }
+  .mt-12 { margin-top: 12px; }
+  .span-full { grid-column: 1 / -1; }
+  .mnemonic-box { background: rgba(196,181,253,0.07); border: 1px solid rgba(196,181,253,0.25); border-radius: 8px; padding: 10px 13px; font-size: 12px; color: var(--accent5); margin-top: 8px; line-height: 1.7; font-family: 'DM Mono', monospace; }
+  .mnemonic-box b { color: #e2e8f0; }
+  @media (max-width: 800px) { .grid-auto, .grid-2, .grid-3 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>Gynae<span>cology</span> Cheatsheet</h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('menstrual',this)">Menstrual Disorders</div>
+    <div class="tab" onclick="showSection('contraception',this)">Contraception</div>
+    <div class="tab" onclick="showSection('infections',this)">Infections & STIs</div>
+    <div class="tab" onclick="showSection('tumours',this)">Gynaec Tumours</div>
+    <div class="tab" onclick="showSection('endometriosis',this)">Endo & Fibroid</div>
+    <div class="tab" onclick="showSection('fertility',this)">Infertility & ART</div>
+    <div class="tab" onclick="showSection('prolapse',this)">Prolapse & Urinary</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- MENSTRUAL DISORDERS -->
+<div class="section active" id="menstrual">
+  <div class="section-title">Menstrual <span>Disorders</span></div>
+  <div class="section-sub">Amenorrhoea, AUB, dysmenorrhoea, PCOS, menopause</div>
+  <div class="grid-auto">
+
+    <div class="card pink">
+      <div class="card-title">🩸 Normal Menstrual Parameters</div>
+      <div class="kv-row"><span class="kv-key">Cycle length</span><span class="kv-val pink">21–35 days</span></div>
+      <div class="kv-row"><span class="kv-key">Duration of flow</span><span class="kv-val">2–7 days</span></div>
+      <div class="kv-row"><span class="kv-key">Blood loss</span><span class="kv-val">20–80 mL (avg 35 mL)</span></div>
+      <div class="kv-row"><span class="kv-key">Menarche (India)</span><span class="kv-val">12–13 years</span></div>
+      <div class="kv-row"><span class="kv-key">Menopause</span><span class="kv-val pink">51 years (avg); &lt;40 = premature</span></div>
+      <div class="kv-row"><span class="kv-key">Climacteric</span><span class="kv-val">Period around menopause</span></div>
+      <div class="kv-row"><span class="kv-key">FSH in menopause</span><span class="kv-val danger">&gt;40 IU/L (confirmatory)</span></div>
+      <div class="mnemonic-box"><b>PALM-COEIN</b> (AUB causes): <b>P</b>olyp, <b>A</b>denomyosis, <b>L</b>eiomyoma, <b>M</b>alignancy — <b>C</b>oagulopathy, <b>O</b>vulatory, <b>E</b>ndometrial, <b>I</b>atrogenic, <b>N</b>ot classified</div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🔴 Amenorrhoea Classification</div>
+      <div class="kv-row"><span class="kv-key">Primary amenorrhoea</span><span class="kv-val highlight">No menarche by 16 yrs (with 2° sex chars) / 14 yrs (without)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause primary (w/ uterus)</span><span class="kv-val">Gonadal dysgenesis (Turner's 45X0)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause primary (w/o uterus)</span><span class="kv-val">MRKH syndrome (Müllerian agenesis)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause secondary amenorrhoea</span><span class="kv-val highlight">Pregnancy (always rule out first)</span></div>
+      <div class="kv-row"><span class="kv-key">Hypothalamic amenorrhoea</span><span class="kv-val">Low GnRH → low FSH/LH → low E2</span></div>
+      <div class="kv-row"><span class="kv-key">Sheehan's syndrome</span><span class="kv-val">Postpartum pituitary necrosis → pan-hypopituitarism</span></div>
+      <div class="kv-row"><span class="kv-key">Asherman's syndrome</span><span class="kv-val">Intrauterine adhesions (post curettage)</span></div>
+      <div class="kv-row"><span class="kv-key">Asherman's diagnosis</span><span class="kv-val">Hysteroscopy (Gold standard)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">💠 PCOS (Polycystic Ovary Syndrome)</div>
+      <div class="kv-row"><span class="kv-key">Diagnostic criteria</span><span class="kv-val blue">Rotterdam: 2 of 3</span></div>
+      <div class="kv-row"><span class="kv-key">Rotterdam triad</span><span class="kv-val">Oligo-ovulation + hyperandrogenism + PCO on USG</span></div>
+      <div class="kv-row"><span class="kv-key">USG criteria</span><span class="kv-val">≥12 follicles 2–9mm OR ovarian volume &gt;10 mL</span></div>
+      <div class="kv-row"><span class="kv-key">LH:FSH ratio</span><span class="kv-val danger">≥3:1 (elevated LH)</span></div>
+      <div class="kv-row"><span class="kv-key">1st line Rx (infertility)</span><span class="kv-val highlight">Clomiphene citrate</span></div>
+      <div class="kv-row"><span class="kv-key">Insulin sensitizer</span><span class="kv-val">Metformin</span></div>
+      <div class="kv-row"><span class="kv-key">Hirsutism Rx</span><span class="kv-val">OCP + anti-androgens (spironolactone)</span></div>
+      <div class="kv-row"><span class="kv-key">Long-term risk</span><span class="kv-val danger">Endometrial cancer (unopposed oestrogen)</span></div>
+      <div class="alert-box">PCOS = MC endocrine disorder in reproductive-age women; associated with insulin resistance in 70%</div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🟢 Dysmenorrhoea</div>
+      <div class="kv-row"><span class="kv-key">Primary dysmenorrhoea</span><span class="kv-val green">No pelvic pathology; PGF2α excess</span></div>
+      <div class="kv-row"><span class="kv-key">Onset (primary)</span><span class="kv-val">6–12 months after menarche</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment (primary)</span><span class="kv-val">NSAIDs (1st line); OCP (2nd line)</span></div>
+      <div class="kv-row"><span class="kv-key">Secondary dysmenorrhoea</span><span class="kv-val danger">Pelvic pathology (endometriosis MC cause)</span></div>
+      <div class="kv-row"><span class="kv-key">Onset (secondary)</span><span class="kv-val">Years after menarche; worsens with time</span></div>
+      <div class="kv-row"><span class="kv-key">Congestive dysmenorrhoea</span><span class="kv-val">Pain few days before period; pelvic congestion</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">💜 Menopause & HRT</div>
+      <div class="kv-row"><span class="kv-key">Vasomotor symptoms</span><span class="kv-val purple">Hot flushes (MC symptom)</span></div>
+      <div class="kv-row"><span class="kv-key">Urogenital atrophy</span><span class="kv-val">Dyspareunia, recurrent UTI</span></div>
+      <div class="kv-row"><span class="kv-key">HRT benefit</span><span class="kv-val green">Vasomotor, bone, urogenital</span></div>
+      <div class="kv-row"><span class="kv-key">HRT absolute CI</span><span class="kv-val danger">Breast/endometrial Ca, undiag. uterine bleeding, thromboembolic disease</span></div>
+      <div class="kv-row"><span class="kv-key">Oestrogen alone HRT risk</span><span class="kv-val danger">Endometrial Ca (add progestogen if uterus intact)</span></div>
+      <div class="kv-row"><span class="kv-key">Combined HRT risk</span><span class="kv-val danger">Breast Ca (slight increase)</span></div>
+      <div class="kv-row"><span class="kv-key">Premature ovarian insufficiency</span><span class="kv-val">&lt;40 yrs; FSH &gt;25 IU/L × 2 tests, 4 wks apart</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">⚡ Turner's Syndrome — High Yield</div>
+      <div class="kv-row"><span class="kv-key">Karyotype</span><span class="kv-val danger">45,X0 (MC); 45X/46XX (mosaic)</span></div>
+      <div class="kv-row"><span class="kv-key">Features</span><span class="kv-val">Short stature, webbed neck, shield chest, cubitus valgus</span></div>
+      <div class="kv-row"><span class="kv-key">Cardiac defect</span><span class="kv-val danger">Bicuspid aortic valve / coarctation of aorta</span></div>
+      <div class="kv-row"><span class="kv-key">Gonads</span><span class="kv-val">Streak gonads (fibrous)</span></div>
+      <div class="kv-row"><span class="kv-key">Hormones</span><span class="kv-val danger">↑FSH, ↑LH, ↓Oestrogen</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val">GH (for height) + HRT at puberty</span></div>
+      <div class="kv-row"><span class="kv-key">Intelligence</span><span class="kv-val green">Normal</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONTRACEPTION -->
+<div class="section" id="contraception">
+  <div class="section-title">Contra<span>ception</span></div>
+  <div class="section-sub">OCP, IUD, barrier, emergency, sterilisation</div>
+  <div class="grid-auto">
+
+    <div class="card pink">
+      <div class="card-title">💊 Combined OCP (COCP)</div>
+      <div class="kv-row"><span class="kv-key">Mechanism</span><span class="kv-val pink">Inhibits ovulation (LH/FSH suppression)</span></div>
+      <div class="kv-row"><span class="kv-key">Pearl Index</span><span class="kv-val green">0.1–0.3 (most effective)</span></div>
+      <div class="kv-row"><span class="kv-key">Absolute CI</span><span class="kv-val danger">Migraine with aura, VTE, smoker &gt;35 yrs, liver disease, breast Ca, CVD</span></div>
+      <div class="kv-row"><span class="kv-key">Non-contraceptive benefits</span><span class="kv-val">↓Dysmenorrhoea, ↓PID, ↓Ovarian Ca, ↓Endometrial Ca, ↓Fibroids</span></div>
+      <div class="kv-row"><span class="kv-key">Increased risk</span><span class="kv-val danger">DVT, stroke, hypertension, breast Ca (slight), cervical Ca</span></div>
+      <div class="kv-row"><span class="kv-key">Start timing</span><span class="kv-val">Day 1–5 of cycle (immediate protection)</span></div>
+      <div class="kv-row"><span class="kv-key">Missed pill rule</span><span class="kv-val">&lt;12 hrs: take ASAP; &gt;12 hrs: barrier method</span></div>
+      <div class="mnemonic-box"><b>ACHES</b> danger signs: <b>A</b>bdominal pain, <b>C</b>hest pain, <b>H</b>eadache, <b>E</b>ye changes, <b>S</b>welling of legs</div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🔵 Progesterone-Only Pill (POP)</div>
+      <div class="kv-row"><span class="kv-key">Mechanism</span><span class="kv-val highlight">Thickens cervical mucus; inconsistently inhibits ovulation</span></div>
+      <div class="kv-row"><span class="kv-key">Timing</span><span class="kv-val">Must take within 3-hr window daily</span></div>
+      <div class="kv-row"><span class="kv-key">Best for</span><span class="kv-val">Breastfeeding, COCP CI patients</span></div>
+      <div class="kv-row"><span class="kv-key">Side effects</span><span class="kv-val">Irregular bleeding, functional ovarian cysts</span></div>
+      <div class="kv-row"><span class="kv-key">Desogestrel POP</span><span class="kv-val green">12-hr window; more effective</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🔶 IUD (Intrauterine Device)</div>
+      <div class="kv-row"><span class="kv-key">Cu-T 380A duration</span><span class="kv-val blue">10 years</span></div>
+      <div class="kv-row"><span class="kv-key">Mechanism Cu-IUD</span><span class="kv-val">Spermicidal (Cu2+ toxic); prevents implantation</span></div>
+      <div class="kv-row"><span class="kv-key">Failure rate Cu-T</span><span class="kv-val green">0.6–0.8% (very effective)</span></div>
+      <div class="kv-row"><span class="kv-key">LNG-IUS (Mirena)</span><span class="kv-val pink">Levonorgestrel 20 μg/day; 5 yrs</span></div>
+      <div class="kv-row"><span class="kv-key">LNG-IUS best for</span><span class="kv-val">Menorrhagia + contraception</span></div>
+      <div class="kv-row"><span class="kv-key">IUD absolute CI</span><span class="kv-val danger">PID, unexplained uterine bleeding, distorted uterine cavity, pregnancy</span></div>
+      <div class="kv-row"><span class="kv-key">MC complication IUD</span><span class="kv-val danger">Expulsion (1st year)</span></div>
+      <div class="kv-row"><span class="kv-key">IUD + pregnancy risk</span><span class="kv-val danger">Ectopic pregnancy ↑ relative risk</span></div>
+      <div class="alert-box">MC cause of IUD failure → Partial expulsion; MC long-term complication → PID (actinomyces)</div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🆘 Emergency Contraception</div>
+      <div class="kv-row"><span class="kv-key">LNG (Plan B)</span><span class="kv-val green">Within 72 hrs (up to 120 hrs)</span></div>
+      <div class="kv-row"><span class="kv-key">Ulipristal acetate (EllaOne)</span><span class="kv-val">Within 120 hrs (5 days); more effective</span></div>
+      <div class="kv-row"><span class="kv-key">Cu-IUD (emergency)</span><span class="kv-val green">Within 5 days — MOST EFFECTIVE EC</span></div>
+      <div class="kv-row"><span class="kv-key">Yuzpe method</span><span class="kv-val">High-dose COCP (older method)</span></div>
+      <div class="kv-row"><span class="kv-key">Mifepristone dose (EC)</span><span class="kv-val">10 mg (low dose) within 72 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">EC does NOT cause abortion</span><span class="kv-val green">Prevents implantation only</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🔗 Sterilisation</div>
+      <div class="kv-row"><span class="kv-key">Female sterilisation</span><span class="kv-val purple">Tubal ligation — most common method worldwide</span></div>
+      <div class="kv-row"><span class="kv-key">Pomeroy method</span><span class="kv-val">Tie and cut loop of tube (MC method)</span></div>
+      <div class="kv-row"><span class="kv-key">Fimbriectomy</span><span class="kv-val">Removes fimbriae; Kroener's method</span></div>
+      <div class="kv-row"><span class="kv-key">Filshie clip</span><span class="kv-val green">Best reversal rate</span></div>
+      <div class="kv-row"><span class="kv-key">Failure rate ligation</span><span class="kv-val">0.5% (10-yr cumulative)</span></div>
+      <div class="kv-row"><span class="kv-key">After sterilisation failure</span><span class="kv-val danger">Ectopic pregnancy more likely</span></div>
+      <div class="kv-row"><span class="kv-key">Vasectomy failure</span><span class="kv-val">1 in 2000 (lower than tubal)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">📊 Pearl Index Comparison</div>
+      <table class="comparison-table">
+        <tr><th>Method</th><th>Pearl Index (typical use)</th><th>Notes</th></tr>
+        <tr><td>Implant (Implanon)</td><td>0.05</td><td>3 yrs; etonogestrel</td></tr>
+        <tr><td>LNG-IUS (Mirena)</td><td>0.1–0.2</td><td>5 yrs; reduces bleeding</td></tr>
+        <tr><td>Cu-IUD</td><td>0.6–0.8</td><td>10 yrs; non-hormonal</td></tr>
+        <tr><td>COCP</td><td>0.3–8</td><td>Daily pill</td></tr>
+        <tr><td>Male condom</td><td>2–15</td><td>STI protection</td></tr>
+        <tr><td>Diaphragm</td><td>6–20</td><td>With spermicide</td></tr>
+        <tr><td>Rhythm method</td><td>9–25</td><td>Least reliable</td></tr>
+        <tr><td>No contraception</td><td>85</td><td>Baseline pregnancy rate</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- INFECTIONS & STIs -->
+<div class="section" id="infections">
+  <div class="section-title">Infections <span>&amp; STIs</span></div>
+  <div class="section-sub">PID, STIs, vaginal infections, cervicitis</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🦠 Vaginal Infections (Quick Comparison)</div>
+      <table class="comparison-table">
+        <tr><th>Feature</th><th>BV</th><th>Trichomonas</th><th>Candida</th></tr>
+        <tr><td>Organism</td><td>Gardnerella vaginalis</td><td>T. vaginalis</td><td>C. albicans</td></tr>
+        <tr><td>Discharge</td><td>Grey, homogeneous, fishy</td><td>Frothy, greenish-yellow</td><td>White, curdy, thick</td></tr>
+        <tr><td>pH</td><td>&gt;4.5</td><td>&gt;4.5</td><td>&lt;4.5 (normal)</td></tr>
+        <tr><td>Clue cells</td><td>Yes (pathognomonic)</td><td>No</td><td>No</td></tr>
+        <tr><td>Whiff test</td><td>Positive (amine odour)</td><td>May be +ve</td><td>Negative</td></tr>
+        <tr><td>Strawberry cervix</td><td>No</td><td>Yes</td><td>No</td></tr>
+        <tr><td>Treatment</td><td>Metronidazole</td><td>Metronidazole (both partners)</td><td>Fluconazole / Clotrimazole</td></tr>
+      </table>
+      <div class="mnemonic-box"><b>Amsel's criteria (BV)</b>: 3 of 4 — Homogeneous discharge + pH&gt;4.5 + Clue cells + Positive whiff test</div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">⚠️ PID (Pelvic Inflammatory Disease)</div>
+      <div class="kv-row"><span class="kv-key">MC organism</span><span class="kv-val danger">N. gonorrhoeae + C. trachomatis (polymicrobial)</span></div>
+      <div class="kv-row"><span class="kv-key">Clinical features</span><span class="kv-val">Adnexal tenderness + cervical motion tenderness + fever</span></div>
+      <div class="kv-row"><span class="kv-key">Chandelier sign</span><span class="kv-val danger">Cervical excitation (severe PID)</span></div>
+      <div class="kv-row"><span class="kv-key">Fitz-Hugh-Curtis syndrome</span><span class="kv-val">PID + perihepatitis (violin string adhesions)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment (outpatient)</span><span class="kv-val">Ceftriaxone + Doxycycline + Metronidazole</span></div>
+      <div class="kv-row"><span class="kv-key">Complication</span><span class="kv-val danger">Tubo-ovarian abscess, ectopic pregnancy, infertility</span></div>
+      <div class="kv-row"><span class="kv-key">Risk factor</span><span class="kv-val">IUD, multiple partners (NOT OCP — protective)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🔵 STIs — Key Facts</div>
+      <div class="kv-row"><span class="kv-key">Gonorrhoea</span><span class="kv-val blue">Gram –ve diplococci; intracellular</span></div>
+      <div class="kv-row"><span class="kv-key">Gonorrhoea Rx</span><span class="kv-val">Ceftriaxone 500 mg IM single dose</span></div>
+      <div class="kv-row"><span class="kv-key">Chlamydia</span><span class="kv-val">Obligate intracellular; MC bacterial STI</span></div>
+      <div class="kv-row"><span class="kv-key">Chlamydia Rx</span><span class="kv-val">Azithromycin 1g stat OR Doxycycline × 7 days</span></div>
+      <div class="kv-row"><span class="kv-key">Syphilis (primary)</span><span class="kv-val">Painless chancre (Treponema pallidum)</span></div>
+      <div class="kv-row"><span class="kv-key">VDRL false positive</span><span class="kv-val danger">SLE, pregnancy, malaria, leprosy</span></div>
+      <div class="kv-row"><span class="kv-key">Condylomata acuminata</span><span class="kv-val">HPV 6, 11 (genital warts)</span></div>
+      <div class="kv-row"><span class="kv-key">Herpes genitalis</span><span class="kv-val danger">HSV-2 (painful vesicles)</span></div>
+      <div class="kv-row"><span class="kv-key">Chancroid</span><span class="kv-val">H. ducreyi; painful ulcer + inguinal bubo</span></div>
+      <div class="kv-row"><span class="kv-key">LGV (C. trachomatis L1–L3)</span><span class="kv-val">Groove sign (inguinal adenopathy)</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🟢 Cervical Pathology</div>
+      <div class="kv-row"><span class="kv-key">Cervical ectropion</span><span class="kv-val green">Columnar epithelium on ectocervix; contact bleeding</span></div>
+      <div class="kv-row"><span class="kv-key">Transformation zone</span><span class="kv-val">Squamocolumnar junction; site of CIN/Ca</span></div>
+      <div class="kv-row"><span class="kv-key">Nabothian cysts</span><span class="kv-val">Blocked cervical glands; benign</span></div>
+      <div class="kv-row"><span class="kv-key">Pap smear screening</span><span class="kv-val">25–65 yrs; every 3–5 yrs</span></div>
+      <div class="kv-row"><span class="kv-key">Koilocytes on smear</span><span class="kv-val">HPV effect (perinuclear halo)</span></div>
+      <div class="kv-row"><span class="kv-key">CIN I</span><span class="kv-val green">Dysplasia in lower 1/3 (often regresses)</span></div>
+      <div class="kv-row"><span class="kv-key">CIN III (CIS)</span><span class="kv-val danger">Full thickness dysplasia → treat (LLETZ/cone)</span></div>
+      <div class="kv-row"><span class="kv-key">HPV vaccine strains</span><span class="kv-val">Gardasil 9: 6,11,16,18,31,33,45,52,58</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- GYNAEC TUMOURS -->
+<div class="section" id="tumours">
+  <div class="section-title">Gynaec <span>Tumours</span></div>
+  <div class="section-sub">Cervix, endometrium, ovary, vulva — staging and management</div>
+  <div class="grid-auto">
+
+    <div class="card red">
+      <div class="card-title">🎗️ Cervical Cancer</div>
+      <div class="kv-row"><span class="kv-key">MC type</span><span class="kv-val danger">Squamous cell carcinoma (70–80%)</span></div>
+      <div class="kv-row"><span class="kv-key">MC HPV type</span><span class="kv-val danger">HPV 16 (SCC) and HPV 18 (adenocarcinoma)</span></div>
+      <div class="kv-row"><span class="kv-key">MC presentation</span><span class="kv-val">Post-coital bleeding</span></div>
+      <div class="kv-row"><span class="kv-key">Staging</span><span class="kv-val">FIGO (clinical staging)</span></div>
+      <div class="kv-row"><span class="kv-key">Stage IA</span><span class="kv-val green">Microscopic only; IA1 ≤3 mm invasion</span></div>
+      <div class="kv-row"><span class="kv-key">Stage IB–IIA Rx</span><span class="kv-val">Radical hysterectomy (Wertheim's) OR CRT</span></div>
+      <div class="kv-row"><span class="kv-key">Stage IIB+ Rx</span><span class="kv-val danger">Concurrent chemoradiation (cisplatin)</span></div>
+      <div class="kv-row"><span class="kv-key">Barrel-shaped cervix</span><span class="kv-val">Endocervical (adenocarcinoma)</span></div>
+      <div class="kv-row"><span class="kv-key">Prognostic factor</span><span class="kv-val danger">Lymph node status (most important)</span></div>
+      <div class="alert-box">Wertheim's hysterectomy = radical hysterectomy + pelvic lymphadenectomy + upper 1/3 vagina removal</div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🔴 Endometrial Cancer</div>
+      <div class="kv-row"><span class="kv-key">MC gynaec malignancy (Western)</span><span class="kv-val pink">Endometrial carcinoma</span></div>
+      <div class="kv-row"><span class="kv-key">MC type</span><span class="kv-val">Endometrioid adenocarcinoma (Type I — oestrogen driven)</span></div>
+      <div class="kv-row"><span class="kv-key">Type I risk factors</span><span class="kv-val">Obesity, PCOS, nulliparity, late menopause, tamoxifen, unopposed oestrogen</span></div>
+      <div class="kv-row"><span class="kv-key">Type II</span><span class="kv-val danger">Serous/clear cell; aggressive; not oestrogen-driven</span></div>
+      <div class="kv-row"><span class="kv-key">MC presentation</span><span class="kv-val danger">Postmenopausal bleeding (PMB) — must biopsy</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard diagnosis</span><span class="kv-val">Endometrial biopsy (Pipelle)</span></div>
+      <div class="kv-row"><span class="kv-key">Staging</span><span class="kv-val">FIGO — surgical staging</span></div>
+      <div class="kv-row"><span class="kv-key">Stage I Rx</span><span class="kv-val">TAH + BSO ± pelvic lymph node dissection</span></div>
+      <div class="kv-row"><span class="kv-key">Protective factors</span><span class="kv-val green">OCP, progestogens, multiparity</span></div>
+      <div class="mnemonic-box"><b>Fat, Fertile, Forty, Fair</b> = classic endometrial Ca patient (Type I)</div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🔮 Ovarian Tumours</div>
+      <div class="kv-row"><span class="kv-key">MC ovarian tumour overall</span><span class="kv-val blue">Serous cystadenoma (benign)</span></div>
+      <div class="kv-row"><span class="kv-key">MC ovarian malignancy</span><span class="kv-val danger">Serous cystadenocarcinoma</span></div>
+      <div class="kv-row"><span class="kv-key">Psammoma bodies</span><span class="kv-val">Serous tumours (granular calcifications)</span></div>
+      <div class="kv-row"><span class="kv-key">Pseudomyxoma peritonei</span><span class="kv-val danger">Mucinous cystadenoma rupture (jelly belly)</span></div>
+      <div class="kv-row"><span class="kv-key">Brenner tumour</span><span class="kv-val">Coffee bean nuclei; transitional cells; Walthard cell rest</span></div>
+      <div class="kv-row"><span class="kv-key">Granulosa cell tumour</span><span class="kv-val pink">Call-Exner bodies; ↑oestrogen → precocious puberty/PMB</span></div>
+      <div class="kv-row"><span class="kv-key">Sertoli-Leydig cell tumour</span><span class="kv-val">Virilisation; ↑testosterone</span></div>
+      <div class="kv-row"><span class="kv-key">Dysgerminoma</span><span class="kv-val danger">Germ cell; LDH marker; radiosensitive</span></div>
+      <div class="kv-row"><span class="kv-key">Endodermal sinus tumour</span><span class="kv-val danger">AFP marker; Schiller-Duval bodies</span></div>
+      <div class="kv-row"><span class="kv-key">Choriocarcinoma (ovarian)</span><span class="kv-val danger">β-hCG marker; most malignant germ cell</span></div>
+      <div class="kv-row"><span class="kv-key">Meigs' syndrome</span><span class="kv-val">Fibroma + ascites + pleural effusion</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">📊 Ovarian Ca — FIGO Staging</div>
+      <div class="kv-row"><span class="kv-key">Stage I</span><span class="kv-val green">Confined to ovary/ovaries</span></div>
+      <div class="kv-row"><span class="kv-key">Stage IA</span><span class="kv-val green">One ovary; capsule intact; no ascites</span></div>
+      <div class="kv-row"><span class="kv-key">Stage IC</span><span class="kv-val">Capsule rupture / tumour on surface / malignant ascites</span></div>
+      <div class="kv-row"><span class="kv-key">Stage II</span><span class="kv-val">Pelvic extension</span></div>
+      <div class="kv-row"><span class="kv-key">Stage III</span><span class="kv-val danger">Peritoneal implants beyond pelvis / LN+</span></div>
+      <div class="kv-row"><span class="kv-key">Stage IV</span><span class="kv-val danger">Distant mets (liver parenchyma, pleural effusion)</span></div>
+      <div class="kv-row"><span class="kv-key">MC stage at diagnosis</span><span class="kv-val danger">Stage III (presents late)</span></div>
+      <div class="kv-row"><span class="kv-key">Tumour marker</span><span class="kv-val">CA-125 (epithelial); AFP/β-hCG (germ cell)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val">TAH+BSO + omentectomy + cytoreduction + carboplatin/paclitaxel</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🔶 Vulval & Vaginal Tumours</div>
+      <div class="kv-row"><span class="kv-key">MC vulval cancer</span><span class="kv-val highlight">Squamous cell carcinoma</span></div>
+      <div class="kv-row"><span class="kv-key">Vulval Ca risk factors</span><span class="kv-val">VIN, lichen sclerosus, HPV 16, old age</span></div>
+      <div class="kv-row"><span class="kv-key">Bartholin gland carcinoma</span><span class="kv-val">Adenocarcinoma (rare)</span></div>
+      <div class="kv-row"><span class="kv-key">MC vaginal cancer</span><span class="kv-val">SCC (secondary > primary)</span></div>
+      <div class="kv-row"><span class="kv-key">VAIN (vaginal intraepithelial neoplasia)</span><span class="kv-val">HPV-related; treat with LLETZ/laser</span></div>
+      <div class="kv-row"><span class="kv-key">Clear cell adenocarcinoma vagina</span><span class="kv-val danger">DES (diethylstilboestrol) exposure in utero</span></div>
+      <div class="kv-row"><span class="kv-key">Sarcoma botryoides</span><span class="kv-val danger">Rhabdomyosarcoma; infant girls; grape-like mass</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">💜 Gestational Trophoblastic Disease</div>
+      <div class="kv-row"><span class="kv-key">Hydatidiform mole complete</span><span class="kv-val danger">46,XX (all paternal); snow storm USG; no fetal parts</span></div>
+      <div class="kv-row"><span class="kv-key">Hydatidiform mole partial</span><span class="kv-val">Triploid 69,XXY; fetal parts present</span></div>
+      <div class="kv-row"><span class="kv-key">β-hCG in mole</span><span class="kv-val danger">Very high; theca lutein cysts</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment HM</span><span class="kv-val">Suction evacuation + follow-up β-hCG</span></div>
+      <div class="kv-row"><span class="kv-key">Malignant transformation</span><span class="kv-val danger">Complete mole 15–20%; Partial 0.5–1%</span></div>
+      <div class="kv-row"><span class="kv-key">Choriocarcinoma</span><span class="kv-val danger">Highly malignant; responds to chemo (MTX)</span></div>
+      <div class="kv-row"><span class="kv-key">Follow-up duration</span><span class="kv-val">6 months (β-hCG normalises) before conception</span></div>
+      <div class="kv-row"><span class="kv-key">Contraception during follow-up</span><span class="kv-val">OCP or barrier (NOT IUD)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ENDOMETRIOSIS & FIBROID -->
+<div class="section" id="endometriosis">
+  <div class="section-title">Endometriosis <span>&amp; Fibroid</span></div>
+  <div class="section-sub">Adenomyosis, uterine leiomyoma, endometriosis management</div>
+  <div class="grid-auto">
+
+    <div class="card pink">
+      <div class="card-title">🌸 Endometriosis</div>
+      <div class="kv-row"><span class="kv-key">Definition</span><span class="kv-val pink">Endometrial glands/stroma outside uterus</span></div>
+      <div class="kv-row"><span class="kv-key">MC site</span><span class="kv-val">Ovaries (chocolate cyst = endometrioma)</span></div>
+      <div class="kv-row"><span class="kv-key">Classic triad</span><span class="kv-val danger">Dysmenorrhoea + Dyspareunia + Dyschezia</span></div>
+      <div class="kv-row"><span class="kv-key">Pathognomonic finding</span><span class="kv-val">Powder-burn/gunshot lesions (laparoscopy)</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard diagnosis</span><span class="kv-val highlight">Laparoscopy + biopsy</span></div>
+      <div class="kv-row"><span class="kv-key">ASRM staging</span><span class="kv-val">I–IV (based on laparoscopy)</span></div>
+      <div class="kv-row"><span class="kv-key">Medical Rx</span><span class="kv-val">NSAIDs, COCP, progestogens, GnRH agonists, Danazol</span></div>
+      <div class="kv-row"><span class="kv-key">Danazol MOA</span><span class="kv-val">Attenuated androgen; inhibits gonadotrophins</span></div>
+      <div class="kv-row"><span class="kv-key">GnRH agonist</span><span class="kv-val">Leuprolide; causes pseudomenopause; max 6 months</span></div>
+      <div class="kv-row"><span class="kv-key">Surgical Rx</span><span class="kv-val">Laparoscopic ablation / TAH+BSO (definitive)</span></div>
+      <div class="mnemonic-box"><b>Sampson's theory</b>: Retrograde menstruation → endometrial implants in pelvis</div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🟠 Adenomyosis</div>
+      <div class="kv-row"><span class="kv-key">Definition</span><span class="kv-val highlight">Endometrial glands within myometrium</span></div>
+      <div class="kv-row"><span class="kv-key">Classic patient</span><span class="kv-val">Parous woman 35–50 yrs</span></div>
+      <div class="kv-row"><span class="kv-key">Classic symptoms</span><span class="kv-val">Menorrhagia + Dysmenorrhoea + Bulky uterus</span></div>
+      <div class="kv-row"><span class="kv-key">Uterus size</span><span class="kv-val">Uniformly enlarged (≤12–14 wks size)</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard diagnosis</span><span class="kv-val highlight">Histopathology (post-hysterectomy)</span></div>
+      <div class="kv-row"><span class="kv-key">Best pre-op imaging</span><span class="kv-val">MRI (T2 — junctional zone &gt;12 mm)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment (definitive)</span><span class="kv-val danger">Hysterectomy</span></div>
+      <div class="kv-row"><span class="kv-key">Medical Rx</span><span class="kv-val">LNG-IUS, GnRH agonists (temporary)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🔵 Uterine Leiomyoma (Fibroid)</div>
+      <div class="kv-row"><span class="kv-key">Histology</span><span class="kv-val blue">Benign smooth muscle tumour (whorled appearance)</span></div>
+      <div class="kv-row"><span class="kv-key">MC benign gynaec tumour</span><span class="kv-val highlight">Fibroid</span></div>
+      <div class="kv-row"><span class="kv-key">Types</span><span class="kv-val">Intramural (MC) &gt; Subserosal &gt; Submucosal</span></div>
+      <div class="kv-row"><span class="kv-key">Most symptomatic type</span><span class="kv-val danger">Submucosal (causes most bleeding)</span></div>
+      <div class="kv-row"><span class="kv-key">FIGO classification</span><span class="kv-val">0 (pedunculated submucosal) → 8</span></div>
+      <div class="kv-row"><span class="kv-key">Degeneration (pregnancy)</span><span class="kv-val danger">Red (carneous) degeneration (MC in pregnancy)</span></div>
+      <div class="kv-row"><span class="kv-key">Sarcomatous change</span><span class="kv-val danger">0.1–0.5% (rapid growth after menopause = suspect)</span></div>
+      <div class="kv-row"><span class="kv-key">Calcification type</span><span class="kv-val">Hyaline (MC); also calcific (womb stones)</span></div>
+      <div class="kv-row"><span class="kv-key">Medical Rx</span><span class="kv-val">GnRH agonists (↓size); Ulipristal acetate</span></div>
+      <div class="kv-row"><span class="kv-key">Myomectomy</span><span class="kv-val green">Fertility-preserving surgery</span></div>
+      <div class="kv-row"><span class="kv-key">UAE (uterine artery embolisation)</span><span class="kv-val">Non-surgical; no fertility data</span></div>
+      <div class="alert-box">Fibroids regress after menopause (oestrogen dependent). Never prescribe HRT in fibroids — causes growth!</div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">📊 Fibroid vs Adenomyosis vs Endometriosis</div>
+      <table class="comparison-table">
+        <tr><th>Feature</th><th>Fibroid</th><th>Adenomyosis</th><th>Endometriosis</th></tr>
+        <tr><td>Age</td><td>30–50 yrs</td><td>35–50 yrs (multiparous)</td><td>20–40 yrs (nulliparous)</td></tr>
+        <tr><td>Uterus</td><td>Irregular/asymmetric</td><td>Uniformly enlarged, tender</td><td>Normal / fixed RVF</td></tr>
+        <tr><td>Menorrhagia</td><td>Common</td><td>Yes (submucosal)</td><td>Dysmenorrhoea > menorrhagia</td></tr>
+        <tr><td>Dysmenorrhoea</td><td>Mild (usually)</td><td>Severe secondary</td><td>Severe progressive</td></tr>
+        <tr><td>Diagnosis (definitive)</td><td>USG/MRI</td><td>Histopathology</td><td>Laparoscopy + biopsy</td></tr>
+        <tr><td>Tumour marker</td><td>None</td><td>None</td><td>CA-125 (moderate raise)</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- INFERTILITY & ART -->
+<div class="section" id="fertility">
+  <div class="section-title">Infertility <span>&amp; ART</span></div>
+  <div class="section-sub">Causes, investigations, ovulation induction, IVF, IUI</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🔬 Infertility — Definitions</div>
+      <div class="kv-row"><span class="kv-key">Primary infertility</span><span class="kv-val highlight">No pregnancy after 12 months unprotected sex</span></div>
+      <div class="kv-row"><span class="kv-key">Secondary infertility</span><span class="kv-val">Prior pregnancy; fails to conceive again</span></div>
+      <div class="kv-row"><span class="kv-key">Subfertility</span><span class="kv-val">Reduced ability; not impossible</span></div>
+      <div class="kv-row"><span class="kv-key">Male factor</span><span class="kv-val">30–40% of couples</span></div>
+      <div class="kv-row"><span class="kv-key">Female factor</span><span class="kv-val">40–55%</span></div>
+      <div class="kv-row"><span class="kv-key">Unexplained</span><span class="kv-val">10–15%</span></div>
+      <div class="kv-row"><span class="kv-key">MC female cause (tubal)</span><span class="kv-val danger">PID / Chlamydia sequelae</span></div>
+      <div class="kv-row"><span class="kv-key">MC female cause (ovulatory)</span><span class="kv-val">PCOS</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🧫 Semen Analysis (WHO 2021)</div>
+      <div class="kv-row"><span class="kv-key">Volume</span><span class="kv-val blue">≥1.4 mL</span></div>
+      <div class="kv-row"><span class="kv-key">Total sperm count</span><span class="kv-val">≥39 million/ejaculate</span></div>
+      <div class="kv-row"><span class="kv-key">Concentration</span><span class="kv-val">≥16 million/mL</span></div>
+      <div class="kv-row"><span class="kv-key">Total motility</span><span class="kv-val">≥42%</span></div>
+      <div class="kv-row"><span class="kv-key">Progressive motility</span><span class="kv-val">≥30%</span></div>
+      <div class="kv-row"><span class="kv-key">Normal morphology (Kruger)</span><span class="kv-val">≥4%</span></div>
+      <div class="kv-row"><span class="kv-key">Azoospermia</span><span class="kv-val danger">No sperm; obstructive vs non-obstructive</span></div>
+      <div class="kv-row"><span class="kv-key">Oligospermia</span><span class="kv-val">&lt;16 million/mL</span></div>
+      <div class="kv-row"><span class="kv-key">Asthenospermia</span><span class="kv-val">&lt;30% progressive motility</span></div>
+      <div class="kv-row"><span class="kv-key">Teratospermia</span><span class="kv-val">&lt;4% normal morphology</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🌡️ Ovulation Induction</div>
+      <div class="kv-row"><span class="kv-key">1st line PCOS</span><span class="kv-val green">Clomiphene citrate (CC)</span></div>
+      <div class="kv-row"><span class="kv-key">CC mechanism</span><span class="kv-val">Anti-oestrogen; ↑FSH by blocking negative feedback</span></div>
+      <div class="kv-row"><span class="kv-key">CC dose</span><span class="kv-val">50 mg day 2–6 (up to 150 mg)</span></div>
+      <div class="kv-row"><span class="kv-key">CC complication</span><span class="kv-val danger">OHSS, multiple pregnancy, thin endometrium</span></div>
+      <div class="kv-row"><span class="kv-key">Letrozole (aromatase inhibitor)</span><span class="kv-val pink">Better in PCOS (WHO: preferred over CC)</span></div>
+      <div class="kv-row"><span class="kv-key">Gonadotrophins</span><span class="kv-val">FSH injections; used in CC failure / IVF</span></div>
+      <div class="kv-row"><span class="kv-key">OHSS (ovarian hyperstimulation)</span><span class="kv-val danger">Bilateral enlarged ovaries, ascites, hypercoagulability</span></div>
+      <div class="kv-row"><span class="kv-key">Trigger shot</span><span class="kv-val">hCG 5000–10,000 IU (or GnRH agonist)</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🔬 ART (Assisted Reproduction)</div>
+      <div class="kv-row"><span class="kv-key">IUI indication</span><span class="kv-val purple">Unexplained, mild male factor, cervical factor</span></div>
+      <div class="kv-row"><span class="kv-key">IUI timing</span><span class="kv-val">Around ovulation; washed sperm</span></div>
+      <div class="kv-row"><span class="kv-key">IVF indication</span><span class="kv-val">Tubal factor, severe male factor, failed IUI</span></div>
+      <div class="kv-row"><span class="kv-key">IVF steps</span><span class="kv-val">Stimulate → Retrieve oocytes → Fertilise → Transfer embryo</span></div>
+      <div class="kv-row"><span class="kv-key">ICSI indication</span><span class="kv-val">Severe oligospermia, azoospermia (TESE)</span></div>
+      <div class="kv-row"><span class="kv-key">Embryo transfer day</span><span class="kv-val">Day 2–3 (cleavage) or Day 5 (blastocyst)</span></div>
+      <div class="kv-row"><span class="kv-key">MC complication IVF</span><span class="kv-val danger">Multiple pregnancy</span></div>
+      <div class="kv-row"><span class="kv-key">GIFT</span><span class="kv-val">Gamete intrafallopian transfer (needs patent tube)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🔭 Tubal Factor & Investigations</div>
+      <div class="kv-row"><span class="kv-key">HSG (hystero-salpingography)</span><span class="kv-val">First-line tubal patency test (X-ray + contrast)</span></div>
+      <div class="kv-row"><span class="kv-key">Laparoscopy + chromotubation</span><span class="kv-val highlight">Gold standard tubal assessment</span></div>
+      <div class="kv-row"><span class="kv-key">HyCoSy</span><span class="kv-val">Ultrasound with contrast (less invasive)</span></div>
+      <div class="kv-row"><span class="kv-key">Ovarian reserve tests</span><span class="kv-val">AMH (best), AFC (antral follicle count), Day 3 FSH</span></div>
+      <div class="kv-row"><span class="kv-key">AMH in PCOS</span><span class="kv-val danger">↑↑ (elevated)</span></div>
+      <div class="kv-row"><span class="kv-key">AMH in POI</span><span class="kv-val danger">↓↓ (very low)</span></div>
+      <div class="kv-row"><span class="kv-key">Day 21 progesterone</span><span class="kv-val">≥30 nmol/L confirms ovulation</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PROLAPSE & URINARY -->
+<div class="section" id="prolapse">
+  <div class="section-title">Prolapse <span>&amp; Urinary</span></div>
+  <div class="section-sub">Uterovaginal prolapse, urinary incontinence, fistulae</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🟠 Uterovaginal Prolapse</div>
+      <div class="kv-row"><span class="kv-key">Cystocele</span><span class="kv-val highlight">Anterior vaginal wall prolapse (bladder)</span></div>
+      <div class="kv-row"><span class="kv-key">Rectocele</span><span class="kv-val">Posterior vaginal wall prolapse (rectum)</span></div>
+      <div class="kv-row"><span class="kv-key">Enterocele</span><span class="kv-val">Small bowel herniation into vaginal vault</span></div>
+      <div class="kv-row"><span class="kv-key">Uterine prolapse grading (Shaw)</span><span class="kv-val">I: Within vagina; II: Cervix at introitus; III (Procidentia): Entire uterus out</span></div>
+      <div class="kv-row"><span class="kv-key">POP-Q system</span><span class="kv-val">IUGA/ICS staging (0–IV); most accurate</span></div>
+      <div class="kv-row"><span class="kv-key">Risk factors</span><span class="kv-val">Multiparity, menopause, chronic straining, obesity, connective tissue disorders</span></div>
+      <div class="kv-row"><span class="kv-key">Conservative Rx</span><span class="kv-val">Pelvic floor exercises (Kegel), ring pessary</span></div>
+      <div class="kv-row"><span class="kv-key">Surgical Rx (uterus present)</span><span class="kv-val">Manchester repair (cervix amputation) or vaginal hysterectomy + repair</span></div>
+      <div class="kv-row"><span class="kv-key">Manchester repair</span><span class="kv-val">Fothergill's operation: amputation cervix + AP repair</span></div>
+      <div class="kv-row"><span class="kv-key">Vault prolapse after hysterectomy</span><span class="kv-val">Sacrocolpopexy (abdominal) or Sacrospinous fixation</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">💧 Urinary Incontinence</div>
+      <div class="kv-row"><span class="kv-key">Stress incontinence</span><span class="kv-val blue">Leakage on cough/sneeze/exertion; urethral sphincter weakness</span></div>
+      <div class="kv-row"><span class="kv-key">Urge incontinence</span><span class="kv-val">Detrusor overactivity; sudden urgency, can't hold</span></div>
+      <div class="kv-row"><span class="kv-key">Mixed incontinence</span><span class="kv-val">Both stress + urge components</span></div>
+      <div class="kv-row"><span class="kv-key">Overflow incontinence</span><span class="kv-val">Bladder outflow obstruction / neurogenic bladder</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard investigation</span><span class="kv-val highlight">Urodynamics (multichannel cystometry)</span></div>
+      <div class="kv-row"><span class="kv-key">Stress UI Rx (conservative)</span><span class="kv-val green">Pelvic floor physiotherapy (1st line)</span></div>
+      <div class="kv-row"><span class="kv-key">Stress UI Rx (surgical)</span><span class="kv-val">Mid-urethral sling (TVT / TOT)</span></div>
+      <div class="kv-row"><span class="kv-key">Urge UI Rx</span><span class="kv-val">Bladder training + Anticholinergics (oxybutynin) / β3 agonist (mirabegron)</span></div>
+      <div class="kv-row"><span class="kv-key">Burch colposuspension</span><span class="kv-val">Surgical Rx stress UI (before TVT era)</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🟢 Vesicovaginal Fistula (VVF)</div>
+      <div class="kv-row"><span class="kv-key">Definition</span><span class="kv-val green">Abnormal communication between bladder and vagina</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause (developing world)</span><span class="kv-val danger">Obstructed labour (ischaemic necrosis)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause (developed world)</span><span class="kv-val">Post-surgical (hysterectomy)</span></div>
+      <div class="kv-row"><span class="kv-key">MC site</span><span class="kv-val">Junction of posterior bladder and anterior vaginal wall</span></div>
+      <div class="kv-row"><span class="kv-key">Diagnosis</span><span class="kv-val">Dye test (methylene blue via catheter) / cystoscopy</span></div>
+      <div class="kv-row"><span class="kv-key">Three swab test</span><span class="kv-val">Distinguish VVF vs ureterovaginal fistula</span></div>
+      <div class="kv-row"><span class="kv-key">Timing of repair</span><span class="kv-val">3–6 months after injury (post-radiation: 1 yr)</span></div>
+      <div class="kv-row"><span class="kv-key">Surgical approaches</span><span class="kv-val">Vaginal (Latzko) / Abdominal (O'Connor)</span></div>
+      <div class="alert-box">RVF (rectovaginal fistula) MC cause = obstetric trauma; presents with passage of flatus/faeces through vagina</div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">📊 Pelvic Floor Anatomy — High Yield</div>
+      <div class="kv-row"><span class="kv-key">Levator ani muscles</span><span class="kv-val purple">Puborectalis + Pubococcygeus + Iliococcygeus</span></div>
+      <div class="kv-row"><span class="kv-key">Most important muscle</span><span class="kv-val">Puborectalis (maintains anorectal angle)</span></div>
+      <div class="kv-row"><span class="kv-key">Urogenital hiatus</span><span class="kv-val">Opening in levator ani for urethra + vagina</span></div>
+      <div class="kv-row"><span class="kv-key">Perineal body</span><span class="kv-val">Central tendinous point of perineum; key for continence</span></div>
+      <div class="kv-row"><span class="kv-key">Nerve supply pelvic floor</span><span class="kv-val">Pudendal nerve (S2,3,4)</span></div>
+      <div class="kv-row"><span class="kv-key">S2,3,4 mnemonic</span><span class="kv-val pink">"S2,3,4 keeps the floor"</span></div>
+      <div class="kv-row"><span class="kv-key">De Lancey levels</span><span class="kv-val">I: Uterosacral-cardinal; II: Paravaginal; III: Perineal body</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">⚡ Bartholin's Cyst & Abscess</div>
+      <div class="kv-row"><span class="kv-key">Location</span><span class="kv-val">4 and 8 o'clock positions, posterior labia majora</span></div>
+      <div class="kv-row"><span class="kv-key">Bartholin's cyst</span><span class="kv-val">Duct obstruction → painless swelling</span></div>
+      <div class="kv-row"><span class="kv-key">Bartholin's abscess</span><span class="kv-val danger">Infected cyst; MC organism = N. gonorrhoeae / S. aureus</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment (abscess)</span><span class="kv-val danger">Marsupialisation (not simple incision)</span></div>
+      <div class="kv-row"><span class="kv-key">Word catheter</span><span class="kv-val">Balloon catheter inserted after I&amp;D; left 4–6 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Bartholin's carcinoma</span><span class="kv-val danger">Rare; suspect if &gt;40 yrs or solid component</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">Rapid-fire high-yield facts for last-minute revision</div>
+  <div class="grid-2">
+
+    <div class="card pink">
+      <div class="card-title">⭐ Gynae Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">MC gynaec emergency</span><span class="kv-val danger">Ectopic pregnancy</span></div>
+      <div class="kv-row"><span class="kv-key">MC site ectopic</span><span class="kv-val">Ampulla of fallopian tube (55–70%)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause ectopic</span><span class="kv-val">PID / salpingitis</span></div>
+      <div class="kv-row"><span class="kv-key">Ectopic Rx (medical)</span><span class="kv-val highlight">Methotrexate (&lt;3.5 cm, β-hCG &lt;5000, unruptured)</span></div>
+      <div class="kv-row"><span class="kv-key">Ectopic Rx (surgical)</span><span class="kv-val danger">Salpingectomy (ruptured) / Salpingostomy (preserve tube)</span></div>
+      <div class="kv-row"><span class="kv-key">Cullen's sign</span><span class="kv-val">Periumbilical bruising (ruptured ectopic / acute pancreatitis)</span></div>
+      <div class="kv-row"><span class="kv-key">MC ovarian cyst in reproductive age</span><span class="kv-val">Follicular cyst (functional)</span></div>
+      <div class="kv-row"><span class="kv-key">Theca lutein cysts</span><span class="kv-val">Hydatidiform mole / multiple gestation / OHSS</span></div>
+      <div class="kv-row"><span class="kv-key">CA-125 false positive</span><span class="kv-val">Endometriosis, PID, pregnancy, fibroids, peritonitis</span></div>
+      <div class="kv-row"><span class="kv-key">Dermoid cyst (mature teratoma)</span><span class="kv-val">MC ovarian tumour in 20s; contains hair/teeth/sebum</span></div>
+      <div class="kv-row"><span class="kv-key">Rokitansky's protuberance</span><span class="kv-val">Dermoid cyst (solid nodule on USG)</span></div>
+      <div class="kv-row"><span class="kv-key">Torsion risk</span><span class="kv-val danger">Dermoid (pedunculated) — emergency laparoscopy</span></div>
+      <div class="kv-row"><span class="kv-key">Krukenberg tumour</span><span class="kv-val danger">Metastatic ovarian tumour (signet ring cells from stomach/GI)</span></div>
+      <div class="kv-row"><span class="kv-key">Meig's syndrome</span><span class="kv-val">Ovarian fibroma + ascites + right pleural effusion</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause PMB</span><span class="kv-val danger">Atrophic vaginitis (benign); but cancer must be excluded</span></div>
+      <div class="kv-row"><span class="kv-key">PMB workup</span><span class="kv-val">TV USG → endometrial thickness &gt;4 mm → biopsy</span></div>
+      <div class="kv-row"><span class="kv-key">Endometrial thickness PMB</span><span class="kv-val danger">&gt;4 mm = biopsy; ≤4 mm = reassure</span></div>
+      <div class="kv-row"><span class="kv-key">Tamoxifen effect on uterus</span><span class="kv-val danger">↑Endometrial Ca risk (acts as oestrogen on endometrium)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">⭐ Gynae Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">MC benign gynaec tumour</span><span class="kv-val highlight">Uterine fibroid (leiomyoma)</span></div>
+      <div class="kv-row"><span class="kv-key">MC gynaec malignancy (India)</span><span class="kv-val danger">Cervical carcinoma</span></div>
+      <div class="kv-row"><span class="kv-key">MC gynaec malignancy (West)</span><span class="kv-val">Endometrial carcinoma</span></div>
+      <div class="kv-row"><span class="kv-key">HNPCC (Lynch) syndrome</span><span class="kv-val danger">↑Endometrial Ca + colorectal Ca (MLH1/MSH2)</span></div>
+      <div class="kv-row"><span class="kv-key">BRCA1 mutation</span><span class="kv-val danger">↑Ovarian Ca (40%) + Breast Ca</span></div>
+      <div class="kv-row"><span class="kv-key">BRCA2 mutation</span><span class="kv-val danger">↑Breast Ca > Ovarian Ca</span></div>
+      <div class="kv-row"><span class="kv-key">Asherman's Rx</span><span class="kv-val">Hysteroscopic adhesiolysis + oestrogen therapy</span></div>
+      <div class="kv-row"><span class="kv-key">Congenital uterine anomalies (MC)</span><span class="kv-val">Arcuate uterus (ASRM) / Subseptate (AFS)</span></div>
+      <div class="kv-row"><span class="kv-key">Septate uterus Rx</span><span class="kv-val">Hysteroscopic metroplasty (Tompkins/Jones)</span></div>
+      <div class="kv-row"><span class="kv-key">GnRH agonist use</span><span class="kv-val">Endometriosis, fibroids, IVF downregulation, central precocious puberty</span></div>
+      <div class="kv-row"><span class="kv-key">Hot flushes Rx (non-HRT)</span><span class="kv-val">Venlafaxine, clonidine, gabapentin</span></div>
+      <div class="kv-row"><span class="kv-key">Ovarian torsion Rx</span><span class="kv-val danger">Emergency laparoscopy; detorse even if black (may recover)</span></div>
+      <div class="kv-row"><span class="kv-key">Simple ovarian cyst ≤5 cm premenopausal</span><span class="kv-val green">Observe (likely functional)</span></div>
+      <div class="kv-row"><span class="kv-key">Risk of malignancy index (RMI)</span><span class="kv-val">CA-125 × USG score × menopausal status</span></div>
+      <div class="kv-row"><span class="kv-key">RMI &gt;200</span><span class="kv-val danger">Refer to gynaec oncologist</span></div>
+      <div class="kv-row"><span class="kv-key">Precocious puberty definition</span><span class="kv-val">&lt;8 yrs girls (breast development); &lt;9 yrs boys</span></div>
+      <div class="kv-row"><span class="kv-key">Precocious puberty Rx</span><span class="kv-val">GnRH agonist (leuprolide depot)</span></div>
+      <div class="kv-row"><span class="kv-key">Lichen sclerosus</span><span class="kv-val danger">Figure-of-eight pattern; 5% risk SCC vulva; Rx: potent topical steroids</span></div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-auto">
+    <div class="card purple span-full">
+      <div class="card-title">📊 Must-Know Values & Cut-offs</div>
+      <table class="comparison-table">
+        <tr><th>Parameter</th><th>Normal / Threshold</th><th>Clinical Significance</th></tr>
+        <tr><td>FSH (menopause)</td><td>&gt;40 IU/L</td><td>Confirms menopause; check × 2, 4 wks apart</td></tr>
+        <tr><td>LH:FSH ratio</td><td>&gt;2–3:1</td><td>PCOS (elevated LH)</td></tr>
+        <tr><td>Day 21 progesterone</td><td>≥30 nmol/L</td><td>Confirms ovulation</td></tr>
+        <tr><td>Endometrial thickness (PMB)</td><td>&gt;4 mm</td><td>Biopsy required</td></tr>
+        <tr><td>β-hCG discriminatory zone</td><td>&gt;1500–2000 IU/L</td><td>IUP visible on TV USG; if not → suspect ectopic</td></tr>
+        <tr><td>β-hCG doubling time</td><td>48 hrs (normal IUP)</td><td>Slow rise → ectopic / miscarriage</td></tr>
+        <tr><td>AMH (low ovarian reserve)</td><td>&lt;1.0 ng/mL (&lt;7.1 pmol/L)</td><td>Poor IVF response</td></tr>
+        <tr><td>CA-125 upper limit</td><td>&lt;35 U/mL</td><td>&gt;35 suggestive of ovarian malignancy</td></tr>
+        <tr><td>Smear interval (NHS)</td><td>Every 3 yrs (25–49) / 5 yrs (50–64)</td><td>Primary HPV testing now used</td></tr>
+        <tr><td>CIN regression (CIN I)</td><td>~60% regress spontaneously</td><td>Observe 12–24 months before treatment</td></tr>
+      </table>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🧠 Key Mnemonics Summary</div>
+      <div class="mnemonic-box">
+        <b>PALM-COEIN</b> = AUB causes<br>
+        <b>ACHES</b> = OCP danger signs<br>
+        <b>CAVE</b> = CTEV components (Ortho crossover)<br>
+        <b>Fat Fertile Forty Fair</b> = Endometrial Ca<br>
+        <b>S2,3,4 keeps the floor</b> = Pudendal nerve<br>
+        <b>Amsel's criteria</b> = 3/4 for BV<br>
+        <b>Koilocytes</b> = HPV on smear
+      </div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">⚡ Frequently Confused Pairs</div>
+      <div class="kv-row"><span class="kv-key">Ortolani vs Barlow (DDH)</span><span class="kv-val highlight">Ortolani = reduces; Barlow = dislocates</span></div>
+      <div class="kv-row"><span class="kv-key">Cystocele vs Rectocele</span><span class="kv-val">Anterior wall = cystocele; Posterior = rectocele</span></div>
+      <div class="kv-row"><span class="kv-key">Complete vs Partial mole</span><span class="kv-val">Complete = 46XX all paternal; Partial = triploid, fetal parts</span></div>
+      <div class="kv-row"><span class="kv-key">Swan neck vs Boutonnière</span><span class="kv-val">Swan neck: PIP hyperext+DIP flex; Boutonnière: reverse</span></div>
+      <div class="kv-row"><span class="kv-key">Gout vs CPPD birefringence</span><span class="kv-val">Gout: negative (yellow); CPPD: positive (blue)</span></div>
+      <div class="kv-row"><span class="kv-key">Meig's vs Pseudo-Meig's</span><span class="kv-val">Meig's = fibroma; Pseudo = other ovarian tumours</span></div>
+      <div class="kv-row"><span class="kv-key">Stress vs Urge incontinence</span><span class="kv-val">Stress = effort; Urge = detrusor overactivity</span></div>
+      <div class="kv-row"><span class="kv-key">Salpingostomy vs Salpingectomy</span><span class="kv-val">Salpingostomy = tube preserved; -ectomy = tube removed</span></div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

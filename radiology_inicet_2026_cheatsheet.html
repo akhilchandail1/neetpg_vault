@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Radiology Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #050d14; --surface: #0d1b2a; --surface2: #112233; --border: #1a2e42;
+    --accent: #38bdf8; --accent2: #34d399; --accent3: #fb923c; --accent4: #f9a8d4; --accent5: #c4b5fd;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #050d14 0%, #0a1628 50%, #050d14 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent); color: #050d14; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent); color: #050d14; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.sky::before { background: var(--accent); }
+  .card.green::before { background: var(--accent2); }
+  .card.orange::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.purple::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.sky .card-title { color: var(--accent); }
+  .card.green .card-title { color: var(--accent2); }
+  .card.orange .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.purple .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #112233; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.green { color: var(--accent2); }
+  .kv-val.orange { color: var(--accent3); }
+  .kv-val.pink { color: var(--accent4); }
+  .kv-val.danger { color: var(--danger); }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(56,189,248,0.07); border: 1px solid rgba(56,189,248,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent); margin-top: 8px; line-height: 1.5; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  .mt-12 { margin-top: 12px; }
+  @media (max-width: 800px) { .grid-auto, .grid-2 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>Radio<span>logy</span> Cheatsheet</h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('xray',this)">X-Ray Signs</div>
+    <div class="tab" onclick="showSection('chest',this)">Chest Radiology</div>
+    <div class="tab" onclick="showSection('ct',this)">CT / MRI</div>
+    <div class="tab" onclick="showSection('usg',this)">Ultrasound</div>
+    <div class="tab" onclick="showSection('nuclear',this)">Nuclear Medicine</div>
+    <div class="tab" onclick="showSection('interventional',this)">Interventional</div>
+    <div class="tab" onclick="showSection('contrast',this)">Contrast &amp; Safety</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- XRAY SIGNS -->
+<div class="section active" id="xray">
+  <div class="section-title">Classic <span>X-Ray Signs</span></div>
+  <div class="section-sub">Pathognomonic appearances and named signs — exam gold</div>
+  <div class="grid-auto">
+    <div class="card sky">
+      <div class="card-title">📋 Chest X-Ray Signs</div>
+      <div class="kv-row"><span class="kv-key">Bat wing opacity</span><span class="kv-val highlight">Pulmonary oedema</span></div>
+      <div class="kv-row"><span class="kv-key">Golden S sign</span><span class="kv-val">RUL collapse + central mass (malignancy)</span></div>
+      <div class="kv-row"><span class="kv-key">Air bronchogram</span><span class="kv-val">Consolidation (air-filled bronchi visible)</span></div>
+      <div class="kv-row"><span class="kv-key">Silhouette sign</span><span class="kv-val">Loss of border — same density as adjacent structure</span></div>
+      <div class="kv-row"><span class="kv-key">Meniscus sign</span><span class="kv-val">Pleural effusion (lateral margin higher)</span></div>
+      <div class="kv-row"><span class="kv-key">Hampton's hump</span><span class="kv-val">Pulmonary embolism (wedge-shaped opacity)</span></div>
+      <div class="kv-row"><span class="kv-key">Westermark sign</span><span class="kv-val">PE (oligaemia distal to clot)</span></div>
+      <div class="kv-row"><span class="kv-key">Palla's sign</span><span class="kv-val">PE (enlarged descending pulmonary artery)</span></div>
+      <div class="kv-row"><span class="kv-key">Fleischner sign</span><span class="kv-val">PE (prominent pulmonary artery)</span></div>
+      <div class="kv-row"><span class="kv-key">Sail sign (thymus)</span><span class="kv-val">Normal thymus in neonates</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">📋 Abdominal X-Ray Signs</div>
+      <div class="kv-row"><span class="kv-key">Coffee bean sign</span><span class="kv-val highlight">Sigmoid volvulus</span></div>
+      <div class="kv-row"><span class="kv-key">Rigler's sign</span><span class="kv-val">Free gas — both sides of bowel wall visible</span></div>
+      <div class="kv-row"><span class="kv-key">String of pearls sign</span><span class="kv-val">Small bowel obstruction (air trapped between valvulae)</span></div>
+      <div class="kv-row"><span class="kv-key">Stepladder pattern</span><span class="kv-val">Small bowel obstruction</span></div>
+      <div class="kv-row"><span class="kv-key">Lead pipe colon</span><span class="kv-val">Ulcerative colitis (loss of haustrations)</span></div>
+      <div class="kv-row"><span class="kv-key">Thumb printing</span><span class="kv-val">Ischaemic colitis (submucosal oedema)</span></div>
+      <div class="kv-row"><span class="kv-key">Double bubble sign</span><span class="kv-val">Duodenal atresia</span></div>
+      <div class="kv-row"><span class="kv-key">Pneumoperitoneum best detected</span><span class="kv-val">Erect CXR (under diaphragm)</span></div>
+      <div class="kv-row"><span class="kv-key">Psoas shadow loss</span><span class="kv-val">Retroperitoneal fluid/mass</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">📋 Bone X-Ray Signs</div>
+      <div class="kv-row"><span class="kv-key">Sunburst pattern</span><span class="kv-val danger">Osteosarcoma</span></div>
+      <div class="kv-row"><span class="kv-key">Onion peel periosteum</span><span class="kv-val danger">Ewing's sarcoma</span></div>
+      <div class="kv-row"><span class="kv-key">Codman's triangle</span><span class="kv-val">Aggressive bone tumour</span></div>
+      <div class="kv-row"><span class="kv-key">Soap bubble lytic</span><span class="kv-val">Giant cell tumour</span></div>
+      <div class="kv-row"><span class="kv-key">Fallen fragment sign</span><span class="kv-val">Simple bone cyst</span></div>
+      <div class="kv-row"><span class="kv-key">Looser's zones</span><span class="kv-val">Osteomalacia (pseudo-fractures)</span></div>
+      <div class="kv-row"><span class="kv-key">Rugger jersey spine</span><span class="kv-val">Renal osteodystrophy</span></div>
+      <div class="kv-row"><span class="kv-key">Bamboo spine</span><span class="kv-val">Ankylosing spondylitis</span></div>
+      <div class="kv-row"><span class="kv-key">Pencil-in-cup deformity</span><span class="kv-val">Psoriatic arthritis</span></div>
+      <div class="kv-row"><span class="kv-key">Picture frame vertebra</span><span class="kv-val">Paget's disease</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">📋 Neuro / Head X-Ray Signs</div>
+      <div class="kv-row"><span class="kv-key">Crescent sign (brain)</span><span class="kv-val danger">Subdural haematoma</span></div>
+      <div class="kv-row"><span class="kv-key">Biconvex (lens-shaped) bleed</span><span class="kv-val danger">Extradural haematoma</span></div>
+      <div class="kv-row"><span class="kv-key">Salt and pepper skull</span><span class="kv-val">Hyperparathyroidism</span></div>
+      <div class="kv-row"><span class="kv-key">Hair on end skull</span><span class="kv-val">Thalassaemia / sickle cell</span></div>
+      <div class="kv-row"><span class="kv-key">Tam-o-shanter skull</span><span class="kv-val">Paget's disease</span></div>
+      <div class="kv-row"><span class="kv-key">Luckenschadel (lacunar skull)</span><span class="kv-val">Spina bifida with Chiari II</span></div>
+      <div class="kv-row"><span class="kv-key">J-shaped sella</span><span class="kv-val">Optic glioma / craniopharyngioma</span></div>
+      <div class="kv-row"><span class="kv-key">Inverted J / Omega sign</span><span class="kv-val">Acoustic neuroma</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- CHEST RADIOLOGY -->
+<div class="section" id="chest">
+  <div class="section-title">Chest <span>Radiology</span></div>
+  <div class="section-sub">Lung patterns, mediastinal masses, pleura, pulmonary diseases</div>
+  <div class="grid-auto">
+    <div class="card sky">
+      <div class="card-title">🫁 Lung Opacification Patterns</div>
+      <div class="kv-row"><span class="kv-key">Consolidation</span><span class="kv-val">Air space opacity + air bronchogram</span></div>
+      <div class="kv-row"><span class="kv-key">Ground glass opacity</span><span class="kv-val">Hazy, vessels still visible through it</span></div>
+      <div class="kv-row"><span class="kv-key">Crazy paving</span><span class="kv-val">GGO + interlobular thickening (Pneumocystis, AEP)</span></div>
+      <div class="kv-row"><span class="kv-key">Nodular pattern</span><span class="kv-val">Miliary (TB, sarcoid, mets)</span></div>
+      <div class="kv-row"><span class="kv-key">Honeycombing</span><span class="kv-val">UIP / IPF (end-stage fibrosis)</span></div>
+      <div class="kv-row"><span class="kv-key">Tram-track sign</span><span class="kv-val">Bronchiectasis (thickened bronchi)</span></div>
+      <div class="kv-row"><span class="kv-key">Signet ring sign</span><span class="kv-val">Bronchiectasis (bronchus &gt; adjacent artery)</span></div>
+      <div class="kv-row"><span class="kv-key">Tree in bud</span><span class="kv-val">Endobronchial spread (TB, bronchopneumonia)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">📦 Mediastinal Mass — 4 T's</div>
+      <div class="kv-row"><span class="kv-key">Anterior mediastinum</span><span class="kv-val highlight">4 T's: Thymoma, Teratoma, Thyroid, Terrible lymphoma</span></div>
+      <div class="kv-row"><span class="kv-key">MC anterior mass (adult)</span><span class="kv-val">Thymoma</span></div>
+      <div class="kv-row"><span class="kv-key">Thymoma association</span><span class="kv-val danger">Myasthenia gravis (30–50%)</span></div>
+      <div class="kv-row"><span class="kv-key">Middle mediastinum</span><span class="kv-val">Lymphoma, sarcoid, aortic arch lesions</span></div>
+      <div class="kv-row"><span class="kv-key">Posterior mediastinum</span><span class="kv-val">Neurogenic tumours (neurofibroma, PNET)</span></div>
+      <div class="kv-row"><span class="kv-key">MC posterior mass (child)</span><span class="kv-val">Neuroblastoma</span></div>
+      <div class="kv-row"><span class="kv-key">Eggshell calcification lymph nodes</span><span class="kv-val">Silicosis / sarcoidosis</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🫁 TB Radiology Patterns</div>
+      <div class="kv-row"><span class="kv-key">Primary TB</span><span class="kv-val">Ghon focus + ipsilateral hilar LN = Ghon complex</span></div>
+      <div class="kv-row"><span class="kv-key">Post-primary (reactivation)</span><span class="kv-val">Apical + posterior upper lobe</span></div>
+      <div class="kv-row"><span class="kv-key">Cavitation</span><span class="kv-val">Post-primary TB (thick walled)</span></div>
+      <div class="kv-row"><span class="kv-key">Miliary TB</span><span class="kv-val">1–3 mm nodules diffusely; haematogenous</span></div>
+      <div class="kv-row"><span class="kv-key">Rasmussen's aneurysm</span><span class="kv-val danger">Pulmonary artery aneurysm in TB cavity</span></div>
+      <div class="kv-row"><span class="kv-key">Calcified Ghon focus</span><span class="kv-val">Ranke complex (Ghon focus + calcified LN)</span></div>
+      <div class="kv-row"><span class="kv-key">TB pleuritis</span><span class="kv-val">Exudative effusion (high protein, high LDH)</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🫁 Pneumothorax &amp; Pleural</div>
+      <div class="kv-row"><span class="kv-key">Tension PTX X-ray</span><span class="kv-val danger">Tracheal deviation AWAY from PTX side</span></div>
+      <div class="kv-row"><span class="kv-key">Massive effusion</span><span class="kv-val danger">Mediastinal shift AWAY from effusion side</span></div>
+      <div class="kv-row"><span class="kv-key">Collapse (obstructive)</span><span class="kv-val danger">Mediastinal shift TOWARDS collapse</span></div>
+      <div class="kv-row"><span class="kv-key">Mesothelioma X-ray</span><span class="kv-val">Pleural effusion + pleural plaques + no mediastinal shift</span></div>
+      <div class="kv-row"><span class="kv-key">Asbestos-related</span><span class="kv-val">Bilateral calcified pleural plaques (diaphragm)</span></div>
+      <div class="kv-row"><span class="kv-key">Subpulmonic effusion</span><span class="kv-val">Apparent elevated hemidiaphragm</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- CT / MRI -->
+<div class="section" id="ct">
+  <div class="section-title">CT <span>&amp; MRI</span></div>
+  <div class="section-sub">Key findings, Hounsfield units, brain imaging</div>
+  <div class="grid-auto">
+    <div class="card sky">
+      <div class="card-title">📊 Hounsfield Units (CT Density)</div>
+      <div class="kv-row"><span class="kv-key">Air</span><span class="kv-val">-1000 HU</span></div>
+      <div class="kv-row"><span class="kv-key">Fat</span><span class="kv-val">-100 to -50 HU</span></div>
+      <div class="kv-row"><span class="kv-key">Water</span><span class="kv-val">0 HU</span></div>
+      <div class="kv-row"><span class="kv-key">Soft tissue</span><span class="kv-val">20–80 HU</span></div>
+      <div class="kv-row"><span class="kv-key">Acute blood</span><span class="kv-val highlight">60–90 HU (hyperdense)</span></div>
+      <div class="kv-row"><span class="kv-key">Subacute blood</span><span class="kv-val">30–60 HU (isodense)</span></div>
+      <div class="kv-row"><span class="kv-key">Chronic blood</span><span class="kv-val">0–30 HU (hypodense)</span></div>
+      <div class="kv-row"><span class="kv-key">Bone</span><span class="kv-val">400–1000 HU</span></div>
+      <div class="kv-row"><span class="kv-key">Contrast agent (iodine)</span><span class="kv-val">100–300 HU</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🧠 Brain CT — Key Findings</div>
+      <div class="kv-row"><span class="kv-key">Extradural haematoma</span><span class="kv-val danger">Biconvex hyperdense; arterial (MMA)</span></div>
+      <div class="kv-row"><span class="kv-key">Subdural haematoma (acute)</span><span class="kv-val danger">Crescent hyperdense; crosses sutures</span></div>
+      <div class="kv-row"><span class="kv-key">Chronic SDH</span><span class="kv-val">Crescent hypodense (isodense at 3 wks)</span></div>
+      <div class="kv-row"><span class="kv-key">Subarachnoid haemorrhage</span><span class="kv-val danger">Hyperdense cisterns/sulci; LP if CT –ve</span></div>
+      <div class="kv-row"><span class="kv-key">SAH: Fisher grade</span><span class="kv-val">Predicts vasospasm risk</span></div>
+      <div class="kv-row"><span class="kv-key">Hypertensive bleed MC site</span><span class="kv-val highlight">Putamen/Basal ganglia</span></div>
+      <div class="kv-row"><span class="kv-key">Middle cerebral artery</span><span class="kv-val">Hyperdense MCA sign (acute ischaemia)</span></div>
+      <div class="kv-row"><span class="kv-key">Diffuse axonal injury</span><span class="kv-val">Normal CT; MRI (FLAIR/SWI)</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🧲 MRI Signal Characteristics</div>
+      <table class="comparison-table">
+        <tr><th>Tissue</th><th>T1</th><th>T2</th></tr>
+        <tr><td>Fat</td><td>Bright (high)</td><td>Bright</td></tr>
+        <tr><td>Water/CSF</td><td>Dark (low)</td><td>Bright (high)</td></tr>
+        <tr><td>Acute blood (deoxyHb)</td><td>Iso/low</td><td>Low (dark)</td></tr>
+        <tr><td>Subacute blood (metHb)</td><td>Bright</td><td>Bright</td></tr>
+        <tr><td>Chronic blood (haemosiderin)</td><td>Dark</td><td>Very dark</td></tr>
+        <tr><td>Cortical bone</td><td>Dark</td><td>Dark</td></tr>
+        <tr><td>Oedema/inflammation</td><td>Dark</td><td>Bright</td></tr>
+        <tr><td>Mucus</td><td>Variable</td><td>Bright</td></tr>
+        <tr><td>Protein-rich fluid</td><td>Bright</td><td>Bright</td></tr>
+      </table>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🩺 Abdomen CT Key Findings</div>
+      <div class="kv-row"><span class="kv-key">Whirl sign</span><span class="kv-val">Midgut volvulus / caecal volvulus</span></div>
+      <div class="kv-row"><span class="kv-key">Target sign (CT)</span><span class="kv-val">Intussusception</span></div>
+      <div class="kv-row"><span class="kv-key">Stranding + appendix &gt;6 mm</span><span class="kv-val danger">Acute appendicitis</span></div>
+      <div class="kv-row"><span class="kv-key">Hyperdense renal cyst</span><span class="kv-val">Bosniak classification (IIF–IV = surgery)</span></div>
+      <div class="kv-row"><span class="kv-key">Liver haemangioma CT</span><span class="kv-val">Peripheral nodular enhancement → centripetal fill</span></div>
+      <div class="kv-row"><span class="kv-key">HCC arterial phase</span><span class="kv-val highlight">Hypervascular + washout on portal phase</span></div>
+      <div class="kv-row"><span class="kv-key">Pancreatic ductal Ca</span><span class="kv-val">Hypovascular + duct dilation (double duct sign)</span></div>
+      <div class="kv-row"><span class="kv-key">Aortic dissection</span><span class="kv-val danger">Intimal flap; Type A involves ascending aorta</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ULTRASOUND -->
+<div class="section" id="usg">
+  <div class="section-title">Ultrasound <span>Findings</span></div>
+  <div class="section-sub">OBS USG, abdominal findings, Doppler, breast</div>
+  <div class="grid-auto">
+    <div class="card sky">
+      <div class="card-title">🤰 Obstetric Ultrasound</div>
+      <div class="kv-row"><span class="kv-key">Gestational sac seen (TVS)</span><span class="kv-val">β-hCG 1000–1500 mIU (≈4–5 wks)</span></div>
+      <div class="kv-row"><span class="kv-key">Yolk sac seen</span><span class="kv-val">5–6 wks</span></div>
+      <div class="kv-row"><span class="kv-key">FHR seen (TVS)</span><span class="kv-val">6 wks (CRL ≥7 mm)</span></div>
+      <div class="kv-row"><span class="kv-key">Best GA measurement &lt;14 wks</span><span class="kv-val highlight">Crown-rump length (CRL)</span></div>
+      <div class="kv-row"><span class="kv-key">Best GA measurement &gt;14 wks</span><span class="kv-val">BPD (biparietal diameter)</span></div>
+      <div class="kv-row"><span class="kv-key">Placenta previa diagnosis</span><span class="kv-val">Transvaginal USG (most accurate)</span></div>
+      <div class="kv-row"><span class="kv-key">MVP (normal amniotic fluid)</span><span class="kv-val green">2–8 cm</span></div>
+      <div class="kv-row"><span class="kv-key">NT cutoff for Down's</span><span class="kv-val danger">≥3.5 mm at 11–14 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Anencephaly USG</span><span class="kv-val">Frog-eye appearance</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🫀 Abdominal USG</div>
+      <div class="kv-row"><span class="kv-key">Portal vein diameter (normal)</span><span class="kv-val green">&lt;13 mm</span></div>
+      <div class="kv-row"><span class="kv-key">CBD normal diameter</span><span class="kv-val green">&lt;6 mm (post-cholecystectomy &lt;10 mm)</span></div>
+      <div class="kv-row"><span class="kv-key">Acoustic shadowing</span><span class="kv-val">Gallstones, calcification</span></div>
+      <div class="kv-row"><span class="kv-key">Posterior acoustic enhancement</span><span class="kv-val">Simple cyst (fluid-filled)</span></div>
+      <div class="kv-row"><span class="kv-key">Wall-echo-shadow (WES)</span><span class="kv-val">Gallbladder full of stones</span></div>
+      <div class="kv-row"><span class="kv-key">Pseudokidney sign</span><span class="kv-val">Intussusception</span></div>
+      <div class="kv-row"><span class="kv-key">Pyloric stenosis</span><span class="kv-val">Muscle thickness &gt;4 mm, channel &gt;16 mm</span></div>
+      <div class="kv-row"><span class="kv-key">Aorta normal diameter</span><span class="kv-val green">&lt;3 cm (AAA if &gt;3 cm)</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🎵 Doppler Ultrasound</div>
+      <div class="kv-row"><span class="kv-key">Normal portal vein flow</span><span class="kv-val green">Hepatopetal (towards liver)</span></div>
+      <div class="kv-row"><span class="kv-key">Portal HTN reversal</span><span class="kv-val danger">Hepatofugal flow (away from liver)</span></div>
+      <div class="kv-row"><span class="kv-key">Resistive index (RI)</span><span class="kv-val">RI = (PSV – EDV) / PSV</span></div>
+      <div class="kv-row"><span class="kv-key">Normal RI (renal artery)</span><span class="kv-val green">&lt;0.7</span></div>
+      <div class="kv-row"><span class="kv-key">Renal artery stenosis</span><span class="kv-val danger">PSV &gt;180 cm/s; RAR &gt;3.5</span></div>
+      <div class="kv-row"><span class="kv-key">Umbilical artery Doppler</span><span class="kv-val">S/D ratio normally &lt;3 at term</span></div>
+      <div class="kv-row"><span class="kv-key">Colour Doppler in torsion</span><span class="kv-val danger">Absent testicular/ovarian flow</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🩺 Breast Imaging (BIRADS)</div>
+      <div class="kv-row"><span class="kv-key">BIRADS 0</span><span class="kv-val">Incomplete — needs more imaging</span></div>
+      <div class="kv-row"><span class="kv-key">BIRADS 1</span><span class="kv-val green">Negative — routine screening</span></div>
+      <div class="kv-row"><span class="kv-key">BIRADS 2</span><span class="kv-val green">Benign — routine follow-up</span></div>
+      <div class="kv-row"><span class="kv-key">BIRADS 3</span><span class="kv-val">Probably benign — 6 month follow-up</span></div>
+      <div class="kv-row"><span class="kv-key">BIRADS 4</span><span class="kv-val orange">Suspicious — biopsy recommended</span></div>
+      <div class="kv-row"><span class="kv-key">BIRADS 5</span><span class="kv-val danger">Highly suggestive malignancy — biopsy</span></div>
+      <div class="kv-row"><span class="kv-key">BIRADS 6</span><span class="kv-val danger">Known malignancy</span></div>
+      <div class="kv-row"><span class="kv-key">Benign USG features</span><span class="kv-val">Parallel orientation, smooth margins</span></div>
+      <div class="kv-row"><span class="kv-key">Malignant USG features</span><span class="kv-val">Non-parallel, spiculated, posterior shadowing</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- NUCLEAR MEDICINE -->
+<div class="section" id="nuclear">
+  <div class="section-title">Nuclear <span>Medicine</span></div>
+  <div class="section-sub">Radionuclides, scan indications, key findings</div>
+  <div class="grid-auto">
+    <div class="card sky">
+      <div class="card-title">☢️ Common Radionuclides</div>
+      <div class="kv-row"><span class="kv-key">Tc-99m (most common)</span><span class="kv-val highlight">Half-life 6 hrs; gamma emitter; SPECT</span></div>
+      <div class="kv-row"><span class="kv-key">I-131</span><span class="kv-val">Thyroid cancer therapy; t½ 8 days</span></div>
+      <div class="kv-row"><span class="kv-key">I-123</span><span class="kv-val">Thyroid imaging; t½ 13 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Ga-67</span><span class="kv-val">Infection / inflammation imaging; t½ 78 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Tl-201</span><span class="kv-val">Myocardial perfusion (older agent)</span></div>
+      <div class="kv-row"><span class="kv-key">F-18 FDG (PET)</span><span class="kv-val highlight">Glucose analogue; tumour/metastasis imaging</span></div>
+      <div class="kv-row"><span class="kv-key">In-111 WBC scan</span><span class="kv-val">Occult infection / osteomyelitis</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔬 Key Nuclear Scans</div>
+      <div class="kv-row"><span class="kv-key">Bone scan (Tc-MDP)</span><span class="kv-val">Metastasis, Paget's, stress #; hot spots</span></div>
+      <div class="kv-row"><span class="kv-key">Thyroid scan hot nodule</span><span class="kv-val green">Autonomous — usually benign</span></div>
+      <div class="kv-row"><span class="kv-key">Cold nodule</span><span class="kv-val danger">20% malignancy risk — biopsy</span></div>
+      <div class="kv-row"><span class="kv-key">HIDA scan</span><span class="kv-val">Hepatobiliary; choledochal cyst, biliary atresia</span></div>
+      <div class="kv-row"><span class="kv-key">DTPA / MAG3 scan</span><span class="kv-val">Renal function / obstruction</span></div>
+      <div class="kv-row"><span class="kv-key">DMSA scan</span><span class="kv-val">Cortical scarring in VUR/pyelonephritis</span></div>
+      <div class="kv-row"><span class="kv-key">Meckel's scan</span><span class="kv-val">Tc-pertechnetate → ectopic gastric mucosa</span></div>
+      <div class="kv-row"><span class="kv-key">V/Q scan</span><span class="kv-val">PE (ventilation-perfusion mismatch)</span></div>
+      <div class="kv-row"><span class="kv-key">MUGA scan</span><span class="kv-val">Left ventricular ejection fraction</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">📡 PET-CT</div>
+      <div class="kv-row"><span class="kv-key">Principle</span><span class="kv-val">FDG uptake = glucose metabolism</span></div>
+      <div class="kv-row"><span class="kv-key">SUV (standardised uptake value)</span><span class="kv-val danger">SUV &gt;2.5 suggests malignancy</span></div>
+      <div class="kv-row"><span class="kv-key">False positives</span><span class="kv-val">Inflammation, infection, brown fat</span></div>
+      <div class="kv-row"><span class="kv-key">False negatives</span><span class="kv-val">Hyperglycaemia, low-grade tumours</span></div>
+      <div class="kv-row"><span class="kv-key">Lymphoma staging</span><span class="kv-val highlight">PET-CT (Deauville criteria response)</span></div>
+      <div class="kv-row"><span class="kv-key">Ga-68 PSMA PET</span><span class="kv-val">Prostate cancer staging/recurrence</span></div>
+      <div class="kv-row"><span class="kv-key">DOTANOC / DOTATATE PET</span><span class="kv-val">Neuroendocrine tumours (NETs)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- INTERVENTIONAL -->
+<div class="section" id="interventional">
+  <div class="section-title">Interventional <span>Radiology</span></div>
+  <div class="section-sub">Procedures, catheters, angiography, ablation</div>
+  <div class="grid-auto">
+    <div class="card sky">
+      <div class="card-title">🩺 Key IR Procedures</div>
+      <div class="kv-row"><span class="kv-key">TIPS</span><span class="kv-val">Transjugular intrahepatic portosystemic shunt</span></div>
+      <div class="kv-row"><span class="kv-key">TIPS indication</span><span class="kv-val">Refractory variceal bleeding / ascites</span></div>
+      <div class="kv-row"><span class="kv-key">TACE</span><span class="kv-val">Transarterial chemoembolisation (HCC)</span></div>
+      <div class="kv-row"><span class="kv-key">RFA</span><span class="kv-val">Radiofrequency ablation (liver/renal/bone tumours)</span></div>
+      <div class="kv-row"><span class="kv-key">PTCA</span><span class="kv-val">Percutaneous coronary angioplasty</span></div>
+      <div class="kv-row"><span class="kv-key">UAE</span><span class="kv-val">Uterine artery embolisation (fibroids/PPH)</span></div>
+      <div class="kv-row"><span class="kv-key">IVC filter</span><span class="kv-val">DVT/PE prevention (CI to anticoagulation)</span></div>
+      <div class="kv-row"><span class="kv-key">Nephrostomy</span><span class="kv-val">Obstructed pyelonephritis / ureteric obstruction</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🫀 Angiography &amp; Vascular</div>
+      <div class="kv-row"><span class="kv-key">Seldinger technique</span><span class="kv-val highlight">Needle → guidewire → catheter</span></div>
+      <div class="kv-row"><span class="kv-key">Coronary angiography access</span><span class="kv-val">Radial artery (Tr. radial preferred)</span></div>
+      <div class="kv-row"><span class="kv-key">Judkins catheter</span><span class="kv-val">Standard coronary angiography</span></div>
+      <div class="kv-row"><span class="kv-key">Amplatz catheter</span><span class="kv-val">Complex coronary anatomy</span></div>
+      <div class="kv-row"><span class="kv-key">GI bleed angiography</span><span class="kv-val">Rate ≥0.5 mL/min detectable</span></div>
+      <div class="kv-row"><span class="kv-key">Splenic artery aneurysm</span><span class="kv-val">Embolisation (if &gt;2 cm or symptomatic)</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🧊 Ablation Techniques</div>
+      <div class="kv-row"><span class="kv-key">RFA temperature</span><span class="kv-val">60–100°C (coagulative necrosis)</span></div>
+      <div class="kv-row"><span class="kv-key">Microwave ablation</span><span class="kv-val">Faster, larger zone, less heat sink effect</span></div>
+      <div class="kv-row"><span class="kv-key">Cryoablation</span><span class="kv-val">Freeze-thaw cycles; better for renal/prostate</span></div>
+      <div class="kv-row"><span class="kv-key">Irreversible electroporation</span><span class="kv-val">Near vessels/bile ducts (non-thermal)</span></div>
+      <div class="kv-row"><span class="kv-key">HCC ablation limit</span><span class="kv-val">&lt;3 cm lesion, ≤3 lesions</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTRAST -->
+<div class="section" id="contrast">
+  <div class="section-title">Contrast <span>&amp; Radiation Safety</span></div>
+  <div class="section-sub">Contrast agents, reactions, radiation doses, safety</div>
+  <div class="grid-auto">
+    <div class="card sky">
+      <div class="card-title">💉 Contrast Agents</div>
+      <div class="kv-row"><span class="kv-key">Ionic contrast (older)</span><span class="kv-val danger">High osmolality — more reactions</span></div>
+      <div class="kv-row"><span class="kv-key">Non-ionic contrast</span><span class="kv-val green">Iohexol, Iodixanol — preferred</span></div>
+      <div class="kv-row"><span class="kv-key">MRI contrast</span><span class="kv-val">Gadolinium (Gd-DTPA)</span></div>
+      <div class="kv-row"><span class="kv-key">Gadolinium CI</span><span class="kv-val danger">GFR &lt;30 (nephrogenic systemic fibrosis)</span></div>
+      <div class="kv-row"><span class="kv-key">Metformin &amp; CT contrast</span><span class="kv-val danger">Hold for 48 hrs post-contrast (lactic acidosis risk)</span></div>
+      <div class="kv-row"><span class="kv-key">Barium CI</span><span class="kv-val danger">Suspected perforation (use water-soluble Gastrografin)</span></div>
+      <div class="kv-row"><span class="kv-key">Water-soluble oral contrast</span><span class="kv-val">Gastrografin (Diatrizoate)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">⚠️ Contrast Reactions</div>
+      <div class="kv-row"><span class="kv-key">Mild reaction</span><span class="kv-val">Nausea, urticaria, mild bronchospasm</span></div>
+      <div class="kv-row"><span class="kv-key">Moderate reaction</span><span class="kv-val">Bronchospasm, laryngospasm, hypotension</span></div>
+      <div class="kv-row"><span class="kv-key">Severe/anaphylactoid</span><span class="kv-val danger">Cardiovascular collapse, cardiac arrest</span></div>
+      <div class="kv-row"><span class="kv-key">Anaphylaxis Rx</span><span class="kv-val danger">IM Adrenaline (epinephrine) 0.5 mg (1:1000)</span></div>
+      <div class="kv-row"><span class="kv-key">Contrast-induced nephropathy</span><span class="kv-val">Creatinine rise &gt;0.5 mg/dL or 25% within 48 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">CIN prevention</span><span class="kv-val">IV N-saline hydration (most effective)</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">☢️ Radiation Doses (approximate)</div>
+      <div class="kv-row"><span class="kv-key">CXR</span><span class="kv-val green">0.02 mSv</span></div>
+      <div class="kv-row"><span class="kv-key">CT chest</span><span class="kv-val">7–8 mSv</span></div>
+      <div class="kv-row"><span class="kv-key">CT abdomen + pelvis</span><span class="kv-val">10–15 mSv</span></div>
+      <div class="kv-row"><span class="kv-key">CT head</span><span class="kv-val">2 mSv</span></div>
+      <div class="kv-row"><span class="kv-key">Annual background</span><span class="kv-val">2–3 mSv</span></div>
+      <div class="kv-row"><span class="kv-key">Occupational limit (annual)</span><span class="kv-val danger">20 mSv</span></div>
+      <div class="kv-row"><span class="kv-key">Pregnancy limit (radiation worker)</span><span class="kv-val danger">1 mSv (whole pregnancy)</span></div>
+      <div class="kv-row"><span class="kv-key">MRI — ionising radiation?</span><span class="kv-val green">NO (uses magnetic fields)</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🚫 MRI Contraindications</div>
+      <div class="kv-row"><span class="kv-key">Absolute CI</span><span class="kv-val danger">Cochlear implants, pacemakers (unless MR-conditional)</span></div>
+      <div class="kv-row"><span class="kv-key">Cardiac devices</span><span class="kv-val danger">Old non-conditional pacemakers</span></div>
+      <div class="kv-row"><span class="kv-key">Metallic foreign bodies</span><span class="kv-val danger">Intraocular metallic FB — absolute CI</span></div>
+      <div class="kv-row"><span class="kv-key">Aneurysm clips</span><span class="kv-val danger">Ferromagnetic — absolute CI</span></div>
+      <div class="kv-row"><span class="kv-key">Tattoos</span><span class="kv-val">Relative CI (metal-containing inks)</span></div>
+      <div class="kv-row"><span class="kv-key">Pregnancy</span><span class="kv-val">Avoid in 1st trimester (relative CI)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency radiology facts for rapid revision</div>
+  <div class="grid-2">
+    <div class="card sky">
+      <div class="card-title">⭐ Radiology Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">Investigation of choice for acute PE</span><span class="kv-val highlight">CTPA (CT pulmonary angiography)</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard for coronary stenosis</span><span class="kv-val">Conventional coronary angiography</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard for aortic dissection</span><span class="kv-val">CT angiography</span></div>
+      <div class="kv-row"><span class="kv-key">Best imaging for soft tissue</span><span class="kv-val">MRI</span></div>
+      <div class="kv-row"><span class="kv-key">Best for acute haemorrhage (brain)</span><span class="kv-val">Non-contrast CT</span></div>
+      <div class="kv-row"><span class="kv-key">Best for diffuse axonal injury</span><span class="kv-val">MRI (SWI sequence)</span></div>
+      <div class="kv-row"><span class="kv-key">Best for acute stroke</span><span class="kv-val highlight">DWI MRI (earliest ischaemia)</span></div>
+      <div class="kv-row"><span class="kv-key">DWI shows ischaemia within</span><span class="kv-val">30–60 minutes</span></div>
+      <div class="kv-row"><span class="kv-key">Best for pituitary</span><span class="kv-val">MRI (sella turcica)</span></div>
+      <div class="kv-row"><span class="kv-key">Best for posterior fossa</span><span class="kv-val">MRI (CT has beam hardening artefact)</span></div>
+      <div class="kv-row"><span class="kv-key">Acoustic neuroma imaging</span><span class="kv-val">MRI IAM with gadolinium</span></div>
+      <div class="kv-row"><span class="kv-key">Best for biliary anatomy</span><span class="kv-val">MRCP (non-invasive)</span></div>
+      <div class="kv-row"><span class="kv-key">Gold std pancreatic Ca staging</span><span class="kv-val">CT (dual phase)</span></div>
+      <div class="kv-row"><span class="kv-key">Best for hepatic lesion characterization</span><span class="kv-val">MRI liver with hepatobiliary contrast</span></div>
+      <div class="kv-row"><span class="kv-key">Calcification best seen on</span><span class="kv-val">CT (or X-ray)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">⭐ Radiology Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">String sign (barium)</span><span class="kv-val highlight">Hypertrophic pyloric stenosis</span></div>
+      <div class="kv-row"><span class="kv-key">Bird's beak (barium)</span><span class="kv-val">Achalasia / sigmoid volvulus</span></div>
+      <div class="kv-row"><span class="kv-key">Rat tail appearance</span><span class="kv-val">Ca oesophagus / Ca pancreas (duct)</span></div>
+      <div class="kv-row"><span class="kv-key">Apple core lesion</span><span class="kv-val">Colonic carcinoma</span></div>
+      <div class="kv-row"><span class="kv-key">Rose thorn ulcers</span><span class="kv-val">Crohn's disease</span></div>
+      <div class="kv-row"><span class="kv-key">Lead pipe colon</span><span class="kv-val">Ulcerative colitis</span></div>
+      <div class="kv-row"><span class="kv-key">Cobblestone mucosa</span><span class="kv-val">Crohn's disease</span></div>
+      <div class="kv-row"><span class="kv-key">Skip lesions</span><span class="kv-val">Crohn's disease</span></div>
+      <div class="kv-row"><span class="kv-key">Comb sign (CT)</span><span class="kv-val">Crohn's (engorged vasa recta)</span></div>
+      <div class="kv-row"><span class="kv-key">Liver in chronic hepatitis (USG)</span><span class="kv-val">Coarse echotexture</span></div>
+      <div class="kv-row"><span class="kv-key">Cirrhosis USG appearance</span><span class="kv-val">Nodular surface, ↑caudate lobe</span></div>
+      <div class="kv-row"><span class="kv-key">Fetal hydrops USG</span><span class="kv-val">Ascites + pleural effusion + skin oedema</span></div>
+      <div class="kv-row"><span class="kv-key">Dandy-Walker USG</span><span class="kv-val">Absent vermis + enlarged 4th ventricle</span></div>
+      <div class="kv-row"><span class="kv-key">Banana sign (fetus)</span><span class="kv-val">Arnold-Chiari II (spina bifida)</span></div>
+      <div class="kv-row"><span class="kv-key">Lemon sign (fetus)</span><span class="kv-val">Spina bifida (frontal bones)</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

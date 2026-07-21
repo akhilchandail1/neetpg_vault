@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Pharmacology Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0e1a; --surface: #111827; --surface2: #1a2235; --border: #1e2d45;
+    --accent: #fb923c; --accent2: #7dd3fc; --accent3: #86efac; --accent4: #f9a8d4; --accent5: #c4b5fd;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #0f172a 0%, #0f0a1a 50%, #0f172a 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent5); color: #0a0e1a; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent5); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent5); color: #0a0e1a; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent5); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.orange::before { background: var(--accent); }
+  .card.blue::before { background: var(--accent2); }
+  .card.green::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.purple::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.orange .card-title { color: var(--accent); }
+  .card.blue .card-title { color: var(--accent2); }
+  .card.green .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.purple .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #1a2235; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.blue { color: var(--accent2); }
+  .kv-val.green { color: var(--accent3); }
+  .kv-val.pink { color: var(--accent4); }
+  .kv-val.purple { color: var(--accent5); }
+  .kv-val.danger { color: var(--danger); }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(125,211,252,0.06); border: 1px solid rgba(125,211,252,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent2); margin-top: 8px; line-height: 1.5; }
+  .green-box { background: rgba(134,239,172,0.06); border: 1px solid rgba(134,239,172,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent3); margin-top: 8px; line-height: 1.5; }
+  .mnemonic-box { background: rgba(196,181,253,0.07); border: 1px solid rgba(196,181,253,0.25); border-radius: 8px; padding: 10px 13px; font-size: 12px; color: var(--accent5); margin-top: 8px; line-height: 1.7; font-family: 'DM Mono', monospace; }
+  .mnemonic-box b { color: #e2e8f0; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent5); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  @media (max-width: 800px) { .grid-auto, .grid-2, .grid-3 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>Pharma<span>cology</span> Cheatsheet</h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('pk',this)">PK / PD</div>
+    <div class="tab" onclick="showSection('ans',this)">ANS Drugs</div>
+    <div class="tab" onclick="showSection('cvs',this)">CVS Drugs</div>
+    <div class="tab" onclick="showSection('cns',this)">CNS Drugs</div>
+    <div class="tab" onclick="showSection('antimicro',this)">Antimicrobials</div>
+    <div class="tab" onclick="showSection('anticancer',this)">Anticancer</div>
+    <div class="tab" onclick="showSection('endo',this)">Endocrine</div>
+    <div class="tab" onclick="showSection('toxicology',this)">Toxicology</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- PK / PD -->
+<div class="section active" id="pk">
+  <div class="section-title">PK <span>&amp; PD</span></div>
+  <div class="section-sub">Pharmacokinetics, pharmacodynamics, drug interactions — core concepts</div>
+  <div class="grid-auto">
+
+    <div class="card purple">
+      <div class="card-title">📐 Pharmacokinetic Parameters</div>
+      <div class="kv-row"><span class="kv-key">Bioavailability (F)</span><span class="kv-val purple">Fraction of drug reaching systemic circulation unchanged</span></div>
+      <div class="kv-row"><span class="kv-key">IV bioavailability</span><span class="kv-val green">100% (by definition)</span></div>
+      <div class="kv-row"><span class="kv-key">Volume of distribution (Vd)</span><span class="kv-val">Dose / plasma concentration (apparent volume)</span></div>
+      <div class="kv-row"><span class="kv-key">Vd &lt;1 L/kg</span><span class="kv-val green">Confined to plasma/ECF (heparin, warfarin)</span></div>
+      <div class="kv-row"><span class="kv-key">Vd &gt;1 L/kg</span><span class="kv-val">Widely distributed (chloroquine, digoxin, amiodarone)</span></div>
+      <div class="kv-row"><span class="kv-key">Clearance (CL)</span><span class="kv-val">Volume of plasma cleared per unit time</span></div>
+      <div class="kv-row"><span class="kv-key">Half-life (t½)</span><span class="kv-val">0.693 × Vd / CL</span></div>
+      <div class="kv-row"><span class="kv-key">Steady state achieved</span><span class="kv-val highlight">~4–5 half-lives</span></div>
+      <div class="kv-row"><span class="kv-key">Loading dose</span><span class="kv-val">Vd × target Cp (used when rapid effect needed)</span></div>
+      <div class="kv-row"><span class="kv-key">Therapeutic index (TI)</span><span class="kv-val">TD50 / ED50 (narrow TI = dangerous: digoxin, lithium, warfarin, phenytoin, aminoglycosides)</span></div>
+      <div class="mnemonic-box"><b>Narrow TI drugs (DLAW-P)</b>: Digoxin, Lithium, Aminoglycosides, Warfarin, Phenytoin</div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">⚗️ Zero vs First Order Kinetics</div>
+      <div class="kv-row"><span class="kv-key">First-order kinetics</span><span class="kv-val green">Fixed fraction eliminated per unit time (most drugs)</span></div>
+      <div class="kv-row"><span class="kv-key">Zero-order kinetics</span><span class="kv-val danger">Fixed amount eliminated per unit time (saturable)</span></div>
+      <div class="kv-row"><span class="kv-key">Zero-order drugs</span><span class="kv-val danger">Phenytoin, Ethanol, Aspirin (high dose), Heparin, Warfarin (at high conc)</span></div>
+      <div class="kv-row"><span class="kv-key">Phenytoin kinetics</span><span class="kv-val danger">Zero-order at therapeutic doses (Michaelis-Menten)</span></div>
+      <div class="kv-row"><span class="kv-key">t½ in zero-order</span><span class="kv-val danger">NOT constant — increases as dose increases</span></div>
+      <div class="kv-row"><span class="kv-key">t½ in first-order</span><span class="kv-val green">Constant regardless of dose</span></div>
+      <div class="kv-row"><span class="kv-key">Michaelis-Menten</span><span class="kv-val">Low dose = 1st order; High dose = 0th order</span></div>
+      <div class="alert-box">Small dose change of phenytoin causes disproportionate plasma level rise — monitor TDM</div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🔄 First-Pass Metabolism</div>
+      <div class="kv-row"><span class="kv-key">Definition</span><span class="kv-val blue">Presystemic hepatic metabolism before reaching circulation</span></div>
+      <div class="kv-row"><span class="kv-key">High first-pass drugs</span><span class="kv-val danger">Morphine, Propranolol, Lignocaine, Nitrates (GTN), Labetalol, Verapamil, Salbutamol (oral), Testosterone</span></div>
+      <div class="kv-row"><span class="kv-key">Sublingual route bypasses</span><span class="kv-val green">First-pass (GTN, buprenorphine, ergotamine)</span></div>
+      <div class="kv-row"><span class="kv-key">Transdermal bypasses</span><span class="kv-val green">First-pass (fentanyl, nicotine, GTN patch)</span></div>
+      <div class="kv-row"><span class="kv-key">Rectal route</span><span class="kv-val">Partially bypasses first-pass (~50%)</span></div>
+      <div class="kv-row"><span class="kv-key">Prodrug advantage</span><span class="kv-val">Avoids first-pass; activated after absorption</span></div>
+      <div class="kv-row"><span class="kv-key">Prodrug examples</span><span class="kv-val">Enalapril→Enalaprilat; Codeine→Morphine; Levodopa→Dopamine</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🧬 Drug Metabolism & Enzymes</div>
+      <div class="kv-row"><span class="kv-key">Phase I reactions</span><span class="kv-val green">Oxidation, Reduction, Hydrolysis (CYP450 mainly)</span></div>
+      <div class="kv-row"><span class="kv-key">Phase II reactions</span><span class="kv-val">Conjugation (glucuronidation, sulfation, acetylation, methylation)</span></div>
+      <div class="kv-row"><span class="kv-key">CYP3A4</span><span class="kv-val">Metabolises ~50% of drugs; intestinal + hepatic</span></div>
+      <div class="kv-row"><span class="kv-key">CYP2D6</span><span class="kv-val">Codeine, TCAs, β-blockers; poor metabolisers: Caucasians 7%</span></div>
+      <div class="kv-row"><span class="kv-key">CYP450 inducers</span><span class="kv-val danger">RIPES: Rifampicin, Isoniazid (chronic), Phenytoin/Phenobarbitone, Ethanol (chronic), Smoking/St John's Wort/Carbamazepine/Griseofulvin</span></div>
+      <div class="kv-row"><span class="kv-key">CYP450 inhibitors</span><span class="kv-val danger">SICKFACES: Sulfonamides, Isoniazid (acute), Cimetidine, Ketoconazole, Fluconazole, Amiodarone, Ciprofloxacin, Erythromycin, SSRIs</span></div>
+      <div class="kv-row"><span class="kv-key">Grapefruit juice</span><span class="kv-val danger">Inhibits CYP3A4 (intestinal) → ↑drug levels (statins, CCBs, cyclosporine)</span></div>
+      <div class="kv-row"><span class="kv-key">Slow acetylators</span><span class="kv-val">↑risk INH toxicity (neuropathy, hepatotoxicity); Hydralazine SLE</span></div>
+      <div class="mnemonic-box"><b>RIPES</b> = Inducers | <b>SICKFACES</b> = Inhibitors</div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">📊 Pharmacodynamics</div>
+      <div class="kv-row"><span class="kv-key">Agonist</span><span class="kv-val pink">Binds receptor + activates (full/partial)</span></div>
+      <div class="kv-row"><span class="kv-key">Full agonist</span><span class="kv-val green">Maximum efficacy (Emax); e.g. morphine</span></div>
+      <div class="kv-row"><span class="kv-key">Partial agonist</span><span class="kv-val">Submaximal effect even with 100% receptor occupancy (buprenorphine)</span></div>
+      <div class="kv-row"><span class="kv-key">Antagonist</span><span class="kv-val">Binds but NO activation; blocks agonist</span></div>
+      <div class="kv-row"><span class="kv-key">Competitive antagonist</span><span class="kv-val">↑Km (↑EC50), same Emax; reversible by ↑agonist</span></div>
+      <div class="kv-row"><span class="kv-key">Non-competitive antagonist</span><span class="kv-val danger">↓Emax; cannot overcome; irreversible or allosteric</span></div>
+      <div class="kv-row"><span class="kv-key">Inverse agonist</span><span class="kv-val">Opposite effect to agonist (e.g. β-carboline at BZD receptor)</span></div>
+      <div class="kv-row"><span class="kv-key">Potency</span><span class="kv-val">EC50 (dose to get 50% effect) — lower EC50 = more potent</span></div>
+      <div class="kv-row"><span class="kv-key">Efficacy</span><span class="kv-val">Maximum effect achievable (Emax)</span></div>
+      <div class="kv-row"><span class="kv-key">Tachyphylaxis</span><span class="kv-val danger">Rapid tolerance on repeated dosing (ephedrine, nitrates)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🧪 Plasma Protein Binding</div>
+      <div class="kv-row"><span class="kv-key">Highly protein bound drugs</span><span class="kv-val danger">Warfarin 99%, Diazepam 98%, Phenytoin 90%, Furosemide 99%, NSAIDs 95%+</span></div>
+      <div class="kv-row"><span class="kv-key">Clinical significance</span><span class="kv-val">Only free drug is active; interactions when displaced</span></div>
+      <div class="kv-row"><span class="kv-key">Acidic drugs bind</span><span class="kv-val">Albumin (warfarin, NSAIDs, furosemide)</span></div>
+      <div class="kv-row"><span class="kv-key">Basic drugs bind</span><span class="kv-val">α1-acid glycoprotein (propranolol, lignocaine, TCAs)</span></div>
+      <div class="kv-row"><span class="kv-key">Renal failure effect</span><span class="kv-val danger">↓albumin → ↑free drug → enhanced effects/toxicity</span></div>
+      <div class="kv-row"><span class="kv-key">Warfarin + aspirin interaction</span><span class="kv-val danger">Displacement → ↑free warfarin → bleeding risk</span></div>
+      <div class="kv-row"><span class="kv-key">Drug not dialysable if</span><span class="kv-val">High Vd OR high protein binding</span></div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-auto">
+    <div class="card blue span-full">
+      <div class="card-title">📊 Drug Excretion & Renal Handling</div>
+      <table class="comparison-table">
+        <tr><th>Concept</th><th>Detail</th><th>Example</th></tr>
+        <tr><td>Glomerular filtration</td><td>Free (unbound) drug filtered; size &lt;7 nm</td><td>Inulin (marker), small drugs</td></tr>
+        <tr><td>Tubular secretion</td><td>Active transport; organic acid (OAT) or base (OCT) transporters</td><td>Penicillin, uric acid, metformin</td></tr>
+        <tr><td>Tubular reabsorption</td><td>Passive; lipophilic/uncharged drugs reabsorbed</td><td>Ethanol, lipid-soluble drugs</td></tr>
+        <tr><td>Alkalinise urine (NaHCO3)</td><td>Traps weak acids in ionised form → ↑excretion</td><td>Aspirin OD, phenobarbitone</td></tr>
+        <tr><td>Acidify urine (NH4Cl)</td><td>Traps weak bases → ↑excretion</td><td>Amphetamine, phencyclidine</td></tr>
+        <tr><td>Probenecid + penicillin</td><td>Blocks OAT → ↓penicillin secretion → ↑levels</td><td>Used historically to prolong penicillin</td></tr>
+        <tr><td>Biliary excretion</td><td>Large molecules (&gt;500 Da) excreted in bile</td><td>Rifampicin, digoxin, morphine glucuronide</td></tr>
+        <tr><td>Enterohepatic circulation</td><td>Bile → gut → reabsorption → portal → liver (prolongs half-life)</td><td>Morphine, oestrogen, chloramphenicol</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ANS DRUGS -->
+<div class="section" id="ans">
+  <div class="section-title">ANS <span>Drugs</span></div>
+  <div class="section-sub">Cholinergic, adrenergic, neuromuscular junction pharmacology</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">🧠 Cholinergic System</div>
+      <div class="kv-row"><span class="kv-key">ACh synthesis</span><span class="kv-val green">Choline + Acetyl-CoA → ChAT enzyme</span></div>
+      <div class="kv-row"><span class="kv-key">ACh breakdown</span><span class="kv-val">Acetylcholinesterase (AChE) → choline + acetate</span></div>
+      <div class="kv-row"><span class="kv-key">Muscarinic receptors</span><span class="kv-val">M1 (CNS/gastric), M2 (heart↓HR), M3 (glands/smooth muscle)</span></div>
+      <div class="kv-row"><span class="kv-key">Nicotinic receptors</span><span class="kv-val">Nm (NMJ), Nn (autonomic ganglia)</span></div>
+      <div class="kv-row"><span class="kv-key">Pilocarpine use</span><span class="kv-val highlight">Glaucoma (open-angle); Sjögren's syndrome (xerostomia)</span></div>
+      <div class="kv-row"><span class="kv-key">Bethanechol use</span><span class="kv-val">Urinary retention; paralytic ileus (M3 agonist, no NMJ effect)</span></div>
+      <div class="kv-row"><span class="kv-key">Carbachol</span><span class="kv-val">Resistant to AChE; used in glaucoma/miosis</span></div>
+      <div class="kv-row"><span class="kv-key">SLUDGE (muscarinic excess)</span><span class="kv-val danger">Salivation, Lacrimation, Urination, Defaecation, GI cramps, Emesis</span></div>
+      <div class="mnemonic-box"><b>DUMBELS</b> = Diarrhoea, Urination, Miosis, Bradycardia, Emesis, Lacrimation, Salivation (muscarinic excess)</div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🚫 Anticholinergics (Muscarinic Blockers)</div>
+      <div class="kv-row"><span class="kv-key">Atropine effects</span><span class="kv-val highlight">↑HR, ↓secretions, mydriasis, cycloplegia, ↓GI motility</span></div>
+      <div class="kv-row"><span class="kv-key">Atropine use</span><span class="kv-val">Bradycardia, organophosphate poisoning, pre-anaesthetic</span></div>
+      <div class="kv-row"><span class="kv-key">Hyoscine (scopolamine)</span><span class="kv-val">Motion sickness; amnesia (crosses BBB better than atropine)</span></div>
+      <div class="kv-row"><span class="kv-key">Ipratropium</span><span class="kv-val">COPD/asthma (inhaled M3 blocker; no CNS effects)</span></div>
+      <div class="kv-row"><span class="kv-key">Tiotropium</span><span class="kv-val">Long-acting M3 blocker (LAMA); once daily; COPD</span></div>
+      <div class="kv-row"><span class="kv-key">Oxybutynin / Solifenacin</span><span class="kv-val">Overactive bladder (M3 blocker in bladder)</span></div>
+      <div class="kv-row"><span class="kv-key">Tropicamide</span><span class="kv-val">Short-acting mydriasis (fundus exam)</span></div>
+      <div class="kv-row"><span class="kv-key">Atropine toxicity mnemonic</span><span class="kv-val danger">Blind as bat, Mad as hatter, Dry as bone, Red as beet, Hot as hare</span></div>
+      <div class="kv-row"><span class="kv-key">Antidote atropine toxicity</span><span class="kv-val green">Physostigmine (crosses BBB)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">💉 AChE Inhibitors (Anticholinesterases)</div>
+      <div class="kv-row"><span class="kv-key">Neostigmine</span><span class="kv-val blue">Quaternary; no BBB; reversal NMB; myasthenia gravis; urinary retention</span></div>
+      <div class="kv-row"><span class="kv-key">Pyridostigmine</span><span class="kv-val">Longest-acting reversible AChEI; drug of choice MG (oral)</span></div>
+      <div class="kv-row"><span class="kv-key">Physostigmine</span><span class="kv-val">Crosses BBB; antidote atropine/TCA toxicity</span></div>
+      <div class="kv-row"><span class="kv-key">Edrophonium (Tensilon)</span><span class="kv-val highlight">Short-acting; diagnosis of MG (Tensilon test); 5 min duration</span></div>
+      <div class="kv-row"><span class="kv-key">Rivastigmine / Donepezil</span><span class="kv-val">Alzheimer's disease (CNS AChEI)</span></div>
+      <div class="kv-row"><span class="kv-key">Donepezil SE</span><span class="kv-val danger">Nightmares (CNS); bradycardia; GI upset</span></div>
+      <div class="kv-row"><span class="kv-key">Memantine</span><span class="kv-val">NMDA antagonist; moderate-severe Alzheimer's</span></div>
+      <div class="kv-row"><span class="kv-key">Organophosphates</span><span class="kv-val danger">Irreversible AChEI (phosphorylation); aging → permanent</span></div>
+      <div class="alert-box">Pralidoxime (2-PAM) must be given BEFORE "aging" of OP-AChE complex (within 24–48 hrs)</div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">⚡ Neuromuscular Junction Drugs</div>
+      <div class="kv-row"><span class="kv-key">Succinylcholine</span><span class="kv-val purple">Depolarising NMB; fastest onset (60 sec); metabolised by pseudocholinesterase</span></div>
+      <div class="kv-row"><span class="kv-key">Succinylcholine SE</span><span class="kv-val danger">Hyperkalaemia (burns, crush), malignant hyperthermia, prolonged block (pseudo-ChE deficiency), bradycardia</span></div>
+      <div class="kv-row"><span class="kv-key">Succinylcholine CI</span><span class="kv-val danger">Burns, spinal cord injury, hyperkalaemia, MH susceptibility, Duchenne's MD</span></div>
+      <div class="kv-row"><span class="kv-key">Non-depolarising NMBs</span><span class="kv-val">Vecuronium, Rocuronium, Atracurium, Cisatracurium, Pancuronium</span></div>
+      <div class="kv-row"><span class="kv-key">Rocuronium reversal</span><span class="kv-val green">Sugammadex (encapsulates aminosteroids); Neostigmine</span></div>
+      <div class="kv-row"><span class="kv-key">Atracurium advantage</span><span class="kv-val green">Hoffman elimination (no renal/hepatic needed)</span></div>
+      <div class="kv-row"><span class="kv-key">Pancuronium SE</span><span class="kv-val danger">Tachycardia (vagolytic); avoid in cardiac patients</span></div>
+      <div class="kv-row"><span class="kv-key">Malignant hyperthermia Rx</span><span class="kv-val danger">Dantrolene (ryanodine receptor blocker)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">⚡ Adrenergic Drugs</div>
+      <div class="kv-row"><span class="kv-key">α1 effects</span><span class="kv-val">Vasoconstriction, pupil dilation (mydriasis), ↑bladder tone</span></div>
+      <div class="kv-row"><span class="kv-key">α2 effects</span><span class="kv-val">Presynaptic inhibition (↓NA release); ↓BP; clonidine</span></div>
+      <div class="kv-row"><span class="kv-key">β1 effects</span><span class="kv-val">↑HR, ↑contractility, ↑renin</span></div>
+      <div class="kv-row"><span class="kv-key">β2 effects</span><span class="kv-val green">Bronchodilation, vasodilation, ↓uterine tone, glycogenolysis</span></div>
+      <div class="kv-row"><span class="kv-key">β3 effects</span><span class="kv-val">Lipolysis; mirabegron (β3 agonist for OAB)</span></div>
+      <div class="kv-row"><span class="kv-key">Adrenaline (epinephrine)</span><span class="kv-val">α1+α2+β1+β2; anaphylaxis, cardiac arrest (1st line)</span></div>
+      <div class="kv-row"><span class="kv-key">Noradrenaline</span><span class="kv-val">α1+α2+β1 (weak β2); vasopressor in septic shock</span></div>
+      <div class="kv-row"><span class="kv-key">Dopamine (low dose)</span><span class="kv-val">D1 → renal vasodilation; (high dose) → α1+β1</span></div>
+      <div class="kv-row"><span class="kv-key">Dobutamine</span><span class="kv-val">β1 agonist; cardiogenic shock; ↑CO without ↑HR much</span></div>
+      <div class="kv-row"><span class="kv-key">Isoprenaline</span><span class="kv-val">β1+β2; AV block; bronchospasm (obsolete)</span></div>
+      <div class="kv-row"><span class="kv-key">Phenylephrine</span><span class="kv-val">Pure α1 agonist; nasal decongestant; raises BP (no cardiac effect)</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🚫 Adrenergic Blockers</div>
+      <div class="kv-row"><span class="kv-key">Selective α1 blockers</span><span class="kv-val pink">Prazosin, Terazosin, Doxazosin (HTN + BPH)</span></div>
+      <div class="kv-row"><span class="kv-key">Prazosin 1st-dose effect</span><span class="kv-val danger">Postural hypotension (take at bedtime)</span></div>
+      <div class="kv-row"><span class="kv-key">Non-selective α blocker</span><span class="kv-val">Phentolamine (reversible), Phenoxybenzamine (irreversible)</span></div>
+      <div class="kv-row"><span class="kv-key">Phenoxybenzamine use</span><span class="kv-val highlight">Phaeochromocytoma pre-op (irreversible α block first, then β)</span></div>
+      <div class="kv-row"><span class="kv-key">β1 selective blockers</span><span class="kv-val">Metoprolol, Atenolol, Bisoprolol, Esmolol, Nebivolol</span></div>
+      <div class="kv-row"><span class="kv-key">Non-selective β blockers</span><span class="kv-val">Propranolol, Timolol, Nadolol, Sotalol, Pindolol</span></div>
+      <div class="kv-row"><span class="kv-key">β blocker with ISA</span><span class="kv-val">Pindolol, Acebutolol (partial agonist activity)</span></div>
+      <div class="kv-row"><span class="kv-key">Combined α+β blockers</span><span class="kv-val">Labetalol (IV in HTN emergency in pregnancy), Carvedilol (HF)</span></div>
+      <div class="kv-row"><span class="kv-key">Nebivolol</span><span class="kv-val green">β1 blocker + NO release → vasodilation; HTN in elderly</span></div>
+      <div class="kv-row"><span class="kv-key">β blocker CI</span><span class="kv-val danger">Asthma, AV block, cardiogenic shock, cocaine toxicity (paradoxical vasoconstriction)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CVS DRUGS -->
+<div class="section" id="cvs">
+  <div class="section-title">CVS <span>Drugs</span></div>
+  <div class="section-sub">Antihypertensives, antiarrhythmics, heart failure, anticoagulants, lipid-lowering</div>
+  <div class="grid-auto">
+
+    <div class="card blue">
+      <div class="card-title">💊 Antihypertensives</div>
+      <div class="kv-row"><span class="kv-key">1st line HTN (uncomplicated)</span><span class="kv-val blue">ACEi / ARB / CCB / Thiazide diuretic</span></div>
+      <div class="kv-row"><span class="kv-key">ACE inhibitors</span><span class="kv-val">Ramipril, Lisinopril, Enalapril (prodrug) → block ACE → ↓Ang II</span></div>
+      <div class="kv-row"><span class="kv-key">ACEi SE</span><span class="kv-val danger">Dry cough (bradykinin↑), angioedema, hyperkalaemia, teratogenic</span></div>
+      <div class="kv-row"><span class="kv-key">ACEi best in</span><span class="kv-val green">DM nephropathy, HF, post-MI, proteinuric CKD</span></div>
+      <div class="kv-row"><span class="kv-key">ARBs</span><span class="kv-val">Losartan, Valsartan, Candesartan (no cough — block AT1 receptor)</span></div>
+      <div class="kv-row"><span class="kv-key">CCBs (dihydropyridine)</span><span class="kv-val">Amlodipine, Nifedipine → mainly vascular; no cardiac effect</span></div>
+      <div class="kv-row"><span class="kv-key">CCBs (non-DHP)</span><span class="kv-val danger">Verapamil (most cardiac), Diltiazem — ↓HR + ↓contractility</span></div>
+      <div class="kv-row"><span class="kv-key">Hydralazine</span><span class="kv-val">Arteriolar vasodilator; HTN in pregnancy; SLE-like syndrome SE</span></div>
+      <div class="kv-row"><span class="kv-key">Minoxidil</span><span class="kv-val">K channel opener; severe HTN; hypertrichosis SE (used topically for alopecia)</span></div>
+      <div class="kv-row"><span class="kv-key">Sodium nitroprusside</span><span class="kv-val danger">Hypertensive emergency (IV); cyanide toxicity risk; light-sensitive</span></div>
+      <div class="kv-row"><span class="kv-key">Clonidine</span><span class="kv-val">Central α2 agonist; ↓sympathetic outflow; withdrawal: rebound HTN</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">💔 Heart Failure Drugs</div>
+      <div class="kv-row"><span class="kv-key">HFrEF mortality benefit drugs</span><span class="kv-val highlight">ACEi/ARB + β-blocker + MRA + SGLT2i</span></div>
+      <div class="kv-row"><span class="kv-key">Carvedilol / Bisoprolol / Metoprolol</span><span class="kv-val green">β-blockers that reduce mortality in HF</span></div>
+      <div class="kv-row"><span class="kv-key">Sacubitril/Valsartan (Entresto)</span><span class="kv-val highlight">ARNI; ARB + neprilysin inhibitor → ↑ANP/BNP; reduces mortality</span></div>
+      <div class="kv-row"><span class="kv-key">Digoxin in HF</span><span class="kv-val">↓Hospitalisations; no mortality benefit; narrow TI</span></div>
+      <div class="kv-row"><span class="kv-key">Digoxin MOA</span><span class="kv-val">Na/K ATPase inhibition → ↑intracellular Ca → ↑contractility + ↓HR (vagal)</span></div>
+      <div class="kv-row"><span class="kv-key">Digoxin toxicity</span><span class="kv-val danger">Yellow-green vision, nausea, bradycardia, heart block, arrhythmias; ↑by hypokalaemia</span></div>
+      <div class="kv-row"><span class="kv-key">Digoxin antidote</span><span class="kv-val green">Digibind (digoxin-specific Fab fragments)</span></div>
+      <div class="kv-row"><span class="kv-key">Spironolactone / Eplerenone</span><span class="kv-val">MRA; ↓aldosterone effect; ↓mortality post-MI with HF</span></div>
+      <div class="kv-row"><span class="kv-key">Ivabradine</span><span class="kv-val">If channel blocker; ↓HR without ↓contractility; HF + sinus tachycardia</span></div>
+      <div class="kv-row"><span class="kv-key">SGLT2 inhibitors</span><span class="kv-val green">Empagliflozin, Dapagliflozin; ↓CV mortality + HF hospitalisations</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">⚡ Antiarrhythmics (Vaughan-Williams)</div>
+      <div class="kv-row"><span class="kv-key">Class IA</span><span class="kv-val purple">Quinidine, Procainamide, Disopyramide (Na channel + K channel block)</span></div>
+      <div class="kv-row"><span class="kv-key">Quinidine SE</span><span class="kv-val danger">Cinchonism, TdP, thrombocytopaenia, SLE (procainamide)</span></div>
+      <div class="kv-row"><span class="kv-key">Class IB</span><span class="kv-val">Lignocaine, Mexiletine, Phenytoin (Na channel; shorten AP)</span></div>
+      <div class="kv-row"><span class="kv-key">Lignocaine use</span><span class="kv-val">Ventricular arrhythmias post-MI (IV only; high first-pass)</span></div>
+      <div class="kv-row"><span class="kv-key">Class IC</span><span class="kv-val danger">Flecainide, Propafenone (most potent Na block; avoided post-MI — ↑mortality CAST trial)</span></div>
+      <div class="kv-row"><span class="kv-key">Class II</span><span class="kv-val">β-blockers (↓SA/AV node automaticity) — SVT, AF rate control</span></div>
+      <div class="kv-row"><span class="kv-key">Class III</span><span class="kv-val">Amiodarone, Sotalol, Dronedarone, Ibutilide (K channel block → ↑AP duration)</span></div>
+      <div class="kv-row"><span class="kv-key">Amiodarone</span><span class="kv-val highlight">Broadest spectrum; Class I+II+III+IV; drug of choice VF/VT</span></div>
+      <div class="kv-row"><span class="kv-key">Amiodarone SE</span><span class="kv-val danger">Pulmonary fibrosis, thyroid dysfunction (hypo/hyperthyroid), corneal microdeposits, photosensitivity, hepatotoxicity, neuropathy, TdP (rare)</span></div>
+      <div class="kv-row"><span class="kv-key">Class IV</span><span class="kv-val">Verapamil, Diltiazem (Ca channel; AV node; SVT/AF rate)</span></div>
+      <div class="kv-row"><span class="kv-key">Adenosine</span><span class="kv-val highlight">Drug of choice PSVT; very short t½ (10 sec); causes transient AV block</span></div>
+      <div class="mnemonic-box"><b>SOAP B-D</b> = I(S)A, I(O)B, I(A)C, II(P)β-blockers, III(B), III(D)ronedarone, I(V)erapamil/Class IV</div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🩸 Anticoagulants</div>
+      <div class="kv-row"><span class="kv-key">Heparin MOA</span><span class="kv-val danger">Potentiates antithrombin III → inhibits Xa + IIa (thrombin)</span></div>
+      <div class="kv-row"><span class="kv-key">Unfractionated heparin (UFH)</span><span class="kv-val">IV/SC; monitor aPTT; antidote: Protamine sulphate</span></div>
+      <div class="kv-row"><span class="kv-key">LMWH (enoxaparin, dalteparin)</span><span class="kv-val">Mainly anti-Xa; more predictable; no routine monitoring</span></div>
+      <div class="kv-row"><span class="kv-key">HIT (heparin-induced thrombocytopenia)</span><span class="kv-val danger">Type I: non-immune (day 1–5); Type II: immune (day 5–14) — stop heparin, use argatroban/fondaparinux</span></div>
+      <div class="kv-row"><span class="kv-key">Warfarin MOA</span><span class="kv-val">Blocks VKOR → ↓Vit K–dependent factors (II, VII, IX, X, Protein C&S)</span></div>
+      <div class="kv-row"><span class="kv-key">Warfarin monitoring</span><span class="kv-val">PT/INR; target 2–3 (2.5–3.5 for mechanical valves)</span></div>
+      <div class="kv-row"><span class="kv-key">Warfarin reversal</span><span class="kv-val">Vit K (slow), FFP (fast), Prothrombin complex concentrate (fastest)</span></div>
+      <div class="kv-row"><span class="kv-key">DOACs — anti-Xa</span><span class="kv-val">Rivaroxaban, Apixaban, Edoxaban (no monitoring needed)</span></div>
+      <div class="kv-row"><span class="kv-key">DOACs — anti-IIa</span><span class="kv-val">Dabigatran; reversal: Idarucizumab</span></div>
+      <div class="kv-row"><span class="kv-key">Fondaparinux</span><span class="kv-val">Synthetic anti-Xa; HIT alternative; no antidote</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">💉 Antiplatelets & Thrombolytics</div>
+      <div class="kv-row"><span class="kv-key">Aspirin MOA</span><span class="kv-val green">Irreversible COX-1 inhibition → ↓TXA2 → ↓platelet aggregation</span></div>
+      <div class="kv-row"><span class="kv-key">Aspirin dose (antiplatelet)</span><span class="kv-val">75–100 mg/day</span></div>
+      <div class="kv-row"><span class="kv-key">Clopidogrel / Prasugrel / Ticagrelor</span><span class="kv-val">P2Y12 (ADP receptor) antagonists; DAPT with aspirin post-ACS/PCI</span></div>
+      <div class="kv-row"><span class="kv-key">Ticagrelor advantage</span><span class="kv-val">Reversible; faster onset; no prodrug activation needed</span></div>
+      <div class="kv-row"><span class="kv-key">GPIIb/IIIa inhibitors</span><span class="kv-val">Abciximab, Eptifibatide, Tirofiban; PCI setting</span></div>
+      <div class="kv-row"><span class="kv-key">Dipyridamole MOA</span><span class="kv-val">↑cAMP (PDE inhibitor) + ↑adenosine → ↓platelet aggregation</span></div>
+      <div class="kv-row"><span class="kv-key">Streptokinase</span><span class="kv-val">Non-specific thrombolytic; antigenic; cannot re-use within 1 year</span></div>
+      <div class="kv-row"><span class="kv-key">Alteplase (tPA)</span><span class="kv-val highlight">Fibrin-specific; preferred in stroke (within 4.5 hrs), STEMI</span></div>
+      <div class="kv-row"><span class="kv-key">Thrombolytic CI</span><span class="kv-val danger">Recent surgery/trauma, intracranial bleed, aortic dissection, active bleeding</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🫀 Lipid-Lowering Drugs</div>
+      <div class="kv-row"><span class="kv-key">Statins MOA</span><span class="kv-val pink">HMG-CoA reductase inhibition → ↓cholesterol synthesis → ↑LDL receptors</span></div>
+      <div class="kv-row"><span class="kv-key">Statins: most potent</span><span class="kv-val">Rosuvastatin &gt; Atorvastatin &gt; Simvastatin</span></div>
+      <div class="kv-row"><span class="kv-key">Statin SE</span><span class="kv-val danger">Myopathy, rhabdomyolysis (↑CK), hepatotoxicity; avoid in pregnancy</span></div>
+      <div class="kv-row"><span class="kv-key">Ezetimibe MOA</span><span class="kv-val">Blocks NPC1L1 → ↓cholesterol absorption from gut; ↓LDL</span></div>
+      <div class="kv-row"><span class="kv-key">Fibrates MOA</span><span class="kv-val">PPARα agonist → ↑LPL → ↓TG (best drug for hypertriglyceridaemia)</span></div>
+      <div class="kv-row"><span class="kv-key">Fibrates SE</span><span class="kv-val danger">Myopathy (↑risk with statins), gallstones</span></div>
+      <div class="kv-row"><span class="kv-key">Niacin (nicotinic acid)</span><span class="kv-val">↑HDL best; ↓TG; flushing (↓by aspirin pre-dose)</span></div>
+      <div class="kv-row"><span class="kv-key">PCSK9 inhibitors</span><span class="kv-val highlight">Evolocumab, Alirocumab; ↓LDL 50–60%; injectable; familial hypercholesterolaemia</span></div>
+      <div class="kv-row"><span class="kv-key">Bile acid sequestrants</span><span class="kv-val">Cholestyramine, Colestipol; ↓LDL; no systemic absorption; ↑TG (avoid in HTG)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CNS DRUGS -->
+<div class="section" id="cns">
+  <div class="section-title">CNS <span>Drugs</span></div>
+  <div class="section-sub">Anaesthesia, antipsychotics, antidepressants, antiepileptics, analgesics</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">😴 General Anaesthesia</div>
+      <div class="kv-row"><span class="kv-key">Stages of anaesthesia (Guedel)</span><span class="kv-val orange">Stage I: Analgesia → II: Excitement → III: Surgical → IV: Medullary depression</span></div>
+      <div class="kv-row"><span class="kv-key">Most dangerous stage</span><span class="kv-val danger">Stage II (excitement) — risk of laryngospasm, vomiting</span></div>
+      <div class="kv-row"><span class="kv-key">MAC (minimum alveolar conc)</span><span class="kv-val">Dose at which 50% don't respond to surgical incision</span></div>
+      <div class="kv-row"><span class="kv-key">Lowest MAC (most potent)</span><span class="kv-val highlight">Halothane; Highest MAC = Desflurane (least potent)</span></div>
+      <div class="kv-row"><span class="kv-key">Halothane hepatotoxicity</span><span class="kv-val danger">Immune-mediated; can re-challenge with enflurane (avoid)</span></div>
+      <div class="kv-row"><span class="kv-key">Isoflurane</span><span class="kv-val">Coronary steal; least hepatotoxic halogenated; ↓cerebral O2 demand</span></div>
+      <div class="kv-row"><span class="kv-key">Nitrous oxide (N2O)</span><span class="kv-val">Fastest onset/offset; analgesia; no relaxation; pneumothorax CI; inhalational</span></div>
+      <div class="kv-row"><span class="kv-key">Propofol</span><span class="kv-val">TIVA; rapid onset/offset; antiemetic; PRIS (propofol infusion syndrome) in prolonged use</span></div>
+      <div class="kv-row"><span class="kv-key">Ketamine</span><span class="kv-val highlight">Dissociative; ↑HR + ↑BP (sympathomimetic); bronchodilator; emergence reactions</span></div>
+      <div class="kv-row"><span class="kv-key">Ketamine use</span><span class="kv-val">Asthmatic/haemodynamically unstable patients; procedural sedation</span></div>
+      <div class="kv-row"><span class="kv-key">Thiopentone</span><span class="kv-val">Ultra-short acting barbiturate; causes laryngospasm; ↓ICP</span></div>
+      <div class="kv-row"><span class="kv-key">Etomidate</span><span class="kv-val">Minimal cardiac depression; ↓cortisol; adrenal suppression SE</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🧠 Antipsychotics</div>
+      <div class="kv-row"><span class="kv-key">Typical antipsychotics (1st gen)</span><span class="kv-val purple">Chlorpromazine, Haloperidol, Fluphenazine (D2 blockers)</span></div>
+      <div class="kv-row"><span class="kv-key">Atypical antipsychotics (2nd gen)</span><span class="kv-val">Clozapine, Olanzapine, Risperidone, Quetiapine, Aripiprazole</span></div>
+      <div class="kv-row"><span class="kv-key">Extrapyramidal SE (EPS)</span><span class="kv-val danger">Typicals &gt;&gt; Atypicals; Akathisia (MC), Parkinsonism, Dystonias, Tardive dyskinesia</span></div>
+      <div class="kv-row"><span class="kv-key">Tardive dyskinesia</span><span class="kv-val danger">Oral-facial involuntary movements; appears AFTER stopping drug; treat with Tetrabenazine/valbenazine</span></div>
+      <div class="kv-row"><span class="kv-key">Clozapine</span><span class="kv-val highlight">Most effective antipsychotic; treatment-resistant schizophrenia; least EPS</span></div>
+      <div class="kv-row"><span class="kv-key">Clozapine SE</span><span class="kv-val danger">Agranulocytosis (1–2%; weekly WBC), seizures, weight gain, myocarditis, hypersalivation</span></div>
+      <div class="kv-row"><span class="kv-key">Aripiprazole</span><span class="kv-val green">Partial D2 agonist; least metabolic SE; weight neutral</span></div>
+      <div class="kv-row"><span class="kv-key">Metabolic SE (atypicals)</span><span class="kv-val danger">Olanzapine > Clozapine > Quetiapine (weight gain, diabetes, dyslipidaemia)</span></div>
+      <div class="kv-row"><span class="kv-key">NMS (neuroleptic malignant syndrome)</span><span class="kv-val danger">↑Temp + Rigidity + ↑CK + altered consciousness; Rx: dantrolene + bromocriptine; stop antipsychotic</span></div>
+      <div class="kv-row"><span class="kv-key">Haloperidol use (acute)</span><span class="kv-val">Rapid tranquillisation; delirium; Tourette's syndrome</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">💊 Antidepressants</div>
+      <div class="kv-row"><span class="kv-key">SSRIs</span><span class="kv-val blue">Fluoxetine, Sertraline, Escitalopram (1st line depression/anxiety)</span></div>
+      <div class="kv-row"><span class="kv-key">SSRI SE</span><span class="kv-val danger">GI upset, sexual dysfunction, insomnia, SIADH, serotonin syndrome (OD/interaction)</span></div>
+      <div class="kv-row"><span class="kv-key">Fluoxetine special</span><span class="kv-val">Longest t½ (7 days); least discontinuation syndrome; bulimia</span></div>
+      <div class="kv-row"><span class="kv-key">SNRIs</span><span class="kv-val">Venlafaxine, Duloxetine (serotonin + noradrenaline reuptake inhibitors)</span></div>
+      <div class="kv-row"><span class="kv-key">Duloxetine use</span><span class="kv-val">Depression + diabetic neuropathy + stress urinary incontinence + fibromyalgia</span></div>
+      <div class="kv-row"><span class="kv-key">TCAs</span><span class="kv-val">Amitriptyline, Imipramine, Clomipramine; block 5-HT + NA reuptake + muscarinic + H1 + α1</span></div>
+      <div class="kv-row"><span class="kv-key">TCA OD</span><span class="kv-val danger">Widened QRS, arrhythmia, seizures, anticholinergic effects; Rx: sodium bicarbonate</span></div>
+      <div class="kv-row"><span class="kv-key">MAOIs</span><span class="kv-val">Phenelzine, Tranylcypromine; avoid tyramine-rich food → hypertensive crisis</span></div>
+      <div class="kv-row"><span class="kv-key">Mirtazapine</span><span class="kv-val">NaSSA; α2 antagonist; ↑serotonin + NA; sedating; weight gain; no sexual SE</span></div>
+      <div class="kv-row"><span class="kv-key">Bupropion</span><span class="kv-val">NDRI; smoking cessation; weight loss; lowers seizure threshold</span></div>
+      <div class="kv-row"><span class="kv-key">Serotonin syndrome Rx</span><span class="kv-val green">Cyproheptadine (5-HT2 antagonist) + supportive care</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">⚡ Antiepileptics</div>
+      <div class="kv-row"><span class="kv-key">Phenytoin MOA</span><span class="kv-val green">Na channel blocker (use-dependent); zero-order kinetics at therapeutic dose</span></div>
+      <div class="kv-row"><span class="kv-key">Phenytoin SE</span><span class="kv-val danger">Gingival hyperplasia, hirsutism, coarsening of features, ataxia, diplopia, Stevens-Johnson syndrome, folate deficiency, teratogenic</span></div>
+      <div class="kv-row"><span class="kv-key">Carbamazepine use</span><span class="kv-val">Partial + generalised seizures; trigeminal neuralgia; bipolar (mood)</span></div>
+      <div class="kv-row"><span class="kv-key">Carbamazepine SE</span><span class="kv-val danger">SIADH, agranulocytosis, diplopia, SJS (HLA-B*1502 in Asians)</span></div>
+      <div class="kv-row"><span class="kv-key">Valproate MOA</span><span class="kv-val">Na channel + GABA-T inhibition; broad spectrum</span></div>
+      <div class="kv-row"><span class="kv-key">Valproate SE</span><span class="kv-val danger">Hepatotoxicity (children &lt;2 yrs), teratogenic (spina bifida), weight gain, tremor, alopecia, pancreatitis</span></div>
+      <div class="kv-row"><span class="kv-key">Lamotrigine</span><span class="kv-val">Na + Ca channel; broad spectrum; safe in pregnancy (relatively); SJS risk</span></div>
+      <div class="kv-row"><span class="kv-key">Ethosuximide</span><span class="kv-val highlight">Drug of choice absence seizures; T-type Ca channel blocker</span></div>
+      <div class="kv-row"><span class="kv-key">Levetiracetam</span><span class="kv-val">SV2A binding; broad spectrum; minimal drug interactions; safe in pregnancy</span></div>
+      <div class="kv-row"><span class="kv-key">Status epilepticus Rx</span><span class="kv-val danger">IV Lorazepam (1st) → IV Phenytoin/Levetiracetam → IV Phenobarbitone → General anaesthesia</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice febrile seizure</span><span class="kv-val">No prophylaxis needed; diazepam PR during seizure</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">💊 Opioid Analgesics</div>
+      <div class="kv-row"><span class="kv-key">Opioid receptors</span><span class="kv-val danger">μ (mu): analgesia + euphoria + respiratory depression; κ: analgesia + dysphoria; δ: analgesia</span></div>
+      <div class="kv-row"><span class="kv-key">Morphine effects</span><span class="kv-val">Analgesia, euphoria, sedation, constipation, miosis, cough suppression, ↓GI motility</span></div>
+      <div class="kv-row"><span class="kv-key">Morphine-6-glucuronide</span><span class="kv-val danger">Active metabolite; accumulates in renal failure — use fentanyl instead</span></div>
+      <div class="kv-row"><span class="kv-key">Fentanyl</span><span class="kv-val">100× more potent; transdermal patch; no histamine release</span></div>
+      <div class="kv-row"><span class="kv-key">Tramadol</span><span class="kv-val">Weak μ agonist + SNRI; lowers seizure threshold; serotonin syndrome with SSRIs</span></div>
+      <div class="kv-row"><span class="kv-key">Meperidine (Pethidine)</span><span class="kv-val danger">Normeperidine (toxic metabolite) → seizures; avoid in renal failure; serotonin syndrome with MAOIs</span></div>
+      <div class="kv-row"><span class="kv-key">Buprenorphine</span><span class="kv-val">Partial μ agonist; opioid dependence treatment; ceiling effect for respiratory depression</span></div>
+      <div class="kv-row"><span class="kv-key">Naloxone</span><span class="kv-val green">Opioid antagonist (competitive μ); t½ 30–90 min (shorter than most opioids — re-dose!)</span></div>
+      <div class="kv-row"><span class="kv-key">Naltrexone</span><span class="kv-val">Oral opioid antagonist; alcohol use disorder + opioid dependence</span></div>
+      <div class="kv-row"><span class="kv-key">Codeine</span><span class="kv-val">Prodrug → morphine (CYP2D6); antitussive; constipation</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">💊 Benzodiazepines & Sedatives</div>
+      <div class="kv-row"><span class="kv-key">BZD MOA</span><span class="kv-val pink">↑frequency of Cl⁻ channel opening at GABA-A receptor</span></div>
+      <div class="kv-row"><span class="kv-key">Barbiturate MOA</span><span class="kv-val">↑duration of Cl⁻ channel opening at GABA-A receptor</span></div>
+      <div class="kv-row"><span class="kv-key">BZD antidote</span><span class="kv-val green">Flumazenil (competitive BZD receptor antagonist)</span></div>
+      <div class="kv-row"><span class="kv-key">Longest-acting BZD</span><span class="kv-val">Diazepam, Chlordiazepoxide (t½ &gt;24 hrs)</span></div>
+      <div class="kv-row"><span class="kv-key">Shortest-acting BZD</span><span class="kv-val highlight">Midazolam (IV procedural sedation); Triazolam (sleep)</span></div>
+      <div class="kv-row"><span class="kv-key">No CYP metabolism BZDs</span><span class="kv-val green">LOT: Lorazepam, Oxazepam, Temazepam (direct glucuronidation; safe in liver disease)</span></div>
+      <div class="kv-row"><span class="kv-key">Z-drugs (non-BZD hypnotics)</span><span class="kv-val">Zolpidem, Zopiclone, Zaleplon; ω1 selective; fewer SE</span></div>
+      <div class="kv-row"><span class="kv-key">Ramelteon</span><span class="kv-val">MT1/MT2 melatonin receptor agonist; insomnia; no dependence</span></div>
+      <div class="kv-row"><span class="kv-key">Buspirone</span><span class="kv-val">5-HT1A partial agonist; GAD; no dependence; slow onset (2–4 wks)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ANTIMICROBIALS -->
+<div class="section" id="antimicro">
+  <div class="section-title">Anti<span>microbials</span></div>
+  <div class="section-sub">Antibiotics, antivirals, antifungals, antiparasitics — MOA, SE, resistance</div>
+  <div class="grid-auto">
+
+    <div class="card green">
+      <div class="card-title">🧫 Antibiotic Mechanisms</div>
+      <table class="comparison-table">
+        <tr><th>Target</th><th>Drug Class</th><th>Examples</th></tr>
+        <tr><td>Cell wall (PBP/transpeptidase)</td><td>β-lactams</td><td>Penicillins, Cephalosporins, Carbapenems, Monobactams</td></tr>
+        <tr><td>Cell wall (transglycosylase)</td><td>Glycopeptides</td><td>Vancomycin, Teicoplanin</td></tr>
+        <tr><td>30S ribosome</td><td>Aminoglycosides (bactericidal)</td><td>Gentamicin, Amikacin, Tobramycin</td></tr>
+        <tr><td>30S ribosome</td><td>Tetracyclines (bacteriostatic)</td><td>Doxycycline, Minocycline, Tigecycline</td></tr>
+        <tr><td>50S ribosome</td><td>Macrolides (bacteriostatic)</td><td>Erythromycin, Azithromycin, Clarithromycin</td></tr>
+        <tr><td>50S ribosome</td><td>Chloramphenicol (bacteriostatic)</td><td>Chloramphenicol</td></tr>
+        <tr><td>50S ribosome</td><td>Lincosamides</td><td>Clindamycin</td></tr>
+        <tr><td>50S ribosome</td><td>Oxazolidinones (bacteriostatic)</td><td>Linezolid</td></tr>
+        <tr><td>DNA gyrase (topo II)/Topo IV</td><td>Fluoroquinolones (bactericidal)</td><td>Ciprofloxacin, Levofloxacin, Moxifloxacin</td></tr>
+        <tr><td>DNA-dependent RNA pol</td><td>Rifamycins</td><td>Rifampicin, Rifabutin</td></tr>
+        <tr><td>DHFR / Dihydropteroate synthase</td><td>Sulfonamides + Trimethoprim</td><td>Co-trimoxazole (TMP-SMX)</td></tr>
+        <tr><td>Cell membrane</td><td>Polymyxins</td><td>Colistin, Polymyxin B (last resort Gram-ve)</td></tr>
+        <tr><td>Cell membrane</td><td>Lipopeptides</td><td>Daptomycin (Gram-positive only)</td></tr>
+      </table>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">⚠️ Antibiotic SE — High Yield</div>
+      <div class="kv-row"><span class="kv-key">Aminoglycosides</span><span class="kv-val danger">Ototoxicity (irreversible) + Nephrotoxicity; synergistic with β-lactams</span></div>
+      <div class="kv-row"><span class="kv-key">Vancomycin</span><span class="kv-val danger">Red man syndrome (histamine; slow infusion prevents), nephrotoxicity, ototoxicity</span></div>
+      <div class="kv-row"><span class="kv-key">Tetracyclines</span><span class="kv-val danger">Teeth staining + ↓bone growth (children/pregnancy CI), photosensitivity, pseudotumour cerebri</span></div>
+      <div class="kv-row"><span class="kv-key">Chloramphenicol</span><span class="kv-val danger">Grey baby syndrome (neonates — ↓glucuronidation), aplastic anaemia (idiosyncratic)</span></div>
+      <div class="kv-row"><span class="kv-key">Fluoroquinolones</span><span class="kv-val danger">Tendinopathy/Achilles tendon rupture, QT prolongation, cartilage damage (avoid &lt;18 yrs), photosensitivity</span></div>
+      <div class="kv-row"><span class="kv-key">Linezolid</span><span class="kv-val danger">Thrombocytopaenia, serotonin syndrome (weak MAOI — avoid SSRIs), optic neuropathy</span></div>
+      <div class="kv-row"><span class="kv-key">Metronidazole</span><span class="kv-val danger">Disulfiram-like reaction with alcohol, peripheral neuropathy, metallic taste</span></div>
+      <div class="kv-row"><span class="kv-key">Clindamycin</span><span class="kv-val danger">C. difficile pseudomembranous colitis (MC antibiotic cause)</span></div>
+      <div class="kv-row"><span class="kv-key">Sulfonamides</span><span class="kv-val danger">Stevens-Johnson syndrome, haemolytic anaemia (G6PD), crystalluria, kernicterus (neonates)</span></div>
+      <div class="kv-row"><span class="kv-key">Rifampicin</span><span class="kv-val danger">Red-orange body fluids, hepatotoxicity, strong CYP450 inducer (↓OCP, warfarin efficacy)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🦠 Specific Bug-Drug Matches</div>
+      <div class="kv-row"><span class="kv-key">MRSA</span><span class="kv-val highlight">Vancomycin (IV) / Linezolid / Daptomycin / Teicoplanin</span></div>
+      <div class="kv-row"><span class="kv-key">VRE (vancomycin-resistant Enterococcus)</span><span class="kv-val danger">Linezolid / Daptomycin</span></div>
+      <div class="kv-row"><span class="kv-key">ESBL-producing organisms</span><span class="kv-val danger">Carbapenem (imipenem/meropenem) — last resort</span></div>
+      <div class="kv-row"><span class="kv-key">CRE/KPC (carbapenem-resistant)</span><span class="kv-val danger">Colistin / Polymyxin B / Ceftazidime-avibactam</span></div>
+      <div class="kv-row"><span class="kv-key">Pseudomonas aeruginosa</span><span class="kv-val">Pip-tazo, Ceftazidime, Cefepime, Ciprofloxacin, Imipenem, Colistin</span></div>
+      <div class="kv-row"><span class="kv-key">C. difficile</span><span class="kv-val">Oral Vancomycin / Fidaxomicin (1st); Metronidazole (mild)</span></div>
+      <div class="kv-row"><span class="kv-key">N. meningitidis</span><span class="kv-val">Penicillin G (Rx); Rifampicin / Ciprofloxacin (prophylaxis)</span></div>
+      <div class="kv-row"><span class="kv-key">Atypical pneumonia (Mycoplasma/Chlamydia/Legionella)</span><span class="kv-val highlight">Azithromycin / Doxycycline / Fluoroquinolone</span></div>
+      <div class="kv-row"><span class="kv-key">Legionella</span><span class="kv-val">Azithromycin (drug of choice); Fluoroquinolones</span></div>
+      <div class="kv-row"><span class="kv-key">H. pylori triple therapy</span><span class="kv-val">PPI + Clarithromycin + Amoxicillin (× 14 days)</span></div>
+      <div class="kv-row"><span class="kv-key">Lyme disease (Borrelia)</span><span class="kv-val">Doxycycline (early); IV ceftriaxone (cardiac/neuro Lyme)</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🦠 Antituberculous Drugs (ATT)</div>
+      <div class="kv-row"><span class="kv-key">First-line drugs (RIPE/HRZE)</span><span class="kv-val purple">Rifampicin, Isoniazid, Pyrazinamide, Ethambutol</span></div>
+      <div class="kv-row"><span class="kv-key">Rifampicin MOA</span><span class="kv-val">Inhibits DNA-dependent RNA polymerase; bactericidal</span></div>
+      <div class="kv-row"><span class="kv-key">Rifampicin SE</span><span class="kv-val danger">Red-orange secretions, hepatotoxicity, flu-like syndrome (intermittent), CYP inducer</span></div>
+      <div class="kv-row"><span class="kv-key">Isoniazid MOA</span><span class="kv-val">Inhibits mycolic acid synthesis (InhA enzyme); prodrug (activated by katG)</span></div>
+      <div class="kv-row"><span class="kv-key">Isoniazid SE</span><span class="kv-val danger">Peripheral neuropathy (↓pyridoxine — give B6), hepatotoxicity, SLE-like, seizures (OD)</span></div>
+      <div class="kv-row"><span class="kv-key">Pyrazinamide SE</span><span class="kv-val danger">Hepatotoxicity (MC cause in ATT), hyperuricaemia, arthralgia</span></div>
+      <div class="kv-row"><span class="kv-key">Ethambutol SE</span><span class="kv-val danger">Optic neuritis (↓red-green colour vision; reversible) — monitor visual acuity</span></div>
+      <div class="kv-row"><span class="kv-key">MDR-TB definition</span><span class="kv-val danger">Resistant to Rifampicin + Isoniazid</span></div>
+      <div class="kv-row"><span class="kv-key">XDR-TB</span><span class="kv-val danger">MDR + resistant to any fluoroquinolone + at least one injectable 2nd-line drug</span></div>
+      <div class="kv-row"><span class="kv-key">Bedaquiline</span><span class="kv-val highlight">ATP synthase inhibitor; MDR-TB (newest drug)</span></div>
+      <div class="mnemonic-box"><b>RIPE</b> all cause Hepatotoxicity — Rife In Preventing Excess liver damage. <b>PZA</b> = highest uric acid. <b>EMB</b> = Eyes (optic neuritis).</div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🦠 Antivirals & Antifungals</div>
+      <div class="kv-row"><span class="kv-key">Acyclovir MOA</span><span class="kv-val danger">Activated by viral thymidine kinase → inhibits viral DNA polymerase</span></div>
+      <div class="kv-row"><span class="kv-key">Acyclovir use</span><span class="kv-val">HSV-1/2, VZV; nephrotoxic (IV) — hydrate well</span></div>
+      <div class="kv-row"><span class="kv-key">Ganciclovir</span><span class="kv-val danger">CMV retinitis (bone marrow suppression SE)</span></div>
+      <div class="kv-row"><span class="kv-key">HIV ARV classes</span><span class="kv-val">NRTIs, NNRTIs, PIs, INSTIs, Entry inhibitors, CCR5 antagonists</span></div>
+      <div class="kv-row"><span class="kv-key">Tenofovir (NRTI)</span><span class="kv-val">Backbone HAART; also Hep B treatment; nephrotoxicity SE</span></div>
+      <div class="kv-row"><span class="kv-key">Nevirapine (NNRTI)</span><span class="kv-val danger">Stevens-Johnson syndrome, hepatotoxicity; avoid in high CD4 (women &gt;250, men &gt;400)</span></div>
+      <div class="kv-row"><span class="kv-key">Oseltamivir (Tamiflu)</span><span class="kv-val">Neuraminidase inhibitor; influenza A+B; within 48 hrs of symptoms</span></div>
+      <div class="kv-row"><span class="kv-key">Amphotericin B MOA</span><span class="kv-val">Binds ergosterol → pores in fungal membrane → leakage</span></div>
+      <div class="kv-row"><span class="kv-key">Amphotericin B SE</span><span class="kv-val danger">Infusion reactions (fever, rigors), nephrotoxicity, hypokalaemia, hypomagnesaemia</span></div>
+      <div class="kv-row"><span class="kv-key">Azoles MOA</span><span class="kv-val">Lanosterol 14α-demethylase inhibition → ↓ergosterol synthesis</span></div>
+      <div class="kv-row"><span class="kv-key">Fluconazole</span><span class="kv-val">Candida (esp. non-neutropenic), cryptococcal meningitis maintenance</span></div>
+      <div class="kv-row"><span class="kv-key">Echinocandins (Caspofungin)</span><span class="kv-val highlight">β-1,3-glucan synthase inhibitor; invasive Aspergillus/Candida; well-tolerated</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🐛 Antiparasitic Drugs</div>
+      <div class="kv-row"><span class="kv-key">Chloroquine MOA</span><span class="kv-val pink">↑lysosomal pH → ↓haem detoxification in parasite</span></div>
+      <div class="kv-row"><span class="kv-key">Chloroquine use</span><span class="kv-val">P. vivax, P. malariae, P. ovale (sensitive strains)</span></div>
+      <div class="kv-row"><span class="kv-key">Chloroquine SE</span><span class="kv-val danger">Retinopathy (bulls-eye maculopathy), pruritus, QT prolongation</span></div>
+      <div class="kv-row"><span class="kv-key">Artemisinin-based combination (ACT)</span><span class="kv-val highlight">Drug of choice P. falciparum malaria (Artemether-Lumefantrine)</span></div>
+      <div class="kv-row"><span class="kv-key">Primaquine</span><span class="kv-val">Radical cure P. vivax/ovale (liver hypnozoites); G6PD test before use</span></div>
+      <div class="kv-row"><span class="kv-key">Metronidazole</span><span class="kv-val">Amoebic dysentery, Giardia, Trichomonas, BV, C. difficile (mild)</span></div>
+      <div class="kv-row"><span class="kv-key">Albendazole</span><span class="kv-val">Drug of choice: intestinal worms (Ascaris, hookworm, Enterobius), hydatid cyst, neurocysticercosis</span></div>
+      <div class="kv-row"><span class="kv-key">Praziquantel</span><span class="kv-val">All trematodes + cestodes (schistosomiasis, cysticercosis, tapeworms)</span></div>
+      <div class="kv-row"><span class="kv-key">Ivermectin</span><span class="kv-val">Onchocerciasis, strongyloidiasis, scabies, head lice; Cl-channel → paralysis</span></div>
+      <div class="kv-row"><span class="kv-key">Diethylcarbamazine (DEC)</span><span class="kv-val">Lymphatic filariasis (W. bancrofti); Mazzotti reaction SE</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ANTICANCER -->
+<div class="section" id="anticancer">
+  <div class="section-title">Anti<span>cancer</span> Drugs</div>
+  <div class="section-sub">Cytotoxics, targeted therapy, hormonal agents, immunotherapy</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">☠️ Alkylating Agents</div>
+      <div class="kv-row"><span class="kv-key">MOA</span><span class="kv-val orange">Cross-link DNA strands → prevent replication; cell cycle non-specific</span></div>
+      <div class="kv-row"><span class="kv-key">Cyclophosphamide</span><span class="kv-val highlight">Most widely used; activated by CYP450 → acrolein (toxic metabolite)</span></div>
+      <div class="kv-row"><span class="kv-key">Cyclophosphamide SE</span><span class="kv-val danger">Haemorrhagic cystitis (acrolein); Rx/prevention: Mesna + hydration</span></div>
+      <div class="kv-row"><span class="kv-key">Ifosfamide SE</span><span class="kv-val danger">CNS toxicity + haemorrhagic cystitis; Rx: Mesna</span></div>
+      <div class="kv-row"><span class="kv-key">Busulfan</span><span class="kv-val danger">CML conditioning; pulmonary fibrosis ("busulfan lung"), hyperpigmentation</span></div>
+      <div class="kv-row"><span class="kv-key">Chlorambucil</span><span class="kv-val">CLL; oral; well-tolerated</span></div>
+      <div class="kv-row"><span class="kv-key">Nitrosoureas (Carmustine/BCNU)</span><span class="kv-val">Crosses BBB; brain tumours; delayed myelosuppression</span></div>
+      <div class="kv-row"><span class="kv-key">Cisplatin</span><span class="kv-val">Platinum compound (like alkylating); cross-links DNA</span></div>
+      <div class="kv-row"><span class="kv-key">Cisplatin SE</span><span class="kv-val danger">Nephrotoxicity (↑creatinine; hydrate + amifostine), ototoxicity, peripheral neuropathy, severe nausea/vomiting</span></div>
+      <div class="kv-row"><span class="kv-key">Carboplatin</span><span class="kv-val">Less nephrotoxic; myelosuppression is dose-limiting</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🧬 Antimetabolites</div>
+      <div class="kv-row"><span class="kv-key">Methotrexate (MTX) MOA</span><span class="kv-val blue">DHFR inhibitor → ↓THF → ↓purine + pyrimidine synthesis (S-phase specific)</span></div>
+      <div class="kv-row"><span class="kv-key">MTX uses</span><span class="kv-val">Choriocarcinoma (curative), ALL, osteosarcoma, RA, psoriasis, ectopic pregnancy</span></div>
+      <div class="kv-row"><span class="kv-key">MTX SE</span><span class="kv-val danger">Myelosuppression, mucositis, hepatotoxicity, pulmonary fibrosis, nephrotoxicity (high dose)</span></div>
+      <div class="kv-row"><span class="kv-key">MTX rescue</span><span class="kv-val green">Leucovorin (folinic acid) — bypasses DHFR block</span></div>
+      <div class="kv-row"><span class="kv-key">5-Fluorouracil (5-FU) MOA</span><span class="kv-val">5-FdUMP inhibits thymidylate synthase → ↓dTMP (S-phase)</span></div>
+      <div class="kv-row"><span class="kv-key">5-FU uses</span><span class="kv-val">Colorectal, breast, GI cancers; topical (actinic keratosis, basal cell Ca)</span></div>
+      <div class="kv-row"><span class="kv-key">Leucovorin + 5-FU</span><span class="kv-val">Folinic acid stabilises 5-FdUMP-TS complex → ↑cytotoxicity</span></div>
+      <div class="kv-row"><span class="kv-key">6-Mercaptopurine (6-MP)</span><span class="kv-val">Purine analogue; ALL maintenance; metabolised by TPMT; xanthine oxidase (allopurinol increases toxicity)</span></div>
+      <div class="kv-row"><span class="kv-key">Cytarabine (Ara-C)</span><span class="kv-val">AML treatment; S-phase specific; cerebellar toxicity (high dose)</span></div>
+      <div class="kv-row"><span class="kv-key">Gemcitabine</span><span class="kv-val">Pancreatic cancer; NSCLC; inhibits ribonucleotide reductase</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🌱 Plant-Derived Anticancer Drugs</div>
+      <div class="kv-row"><span class="kv-key">Vinca alkaloids MOA</span><span class="kv-val green">Bind tubulin → prevent microtubule polymerisation → M-phase arrest</span></div>
+      <div class="kv-row"><span class="kv-key">Vincristine</span><span class="kv-val highlight">ALL, lymphoma; unique SE: peripheral neuropathy (NOT myelosuppression)</span></div>
+      <div class="kv-row"><span class="kv-key">Vinblastine</span><span class="kv-val danger">Hodgkin's lymphoma; SE: myelosuppression</span></div>
+      <div class="kv-row"><span class="kv-key">Taxanes MOA</span><span class="kv-val">Stabilise microtubules → prevent depolymerisation → M-phase arrest</span></div>
+      <div class="kv-row"><span class="kv-key">Paclitaxel (Taxol)</span><span class="kv-val">Breast, ovarian, NSCLC; peripheral neuropathy, hypersensitivity</span></div>
+      <div class="kv-row"><span class="kv-key">Topoisomerase I inhibitors</span><span class="kv-val">Irinotecan, Topotecan; colorectal Ca; diarrhoea SE</span></div>
+      <div class="kv-row"><span class="kv-key">Topoisomerase II inhibitors</span><span class="kv-val">Etoposide (VP-16); lung Ca, testicular; secondary AML risk</span></div>
+      <div class="kv-row"><span class="kv-key">Bleomycin</span><span class="kv-val danger">DNA strand breaks; testicular Ca, Hodgkin's (ABVD); pulmonary fibrosis (dose-limiting)</span></div>
+      <div class="kv-row"><span class="kv-key">Doxorubicin (Adriamycin) SE</span><span class="kv-val danger">Dilated cardiomyopathy (cumulative dose; &gt;550 mg/m²), red urine, myelosuppression, vesicant</span></div>
+      <div class="kv-row"><span class="kv-key">Dexrazoxane</span><span class="kv-val green">Cardioprotection with doxorubicin (iron chelator)</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🎯 Targeted Therapy</div>
+      <div class="kv-row"><span class="kv-key">Imatinib (Gleevec)</span><span class="kv-val purple">BCR-ABL TKI; CML (Ph+); GIST (c-Kit); 1st-line</span></div>
+      <div class="kv-row"><span class="kv-key">Dasatinib/Nilotinib</span><span class="kv-val">2nd-gen BCR-ABL TKIs; imatinib-resistant CML</span></div>
+      <div class="kv-row"><span class="kv-key">Gefitinib/Erlotinib</span><span class="kv-val">EGFR TKIs; NSCLC with EGFR mutation; rash, diarrhoea</span></div>
+      <div class="kv-row"><span class="kv-key">Trastuzumab (Herceptin)</span><span class="kv-val highlight">Anti-HER2 antibody; HER2+ breast Ca; cardiotoxicity SE (dilated CMP)</span></div>
+      <div class="kv-row"><span class="kv-key">Bevacizumab</span><span class="kv-val">Anti-VEGF antibody; colorectal, NSCLC, GBM; hypertension, thrombosis</span></div>
+      <div class="kv-row"><span class="kv-key">Rituximab</span><span class="kv-val">Anti-CD20; B-cell NHL, CLL, RA; B-cell depletion</span></div>
+      <div class="kv-row"><span class="kv-key">Cetuximab</span><span class="kv-val">Anti-EGFR antibody; colorectal Ca (KRAS wild-type only), head/neck</span></div>
+      <div class="kv-row"><span class="kv-key">Pembrolizumab/Nivolumab</span><span class="kv-val highlight">Anti-PD-1; immune checkpoint inhibitors; melanoma, NSCLC; immune-related AEs</span></div>
+      <div class="kv-row"><span class="kv-key">Ipilimumab</span><span class="kv-val">Anti-CTLA-4; melanoma; colitis, hypophysitis (immune AEs)</span></div>
+      <div class="kv-row"><span class="kv-key">PARP inhibitors</span><span class="kv-val">Olaparib, Niraparib; BRCA1/2+ ovarian/breast Ca</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">💊 Hormonal Anticancer Agents</div>
+      <div class="kv-row"><span class="kv-key">Tamoxifen</span><span class="kv-val danger">SERM; ER+ breast Ca (pre/perimenopausal); endometrial Ca risk (uterine oestrogen agonist)</span></div>
+      <div class="kv-row"><span class="kv-key">Aromatase inhibitors (AIs)</span><span class="kv-val">Anastrozole, Letrozole, Exemestane; ER+ breast Ca (postmenopausal); arthralgia SE</span></div>
+      <div class="kv-row"><span class="kv-key">Fulvestrant</span><span class="kv-val">Pure ER antagonist/degrader; advanced ER+ breast Ca</span></div>
+      <div class="kv-row"><span class="kv-key">Leuprolide (GnRH agonist)</span><span class="kv-val highlight">Prostate Ca; breast Ca (premenopausal); initial "flare" in prostate Ca</span></div>
+      <div class="kv-row"><span class="kv-key">Enzalutamide / Bicalutamide</span><span class="kv-val">Androgen receptor antagonist; castration-resistant prostate Ca</span></div>
+      <div class="kv-row"><span class="kv-key">Abiraterone</span><span class="kv-val">CYP17A1 inhibitor; ↓androgen synthesis (adrenal + tumour); prostate Ca</span></div>
+      <div class="kv-row"><span class="kv-key">Progestins (Megestrol)</span><span class="kv-val">Endometrial Ca, breast Ca; appetite stimulant</span></div>
+      <div class="kv-row"><span class="kv-key">Dexamethasone in cancer</span><span class="kv-val">MM, brain oedema, anti-emetic, cerebral mets</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">📊 Anticancer Drug SE Summary</div>
+      <table class="comparison-table">
+        <tr><th>Drug</th><th>Unique/Dose-Limiting SE</th></tr>
+        <tr><td>Bleomycin</td><td>Pulmonary fibrosis (dose-limiting)</td></tr>
+        <tr><td>Doxorubicin</td><td>Cardiomyopathy (cumulative)</td></tr>
+        <tr><td>Vincristine</td><td>Peripheral neuropathy (no myelosuppression)</td></tr>
+        <tr><td>Cyclophosphamide</td><td>Haemorrhagic cystitis (Mesna prevents)</td></tr>
+        <tr><td>Cisplatin</td><td>Nephrotoxicity + Ototoxicity</td></tr>
+        <tr><td>Methotrexate</td><td>Mucositis + hepatotoxicity + pulmonary fibrosis</td></tr>
+        <tr><td>Busulfan</td><td>Pulmonary fibrosis + hyperpigmentation</td></tr>
+        <tr><td>Irinotecan</td><td>Diarrhoea (early: cholinergic; late: secretory)</td></tr>
+        <tr><td>L-Asparaginase</td><td>Pancreatitis + thrombosis (↓clotting factors)</td></tr>
+        <tr><td>Tamoxifen</td><td>Endometrial Ca + thromboembolic events</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ENDOCRINE DRUGS -->
+<div class="section" id="endo">
+  <div class="section-title">Endocrine <span>Drugs</span></div>
+  <div class="section-sub">Diabetes, thyroid, corticosteroids, bone, reproductive pharmacology</div>
+  <div class="grid-auto">
+
+    <div class="card blue">
+      <div class="card-title">💉 Antidiabetic Drugs</div>
+      <div class="kv-row"><span class="kv-key">Metformin MOA</span><span class="kv-val blue">↑AMPK → ↓hepatic gluconeogenesis; insulin sensitiser</span></div>
+      <div class="kv-row"><span class="kv-key">Metformin SE</span><span class="kv-val danger">Lactic acidosis (CI: eGFR &lt;30, contrast media, surgery, liver disease, alcohol); B12 deficiency</span></div>
+      <div class="kv-row"><span class="kv-key">Metformin advantage</span><span class="kv-val green">No hypoglycaemia, weight neutral/loss, CV benefit</span></div>
+      <div class="kv-row"><span class="kv-key">Sulfonylureas MOA</span><span class="kv-val">Block KATP channels → depolarisation → ↑insulin secretion</span></div>
+      <div class="kv-row"><span class="kv-key">Sulfonylureas SE</span><span class="kv-val danger">Hypoglycaemia (MC), weight gain; Glibenclamide longest-acting (most dangerous)</span></div>
+      <div class="kv-row"><span class="kv-key">Glipizide</span><span class="kv-val green">Short-acting; preferred in elderly + CKD</span></div>
+      <div class="kv-row"><span class="kv-key">SGLT2 inhibitors MOA</span><span class="kv-val highlight">Block renal glucose reabsorption → glucosuria → ↓blood glucose</span></div>
+      <div class="kv-row"><span class="kv-key">SGLT2i SE</span><span class="kv-val danger">UTI/genital mycotic infections, DKA (euglycaemic), volume depletion, Fournier's gangrene</span></div>
+      <div class="kv-row"><span class="kv-key">SGLT2i benefits</span><span class="kv-val green">↓CV mortality, ↓HF hospitalisations, renoprotection</span></div>
+      <div class="kv-row"><span class="kv-key">GLP-1 receptor agonists</span><span class="kv-val">Semaglutide, Liraglutide, Exenatide; weight loss, CV benefit; nausea SE</span></div>
+      <div class="kv-row"><span class="kv-key">DPP-4 inhibitors (Gliptins)</span><span class="kv-val">Sitagliptin, Saxagliptin; ↑GLP-1; weight neutral; pancreatitis risk; HF risk (saxagliptin)</span></div>
+      <div class="kv-row"><span class="kv-key">Thiazolidinediones (TZDs)</span><span class="kv-val danger">Pioglitazone (PPARγ agonist); weight gain, oedema, HF, bone fractures, bladder Ca</span></div>
+      <div class="kv-row"><span class="kv-key">Acarbose</span><span class="kv-val">α-glucosidase inhibitor; delays CHO absorption; flatulence SE</span></div>
+      <div class="mnemonic-box"><b>Insulin types</b>: Lispro/Aspart (rapid, 15min) → Regular (short, 30min) → NPH (intermediate) → Glargine/Detemir (long, 24hr peakless)</div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🦋 Thyroid Pharmacology</div>
+      <div class="kv-row"><span class="kv-key">Carbimazole / Propylthiouracil (PTU) MOA</span><span class="kv-val orange">Block thyroid peroxidase → ↓T4/T3 synthesis</span></div>
+      <div class="kv-row"><span class="kv-key">PTU additional action</span><span class="kv-val highlight">Also blocks peripheral T4→T3 conversion (preferred in thyroid storm)</span></div>
+      <div class="kv-row"><span class="kv-key">PTU preferred in</span><span class="kv-val green">Thyroid storm, 1st trimester pregnancy (teratogen risk less vs carbimazole), breastfeeding</span></div>
+      <div class="kv-row"><span class="kv-key">Carbimazole SE</span><span class="kv-val danger">Agranulocytosis (0.3–0.5%; check WBC if sore throat/fever), rash</span></div>
+      <div class="kv-row"><span class="kv-key">PTU SE</span><span class="kv-val danger">Hepatotoxicity (more than carbimazole), vasculitis, agranulocytosis</span></div>
+      <div class="kv-row"><span class="kv-key">Radioactive iodine (RAI)</span><span class="kv-val">¹³¹I; Graves'/toxic nodular goitre; CI: pregnancy, breastfeeding</span></div>
+      <div class="kv-row"><span class="kv-key">Potassium iodide (Lugol's)</span><span class="kv-val">Wolff-Chaikoff effect → ↓T3/T4; preoperative Graves', thyroid storm</span></div>
+      <div class="kv-row"><span class="kv-key">Propranolol in hyperthyroidism</span><span class="kv-val">Symptomatic control (tachycardia, tremor) + ↓T4→T3 conversion</span></div>
+      <div class="kv-row"><span class="kv-key">Levothyroxine (T4)</span><span class="kv-val">Hypothyroidism Rx; take 30 min before breakfast; start low, go slow in elderly/CAD</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">💊 Corticosteroids</div>
+      <div class="kv-row"><span class="kv-key">Glucocorticoid effects</span><span class="kv-val purple">Anti-inflammatory, immunosuppressive, ↑gluconeogenesis, ↑lipolysis, ↓bone density</span></div>
+      <div class="kv-row"><span class="kv-key">Mineralocorticoid effects</span><span class="kv-val">↑Na retention, ↑K excretion, ↑water retention</span></div>
+      <div class="kv-row"><span class="kv-key">Most potent glucocorticoid (synthetic)</span><span class="kv-val highlight">Betamethasone / Dexamethasone (no mineralocorticoid activity)</span></div>
+      <div class="kv-row"><span class="kv-key">Dexamethasone uses</span><span class="kv-val">Cerebral oedema, fetal lung maturity (antenatal), DXM suppression test, anti-emetic, COVID-19</span></div>
+      <div class="kv-row"><span class="kv-key">Cortisol SE (chronic use)</span><span class="kv-val danger">Cushing's syndrome: obesity, DM, HTN, osteoporosis, cataracts, Addisonian crisis on withdrawal, immunosuppression, peptic ulcer</span></div>
+      <div class="kv-row"><span class="kv-key">HPA axis suppression</span><span class="kv-val danger">Never stop steroids abruptly if used &gt;2 weeks; taper slowly</span></div>
+      <div class="kv-row"><span class="kv-key">Fludrocortisone</span><span class="kv-val">Pure mineralocorticoid; Addison's disease, CAH, postural hypotension</span></div>
+      <div class="kv-row"><span class="kv-key">Mifepristone</span><span class="kv-val">Glucocorticoid receptor antagonist (also anti-progestogen); Cushing's; medical abortion</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🦴 Bone & Calcium Drugs</div>
+      <div class="kv-row"><span class="kv-key">Bisphosphonates MOA</span><span class="kv-val green">↓Osteoclast activity (inhibit farnesyl pyrophosphate synthase)</span></div>
+      <div class="kv-row"><span class="kv-key">Bisphosphonate use</span><span class="kv-val">Osteoporosis, Paget's disease, hypercalcaemia of malignancy, bone mets</span></div>
+      <div class="kv-row"><span class="kv-key">Bisphosphonate SE</span><span class="kv-val danger">Oesophagitis (take upright + full glass water), ONJ (osteonecrosis of jaw), atypical femoral fracture</span></div>
+      <div class="kv-row"><span class="kv-key">Denosumab</span><span class="kv-val">Anti-RANK-L antibody; ↓osteoclastogenesis; osteoporosis + bone mets; ONJ risk</span></div>
+      <div class="kv-row"><span class="kv-key">Teriparatide</span><span class="kv-val highlight">PTH analogue; anabolic; severe osteoporosis; ↑bone formation; osteosarcoma risk (avoid &gt;2 yrs)</span></div>
+      <div class="kv-row"><span class="kv-key">Romosozumab</span><span class="kv-val">Anti-sclerostin; ↑bone formation + ↓resorption; severe osteoporosis</span></div>
+      <div class="kv-row"><span class="kv-key">Calcitonin</span><span class="kv-val">↓serum Ca; Paget's disease, acute hypercalcaemia; tachyphylaxis</span></div>
+      <div class="kv-row"><span class="kv-key">Cinacalcet</span><span class="kv-val">Calcimimetic; ↓PTH (CaSR agonist); hyperparathyroidism (dialysis patients)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">💊 Reproductive Pharmacology</div>
+      <div class="kv-row"><span class="kv-key">Oxytocin</span><span class="kv-val danger">Augment labour, PPH prevention; antidiuretic (water intoxication at high dose)</span></div>
+      <div class="kv-row"><span class="kv-key">Ergometrine (ergot alkaloid)</span><span class="kv-val">PPH treatment (sustained uterine contraction); CI: hypertension</span></div>
+      <div class="kv-row"><span class="kv-key">Carboprost (PGF2α)</span><span class="kv-val danger">Refractory PPH; bronchospasm (CI: asthma)</span></div>
+      <div class="kv-row"><span class="kv-key">Misoprostol (PGE1)</span><span class="kv-val">PPH, medical abortion (with mifepristone), cervical ripening; oral/sublingual/vaginal</span></div>
+      <div class="kv-row"><span class="kv-key">Mifepristone</span><span class="kv-val">Antiprogesterone (progesterone receptor blocker); medical abortion; Cushing's</span></div>
+      <div class="kv-row"><span class="kv-key">Tocolytics (suppress labour)</span><span class="kv-val">Ritodrine (β2 agonist), Nifedipine (CCB), Atosiban (oxytocin antagonist), Indomethacin</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice tocolysis</span><span class="kv-val highlight">Nifedipine (CCB) — safest; or Atosiban (oxytocin receptor antagonist)</span></div>
+      <div class="kv-row"><span class="kv-key">Clomiphene citrate</span><span class="kv-val">SERM; anti-oestrogen → ↑GnRH → ↑FSH/LH → ovulation; PCOS 1st-line</span></div>
+      <div class="kv-row"><span class="kv-key">Danazol</span><span class="kv-val">Attenuated androgen; ↓GnRH pulsatility; endometriosis; androgenic SE</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🌿 Drugs in Special Populations</div>
+      <div class="kv-row"><span class="kv-key">Safe in pregnancy (FDA Cat B)</span><span class="kv-val green">Paracetamol, Penicillins, Cephalosporins, Heparin, Metformin, Labetalol, Hydralazine, Magnesium sulphate</span></div>
+      <div class="kv-row"><span class="kv-key">Absolutely CI in pregnancy</span><span class="kv-val danger">Warfarin (1st trimester embryopathy, 3rd trimester haemorrhage), Tetracyclines, ACEi/ARBs (2nd/3rd), Methotrexate, Thalidomide, Isotretinoin, Valproate, Carbamazepine</span></div>
+      <div class="kv-row"><span class="kv-key">Thalidomide teratogenicity</span><span class="kv-val danger">Phocomelia (limb reduction defects); now used for myeloma + leprosy ENL</span></div>
+      <div class="kv-row"><span class="kv-key">Drugs CI in breastfeeding</span><span class="kv-val danger">Bromocriptine, Methotrexate, Lithium, Amiodarone, Chloramphenicol, Tetracyclines, Quinolones, Ergotamine</span></div>
+      <div class="kv-row"><span class="kv-key">Drugs safe in renal failure</span><span class="kv-val green">Azithromycin, Ceftriaxone, Metronidazole (hepatically cleared)</span></div>
+      <div class="kv-row"><span class="kv-key">Drugs to avoid in hepatic failure</span><span class="kv-val danger">Paracetamol (hepatotoxic), Statins, Methotrexate, High-dose aspirin</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOXICOLOGY -->
+<div class="section" id="toxicology">
+  <div class="section-title">Clinical <span>Toxicology</span></div>
+  <div class="section-sub">Poisoning, overdoses, antidotes — rapid identification and management</div>
+  <div class="grid-auto">
+
+    <div class="card red">
+      <div class="card-title">☠️ Antidote Quick Reference</div>
+      <table class="comparison-table">
+        <tr><th>Poison / Drug</th><th>Antidote / Treatment</th><th>Key Point</th></tr>
+        <tr><td>Paracetamol</td><td>N-Acetylcysteine (NAC)</td><td>Within 8–10 hrs most effective; Rumack-Matthew nomogram</td></tr>
+        <tr><td>Opioids</td><td>Naloxone (IV/IM/IN)</td><td>t½ 30–90 min → re-dose; watch for withdrawal</td></tr>
+        <tr><td>Benzodiazepines</td><td>Flumazenil</td><td>Short t½; may precipitate seizures in BZD-dependent</td></tr>
+        <tr><td>Organophosphate</td><td>Atropine + Pralidoxime (2-PAM)</td><td>Atropine = muscarinic symptoms; 2-PAM = prevents aging</td></tr>
+        <tr><td>Warfarin</td><td>Vit K / FFP / PCC</td><td>Vit K = slow; FFP = faster; PCC = fastest</td></tr>
+        <tr><td>Heparin</td><td>Protamine sulphate</td><td>1 mg protamine per 100 units heparin</td></tr>
+        <tr><td>Dabigatran</td><td>Idarucizumab (Praxbind)</td><td>Humanised Fab fragment</td></tr>
+        <tr><td>Rivaroxaban/Apixaban</td><td>Andexanet alfa</td><td>Modified Xa decoy molecule</td></tr>
+        <tr><td>Iron</td><td>Desferrioxamine (DFO)</td><td>Vin rosé urine (ferrioxamine) indicates effectiveness</td></tr>
+        <tr><td>Lead</td><td>DMSA (Succimer) oral; CaEDTA (IV)</td><td>DMSA preferred in children</td></tr>
+        <tr><td>Mercury</td><td>DMSA, DMPS, D-penicillamine</td><td>BAL (dimercaprol) for acute</td></tr>
+        <tr><td>Arsenic</td><td>Dimercaprol (BAL) / DMSA</td><td>BAL = British Anti-Lewisite</td></tr>
+        <tr><td>Cyanide</td><td>Hydroxocobalamin / Sodium thiosulphate</td><td>Hydroxocobalamin → cyanocobalamin (B12)</td></tr>
+        <tr><td>CO poisoning</td><td>100% O2 / Hyperbaric O2</td><td>HBO if: coma, neurological deficit, cardiac, pregnancy</td></tr>
+        <tr><td>Methanol / Ethylene glycol</td><td>Fomepizole / Ethanol + Haemodialysis</td><td>Fomepizole = ADH inhibitor (preferred); HD if severe</td></tr>
+        <tr><td>TCA overdose</td><td>Sodium bicarbonate (IV)</td><td>Alkalinise blood → Na channel stabilisation + ↑protein binding</td></tr>
+        <tr><td>Atropine toxicity</td><td>Physostigmine</td><td>Crosses BBB; antagonises muscarinic blockade</td></tr>
+        <tr><td>Digoxin</td><td>Digoxin-specific Fab (Digibind)</td><td>Correct K, Mg; treat arrhythmias; avoid cardioversion</td></tr>
+        <tr><td>Methotrexate</td><td>Leucovorin (folinic acid)</td><td>Bypass DHFR; give even if late</td></tr>
+        <tr><td>Sulphonylurea</td><td>Dextrose + Octreotide</td><td>Octreotide ↓insulin secretion; prevents rebound hypoglycaemia</td></tr>
+      </table>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🔍 Toxidromes — Clinical Recognition</div>
+      <table class="comparison-table">
+        <tr><th>Toxidrome</th><th>Pupils</th><th>HR / BP</th><th>Key Features</th><th>Cause</th></tr>
+        <tr><td>Cholinergic</td><td>Miosis</td><td>↓HR, ↓BP</td><td>SLUDGE, bronchospasm, seizures</td><td>OP, carbamates, pilocarpine</td></tr>
+        <tr><td>Anticholinergic</td><td>Mydriasis</td><td>↑HR</td><td>Dry, hot, red, mad, blind, urinary retention</td><td>Atropine, TCAs, antihistamines, Dhatura</td></tr>
+        <tr><td>Sympathomimetic</td><td>Mydriasis</td><td>↑HR, ↑BP</td><td>Diaphoresis, hyperthermia, agitation, seizures</td><td>Cocaine, amphetamines, ephedrine</td></tr>
+        <tr><td>Opioid</td><td>Miosis (pin-point)</td><td>↓HR, ↓BP</td><td>CNS depression, respiratory depression, coma</td><td>Morphine, heroin, fentanyl</td></tr>
+        <tr><td>Sedative/Hypnotic</td><td>Normal</td><td>↓HR, ↓BP</td><td>CNS depression, ataxia, slurred speech</td><td>BZDs, barbiturates, ethanol</td></tr>
+        <tr><td>Serotonin syndrome</td><td>Mydriasis</td><td>↑HR, ↑BP</td><td>Hyperthermia + myoclonus + clonus + agitation</td><td>SSRIs + MAOIs, tramadol + SSRIs</td></tr>
+        <tr><td>NMS</td><td>Normal</td><td>↑HR, ↑BP</td><td>Hyperthermia + "lead pipe" rigidity + ↑CK</td><td>Antipsychotics, metoclopramide</td></tr>
+      </table>
+      <div class="alert-box">Serotonin syndrome vs NMS: Both → hyperthermia + autonomic instability. KEY DIFF: Serotonin = clonus/myoclonus (hyperreflexia); NMS = "lead-pipe" rigidity (↑CK &gt;1000). Onset: SS = rapid (hours); NMS = days-weeks.</div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">💊 Common OD Management</div>
+      <div class="kv-row"><span class="kv-key">Paracetamol OD mechanism</span><span class="kv-val blue">NAPQI (toxic metabolite from CYP2E1) → glutathione depletion → centrilobular necrosis</span></div>
+      <div class="kv-row"><span class="kv-key">Paracetamol OD risk factors</span><span class="kv-val danger">Alcohol, fasting, CYP inducers (rifampicin, carbamazepine) → ↑NAPQI production</span></div>
+      <div class="kv-row"><span class="kv-key">NAC mechanism</span><span class="kv-val green">↑Glutathione synthesis → conjugates NAPQI</span></div>
+      <div class="kv-row"><span class="kv-key">Aspirin OD stages</span><span class="kv-val">Early: respiratory alkalosis (↑RR) → Mixed: resp alkalosis + metabolic acidosis → Late (severe): metabolic acidosis</span></div>
+      <div class="kv-row"><span class="kv-key">Aspirin OD Rx</span><span class="kv-val danger">NaHCO3 (alkalinise urine → ↑ionisation → ↑excretion) + HD if severe</span></div>
+      <div class="kv-row"><span class="kv-key">Iron OD stages</span><span class="kv-val">GI (0–6 hr) → Latent (6–24 hr) → Systemic toxicity (24–48 hr) → GI scarring (wks)</span></div>
+      <div class="kv-row"><span class="kv-key">Iron OD investigation</span><span class="kv-val">Serum iron &gt;350 µg/dL → treat; X-ray (radio-opaque tablets)</span></div>
+      <div class="kv-row"><span class="kv-key">TCA OD key features</span><span class="kv-val danger">QRS &gt;100ms (arrhythmia risk), hypotension, seizures, anticholinergic effects</span></div>
+      <div class="kv-row"><span class="kv-key">TCA OD NaHCO3 mechanism</span><span class="kv-val green">Alkalinisation → ↑protein binding + Na load → ↓Na channel blockade</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🌿 Heavy Metal Poisoning</div>
+      <div class="kv-row"><span class="kv-key">Lead poisoning signs</span><span class="kv-val danger">Basophilic stippling of RBCs, Burton's line (gingiva), wrist/foot drop, colic, encephalopathy</span></div>
+      <div class="kv-row"><span class="kv-key">Lead level (treatment threshold)</span><span class="kv-val">Children: &gt;45 µg/dL (chelation); &gt;70 µg/dL (emergency)</span></div>
+      <div class="kv-row"><span class="kv-key">Lead chelation</span><span class="kv-val">DMSA (oral; first choice children); CaEDTA (IV); BAL (severe)</span></div>
+      <div class="kv-row"><span class="kv-key">Arsenic poisoning</span><span class="kv-val">Garlic breath, rain-drop pigmentation, Mees' lines (transverse white nail bands), peripheral neuropathy</span></div>
+      <div class="kv-row"><span class="kv-key">Arsenic antidote</span><span class="kv-val green">BAL (dimercaprol) acute; DMSA chronic</span></div>
+      <div class="kv-row"><span class="kv-key">Mercury — organic (methyl)</span><span class="kv-val danger">Minamata disease; CNS damage; visual/hearing loss; teratogenic</span></div>
+      <div class="kv-row"><span class="kv-key">Mercury — inorganic</span><span class="kv-val">Acrodynia (pink disease in children), erethism (Mad Hatter), GI symptoms</span></div>
+      <div class="kv-row"><span class="kv-key">Mercury antidote</span><span class="kv-val green">Dimercaprol (BAL); DMSA for organic; DMPS</span></div>
+      <div class="kv-row"><span class="kv-key">Chelating agents summary</span><span class="kv-val">BAL (arsenic, mercury, lead+), DMSA (lead, mercury, arsenic), CaEDTA (lead), Penicillamine (Wilson's, lead)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Pharma <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency single-answer facts for rapid revision</div>
+  <div class="grid-2">
+
+    <div class="card purple">
+      <div class="card-title">⭐ Pharma Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">Drug causing dry cough</span><span class="kv-val highlight">ACE inhibitors (bradykinin)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice PSVT</span><span class="kv-val">Adenosine (6 mg IV rapid bolus)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice VF/VT (pulseless)</span><span class="kv-val danger">Amiodarone (after defibrillation)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice anaphylaxis</span><span class="kv-val danger">Adrenaline (epinephrine) IM</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice absence seizures</span><span class="kv-val">Ethosuximide</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice status epilepticus</span><span class="kv-val danger">IV Lorazepam (then phenytoin)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice myasthenia gravis</span><span class="kv-val">Pyridostigmine (oral); thymectomy if thymoma</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice Alzheimer's</span><span class="kv-val">Donepezil (mild-mod); Memantine (mod-severe)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice Parkinson's</span><span class="kv-val">Levodopa + Carbidopa (gold standard)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice bipolar (acute mania)</span><span class="kv-val">Lithium / Valproate / Haloperidol</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice OCD</span><span class="kv-val">Fluvoxamine (1st line); Clomipramine (TCA)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice panic disorder</span><span class="kv-val">SSRIs (1st line); Alprazolam (acute)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice ADHD</span><span class="kv-val">Methylphenidate (child); Atomoxetine (NRI)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice Tourette's</span><span class="kv-val">Haloperidol / Pimozide / Clonidine</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice trigeminal neuralgia</span><span class="kv-val highlight">Carbamazepine</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice migraine (acute)</span><span class="kv-val">Sumatriptan (5-HT1B/1D agonist, triptan)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice migraine prophylaxis</span><span class="kv-val">Propranolol / Topiramate / Amitriptyline</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice gout (acute)</span><span class="kv-val">Colchicine / NSAIDs / Steroids</span></div>
+      <div class="kv-row"><span class="kv-key">Gout prophylaxis</span><span class="kv-val">Allopurinol (xanthine oxidase inhibitor)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug of choice H. pylori</span><span class="kv-val">PPI + Clarithromycin + Amoxicillin × 14 days</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">⭐ Pharma Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">Drug causing haemorrhagic cystitis</span><span class="kv-val danger">Cyclophosphamide / Ifosfamide (Rx: Mesna)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug causing pulmonary fibrosis</span><span class="kv-val danger">Bleomycin, Busulfan, Amiodarone, Methotrexate, Nitrofurantoin</span></div>
+      <div class="kv-row"><span class="kv-key">Drug causing cardiomyopathy</span><span class="kv-val danger">Doxorubicin (anthracyclines), Trastuzumab</span></div>
+      <div class="kv-row"><span class="kv-key">Drug causing peripheral neuropathy</span><span class="kv-val danger">Vincristine, Isoniazid, Cisplatin, Thalidomide, Metronidazole</span></div>
+      <div class="kv-row"><span class="kv-key">Drug causing agranulocytosis</span><span class="kv-val danger">Clozapine, Carbimazole, Carbamazepine, Chlorpromazine, Ticlopidine</span></div>
+      <div class="kv-row"><span class="kv-key">Drug causing SJS / TEN</span><span class="kv-val danger">Allopurinol, Lamotrigine, Carbamazepine, Sulfonamides, Nevirapine</span></div>
+      <div class="kv-row"><span class="kv-key">Drug causing lupus-like syndrome</span><span class="kv-val danger">Hydralazine, Procainamide, Isoniazid, Methyldopa (anti-histone Ab)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug causing gingival hyperplasia</span><span class="kv-val">Phenytoin, Cyclosporine, Nifedipine (CCBs)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug causing photosensitivity</span><span class="kv-val">Tetracyclines, Amiodarone, Chlorpromazine, Sulfonamides, Fluoroquinolones</span></div>
+      <div class="kv-row"><span class="kv-key">Drug causing SIADH</span><span class="kv-val danger">Carbamazepine, SSRIs, Chlorpropamide, Cyclophosphamide, Vincristine</span></div>
+      <div class="kv-row"><span class="kv-key">Drug causing QT prolongation</span><span class="kv-val danger">Amiodarone, Sotalol, Quinidine, Haloperidol, Methadone, Ciprofloxacin, Azithromycin, Chloroquine</span></div>
+      <div class="kv-row"><span class="kv-key">Drug causing hyperuricaemia</span><span class="kv-val">Pyrazinamide, Thiazides, Loop diuretics, Ethambutol, Cyclosporine</span></div>
+      <div class="kv-row"><span class="kv-key">Drug causing hyperprolactinaemia</span><span class="kv-val danger">Haloperidol, Risperidone, Metoclopramide, Domperidone, Methyldopa</span></div>
+      <div class="kv-row"><span class="kv-key">Drug causing gynaecomastia</span><span class="kv-val danger">Spironolactone, Digoxin, Cimetidine, Ketoconazole, Oestrogens, Finasteride</span></div>
+      <div class="kv-row"><span class="kv-key">Drug causing disulfiram-like reaction</span><span class="kv-val danger">Metronidazole, Cephalosporins (MTT side chain), Chlorpropamide, Tinidazole</span></div>
+      <div class="kv-row"><span class="kv-key">Safest NSAID in aspirin-sensitive asthma</span><span class="kv-val green">Paracetamol; or COX-2 selective (Celecoxib)</span></div>
+      <div class="kv-row"><span class="kv-key">NSAID safest in renal impairment</span><span class="kv-val green">Sulindac (prodrug; renal-sparing)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug blocking tubular secretion of penicillin</span><span class="kv-val">Probenecid (↑penicillin plasma levels)</span></div>
+      <div class="kv-row"><span class="kv-key">Inhibitor of xanthine oxidase</span><span class="kv-val">Allopurinol (gout prophylaxis); ↑6-MP/azathioprine toxicity</span></div>
+      <div class="kv-row"><span class="kv-key">MOA of sildenafil</span><span class="kv-val">PDE-5 inhibitor → ↑cGMP → smooth muscle relaxation → vasodilation</span></div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-auto">
+    <div class="card green span-full">
+      <div class="card-title">📊 Receptors & Second Messengers</div>
+      <table class="comparison-table">
+        <tr><th>Receptor</th><th>Type / Second Messenger</th><th>Example Drug</th></tr>
+        <tr><td>β1, β2, D1, H2, V2, TSH, LH/FSH, PTH</td><td>Gs → ↑cAMP (via adenylyl cyclase)</td><td>Dobutamine (β1), Salbutamol (β2), Vasopressin (V2)</td></tr>
+        <tr><td>M2, D2, α2, GABA-B, opioid μ/δ/κ</td><td>Gi → ↓cAMP</td><td>Clonidine (α2), Morphine (μ), Haloperidol (D2 block)</td></tr>
+        <tr><td>M1, M3, α1, H1, 5-HT2, AT1, V1, GnRH</td><td>Gq → ↑IP3 + DAG → ↑Ca²⁺</td><td>Pilocarpine (M3), Prazosin (α1 block), Oxytocin (V1)</td></tr>
+        <tr><td>ANP, NO → sGC</td><td>↑cGMP (soluble guanylyl cyclase)</td><td>Nitroprusside (→ NO), Sildenafil (PDE-5 block → ↑cGMP)</td></tr>
+        <tr><td>Insulin, EGFR, HER2</td><td>Receptor tyrosine kinase → MAPK/PI3K</td><td>Insulin, Gefitinib (EGFR block), Trastuzumab (HER2 block)</td></tr>
+        <tr><td>GH, EPO, cytokines</td><td>JAK-STAT pathway</td><td>Ruxolitinib (JAK inhibitor), Tofacitinib (JAK-STAT)</td></tr>
+        <tr><td>Glucocorticoids, sex hormones, thyroid hormone</td><td>Intracellular / nuclear receptor → gene transcription</td><td>Prednisolone, Testosterone, Levothyroxine, Tamoxifen</td></tr>
+        <tr><td>Nicotinic (Nm, Nn), GABA-A, 5-HT3, AMPA, NMDA</td><td>Ion channel linked (ionotropic)</td><td>Succinylcholine (Nm), BZDs (GABA-A), Ondansetron (5-HT3 block)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FMT Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0d0a06; --surface: #1a1208; --surface2: #221a0c; --border: #2e2210;
+    --accent: #f59e0b; --accent2: #34d399; --accent3: #f87171; --accent4: #c4b5fd; --accent5: #38bdf8;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #0d0a06 0%, #1c1404 50%, #0d0a06 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent); color: #0d0a06; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent); color: #0d0a06; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.amber::before { background: var(--accent); }
+  .card.green::before { background: var(--accent2); }
+  .card.red::before { background: var(--accent3); }
+  .card.purple::before { background: var(--accent4); }
+  .card.sky::before { background: var(--accent5); }
+  .card.orange::before { background: #fb923c; }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.amber .card-title { color: var(--accent); }
+  .card.green .card-title { color: var(--accent2); }
+  .card.red .card-title { color: var(--accent3); }
+  .card.purple .card-title { color: var(--accent4); }
+  .card.sky .card-title { color: var(--accent5); }
+  .card.orange .card-title { color: #fb923c; }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #221a0c; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.green { color: var(--accent2); }
+  .kv-val.danger { color: var(--accent3); }
+  .kv-val.purple { color: var(--accent4); }
+  .kv-val.sky { color: var(--accent5); }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.3); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent); margin-top: 8px; line-height: 1.5; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  .mt-12 { margin-top: 12px; }
+  @media (max-width: 800px) { .grid-auto, .grid-2 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>FMT <span>Cheatsheet</span></h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('thanatology',this)">Thanatology</div>
+    <div class="tab" onclick="showSection('wounds',this)">Wounds &amp; Injuries</div>
+    <div class="tab" onclick="showSection('sexual',this)">Sexual Offences</div>
+    <div class="tab" onclick="showSection('toxicology',this)">Toxicology</div>
+    <div class="tab" onclick="showSection('medlaw',this)">Medical Law &amp; Ethics</div>
+    <div class="tab" onclick="showSection('identification',this)">Identification</div>
+    <div class="tab" onclick="showSection('specific_poison',this)">Specific Poisons</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- THANATOLOGY -->
+<div class="section active" id="thanatology">
+  <div class="section-title">Thanatology <span>— Signs of Death</span></div>
+  <div class="section-sub">Postmortem changes, time since death estimation</div>
+  <div class="grid-auto">
+    <div class="card amber">
+      <div class="card-title">🌡️ Postmortem Cooling (Algor Mortis)</div>
+      <div class="kv-row"><span class="kv-key">Rate of cooling</span><span class="kv-val highlight">~1.5°F (0.8°C) per hour (first 6 hrs)</span></div>
+      <div class="kv-row"><span class="kv-key">Body reaches room temp</span><span class="kv-val">~24 hrs (in average conditions)</span></div>
+      <div class="kv-row"><span class="kv-key">Henssge nomogram</span><span class="kv-val">Best formula for time of death</span></div>
+      <div class="kv-row"><span class="kv-key">Rectum site preferred</span><span class="kv-val">For core temp measurement</span></div>
+      <div class="kv-row"><span class="kv-key">Factors ↑ cooling rate</span><span class="kv-val danger">Thin body, cold environment, windy, wet</span></div>
+      <div class="kv-row"><span class="kv-key">Factors ↓ cooling rate</span><span class="kv-val">Obese, hot environment, clothed</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔵 Postmortem Lividity (Livor Mortis)</div>
+      <div class="kv-row"><span class="kv-key">Appears</span><span class="kv-val highlight">30 min – 2 hrs after death</span></div>
+      <div class="kv-row"><span class="kv-key">Well established</span><span class="kv-val">6–12 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Fixed (non-blanchable)</span><span class="kv-val danger">8–12 hrs (blood in vessels)</span></div>
+      <div class="kv-row"><span class="kv-key">Colour</span><span class="kv-val">Purplish-red (deoxyHb)</span></div>
+      <div class="kv-row"><span class="kv-key">Cherry-red lividity</span><span class="kv-val danger">CO poisoning, CN poisoning, cold exposure</span></div>
+      <div class="kv-row"><span class="kv-key">Brown lividity</span><span class="kv-val danger">Methaemoglobinaemia (nitrites, aniline dyes)</span></div>
+      <div class="kv-row"><span class="kv-key">Floater (drowning)</span><span class="kv-val">Pink lividity (anterior surface)</span></div>
+      <div class="kv-row"><span class="kv-key">Contact flattening</span><span class="kv-val">Pale areas where body pressed against surface</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">💀 Rigor Mortis</div>
+      <div class="kv-row"><span class="kv-key">Onset</span><span class="kv-val highlight">1–2 hrs after death (warm climate: 30 min)</span></div>
+      <div class="kv-row"><span class="kv-key">Complete</span><span class="kv-val">6–12 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Passes off</span><span class="kv-val danger">24–48 hrs (secondary flaccidity)</span></div>
+      <div class="kv-row"><span class="kv-key">Mechanism</span><span class="kv-val">ATP depletion → actin-myosin lock</span></div>
+      <div class="kv-row"><span class="kv-key">Nysten's rule</span><span class="kv-val">Jaw → neck → trunk → arms → legs (descending)</span></div>
+      <div class="kv-row"><span class="kv-key">Cadaveric spasm</span><span class="kv-val">Instantaneous rigor (intense emotion/exertion)</span></div>
+      <div class="kv-row"><span class="kv-key">Heat stiffening</span><span class="kv-val">Pugilistic (boxing) posture</span></div>
+      <div class="kv-row"><span class="kv-key">Cold stiffening</span><span class="kv-val">Freezing (not true rigor)</span></div>
+      <div class="kv-row"><span class="kv-key">Rigor in fetus</span><span class="kv-val">Intrauterine fetal death (IUFD)</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🧫 Decomposition &amp; Putrefaction</div>
+      <div class="kv-row"><span class="kv-key">First sign of putrefaction</span><span class="kv-val highlight">Green discolouration of RIF (caecum — gut bacteria)</span></div>
+      <div class="kv-row"><span class="kv-key">Timing (tropical climate)</span><span class="kv-val">24–48 hrs after death</span></div>
+      <div class="kv-row"><span class="kv-key">Marbling</span><span class="kv-val">Greenish network on skin (dilated blood vessels)</span></div>
+      <div class="kv-row"><span class="kv-key">Bloating</span><span class="kv-val">3–5 days (gas formation)</span></div>
+      <div class="kv-row"><span class="kv-key">Adipocere</span><span class="kv-val">Saponification of fat; wet environment; months–years</span></div>
+      <div class="kv-row"><span class="kv-key">Mummification</span><span class="kv-val">Desiccation in hot/dry environment</span></div>
+      <div class="kv-row"><span class="kv-key">Skeletonisation</span><span class="kv-val">~1 year in tropical climate</span></div>
+      <div class="kv-row"><span class="kv-key">Best preserved tissue</span><span class="kv-val">Uterus (last to putrefy)</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🪰 Entomology &amp; Other Markers</div>
+      <div class="kv-row"><span class="kv-key">Blow flies (Calliphora)</span><span class="kv-val highlight">First to arrive; eggs in 24 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Maggots appear</span><span class="kv-val">12–24 hrs after egg laying</span></div>
+      <div class="kv-row"><span class="kv-key">Succession of insects</span><span class="kv-val">Blow fly → Flesh fly → Beetles → Mites</span></div>
+      <div class="kv-row"><span class="kv-key">Vitreous humour</span><span class="kv-val">Potassium ↑ 1 mEq/L/hr (time of death marker)</span></div>
+      <div class="kv-row"><span class="kv-key">Subdural haematoma age</span><span class="kv-val">Colour change: red → yellow/orange → clear</span></div>
+      <div class="kv-row"><span class="kv-key">Stomach contents</span><span class="kv-val">Gastric emptying 4–6 hrs; time of last meal</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WOUNDS -->
+<div class="section" id="wounds">
+  <div class="section-title">Wounds <span>&amp; Injuries</span></div>
+  <div class="section-sub">Blunt force, sharp force, firearm injuries, hanging, drowning</div>
+  <div class="grid-auto">
+    <div class="card amber">
+      <div class="card-title">🔪 Types of Wounds</div>
+      <div class="kv-row"><span class="kv-key">Abrasion</span><span class="kv-val">Superficial scraping; epidermis only; direction evidence</span></div>
+      <div class="kv-row"><span class="kv-key">Contusion (bruise)</span><span class="kv-val">Blunt force; extravasation of blood</span></div>
+      <div class="kv-row"><span class="kv-key">Laceration</span><span class="kv-val">Blunt force → tearing; irregular edges, tissue bridges</span></div>
+      <div class="kv-row"><span class="kv-key">Incised wound</span><span class="kv-val">Sharp instrument; clean edges; length &gt; depth</span></div>
+      <div class="kv-row"><span class="kv-key">Stab wound</span><span class="kv-val">Sharp; depth &gt; length; minimal bleeding external</span></div>
+      <div class="kv-row"><span class="kv-key">Chop wound</span><span class="kv-val">Heavy sharp weapon; penetrates bone</span></div>
+      <div class="kv-row"><span class="kv-key">Laceration vs incised</span><span class="kv-val highlight">Tissue bridges present → Laceration; absent → Incised</span></div>
+      <div class="kv-row"><span class="kv-key">Hesitation cuts</span><span class="kv-val">Multiple superficial incisions → suicidal cut</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">💢 Contusion (Bruise) Ageing</div>
+      <div class="kv-row"><span class="kv-key">Red/blue/purple</span><span class="kv-val highlight">0–2 days (fresh)</span></div>
+      <div class="kv-row"><span class="kv-key">Greenish tinge</span><span class="kv-val">3–5 days (biliverdin)</span></div>
+      <div class="kv-row"><span class="kv-key">Yellow</span><span class="kv-val">5–7 days (bilirubin)</span></div>
+      <div class="kv-row"><span class="kv-key">Returns to normal</span><span class="kv-val">2–4 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">Bruise not present immediately</span><span class="kv-val">Appears 12–24 hrs later (deep bruises)</span></div>
+      <div class="kv-row"><span class="kv-key">Wandering bruise</span><span class="kv-val">Tracks along fascial planes</span></div>
+      <div class="kv-row"><span class="kv-key">Spectacle haematoma</span><span class="kv-val">Fracture base of skull (raccoon eyes)</span></div>
+      <div class="kv-row"><span class="kv-key">Battle's sign</span><span class="kv-val">Bruise behind ear → petrous temporal # (mastoid)</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🔫 Firearm Injuries</div>
+      <div class="kv-row"><span class="kv-key">Contact wound</span><span class="kv-val danger">Stellate tear; blackening; muzzle imprint; inverted edges</span></div>
+      <div class="kv-row"><span class="kv-key">Close range (&lt;15 cm)</span><span class="kv-val">Blackening + tattooing (unburnt powder)</span></div>
+      <div class="kv-row"><span class="kv-key">Intermediate (15–60 cm)</span><span class="kv-val">Tattooing only (no blackening)</span></div>
+      <div class="kv-row"><span class="kv-key">Distant (&gt;60 cm)</span><span class="kv-val">Circular hole, no blackening/tattooing</span></div>
+      <div class="kv-row"><span class="kv-key">Entry wound</span><span class="kv-val highlight">Smaller, inverted, abraded collar</span></div>
+      <div class="kv-row"><span class="kv-key">Exit wound</span><span class="kv-val">Larger, irregular, everted edges</span></div>
+      <div class="kv-row"><span class="kv-key">Grease collar</span><span class="kv-val">Dirt/lubricant deposited at entry</span></div>
+      <div class="kv-row"><span class="kv-key">Rifled vs smooth bore</span><span class="kv-val">Rifled → single bullet; Smooth → shotgun pellets</span></div>
+      <div class="kv-row"><span class="kv-key">Wad in shotgun</span><span class="kv-val">Only within 3 metres — indicates range</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🪢 Hanging &amp; Strangulation</div>
+      <div class="kv-row"><span class="kv-key">Typical hanging</span><span class="kv-val highlight">Knot at occiput; runs up the neck obliquely</span></div>
+      <div class="kv-row"><span class="kv-key">Atypical hanging</span><span class="kv-val">Knot at side or front (partial suspension)</span></div>
+      <div class="kv-row"><span class="kv-key">COD in hanging</span><span class="kv-val">Asphyxia + venous obstruction + reflex cardiac arrest</span></div>
+      <div class="kv-row"><span class="kv-key">Judicial hanging COD</span><span class="kv-val">Fracture dislocation of C2-C3 (hangman's fracture)</span></div>
+      <div class="kv-row"><span class="kv-key">Ligature strangulation</span><span class="kv-val">Horizontal mark; murder or suicide</span></div>
+      <div class="kv-row"><span class="kv-key">Manual strangulation</span><span class="kv-val danger">ALWAYS homicidal; nail marks, petechiae</span></div>
+      <div class="kv-row"><span class="kv-key">Throttling</span><span class="kv-val danger">Manual strangulation from front</span></div>
+      <div class="kv-row"><span class="kv-key">Mugging</span><span class="kv-val danger">Strangulation from behind (arm lock)</span></div>
+      <div class="kv-row"><span class="kv-key">Tardieu's spots</span><span class="kv-val">Petechiae (subconjunctival, pleural) — asphyxia</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">💧 Drowning &amp; Asphyxia</div>
+      <div class="kv-row"><span class="kv-key">Wet drowning</span><span class="kv-val highlight">Fluid in lungs (MC type — 90%)</span></div>
+      <div class="kv-row"><span class="kv-key">Dry drowning</span><span class="kv-val">Laryngospasm; no fluid in lungs</span></div>
+      <div class="kv-row"><span class="kv-key">Saltwater drowning</span><span class="kv-val danger">Hypertonic → pulmonary oedema; haemoconcentration</span></div>
+      <div class="kv-row"><span class="kv-key">Freshwater drowning</span><span class="kv-val danger">Hypotonic → haemodilution → haemolysis</span></div>
+      <div class="kv-row"><span class="kv-key">Diatoms</span><span class="kv-val highlight">Siliceous algae; found in bone marrow → confirms drowning</span></div>
+      <div class="kv-row"><span class="kv-key">Washerwoman hands</span><span class="kv-val">Skin maceration (1–2 hrs in water)</span></div>
+      <div class="kv-row"><span class="kv-key">Goose skin (cutis anserina)</span><span class="kv-val">Postmortem feature; not diagnostic</span></div>
+      <div class="kv-row"><span class="kv-key">Paltauf's haemorrhages</span><span class="kv-val">Pale haemorrhages in lung (freshwater drowning)</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔥 Burns &amp; Other Injuries</div>
+      <div class="kv-row"><span class="kv-key">Antemortem burn</span><span class="kv-val highlight">Vital reaction: redness, blister with protein/albumin</span></div>
+      <div class="kv-row"><span class="kv-key">Postmortem burn</span><span class="kv-val">No vital reaction; no true blister</span></div>
+      <div class="kv-row"><span class="kv-key">COD in burns</span><span class="kv-val">Asphyxia (CO poisoning) &gt; shock</span></div>
+      <div class="kv-row"><span class="kv-key">Pugilistic attitude</span><span class="kv-val">Heat stiffening (not true rigor); fists clenched</span></div>
+      <div class="kv-row"><span class="kv-key">Epidural haematoma</span><span class="kv-val">Lucid interval + middle meningeal artery tear</span></div>
+      <div class="kv-row"><span class="kv-key">Contre-coup injury</span><span class="kv-val">Injury opposite to site of impact</span></div>
+      <div class="kv-row"><span class="kv-key">Shaken baby syndrome</span><span class="kv-val danger">Subdural haematoma + retinal haemorrhages + no external trauma</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SEXUAL OFFENCES -->
+<div class="section" id="sexual">
+  <div class="section-title">Sexual <span>Offences</span></div>
+  <div class="section-sub">Rape, POCSO, examination findings, medicolegal aspects</div>
+  <div class="grid-auto">
+    <div class="card amber">
+      <div class="card-title">⚖️ Legal Definition — Rape (IPC 375)</div>
+      <div class="kv-row"><span class="kv-key">POCSO Act</span><span class="kv-val highlight">Protection of Children from Sexual Offences Act 2012</span></div>
+      <div class="kv-row"><span class="kv-key">Age of consent (India)</span><span class="kv-val danger">18 years</span></div>
+      <div class="kv-row"><span class="kv-key">Statutory rape</span><span class="kv-val">Sex with girl &lt;18 yrs (even with consent)</span></div>
+      <div class="kv-row"><span class="kv-key">Rape by husband</span><span class="kv-val">If wife &lt;18 yrs — constitutes rape</span></div>
+      <div class="kv-row"><span class="kv-key">Section 376</span><span class="kv-val">Punishment for rape (minimum 7 yrs; max life/death)</span></div>
+      <div class="kv-row"><span class="kv-key">Section 376A</span><span class="kv-val">Rape causing death or vegetative state → death penalty</span></div>
+      <div class="kv-row"><span class="kv-key">Two-finger test</span><span class="kv-val danger">Banned by Supreme Court of India (2022)</span></div>
+      <div class="kv-row"><span class="kv-key">Medical examination</span><span class="kv-val">Requires written consent; within 72 hrs ideally</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔬 Examination Findings</div>
+      <div class="kv-row"><span class="kv-key">Hymen types</span><span class="kv-val">Annular, crescentic, fimbriated, cribriform, imperforate</span></div>
+      <div class="kv-row"><span class="kv-key">Rape-specific hymen tear</span><span class="kv-val highlight">Posterior 5 o'clock–7 o'clock position (6 o'clock MC)</span></div>
+      <div class="kv-row"><span class="kv-key">Spermatozoa motile</span><span class="kv-val">Up to 8–12 hrs in vagina</span></div>
+      <div class="kv-row"><span class="kv-key">Spermatozoa non-motile</span><span class="kv-val">Up to 24–48 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Sperm in cervical mucus</span><span class="kv-val">Up to 7–10 days</span></div>
+      <div class="kv-row"><span class="kv-key">Acid phosphatase (semen)</span><span class="kv-val">Elevated; detected up to 72 hrs post-coitus</span></div>
+      <div class="kv-row"><span class="kv-key">PSA (prostate-specific antigen)</span><span class="kv-val">More sensitive semen marker</span></div>
+      <div class="kv-row"><span class="kv-key">DNA fingerprinting</span><span class="kv-val">Gold standard for identification of assailant</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">👶 POCSO &amp; Child Abuse</div>
+      <div class="kv-row"><span class="kv-key">POCSO mandatory reporting</span><span class="kv-val danger">ANY person who suspects must report (Section 19)</span></div>
+      <div class="kv-row"><span class="kv-key">Failure to report</span><span class="kv-val danger">Punishable offence (imprisonment up to 6 months)</span></div>
+      <div class="kv-row"><span class="kv-key">Child definition (POCSO)</span><span class="kv-val">Below 18 years of age</span></div>
+      <div class="kv-row"><span class="kv-key">Special court</span><span class="kv-val">Cases tried in designated POCSO courts</span></div>
+      <div class="kv-row"><span class="kv-key">Child sexual abuse indicators</span><span class="kv-val">Abnormal sexual behaviour, genital injury, STI in child</span></div>
+      <div class="kv-row"><span class="kv-key">Battered child syndrome</span><span class="kv-val danger">Multiple bruises in various stages + metaphyseal # + SDH</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🧬 Virginity &amp; Potency</div>
+      <div class="kv-row"><span class="kv-key">Virginity medical definition</span><span class="kv-val">No valid medical test for virginity</span></div>
+      <div class="kv-row"><span class="kv-key">Intact hymen ≠ virginity</span><span class="kv-val">Consensual/tampons can rupture; consensual may not rupture</span></div>
+      <div class="kv-row"><span class="kv-key">Impotence types</span><span class="kv-val">Absolute (cannot have intercourse), Relative (infertility)</span></div>
+      <div class="kv-row"><span class="kv-key">Evidence of recent intercourse</span><span class="kv-val">Semen, hymen tear, abrasions, lubricant</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOXICOLOGY -->
+<div class="section" id="toxicology">
+  <div class="section-title">General <span>Toxicology</span></div>
+  <div class="section-sub">Principles, routes, diagnosis, antidotes, corrosive poisons</div>
+  <div class="grid-auto">
+    <div class="card amber">
+      <div class="card-title">⚗️ Toxicology Principles</div>
+      <div class="kv-row"><span class="kv-key">LD50 definition</span><span class="kv-val">Dose lethal to 50% of test animals</span></div>
+      <div class="kv-row"><span class="kv-key">Therapeutic index</span><span class="kv-val highlight">TI = LD50 / ED50 (narrow TI = dangerous drug)</span></div>
+      <div class="kv-row"><span class="kv-key">Narrow TI drugs</span><span class="kv-val danger">Digoxin, Warfarin, Lithium, Phenytoin, Theophylline</span></div>
+      <div class="kv-row"><span class="kv-key">MC route poisoning (India)</span><span class="kv-val highlight">Oral (ingestion)</span></div>
+      <div class="kv-row"><span class="kv-key">MC poison (India)</span><span class="kv-val danger">Organophosphates (agricultural)</span></div>
+      <div class="kv-row"><span class="kv-key">Phase I reactions</span><span class="kv-val">Oxidation, reduction, hydrolysis (CYP450)</span></div>
+      <div class="kv-row"><span class="kv-key">Phase II reactions</span><span class="kv-val">Conjugation (glucuronidation, sulfation)</span></div>
+      <div class="kv-row"><span class="kv-key">Tolerance</span><span class="kv-val">↑ dose needed for same effect</span></div>
+      <div class="kv-row"><span class="kv-key">Tachyphylaxis</span><span class="kv-val">Rapid tolerance within short time</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🩺 Key Antidotes</div>
+      <table class="comparison-table">
+        <tr><th>Poison</th><th>Antidote</th></tr>
+        <tr><td>Organophosphate</td><td>Atropine + Pralidoxime (2-PAM) — within 24–48 hrs</td></tr>
+        <tr><td>Paracetamol</td><td>N-acetylcysteine (NAC) — most effective within 8–10 hrs</td></tr>
+        <tr><td>Opioid</td><td>Naloxone (0.4–2 mg IV)</td></tr>
+        <tr><td>Benzodiazepine</td><td>Flumazenil</td></tr>
+        <tr><td>CO poisoning</td><td>100% O2 (or HBO in severe cases)</td></tr>
+        <tr><td>Cyanide</td><td>Hydroxocobalamin / Sodium nitrite + Sodium thiosulfate</td></tr>
+        <tr><td>Iron</td><td>Desferrioxamine</td></tr>
+        <tr><td>Digoxin</td><td>Digoxin-specific Fab antibody fragments</td></tr>
+        <tr><td>Heparin</td><td>Protamine sulfate</td></tr>
+        <tr><td>Warfarin</td><td>Vitamin K (slow) / FFP (fast)</td></tr>
+        <tr><td>Methanol/Ethylene glycol</td><td>Fomepizole / Ethanol (competitively inhibit ADH)</td></tr>
+        <tr><td>Lead</td><td>DMSA (oral), EDTA (IV), BAL (severe/encephalopathy)</td></tr>
+        <tr><td>Mercury</td><td>DMSA / BAL (dimercaprol)</td></tr>
+        <tr><td>Arsenic</td><td>BAL (dimercaprol), DMSA</td></tr>
+        <tr><td>Atropine poisoning</td><td>Physostigmine</td></tr>
+        <tr><td>Beta-blocker</td><td>Glucagon</td></tr>
+      </table>
+    </div>
+    <div class="card red">
+      <div class="card-title">🧪 Corrosive Poisons</div>
+      <div class="kv-row"><span class="kv-key">Strong acids</span><span class="kv-val danger">H2SO4, HCl, HNO3 → coagulative necrosis</span></div>
+      <div class="kv-row"><span class="kv-key">Strong alkalis</span><span class="kv-val danger">NaOH, KOH → liquefactive necrosis (deeper)</span></div>
+      <div class="kv-row"><span class="kv-key">Carbolic acid (Phenol)</span><span class="kv-val highlight">White eschar → brown; urine turns dark (carbolurea); MC used for suicide in earlier era</span></div>
+      <div class="kv-row"><span class="kv-key">Oxalic acid</span><span class="kv-val">Hypocalcaemia (binds Ca2+); renal failure; Ca oxalate crystals</span></div>
+      <div class="kv-row"><span class="kv-key">H2SO4 (vitriol)</span><span class="kv-val danger">Charred black eschar; throws on face (acid attacks)</span></div>
+      <div class="kv-row"><span class="kv-key">Lysol (cresol)</span><span class="kv-val">Ingestion → brown tongue, green vomit</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment (acids)</span><span class="kv-val">DO NOT use strong alkali; dilute with water/milk</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">💊 Paracetamol Poisoning</div>
+      <div class="kv-row"><span class="kv-key">Toxic metabolite</span><span class="kv-val highlight">NAPQI (N-acetyl-p-benzoquinone imine)</span></div>
+      <div class="kv-row"><span class="kv-key">Made by</span><span class="kv-val">CYP2E1 and CYP3A4</span></div>
+      <div class="kv-row"><span class="kv-key">Detoxified by</span><span class="kv-val">Glutathione</span></div>
+      <div class="kv-row"><span class="kv-key">Toxic dose (adult)</span><span class="kv-val danger">&gt;150 mg/kg or &gt;7.5 g single dose</span></div>
+      <div class="kv-row"><span class="kv-key">Phase I (0–24 hrs)</span><span class="kv-val">N/V, malaise — minimal symptoms</span></div>
+      <div class="kv-row"><span class="kv-key">Phase III (72–96 hrs)</span><span class="kv-val danger">Peak hepatotoxicity; jaundice; coagulopathy; death</span></div>
+      <div class="kv-row"><span class="kv-key">Rumack-Matthew nomogram</span><span class="kv-val">Serum level at 4 hrs → predicts toxicity</span></div>
+      <div class="kv-row"><span class="kv-key">NAC mechanism</span><span class="kv-val">Replenishes glutathione</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- MEDICAL LAW -->
+<div class="section" id="medlaw">
+  <div class="section-title">Medical Law <span>&amp; Ethics</span></div>
+  <div class="section-sub">Consent, negligence, MCI/NMC regulations, medicolegal duties</div>
+  <div class="grid-auto">
+    <div class="card amber">
+      <div class="card-title">📋 Consent</div>
+      <div class="kv-row"><span class="kv-key">Valid consent requires</span><span class="kv-val highlight">Competence + Information + Voluntariness</span></div>
+      <div class="kv-row"><span class="kv-key">Age of consent (India)</span><span class="kv-val">18 years (for medical treatment)</span></div>
+      <div class="kv-row"><span class="kv-key">Informed consent</span><span class="kv-val">All material risks explained</span></div>
+      <div class="kv-row"><span class="kv-key">Implied consent</span><span class="kv-val">Emergency situations (unconscious patient)</span></div>
+      <div class="kv-row"><span class="kv-key">Proxy consent</span><span class="kv-val">Guardian for minors/mentally incompetent</span></div>
+      <div class="kv-row"><span class="kv-key">Emergency exception</span><span class="kv-val">Lifesaving treatment without consent</span></div>
+      <div class="kv-row"><span class="kv-key">Research consent</span><span class="kv-val">Written; voluntary; can withdraw anytime (ICMR)</span></div>
+      <div class="kv-row"><span class="kv-key">Operation without consent</span><span class="kv-val danger">Assault and battery (medicolegal)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">⚖️ Medical Negligence</div>
+      <div class="kv-row"><span class="kv-key">4 D's of negligence</span><span class="kv-val highlight">Duty, Dereliction, Damage, Direct causation</span></div>
+      <div class="kv-row"><span class="kv-key">Bolam test</span><span class="kv-val">Standard of a reasonably competent doctor in that specialty</span></div>
+      <div class="kv-row"><span class="kv-key">Res ipsa loquitur</span><span class="kv-val highlight">The thing speaks for itself (eg. swab left in abdomen)</span></div>
+      <div class="kv-row"><span class="kv-key">Criminal negligence</span><span class="kv-val danger">Gross negligence → IPC 304A (death by negligence)</span></div>
+      <div class="kv-row"><span class="kv-key">Consumer Protection Act</span><span class="kv-val">Medical services covered (paid); patient = consumer</span></div>
+      <div class="kv-row"><span class="kv-key">Vicarious liability</span><span class="kv-val">Hospital liable for staff negligence</span></div>
+      <div class="kv-row"><span class="kv-key">Good Samaritan law</span><span class="kv-val">Protection for bystander who provides emergency aid</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">📝 Medicolegal Documents</div>
+      <div class="kv-row"><span class="kv-key">MLC (Medicolegal Case)</span><span class="kv-val highlight">ANY injury with legal implications must be reported to police</span></div>
+      <div class="kv-row"><span class="kv-key">Dying declaration</span><span class="kv-val">Statement by dying person; no magistrate needed; doctor can record</span></div>
+      <div class="kv-row"><span class="kv-key">Dying deposition</span><span class="kv-val">Recorded by magistrate with cross-examination</span></div>
+      <div class="kv-row"><span class="kv-key">Inquest</span><span class="kv-val">Official inquiry into cause of death</span></div>
+      <div class="kv-row"><span class="kv-key">Police inquest (Section 174)</span><span class="kv-val">For suspicious/unnatural deaths</span></div>
+      <div class="kv-row"><span class="kv-key">Magistrate inquest (Section 176)</span><span class="kv-val">For deaths in custody/dowry deaths</span></div>
+      <div class="kv-row"><span class="kv-key">First Information Report (FIR)</span><span class="kv-val">Doctor must give info; cannot refuse MLC</span></div>
+      <div class="kv-row"><span class="kv-key">Confidentiality exceptions</span><span class="kv-val danger">Court order, notifiable disease, MLC, patient consent</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🏥 Notifiable Diseases &amp; Duties</div>
+      <div class="kv-row"><span class="kv-key">Notifiable diseases (examples)</span><span class="kv-val">Cholera, Plague, Smallpox, Yellow fever, Typhus</span></div>
+      <div class="kv-row"><span class="kv-key">Obligation to treat</span><span class="kv-val">Emergency → cannot refuse treatment</span></div>
+      <div class="kv-row"><span class="kv-key">Brain death criteria</span><span class="kv-val">THOA 1994; 2 doctors × 2 tests (6 hrs apart)</span></div>
+      <div class="kv-row"><span class="kv-key">Transplant of Human Organs Act</span><span class="kv-val">1994; amended 2011</span></div>
+      <div class="kv-row"><span class="kv-key">MTP Act 1971</span><span class="kv-val">Abortion up to 20 wks (1 doctor); up to 24 wks (2 doctors, special cases)</span></div>
+      <div class="kv-row"><span class="kv-key">PCPNDT Act 1994</span><span class="kv-val">Pre-Conception and Pre-Natal Diagnostic Techniques Act — bans sex determination</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">📜 Indian Penal Code — Key Sections</div>
+      <div class="kv-row"><span class="kv-key">Section 304A</span><span class="kv-val">Death due to negligence (criminal)</span></div>
+      <div class="kv-row"><span class="kv-key">Section 375</span><span class="kv-val">Rape definition</span></div>
+      <div class="kv-row"><span class="kv-key">Section 376</span><span class="kv-val">Punishment for rape</span></div>
+      <div class="kv-row"><span class="kv-key">Section 302</span><span class="kv-val">Murder (culpable homicide amounting to murder)</span></div>
+      <div class="kv-row"><span class="kv-key">Section 309</span><span class="kv-val">Attempt to suicide (decriminalised by Mental Health Act 2017)</span></div>
+      <div class="kv-row"><span class="kv-key">Section 313</span><span class="kv-val">Causing miscarriage without consent</span></div>
+      <div class="kv-row"><span class="kv-key">Section 498A</span><span class="kv-val">Cruelty by husband/relatives (dowry harassment)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- IDENTIFICATION -->
+<div class="section" id="identification">
+  <div class="section-title">Forensic <span>Identification</span></div>
+  <div class="section-sub">Age, sex, stature estimation; DNA; fingerprints</div>
+  <div class="grid-auto">
+    <div class="card amber">
+      <div class="card-title">🦷 Age Estimation — Teeth</div>
+      <div class="kv-row"><span class="kv-key">Primary teeth erupt</span><span class="kv-val">6 months – 2.5 years (20 teeth)</span></div>
+      <div class="kv-row"><span class="kv-key">First permanent molar</span><span class="kv-val highlight">6 years (6-year molar)</span></div>
+      <div class="kv-row"><span class="kv-key">Second permanent molar</span><span class="kv-val">12 years (12-year molar)</span></div>
+      <div class="kv-row"><span class="kv-key">Third molar (wisdom)</span><span class="kv-val">17–25 years (highly variable)</span></div>
+      <div class="kv-row"><span class="kv-key">Gustafson's method</span><span class="kv-val highlight">6 criteria for adult dental age (attrition, secondary dentin etc.)</span></div>
+      <div class="kv-row"><span class="kv-key">Attrition</span><span class="kv-val">Tooth wear — correlates with age</span></div>
+      <div class="kv-row"><span class="kv-key">Calcification of canine</span><span class="kv-val">MC asked for age estimation</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🦴 Age Estimation — Bones</div>
+      <div class="kv-row"><span class="kv-key">Secondary ossification → union</span><span class="kv-val highlight">Key principle for skeletal age</span></div>
+      <div class="kv-row"><span class="kv-key">Clavicle medial end fuses</span><span class="kv-val">25–31 years (last bone to fuse)</span></div>
+      <div class="kv-row"><span class="kv-key">Iliac crest fuses</span><span class="kv-val">20–25 years</span></div>
+      <div class="kv-row"><span class="kv-key">Femoral head fuses</span><span class="kv-val">17–18 years</span></div>
+      <div class="kv-row"><span class="kv-key">Pubic symphysis (Todd's method)</span><span class="kv-val">Morphological changes for adult age</span></div>
+      <div class="kv-row"><span class="kv-key">Ossification of wrist bones</span><span class="kv-val">C-a-p-i-t-a-t-e (starts in order)</span></div>
+      <div class="kv-row"><span class="kv-key">Adult stature formula</span><span class="kv-val">Pearson's regression formula (femur/tibia)</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🔍 DNA &amp; Fingerprints</div>
+      <div class="kv-row"><span class="kv-key">Fingerprints (Galton's details)</span><span class="kv-val">Loops (65%), Whorls (30%), Arches (5%)</span></div>
+      <div class="kv-row"><span class="kv-key">Fingerprints present from</span><span class="kv-val">6th month of fetal life; permanent</span></div>
+      <div class="kv-row"><span class="kv-key">Dactylography</span><span class="kv-val">Study of fingerprints</span></div>
+      <div class="kv-row"><span class="kv-key">Latent fingerprints</span><span class="kv-val">Invisible; developed with powder/ninhydrin</span></div>
+      <div class="kv-row"><span class="kv-key">DNA profiling gold std</span><span class="kv-val highlight">STR (Short Tandem Repeat) analysis</span></div>
+      <div class="kv-row"><span class="kv-key">mtDNA</span><span class="kv-val">Maternal inheritance; used for old/degraded samples</span></div>
+      <div class="kv-row"><span class="kv-key">Y-STR</span><span class="kv-val">Paternal lineage; male-specific</span></div>
+      <div class="kv-row"><span class="kv-key">Chimerism</span><span class="kv-val">Two DNA profiles in one person</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">👨‍⚕️ Sex Determination</div>
+      <div class="kv-row"><span class="kv-key">Pelvis (most reliable)</span><span class="kv-val highlight">Subpubic angle: female &gt;90°; male &lt;70°</span></div>
+      <div class="kv-row"><span class="kv-key">Greater sciatic notch</span><span class="kv-val">Wide in female; narrow in male</span></div>
+      <div class="kv-row"><span class="kv-key">Skull differences</span><span class="kv-val">Male = larger, mastoid, glabella, supraorbital ridge</span></div>
+      <div class="kv-row"><span class="kv-key">Barr body (sex chromatin)</span><span class="kv-val highlight">Inactive X chromosome; present in females</span></div>
+      <div class="kv-row"><span class="kv-key">Drumstick appendage</span><span class="kv-val">Neutrophil (Barr body variant); seen in females</span></div>
+      <div class="kv-row"><span class="kv-key">Sternal length</span><span class="kv-val">Female &lt;15 cm; Male &gt;15 cm</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SPECIFIC POISONS -->
+<div class="section" id="specific_poison">
+  <div class="section-title">Specific <span>Poisons</span></div>
+  <div class="section-sub">OP compounds, heavy metals, plant poisons, drugs of abuse</div>
+  <div class="grid-auto">
+    <div class="card amber">
+      <div class="card-title">🌿 Organophosphate (OP) Poisoning</div>
+      <div class="kv-row"><span class="kv-key">MOA</span><span class="kv-val highlight">Inhibit acetylcholinesterase → ACh accumulation</span></div>
+      <div class="kv-row"><span class="kv-key">Muscarinic effects (DUMBELS)</span><span class="kv-val danger">Defecation, Urination, Miosis, Bradycardia, Emesis, Lacrimation, Salivation</span></div>
+      <div class="kv-row"><span class="kv-key">Nicotinic effects</span><span class="kv-val">Muscle weakness, fasciculations, paralysis</span></div>
+      <div class="kv-row"><span class="kv-key">CNS effects</span><span class="kv-val">Seizures, coma</span></div>
+      <div class="kv-row"><span class="kv-key">Lab test</span><span class="kv-val highlight">RBC cholinesterase activity (gold standard)</span></div>
+      <div class="kv-row"><span class="kv-key">Atropine dose</span><span class="kv-val danger">Large doses IV (2–4 mg) until secretions dry</span></div>
+      <div class="kv-row"><span class="kv-key">Pralidoxime (2-PAM)</span><span class="kv-val">Reactivates AChE if given within 48 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Intermediate syndrome</span><span class="kv-val danger">24–96 hrs; proximal limb weakness; respiratory failure</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">⚙️ Heavy Metal Poisoning</div>
+      <table class="comparison-table">
+        <tr><th>Metal</th><th>Source</th><th>Classic Features</th><th>Antidote</th></tr>
+        <tr><td>Lead (Pb)</td><td>Paint, petrol, batteries</td><td>Burton's line (gums), wrist/foot drop, basophilic stippling, Pb line on X-ray, Pica</td><td>EDTA (IV), DMSA (oral), BAL (encephalopathy)</td></tr>
+        <tr><td>Mercury (Hg)</td><td>Fish, thermometers, dental</td><td>Mad Hatter syndrome; acrodynia (pink disease); tremors; Minamata disease</td><td>BAL, DMSA</td></tr>
+        <tr><td>Arsenic (As)</td><td>Rat poison, pesticides, well water</td><td>Garlic odour; Aldrich-Mees lines (nails); rain-drop pigmentation; peripheral neuropathy</td><td>BAL, DMSA</td></tr>
+        <tr><td>Iron (Fe)</td><td>Iron tablets (children)</td><td>4 phases; GI bleed → shock → metabolic acidosis → hepatic failure</td><td>Desferrioxamine</td></tr>
+        <tr><td>Copper (Cu)</td><td>Wilson's disease; verdigris</td><td>Green vomit; Kayser-Fleischer rings (Wilson's); hepatic failure</td><td>D-penicillamine, trientine</td></tr>
+      </table>
+    </div>
+    <div class="card red">
+      <div class="card-title">🍄 Plant Poisons</div>
+      <div class="kv-row"><span class="kv-key">Aconite (Monkshood)</span><span class="kv-val danger">Tingling, numbness; arrhythmia; MC plant poison India</span></div>
+      <div class="kv-row"><span class="kv-key">Dhatura (Datura)</span><span class="kv-val danger">Anticholinergic — Dry, Hot, Blind, Mad, Red, Full (DHBMRF)</span></div>
+      <div class="kv-row"><span class="kv-key">Nux Vomica</span><span class="kv-val">Strychnine; opisthotonus; risus sardonicus; tetanic convulsions</span></div>
+      <div class="kv-row"><span class="kv-key">Opium / Morphine</span><span class="kv-val">Miosis, drowsiness, respiratory depression; antidote: Naloxone</span></div>
+      <div class="kv-row"><span class="kv-key">Cocaine</span><span class="kv-val">Sympathomimetic; Mees lines; nasal septum perforation</span></div>
+      <div class="kv-row"><span class="kv-key">Cannabis (Ganja/Bhang)</span><span class="kv-val">Euphoria, conjunctival injection; not physically addictive</span></div>
+      <div class="kv-row"><span class="kv-key">Abrus precatorius (Rosary pea)</span><span class="kv-val danger">Abrin toxin; GI, hepatic, renal failure</span></div>
+      <div class="kv-row"><span class="kv-key">Oleander (Kaner)</span><span class="kv-val danger">Cardiac glycoside; arrhythmias → antidote: Digoxin Fab</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">💊 Drugs of Abuse</div>
+      <div class="kv-row"><span class="kv-key">Heroin (diacetylmorphine)</span><span class="kv-val">Most potent; skin-popping; track marks; antidote Naloxone</span></div>
+      <div class="kv-row"><span class="kv-key">LSD</span><span class="kv-val">Hallucinations; no withdrawal; flashbacks</span></div>
+      <div class="kv-row"><span class="kv-key">MDMA (Ecstasy)</span><span class="kv-val danger">Hyperthermia, hyponatraemia, serotonin syndrome</span></div>
+      <div class="kv-row"><span class="kv-key">Amphetamines</span><span class="kv-val">Sympathomimetic; anorexia; bruxism</span></div>
+      <div class="kv-row"><span class="kv-key">GHB (date rape drug)</span><span class="kv-val danger">Colourless/odourless; CNS depression; amnesia</span></div>
+      <div class="kv-row"><span class="kv-key">Withdrawal from opioid</span><span class="kv-val danger">Yawning, lacrimation, rhinorrhoea, piloerection, restlessness</span></div>
+      <div class="kv-row"><span class="kv-key">Alcohol (ethanol)</span><span class="kv-val">Medico-legal limit driving (India): 30 mg/100 mL blood</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency FMT facts for rapid revision</div>
+  <div class="grid-2">
+    <div class="card amber">
+      <div class="card-title">⭐ FMT Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">First sign of putrefaction</span><span class="kv-val highlight">Green discolouration of RIF</span></div>
+      <div class="kv-row"><span class="kv-key">Last organ to putrefy (female)</span><span class="kv-val">Uterus (non-pregnant)</span></div>
+      <div class="kv-row"><span class="kv-key">Instantaneous rigor</span><span class="kv-val">Cadaveric spasm (intense emotion/exertion at death)</span></div>
+      <div class="kv-row"><span class="kv-key">Best time to detect rigor</span><span class="kv-val">6–12 hours post death</span></div>
+      <div class="kv-row"><span class="kv-key">Cherry-red lividity causes</span><span class="kv-val danger">CO poisoning, Cyanide, Cold exposure</span></div>
+      <div class="kv-row"><span class="kv-key">Diatoms found in bone marrow</span><span class="kv-val">Confirms death by drowning</span></div>
+      <div class="kv-row"><span class="kv-key">Manual strangulation</span><span class="kv-val danger">Always homicidal</span></div>
+      <div class="kv-row"><span class="kv-key">Contact gunshot wound</span><span class="kv-val">Stellate/cruciform tear; inverted edges</span></div>
+      <div class="kv-row"><span class="kv-key">Entry vs exit wound</span><span class="kv-val">Entry: smaller + inverted; Exit: larger + everted</span></div>
+      <div class="kv-row"><span class="kv-key">Hesitation cuts</span><span class="kv-val">Suicidal (multiple superficial, parallel)</span></div>
+      <div class="kv-row"><span class="kv-key">Defence wounds</span><span class="kv-val">Forearm ulnar border + palm</span></div>
+      <div class="kv-row"><span class="kv-key">Pugilistic attitude</span><span class="kv-val">Heat stiffening in fire deaths</span></div>
+      <div class="kv-row"><span class="kv-key">Spectacle haematoma</span><span class="kv-val">Base of skull fracture</span></div>
+      <div class="kv-row"><span class="kv-key">Battle's sign</span><span class="kv-val">Bruising behind ear (mastoid)</span></div>
+      <div class="kv-row"><span class="kv-key">Tardieu's spots</span><span class="kv-val">Petechial haemorrhages in asphyxia (eyes, pleura)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">⭐ FMT Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">MC poison in India</span><span class="kv-val highlight">Organophosphates</span></div>
+      <div class="kv-row"><span class="kv-key">Antidote OP compounds</span><span class="kv-val">Atropine + Pralidoxime</span></div>
+      <div class="kv-row"><span class="kv-key">Opisthotonos</span><span class="kv-val">Strychnine poisoning</span></div>
+      <div class="kv-row"><span class="kv-key">Garlic odour</span><span class="kv-val">Arsenic, Phosphorus, Selenium, Tellurium</span></div>
+      <div class="kv-row"><span class="kv-key">Bitter almond odour</span><span class="kv-val danger">Cyanide poisoning</span></div>
+      <div class="kv-row"><span class="kv-key">Coal tar smell</span><span class="kv-val">Carbolic acid (phenol)</span></div>
+      <div class="kv-row"><span class="kv-key">Aldrich-Mees lines</span><span class="kv-val">Arsenic (white transverse bands on nails)</span></div>
+      <div class="kv-row"><span class="kv-key">Burton's line</span><span class="kv-val">Lead poisoning (blue-black gum line)</span></div>
+      <div class="kv-row"><span class="kv-key">Medico-legal alcohol limit (driving)</span><span class="kv-val danger">30 mg/100 mL blood (India)</span></div>
+      <div class="kv-row"><span class="kv-key">Two-finger test</span><span class="kv-val danger">Banned in India (SC judgment 2022)</span></div>
+      <div class="kv-row"><span class="kv-key">Res ipsa loquitur</span><span class="kv-val">Negligence presumed from facts (swab left inside)</span></div>
+      <div class="kv-row"><span class="kv-key">4D's of negligence</span><span class="kv-val">Duty, Dereliction, Damage, Direct causation</span></div>
+      <div class="kv-row"><span class="kv-key">Last bone to fuse</span><span class="kv-val">Clavicle medial epiphysis (25–31 yrs)</span></div>
+      <div class="kv-row"><span class="kv-key">Barr body</span><span class="kv-val">Inactive X chromosome in females</span></div>
+      <div class="kv-row"><span class="kv-key">Fingerprint pattern MC</span><span class="kv-val">Loop (65%)</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

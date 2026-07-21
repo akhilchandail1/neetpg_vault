@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dermatology Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0e1a; --surface: #111827; --surface2: #1a2235; --border: #1e2d45;
+    --accent: #fb923c; --accent2: #7dd3fc; --accent3: #86efac; --accent4: #f9a8d4; --accent5: #c4b5fd;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #0f172a 0%, #1a0f1a 50%, #0f172a 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent); color: #0a0e1a; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent); color: #0a0e1a; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.orange::before { background: var(--accent); }
+  .card.blue::before { background: var(--accent2); }
+  .card.green::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.purple::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.orange .card-title { color: var(--accent); }
+  .card.blue .card-title { color: var(--accent2); }
+  .card.green .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.purple .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #1a2235; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.blue { color: var(--accent2); }
+  .kv-val.green { color: var(--accent3); }
+  .kv-val.pink { color: var(--accent4); }
+  .kv-val.danger { color: var(--danger); }
+  .kv-val.purple { color: var(--accent5); }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(125,211,252,0.06); border: 1px solid rgba(125,211,252,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent2); margin-top: 8px; line-height: 1.5; }
+  .green-box { background: rgba(134,239,172,0.06); border: 1px solid rgba(134,239,172,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent3); margin-top: 8px; line-height: 1.5; }
+  .mnemonic { background: rgba(196,181,253,0.07); border-left: 3px solid var(--accent5); border-radius: 0 8px 8px 0; padding: 8px 12px; margin-top: 8px; font-size: 12px; color: var(--accent5); line-height: 1.6; }
+  .mnemonic b { color: var(--accent); }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  @media (max-width: 800px) { .grid-auto, .grid-2 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>Dermatology <span>Cheatsheet</span></h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('basics',this)">Basics &amp; Morphology</div>
+    <div class="tab" onclick="showSection('infections',this)">Infections</div>
+    <div class="tab" onclick="showSection('inflammatory',this)">Inflammatory</div>
+    <div class="tab" onclick="showSection('bullous',this)">Bullous Disorders</div>
+    <div class="tab" onclick="showSection('pigment',this)">Pigment &amp; Hair/Nail</div>
+    <div class="tab" onclick="showSection('tumours',this)">Skin Tumours</div>
+    <div class="tab" onclick="showSection('std',this)">STIs &amp; Leprosy</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- BASICS & MORPHOLOGY -->
+<div class="section active" id="basics">
+  <div class="section-title">Basics <span>&amp; Morphology</span></div>
+  <div class="section-sub">Skin structure, primary and secondary lesions, dermatological signs</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🔬 Skin Layers — High Yield</div>
+      <div class="kv-row"><span class="kv-key">Epidermis layers (deep→superficial)</span><span class="kv-val highlight">BSSGL: Basale, Spinosum, Granulosum, Lucidum, Corneum</span></div>
+      <div class="kv-row"><span class="kv-key">Stratum lucidum — where</span><span class="kv-val">Only in thick skin (palms and soles)</span></div>
+      <div class="kv-row"><span class="kv-key">Melanocytes — layer</span><span class="kv-val">Stratum basale (basal layer)</span></div>
+      <div class="kv-row"><span class="kv-key">Langerhans cells — layer</span><span class="kv-val highlight">Stratum spinosum (prickle cell layer); antigen-presenting cells</span></div>
+      <div class="kv-row"><span class="kv-key">Merkel cells — function</span><span class="kv-val">Mechanoreceptors (light touch); stratum basale</span></div>
+      <div class="kv-row"><span class="kv-key">Desmosomes — location</span><span class="kv-val">Stratum spinosum; cell-cell adhesion; pemphigus target</span></div>
+      <div class="kv-row"><span class="kv-key">Hemidesmosomes — location</span><span class="kv-val">Basement membrane zone; epidermis-dermis adhesion; bullous pemphigoid target</span></div>
+      <div class="kv-row"><span class="kv-key">Collagen in dermis</span><span class="kv-val">Type I (80%) + Type III (reticular fibers)</span></div>
+      <div class="kv-row"><span class="kv-key">Rete ridges (pegs)</span><span class="kv-val">Epidermal projections downward; interdigitate with dermal papillae</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">📋 Primary Lesions</div>
+      <div class="kv-row"><span class="kv-key">Macule</span><span class="kv-val">Flat colour change &lt;1 cm (patch if &gt;1 cm)</span></div>
+      <div class="kv-row"><span class="kv-key">Papule</span><span class="kv-val">Raised solid &lt;1 cm (plaque if &gt;1 cm)</span></div>
+      <div class="kv-row"><span class="kv-key">Nodule</span><span class="kv-val">Raised solid &gt;1 cm; deeper than papule</span></div>
+      <div class="kv-row"><span class="kv-key">Vesicle</span><span class="kv-val">Fluid-filled &lt;1 cm (bulla if &gt;1 cm)</span></div>
+      <div class="kv-row"><span class="kv-key">Pustule</span><span class="kv-val">Pus-filled (may be sterile — psoriasis)</span></div>
+      <div class="kv-row"><span class="kv-key">Wheal (urticaria)</span><span class="kv-val">Transient oedematous papule/plaque; evanescent (&lt;24 hrs)</span></div>
+      <div class="kv-row"><span class="kv-key">Telangiectasia</span><span class="kv-val">Dilated superficial capillaries; blanches on pressure</span></div>
+      <div class="kv-row"><span class="kv-key">Purpura</span><span class="kv-val">Non-blanchable red/purple; &gt;3 mm = ecchymosis; &lt;3 mm = petechiae</span></div>
+      <div class="kv-row"><span class="kv-key">Comedone</span><span class="kv-val">Plugged follicular opening; open (blackhead) / closed (whitehead)</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">📋 Secondary Lesions &amp; Special Terms</div>
+      <div class="kv-row"><span class="kv-key">Scale</span><span class="kv-val">Flaky dead stratum corneum (psoriasis, tinea)</span></div>
+      <div class="kv-row"><span class="kv-key">Crust (scab)</span><span class="kv-val">Dried serum/blood/pus (impetigo — golden crust)</span></div>
+      <div class="kv-row"><span class="kv-key">Erosion</span><span class="kv-val">Partial-thickness epidermal loss; heals without scar</span></div>
+      <div class="kv-row"><span class="kv-key">Ulcer</span><span class="kv-val">Full-thickness epidermal + dermal loss; heals with scar</span></div>
+      <div class="kv-row"><span class="kv-key">Excoriation</span><span class="kv-val">Scratch marks (linear erosions)</span></div>
+      <div class="kv-row"><span class="kv-key">Lichenification</span><span class="kv-val">Thickened skin with exaggerated markings; chronic rubbing</span></div>
+      <div class="kv-row"><span class="kv-key">Fissure</span><span class="kv-val">Linear crack through epidermis ± dermis (tinea pedis, eczema)</span></div>
+      <div class="kv-row"><span class="kv-key">Sinus</span><span class="kv-val">Blind-ending tract (hidradenitis suppurativa)</span></div>
+      <div class="kv-row"><span class="kv-key">Burrow</span><span class="kv-val">Serpiginous tunnel in stratum corneum — scabies (pathognomonic)</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🔑 Key Dermatological Signs</div>
+      <div class="kv-row"><span class="kv-key">Auspitz sign</span><span class="kv-val highlight">Pinpoint bleeding on removing psoriasis scale</span></div>
+      <div class="kv-row"><span class="kv-key">Nikolsky sign</span><span class="kv-val danger">Lateral pressure → skin slides/peels (pemphigus vulgaris, SSSS, TEN)</span></div>
+      <div class="kv-row"><span class="kv-key">Darier's sign</span><span class="kv-val">Stroking → urticarial wheal; mastocytosis (urticaria pigmentosa)</span></div>
+      <div class="kv-row"><span class="kv-key">Koebner phenomenon</span><span class="kv-val">New lesions at site of trauma; psoriasis, lichen planus, vitiligo, warts</span></div>
+      <div class="kv-row"><span class="kv-key">Reverse Koebner</span><span class="kv-val">Lesions CLEAR at trauma site; pityriasis rosea</span></div>
+      <div class="kv-row"><span class="kv-key">Pathergy</span><span class="kv-val">Exaggerated response to minor trauma; Behçet's disease</span></div>
+      <div class="kv-row"><span class="kv-key">Dermographism</span><span class="kv-val">Stroking → raised red line; MC form of physical urticaria</span></div>
+      <div class="kv-row"><span class="kv-key">Wickham's striae</span><span class="kv-val">White lacy lines on lichen planus papules (reticulate pattern)</span></div>
+      <div class="kv-row"><span class="kv-key">Leser-Trélat sign</span><span class="kv-val danger">Sudden ↑ in seborrhoeic keratoses → internal malignancy (GI cancer)</span></div>
+      <div class="kv-row"><span class="kv-key">Carpet tack sign</span><span class="kv-val">Scaling in discoid lupus erythematosus (DLE)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">⚗️ Histopathological Patterns</div>
+      <div class="kv-row"><span class="kv-key">Acanthosis</span><span class="kv-val">↑ Thickness of stratum spinosum (psoriasis)</span></div>
+      <div class="kv-row"><span class="kv-key">Acantholysis</span><span class="kv-val danger">Loss of intercellular bridges → intraepidermal split (pemphigus)</span></div>
+      <div class="kv-row"><span class="kv-key">Spongiosis</span><span class="kv-val">Intercellular oedema of epidermis (eczema/dermatitis)</span></div>
+      <div class="kv-row"><span class="kv-key">Hyperkeratosis</span><span class="kv-val">↑ Stratum corneum thickness (psoriasis, callus)</span></div>
+      <div class="kv-row"><span class="kv-key">Parakeratosis</span><span class="kv-val">Nuclei retained in corneum (psoriasis — rapid turnover)</span></div>
+      <div class="kv-row"><span class="kv-key">Hypergranulosis</span><span class="kv-val">↑ Stratum granulosum (lichen planus)</span></div>
+      <div class="kv-row"><span class="kv-key">Dyskeratosis</span><span class="kv-val">Premature abnormal keratinisation (Darier's disease)</span></div>
+      <div class="kv-row"><span class="kv-key">Munro's microabscesses</span><span class="kv-val highlight">Neutrophils in stratum corneum — psoriasis</span></div>
+      <div class="kv-row"><span class="kv-key">Pautrier's microabscesses</span><span class="kv-val danger">Atypical lymphocytes in epidermis — mycosis fungoides (CTCL)</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">🌡️ Drug Reactions — Patterns</div>
+      <div class="kv-row"><span class="kv-key">Stevens-Johnson Syndrome (SJS)</span><span class="kv-val danger">&lt;10% BSA epidermal detachment; mucosa involved; Nikolsky +ve</span></div>
+      <div class="kv-row"><span class="kv-key">TEN (Toxic Epidermal Necrolysis)</span><span class="kv-val danger">&gt;30% BSA; SJS-TEN overlap = 10–30%; mortality 30–50%</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause SJS/TEN</span><span class="kv-val danger">Drugs: sulfonamides, allopurinol, carbamazepine, lamotrigine, NSAIDs</span></div>
+      <div class="kv-row"><span class="kv-key">DRESS syndrome</span><span class="kv-val danger">Drug Rash + Eosinophilia + Systemic Symptoms; onset 2–6 weeks; carbamazepine, allopurinol, dapsone</span></div>
+      <div class="kv-row"><span class="kv-key">Fixed drug eruption</span><span class="kv-val highlight">Same site recurs with re-exposure; hyperpigmented plaque; NSAIDs, tetracycline, cotrimoxazole</span></div>
+      <div class="kv-row"><span class="kv-key">Photosensitivity drugs</span><span class="kv-val">Tetracyclines, thiazides, quinolones, amiodarone, psoralens</span></div>
+      <div class="kv-row"><span class="kv-key">Drug-induced lupus</span><span class="kv-val">Hydralazine, procainamide, isoniazid; anti-histone antibody</span></div>
+      <div class="kv-row"><span class="kv-key">Acneiform eruption</span><span class="kv-val">Steroids, lithium, INH, phenytoin, EGFR inhibitors</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- INFECTIONS -->
+<div class="section" id="infections">
+  <div class="section-title">Skin <span>Infections</span></div>
+  <div class="section-sub">Bacterial, viral, fungal, and parasitic skin infections</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🦠 Bacterial Skin Infections</div>
+      <div class="kv-row"><span class="kv-key">Impetigo — MC organism</span><span class="kv-val highlight">S. aureus (bullous); S. pyogenes (non-bullous/crusted)</span></div>
+      <div class="kv-row"><span class="kv-key">Impetigo — classic lesion</span><span class="kv-val">Honey-golden crust; face around nose/mouth</span></div>
+      <div class="kv-row"><span class="kv-key">Impetigo — complication</span><span class="kv-val danger">Post-streptococcal glomerulonephritis (NOT rheumatic fever)</span></div>
+      <div class="kv-row"><span class="kv-key">Impetigo treatment</span><span class="kv-val">Topical mupirocin; oral flucloxacillin / cefalexin if widespread</span></div>
+      <div class="kv-row"><span class="kv-key">Ecthyma</span><span class="kv-val">Deeper version of impetigo; ulceration; Group A strep</span></div>
+      <div class="kv-row"><span class="kv-key">Erysipelas</span><span class="kv-val">Superficial dermis + lymphatics; sharp border; S. pyogenes; face/legs</span></div>
+      <div class="kv-row"><span class="kv-key">Cellulitis</span><span class="kv-val">Deeper dermis + subcutis; diffuse border; S. aureus + S. pyogenes</span></div>
+      <div class="kv-row"><span class="kv-key">Erythrasma</span><span class="kv-val highlight">Corynebacterium minutissimum; coral-red fluorescence on Wood's lamp; axillae/groin</span></div>
+      <div class="kv-row"><span class="kv-key">SSSS (Staphylococcal Scalded Skin Syndrome)</span><span class="kv-val danger">Exfoliatin toxin (phage group II S. aureus); children; split at granular layer; Nikolsky +ve</span></div>
+      <div class="kv-row"><span class="kv-key">SSSS vs TEN — biopsy level</span><span class="kv-val danger">SSSS = subgranular (superficial); TEN = subepidermal (deep)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🦠 Viral Skin Infections</div>
+      <div class="kv-row"><span class="kv-key">Herpes simplex — type 1</span><span class="kv-val">Orolabial (cold sores); also genitals</span></div>
+      <div class="kv-row"><span class="kv-key">Herpes simplex — type 2</span><span class="kv-val">Genital herpes (primary; also HSV-1 increasingly)</span></div>
+      <div class="kv-row"><span class="kv-key">Tzanck smear</span><span class="kv-val highlight">Multinucleated giant cells — HSV &amp; VZV (NOT diagnostic of type)</span></div>
+      <div class="kv-row"><span class="kv-key">Herpes zoster — dermatome</span><span class="kv-val">Unilateral dermatomal vesicles; T5–T10 MC; VZV reactivation</span></div>
+      <div class="kv-row"><span class="kv-key">Zoster ophthalmicus — sign</span><span class="kv-val danger">Hutchinson's sign: vesicles on tip/side of nose → corneal involvement risk (nasociliary branch V1)</span></div>
+      <div class="kv-row"><span class="kv-key">Molluscum contagiosum</span><span class="kv-val">Poxvirus; umbilicated pearly papules; Henderson-Paterson bodies on histology</span></div>
+      <div class="kv-row"><span class="kv-key">Verruca vulgaris (common wart)</span><span class="kv-val">HPV 1, 2, 4; koilocytes on histology; hands/feet</span></div>
+      <div class="kv-row"><span class="kv-key">Condyloma acuminata</span><span class="kv-val highlight">HPV 6 &amp; 11 (benign); HPV 16 &amp; 18 (malignant); koilocytes</span></div>
+      <div class="kv-row"><span class="kv-key">Orf (ecthyma contagiosum)</span><span class="kv-val">Parapoxvirus; from sheep/goats; target lesion on hand</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🍄 Fungal Infections (Dermatophytosis)</div>
+      <div class="kv-row"><span class="kv-key">Tinea capitis — MC organism</span><span class="kv-val highlight">Trichophyton tonsurans (endothrix); also Microsporum canis (ectothrix)</span></div>
+      <div class="kv-row"><span class="kv-key">Kerion</span><span class="kv-val danger">Boggy inflamed mass; tinea capitis; treated with griseofulvin + steroids</span></div>
+      <div class="kv-row"><span class="kv-key">Favus</span><span class="kv-val">T. schoenleinii; scutula (cup-shaped crusts); mousy odour</span></div>
+      <div class="kv-row"><span class="kv-key">Tinea unguium (onychomycosis)</span><span class="kv-val">Distal subungual; T. rubrum (MC); oral terbinafine preferred</span></div>
+      <div class="kv-row"><span class="kv-key">Tinea versicolor (pityriasis versicolor)</span><span class="kv-val highlight">Malassezia furfur; hypo/hyperpigmented macules; spaghetti &amp; meatballs on KOH</span></div>
+      <div class="kv-row"><span class="kv-key">Wood's lamp — tinea versicolor</span><span class="kv-val">Golden-yellow fluorescence</span></div>
+      <div class="kv-row"><span class="kv-key">Wood's lamp — Microsporum</span><span class="kv-val green">Bright green fluorescence (tinea capitis — Microsporum species)</span></div>
+      <div class="kv-row"><span class="kv-key">Candida — intertrigo</span><span class="kv-val">Satellite lesions beyond main rash (pathognomonic)</span></div>
+      <div class="kv-row"><span class="kv-key">KOH preparation — dermatophyte</span><span class="kv-val">Septate hyphae + arthrospores</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🦟 Parasitic Infestations</div>
+      <div class="kv-row"><span class="kv-key">Scabies — mite</span><span class="kv-val highlight">Sarcoptes scabiei var. hominis; female mite burrows</span></div>
+      <div class="kv-row"><span class="kv-key">Scabies — pathognomonic</span><span class="kv-val danger">Burrow (linear/serpiginous) in web spaces, wrists, penis, areola</span></div>
+      <div class="kv-row"><span class="kv-key">Scabies — nocturnal pruritus</span><span class="kv-val">Intense itch worse at night (sensitisation takes 4–6 weeks on first exposure)</span></div>
+      <div class="kv-row"><span class="kv-key">Norwegian (crusted) scabies</span><span class="kv-val danger">Thousands of mites; immunocompromised; hyperkeratotic crusted plaques; highly contagious</span></div>
+      <div class="kv-row"><span class="kv-key">Scabies treatment (1st line)</span><span class="kv-val highlight">Permethrin 5% cream (whole body, leave 8–14 hrs); repeat at 1 week</span></div>
+      <div class="kv-row"><span class="kv-key">Norwegian scabies treatment</span><span class="kv-val danger">Oral ivermectin + permethrin</span></div>
+      <div class="kv-row"><span class="kv-key">Pediculosis capitis</span><span class="kv-val">Pediculus humanus capitis; nits attached to hair shaft; permethrin / malathion</span></div>
+      <div class="kv-row"><span class="kv-key">Cutaneous larva migrans</span><span class="kv-val">Hookworm larvae (Ancylostoma); serpiginous track; bare feet on beach; ivermectin</span></div>
+      <div class="kv-row"><span class="kv-key">Myiasis</span><span class="kv-val">Fly larvae in skin (Dermatobia hominis botfly); breathing pore visible; ivermectin / surgical</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🧫 Deep / Systemic Fungal &amp; Other</div>
+      <div class="kv-row"><span class="kv-key">Sporotrichosis</span><span class="kv-val highlight">Sporothrix schenckii; rose-thorn / gardener's; lymphocutaneous spread; itraconazole</span></div>
+      <div class="kv-row"><span class="kv-key">Chromoblastomycosis</span><span class="kv-val">Dematiaceous fungi; verrucous nodules; Medlar bodies (copper penny cells)</span></div>
+      <div class="kv-row"><span class="kv-key">Rhinosporidiosis</span><span class="kv-val">Rhinosporidium seeberi; nasal polyps; strawberry polyp; India/Sri Lanka</span></div>
+      <div class="kv-row"><span class="kv-key">Mycetoma (Madura foot)</span><span class="kv-val">Actinomycotic (Actinomadura) or eumycetoma (Madurella); grains in discharge; triad: mass + sinuses + grains</span></div>
+      <div class="kv-row"><span class="kv-key">Actinomycosis</span><span class="kv-val">Actinomyces israelii; sulfur granules; sinus tracts; cervicofacial MC; penicillin</span></div>
+      <div class="kv-row"><span class="kv-key">Cutaneous leishmaniasis</span><span class="kv-val">L. tropica (dry / urban); L. major (wet / rural); painless ulcer with heaped-up border</span></div>
+      <div class="kv-row"><span class="kv-key">Leishmaniasis treatment</span><span class="kv-val danger">Sodium stibogluconate (SSG) / miltefosine / liposomal amphotericin</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- INFLAMMATORY -->
+<div class="section" id="inflammatory">
+  <div class="section-title">Inflammatory <span>Dermatoses</span></div>
+  <div class="section-sub">Eczema, psoriasis, lichen planus, acne, rosacea, urticaria</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🔴 Psoriasis</div>
+      <div class="kv-row"><span class="kv-key">MC type</span><span class="kv-val highlight">Chronic plaque psoriasis (psoriasis vulgaris)</span></div>
+      <div class="kv-row"><span class="kv-key">Classic lesion</span><span class="kv-val">Well-demarcated erythematous plaque with silvery-white scale; extensor surfaces + scalp</span></div>
+      <div class="kv-row"><span class="kv-key">Auspitz sign</span><span class="kv-val highlight">Pinpoint bleeding on removing scale (dilated papillary vessels)</span></div>
+      <div class="kv-row"><span class="kv-key">Candle grease / wax sign</span><span class="kv-val">Scale removal resembles scraping candle</span></div>
+      <div class="kv-row"><span class="kv-key">Nail changes</span><span class="kv-val">Pitting (MC), onycholysis, oil drop sign, subungual hyperkeratosis</span></div>
+      <div class="kv-row"><span class="kv-key">Histology</span><span class="kv-val">Acanthosis + parakeratosis + Munro's microabscesses + dilated tortuous capillaries</span></div>
+      <div class="kv-row"><span class="kv-key">Psoriatic arthritis</span><span class="kv-val">30%; DIP joint; pencil-in-cup deformity; asymmetric; RF negative</span></div>
+      <div class="kv-row"><span class="kv-key">Guttate psoriasis</span><span class="kv-val">Post-streptococcal; raindrop lesions; young adults</span></div>
+      <div class="kv-row"><span class="kv-key">Erythrodermic psoriasis</span><span class="kv-val danger">&gt;90% BSA; life-threatening; temperature dysregulation; high output HF</span></div>
+      <div class="kv-row"><span class="kv-key">Biologics for psoriasis</span><span class="kv-val highlight">Anti-TNF (adalimumab), Anti-IL17 (secukinumab), Anti-IL23 (guselkumab)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🌊 Eczema (Atopic Dermatitis)</div>
+      <div class="kv-row"><span class="kv-key">Atopic triad</span><span class="kv-val highlight">Eczema + Asthma + Allergic rhinitis</span></div>
+      <div class="kv-row"><span class="kv-key">Gene defect in AD</span><span class="kv-val">Filaggrin (FLG) mutation → impaired skin barrier</span></div>
+      <div class="kv-row"><span class="kv-key">Infantile AD (&lt;2 yrs)</span><span class="kv-val">Face, scalp, extensor surfaces; weepy/crusted</span></div>
+      <div class="kv-row"><span class="kv-key">Childhood AD (2–12 yrs)</span><span class="kv-val">Flexural surfaces (antecubital/popliteal fossa); lichenification</span></div>
+      <div class="kv-row"><span class="kv-key">Adult AD</span><span class="kv-val">Flexures, hands, eyelids, neck; excoriations + lichenification</span></div>
+      <div class="kv-row"><span class="kv-key">Dennie-Morgan folds</span><span class="kv-val">Extra infraorbital skin folds (Dennie–Morgan lines); AD feature</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment — mild</span><span class="kv-val">Emollients + topical corticosteroids (low potency)</span></div>
+      <div class="kv-row"><span class="kv-key">Topical calcineurin inhibitors</span><span class="kv-val">Tacrolimus / pimecrolimus; face &amp; flexures; steroid-sparing</span></div>
+      <div class="kv-row"><span class="kv-key">Dupilumab</span><span class="kv-val highlight">Anti-IL-4Rα (IL-4 + IL-13 blocker); moderate–severe AD; biologic</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">💜 Lichen Planus</div>
+      <div class="kv-row"><span class="kv-key">Classic description — 6 Ps</span><span class="kv-val highlight">Pruritic, Purple, Polygonal, Planar, Papule, Plaque</span></div>
+      <div class="kv-row"><span class="kv-key">MC site</span><span class="kv-val">Flexor wrists, ankles, lower back; also oral mucosa</span></div>
+      <div class="kv-row"><span class="kv-key">Wickham's striae</span><span class="kv-val highlight">White lacy network on surface of papules (pathognomonic)</span></div>
+      <div class="kv-row"><span class="kv-key">Oral LP</span><span class="kv-val danger">White reticular/erosive patches; buccal mucosa; pre-malignant (erosive type)</span></div>
+      <div class="kv-row"><span class="kv-key">Histology</span><span class="kv-val">Band-like lymphocytic infiltrate at DEJ; hypergranulosis; saw-tooth rete ridges; Civatte bodies (colloid bodies)</span></div>
+      <div class="kv-row"><span class="kv-key">Koebner phenomenon</span><span class="kv-val">Present in lichen planus</span></div>
+      <div class="kv-row"><span class="kv-key">Association</span><span class="kv-val">HCV infection (lichen planus — screen for hepatitis C)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val">Topical corticosteroids (1st line); systemic steroids for widespread</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🌺 Acne Vulgaris</div>
+      <div class="kv-row"><span class="kv-key">Pathogenesis</span><span class="kv-val">Sebum ↑ + follicular plugging + C. acnes + inflammation</span></div>
+      <div class="kv-row"><span class="kv-key">C. acnes role</span><span class="kv-val">Cutibacterium acnes (formerly Propionibacterium acnes)</span></div>
+      <div class="kv-row"><span class="kv-key">Comedonal acne (Grade I)</span><span class="kv-val">Open + closed comedones; topical retinoids (adapalene)</span></div>
+      <div class="kv-row"><span class="kv-key">Mild-moderate (Grade II–III)</span><span class="kv-val">Papulopustular; topical BPO + antibiotic OR oral antibiotic</span></div>
+      <div class="kv-row"><span class="kv-key">Severe (Grade IV) / nodulocystic</span><span class="kv-val danger">Oral isotretinoin (vitamin A derivative; gold standard)</span></div>
+      <div class="kv-row"><span class="kv-key">Isotretinoin — contraindication</span><span class="kv-val danger">Pregnancy (teratogenic: cleft palate, CNS malformations); iPLEDGE program</span></div>
+      <div class="kv-row"><span class="kv-key">Isotretinoin — side effects</span><span class="kv-val">Cheilitis, dry skin, hypertriglyceridaemia, night blindness, depression, hepatotoxicity</span></div>
+      <div class="kv-row"><span class="kv-key">Oral antibiotics for acne</span><span class="kv-val">Doxycycline / lymecycline (max 3–6 months)</span></div>
+      <div class="kv-row"><span class="kv-key">Acne conglobata</span><span class="kv-val danger">Severe nodulocystic; interconnecting sinuses; males; isotretinoin</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🌹 Rosacea &amp; Urticaria</div>
+      <div class="kv-row"><span class="kv-key">Rosacea — subtypes</span><span class="kv-val">Erythematotelangiectatic, Papulopustular, Phymatous (rhinophyma), Ocular</span></div>
+      <div class="kv-row"><span class="kv-key">Rhinophyma</span><span class="kv-val">Enlarged bulbous sebaceous nose; Phymatous rosacea; males</span></div>
+      <div class="kv-row"><span class="kv-key">Rosacea — treatment</span><span class="kv-val highlight">Topical metronidazole / azelaic acid; oral doxycycline; laser for telangiectasia</span></div>
+      <div class="kv-row"><span class="kv-key">Rosacea vs Acne</span><span class="kv-val">Rosacea: no comedones; flushing; central face; >30 yrs; triggered by sun/alcohol/spicy food</span></div>
+      <div class="kv-row"><span class="kv-key">Acute urticaria</span><span class="kv-val">&lt;6 weeks; IgE-mediated (Type I); allergen triggered</span></div>
+      <div class="kv-row"><span class="kv-key">Chronic urticaria</span><span class="kv-val">&gt;6 weeks; often idiopathic; anti-FcεRI antibodies</span></div>
+      <div class="kv-row"><span class="kv-key">Urticaria treatment</span><span class="kv-val highlight">Non-sedating antihistamines (cetirizine); omalizumab for refractory</span></div>
+      <div class="kv-row"><span class="kv-key">Anaphylaxis — 1st line</span><span class="kv-val danger">IM adrenaline (epinephrine) 0.5 mg (1:1000) in thigh</span></div>
+      <div class="kv-row"><span class="kv-key">Hereditary angioedema</span><span class="kv-val danger">C1-inhibitor deficiency; no urticaria; bradykinin-mediated; antihistamines INEFFECTIVE</span></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-title">🟡 Other Inflammatory Dermatoses</div>
+      <div class="kv-row"><span class="kv-key">Pityriasis rosea</span><span class="kv-val highlight">Herald patch (large oval plaque) → Christmas tree pattern on back; HHV-6/7; self-limiting 6–8 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Seborrhoeic dermatitis</span><span class="kv-val">Malassezia; greasy yellowish scale; scalp, face (nasolabial), chest; ketoconazole shampoo</span></div>
+      <div class="kv-row"><span class="kv-key">Contact dermatitis — allergic</span><span class="kv-val">Type IV (delayed); patch testing (gold standard); nickel MC allergen</span></div>
+      <div class="kv-row"><span class="kv-key">Contact dermatitis — irritant</span><span class="kv-val">No sensitisation needed; MC form; soaps, detergents</span></div>
+      <div class="kv-row"><span class="kv-key">Granuloma annulare</span><span class="kv-val">Ring-shaped non-scaly papules; dorsum of hand/foot; no treatment usually needed; association with DM</span></div>
+      <div class="kv-row"><span class="kv-key">Necrobiosis lipoidica</span><span class="kv-val danger">Pretibial; yellow-brown atrophic plaques; DM association (but can occur without DM)</span></div>
+      <div class="kv-row"><span class="kv-key">Erythema nodosum</span><span class="kv-val">Tender red nodules on shins; panniculitis; causes: strep, TB, sarcoidosis, IBD, OCP, drugs</span></div>
+      <div class="kv-row"><span class="kv-key">Pyoderma gangrenosum</span><span class="kv-val danger">Painful ulcer with violaceous undermined edge; IBD, RA, haematological malignancy; pathergy +ve; steroids</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BULLOUS DISORDERS -->
+<div class="section" id="bullous">
+  <div class="section-title">Bullous <span>Disorders</span></div>
+  <div class="section-sub">Autoimmune blistering diseases — pemphigus, pemphigoid, dermatitis herpetiformis</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">💥 Pemphigus Vulgaris</div>
+      <div class="kv-row"><span class="kv-key">Target antigen</span><span class="kv-val highlight">Desmoglein 3 (+ Desmoglein 1 in mucocutaneous type)</span></div>
+      <div class="kv-row"><span class="kv-key">Antibody</span><span class="kv-val">IgG anti-desmoglein</span></div>
+      <div class="kv-row"><span class="kv-key">Level of split</span><span class="kv-val danger">Suprabasal (intraepidermal) — just above basal layer</span></div>
+      <div class="kv-row"><span class="kv-key">Nikolsky sign</span><span class="kv-val danger">POSITIVE — lateral pressure → extension of blister</span></div>
+      <div class="kv-row"><span class="kv-key">Clinical feature</span><span class="kv-val danger">Flaccid bullae → erosions; mucosal involvement (oral MC — 60% present first)</span></div>
+      <div class="kv-row"><span class="kv-key">Histology</span><span class="kv-val">Acantholysis; Tzanck cells (rounded acantholytic keratinocytes); "tombstone" basal cells</span></div>
+      <div class="kv-row"><span class="kv-key">DIF (Direct Immunofluorescence)</span><span class="kv-val highlight">IgG + C3 — fish-net / chicken-wire pattern (intercellular)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val danger">High-dose oral prednisolone + rituximab (anti-CD20) or azathioprine/MMF</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause of death (before steroids)</span><span class="kv-val danger">Sepsis (skin barrier loss); now steroid complications</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🫧 Bullous Pemphigoid</div>
+      <div class="kv-row"><span class="kv-key">Target antigen</span><span class="kv-val highlight">BP180 (collagen XVII) + BP230 — hemidesmosomes</span></div>
+      <div class="kv-row"><span class="kv-key">Antibody</span><span class="kv-val">IgG anti-BP180 / anti-BP230</span></div>
+      <div class="kv-row"><span class="kv-key">Level of split</span><span class="kv-val green">Subepidermal (dermis-epidermis junction)</span></div>
+      <div class="kv-row"><span class="kv-key">Nikolsky sign</span><span class="kv-val green">NEGATIVE (tense bullae; roof intact)</span></div>
+      <div class="kv-row"><span class="kv-key">Clinical feature</span><span class="kv-val">Elderly (&gt;60 yrs); tense bullae on erythematous/urticarial base; flexures; pruriginous; mucosa spared (usually)</span></div>
+      <div class="kv-row"><span class="kv-key">DIF</span><span class="kv-val highlight">Linear IgG + C3 at BMZ (basement membrane zone)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val">Potent topical steroids (clobetasol) / oral prednisolone; doxycycline + nicotinamide (mild)</span></div>
+      <div class="kv-row"><span class="kv-key">Pemphigoid gestationis</span><span class="kv-val danger">Pregnancy; periumbilical; same target (BP180); resolves postpartum; neonatal bullae</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">📊 Bullous Disorders Comparison</div>
+      <table class="comparison-table">
+        <tr><th>Feature</th><th>Pemphigus Vulgaris</th><th>Bullous Pemphigoid</th><th>Dermatitis Herpetiformis</th></tr>
+        <tr><td>Age</td><td>40–60 yrs</td><td>&gt;60 yrs (elderly)</td><td>20–40 yrs</td></tr>
+        <tr><td>Bulla type</td><td>Flaccid (fragile)</td><td>Tense (thick roof)</td><td>Vesicles on erythematous base</td></tr>
+        <tr><td>Nikolsky</td><td>Positive</td><td>Negative</td><td>Negative</td></tr>
+        <tr><td>Mucosa</td><td>Always involved</td><td>Spared (usually)</td><td>Spared</td></tr>
+        <tr><td>Antigen</td><td>Desmoglein 3 (+ Dsg1)</td><td>BP180 + BP230</td><td>Epidermal transglutaminase (eTG)</td></tr>
+        <tr><td>DIF pattern</td><td>Intercellular (fish-net)</td><td>Linear BMZ</td><td>Granular IgA at dermal papillae</td></tr>
+        <tr><td>Association</td><td>HLA-DR4; thymoma</td><td>Elderly; drugs (furosemide, NSAIDs)</td><td>Coeliac disease (gluten-sensitive enteropathy)</td></tr>
+        <tr><td>Treatment</td><td>Systemic steroids + rituximab</td><td>Topical clobetasol / oral steroids</td><td>Dapsone (rapid) + gluten-free diet</td></tr>
+      </table>
+      <div class="mnemonic"><b>DH — Dapsone + Diet:</b> Dermatitis Herpetiformis → Dapsone (rapid itch relief) + gluten-free Diet (disease control). Associated with coeliac disease and HLA-DQ2/DQ8.</div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🫧 Other Bullous Conditions</div>
+      <div class="kv-row"><span class="kv-key">Pemphigus foliaceus</span><span class="kv-val">Anti-Dsg1 only; superficial bullae; no mucosa; corn flake scale; endemic in Brazil (fogo selvagem)</span></div>
+      <div class="kv-row"><span class="kv-key">Paraneoplastic pemphigus</span><span class="kv-val danger">Associated with lymphoma, CLL, thymoma; severe oral erosions; anti-envoplakin/periplakin</span></div>
+      <div class="kv-row"><span class="kv-key">Linear IgA bullous dermatosis</span><span class="kv-val">Linear IgA at BMZ; drug-induced (vancomycin MC); crown of thorns / string of pearls pattern</span></div>
+      <div class="kv-row"><span class="kv-key">Epidermolysis bullosa acquisita</span><span class="kv-val">Anti-collagen VII (anchoring fibrils); subepidermal; trauma-induced; associated with IBD</span></div>
+      <div class="kv-row"><span class="kv-key">Epidermolysis bullosa (hereditary)</span><span class="kv-val">Genetic; EB simplex (KRT5/14); Junctional EB (laminin-332); Dystrophic EB (COL7A1)</span></div>
+      <div class="kv-row"><span class="kv-key">Darier's disease</span><span class="kv-val">ATP2A2 (SERCA pump) mutation; keratotic papules (seborrhoeic distribution); warty plaques; greasy scale; acantholysis + dyskeratosis (corps ronds + grains)</span></div>
+      <div class="kv-row"><span class="kv-key">Hailey-Hailey disease</span><span class="kv-val">ATP2C1 mutation; familial benign pemphigus; flexures; macerated erosions; "dilapidated brick wall" histology</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PIGMENT & HAIR/NAIL -->
+<div class="section" id="pigment">
+  <div class="section-title">Pigment, Hair <span>&amp; Nail</span></div>
+  <div class="section-sub">Vitiligo, melasma, albinism, alopecia, nail disorders</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">⬜ Vitiligo</div>
+      <div class="kv-row"><span class="kv-key">Pathology</span><span class="kv-val">Autoimmune destruction of melanocytes; T-cell mediated</span></div>
+      <div class="kv-row"><span class="kv-key">Appearance</span><span class="kv-val">Chalk-white (depigmented) macules/patches; Wood's lamp: brilliant white fluorescence</span></div>
+      <div class="kv-row"><span class="kv-key">MC type</span><span class="kv-val highlight">Non-segmental (generalised) vitiligo</span></div>
+      <div class="kv-row"><span class="kv-key">Koebner phenomenon</span><span class="kv-val">Present in vitiligo</span></div>
+      <div class="kv-row"><span class="kv-key">Leukotrichia</span><span class="kv-val danger">White hair in vitiligo patch → poor response to treatment</span></div>
+      <div class="kv-row"><span class="kv-key">Associations</span><span class="kv-val">Thyroid disease (Hashimoto's, Graves'), DM type 1, Addison's, pernicious anaemia, alopecia areata</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val">Topical steroids + topical tacrolimus; NB-UVB (most effective); JAK inhibitors (ruxolitinib cream)</span></div>
+      <div class="kv-row"><span class="kv-key">PUVA therapy</span><span class="kv-val">Psoralen + UVA; oral methoxsalen (8-MOP)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🟤 Melasma &amp; Hyperpigmentation</div>
+      <div class="kv-row"><span class="kv-key">Melasma — cause</span><span class="kv-val highlight">OCP, pregnancy (chloasma), sun exposure; females; brown patches on face</span></div>
+      <div class="kv-row"><span class="kv-key">Melasma — Wood's lamp</span><span class="kv-val">Enhanced in epidermal type; not enhanced in dermal type</span></div>
+      <div class="kv-row"><span class="kv-key">Melasma treatment</span><span class="kv-val">SPF + hydroquinone + topical tretinoin + mild steroid (Kligman's formula)</span></div>
+      <div class="kv-row"><span class="kv-key">Post-inflammatory hyperpigmentation</span><span class="kv-val">Darker skin types; after eczema/acne; melanin in dermis</span></div>
+      <div class="kv-row"><span class="kv-key">Acanthosis nigricans</span><span class="kv-val danger">Velvety hyperpigmented thickening; axillae, neck, groin; insulin resistance, DM, obesity; malignancy (GI cancer — paraneoplastic)</span></div>
+      <div class="kv-row"><span class="kv-key">Addison's disease — skin</span><span class="kv-val">Generalised hyperpigmentation; buccal mucosa, palmar creases, scars (↑ACTH → ↑MSH)</span></div>
+      <div class="kv-row"><span class="kv-key">Peutz-Jeghers syndrome</span><span class="kv-val">Perioral + mucosal lentigines + GI hamartomatous polyps; STK11 mutation</span></div>
+      <div class="kv-row"><span class="kv-key">Albinism</span><span class="kv-val">Tyrosinase deficiency (oculocutaneous); normal melanocyte number; ↑SCC risk; nystagmus</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">💇 Alopecia</div>
+      <table class="comparison-table">
+        <tr><th>Type</th><th>Pattern</th><th>Key Points</th></tr>
+        <tr><td>Androgenetic alopecia (AGA)</td><td>Males: Hamilton-Norwood; Females: Ludwig (diffuse crown)</td><td>DHT-mediated; miniaturisation; minoxidil + finasteride (males)</td></tr>
+        <tr><td>Alopecia areata</td><td>Patchy non-scarring; exclamation mark hairs; nail pitting</td><td>Autoimmune; associated with atopy, thyroid, vitiligo; JAK inhibitors (baricitinib)</td></tr>
+        <tr><td>Alopecia totalis</td><td>Complete scalp hair loss</td><td>Autoimmune; baricitinib approved</td></tr>
+        <tr><td>Alopecia universalis</td><td>Complete body hair loss</td><td>Most severe form AA</td></tr>
+        <tr><td>Telogen effluvium</td><td>Diffuse shedding 2–3 months after trigger</td><td>Post-partum, post-illness (COVID-19), stress, iron deficiency; self-limiting</td></tr>
+        <tr><td>Trichotillomania</td><td>Irregular patches; different hair lengths; self-pulling</td><td>OCD spectrum; habit-reversal therapy + SSRIs</td></tr>
+        <tr><td>Tinea capitis</td><td>Patchy + scaling + broken hairs</td><td>Griseofulvin (oral; fungal = only oral treatment works); kerion → steroids</td></tr>
+        <tr><td>Lichen planopilaris</td><td>Scarring; perifollicular scale + erythema</td><td>Hydroxychloroquine; irreversible</td></tr>
+      </table>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">💅 Nail Disorders</div>
+      <div class="kv-row"><span class="kv-key">Pitting (nail)</span><span class="kv-val highlight">Psoriasis (MC) &gt; alopecia areata &gt; eczema</span></div>
+      <div class="kv-row"><span class="kv-key">Onycholysis</span><span class="kv-val">Separation of nail plate from bed; psoriasis, thyrotoxicosis, trauma, fungi</span></div>
+      <div class="kv-row"><span class="kv-key">Beau's lines</span><span class="kv-val">Transverse grooves — systemic illness / chemotherapy (temporary growth arrest)</span></div>
+      <div class="kv-row"><span class="kv-key">Mees' lines</span><span class="kv-val danger">White transverse bands — arsenic poisoning</span></div>
+      <div class="kv-row"><span class="kv-key">Muehrcke's lines</span><span class="kv-val">Paired white transverse lines — hypoalbuminaemia</span></div>
+      <div class="kv-row"><span class="kv-key">Terry's nails</span><span class="kv-val">Proximal 2/3 white, distal pink band — liver cirrhosis, HF, DM</span></div>
+      <div class="kv-row"><span class="kv-key">Lindsay's (half-and-half) nails</span><span class="kv-val danger">Proximal white, distal brown — chronic renal failure</span></div>
+      <div class="kv-row"><span class="kv-key">Koilonychia (spoon-shaped)</span><span class="kv-val">Iron deficiency anaemia; also haemochromatosis</span></div>
+      <div class="kv-row"><span class="kv-key">Clubbing — most reliable sign</span><span class="kv-val">Schamroth's window test (loss of diamond-shaped window)</span></div>
+      <div class="kv-row"><span class="kv-key">Yellow nail syndrome</span><span class="kv-val">Yellow + thick + slow-growing nails + lymphoedema + pleural effusion</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SKIN TUMOURS -->
+<div class="section" id="tumours">
+  <div class="section-title">Skin <span>Tumours</span></div>
+  <div class="section-sub">Benign, pre-malignant, and malignant skin tumours; melanoma</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🟤 Benign Skin Tumours</div>
+      <div class="kv-row"><span class="kv-key">Seborrhoeic keratosis</span><span class="kv-val">Stuck-on appearance; warty; any colour; horn cysts on dermoscopy; MC benign skin tumour</span></div>
+      <div class="kv-row"><span class="kv-key">Leser-Trélat sign</span><span class="kv-val danger">Sudden eruptive seborrhoeic keratoses → paraneoplastic (GI adenocarcinoma)</span></div>
+      <div class="kv-row"><span class="kv-key">Dermatofibroma</span><span class="kv-val">Firm dermal nodule; legs; pinches inward (dimple sign); histiocyte proliferation</span></div>
+      <div class="kv-row"><span class="kv-key">Lipoma</span><span class="kv-val">Soft, lobulated, subcutaneous; compressible; encapsulated fat; treatment: excision if symptomatic</span></div>
+      <div class="kv-row"><span class="kv-key">Epidermal (epidermoid) cyst</span><span class="kv-val">Keratin-filled; punctum; rupture → foreign body reaction; face/scalp/neck</span></div>
+      <div class="kv-row"><span class="kv-key">Pilar (trichilemmal) cyst</span><span class="kv-val">Scalp MC; no punctum; firm; calcification common</span></div>
+      <div class="kv-row"><span class="kv-key">Glomus tumour</span><span class="kv-val">Subungual; intense point tenderness; Love's test (pin pressure); MRI diagnostic; excision</span></div>
+      <div class="kv-row"><span class="kv-key">Pyogenic granuloma</span><span class="kv-val">Rapidly growing vascular nodule; bleeds easily; pregnancy / trauma; shave + cautery</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">⚠️ Pre-malignant Conditions</div>
+      <div class="kv-row"><span class="kv-key">Actinic (solar) keratosis</span><span class="kv-val danger">Rough scaly patch on sun-damaged skin; risk of SCC (1–2% per year); treat with cryotherapy / 5-FU / imiquimod</span></div>
+      <div class="kv-row"><span class="kv-key">Bowen's disease</span><span class="kv-val">SCC in-situ; well-demarcated erythematous scaly plaque; HPV association; treat: 5-FU / photodynamic therapy / cryotherapy</span></div>
+      <div class="kv-row"><span class="kv-key">Erythroplasia of Queyrat</span><span class="kv-val danger">Bowen's disease on glans penis; moist red velvety plaque; higher malignant potential</span></div>
+      <div class="kv-row"><span class="kv-key">Leukoplakia</span><span class="kv-val danger">White patch on mucosa; cannot be rubbed off; 5% malignant transformation; biopsy mandatory</span></div>
+      <div class="kv-row"><span class="kv-key">Erythroplakia</span><span class="kv-val danger">Red velvety mucosal patch; 50% already invasive; higher risk than leukoplakia</span></div>
+      <div class="kv-row"><span class="kv-key">Keratoacanthoma</span><span class="kv-val">Rapidly growing nodule with central keratin plug; sun-exposed; self-involutes in 3–6 months; considered low-grade SCC</span></div>
+      <div class="kv-row"><span class="kv-key">Arsenical keratoses</span><span class="kv-val">Palmoplantar punctate keratoses; Bowen's disease; Mees' lines; chronic arsenic ingestion</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">☀️ Non-Melanoma Skin Cancers</div>
+      <div class="kv-row"><span class="kv-key">BCC — MC skin cancer overall</span><span class="kv-val highlight">Basal cell carcinoma; UV radiation; rarely metastasises ("rodent ulcer")</span></div>
+      <div class="kv-row"><span class="kv-key">BCC classic appearance</span><span class="kv-val">Pearly papule with rolled telangictaticborder; central ulceration; face (nose MC)</span></div>
+      <div class="kv-row"><span class="kv-key">BCC subtypes</span><span class="kv-val">Nodular (MC), Superficial, Morphoeic (sclerosing — worst prognosis, hard to excise)</span></div>
+      <div class="kv-row"><span class="kv-key">BCC treatment</span><span class="kv-val">Surgical excision; Mohs surgery (periocular/nasal); vismodegib (hedgehog pathway inhibitor) for advanced</span></div>
+      <div class="kv-row"><span class="kv-key">SCC — 2nd MC skin cancer</span><span class="kv-val highlight">Squamous cell carcinoma; can metastasise; arises from actinic keratosis</span></div>
+      <div class="kv-row"><span class="kv-key">SCC — appearance</span><span class="kv-val">Ulcerated nodule/plaque with indurated everted edges; sun-exposed areas</span></div>
+      <div class="kv-row"><span class="kv-key">Marjolin's ulcer</span><span class="kv-val danger">SCC in chronic scar/burn/sinus; aggressive; metastasises early</span></div>
+      <div class="kv-row"><span class="kv-key">Gorlin syndrome</span><span class="kv-val danger">Multiple BCCs + jaw cysts + calcified falx cerebri + rib anomalies; PTCH1 mutation</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🖤 Melanoma</div>
+      <div class="kv-row"><span class="kv-key">ABCDE criteria</span><span class="kv-val highlight">Asymmetry, Border irregularity, Colour variation, Diameter &gt;6 mm, Evolution/change</span></div>
+      <div class="kv-row"><span class="kv-key">MC type</span><span class="kv-val highlight">Superficial spreading melanoma (SSM) — 70%; radial growth initially</span></div>
+      <div class="kv-row"><span class="kv-key">Nodular melanoma</span><span class="kv-val danger">Vertical growth from onset; worst prognosis of common subtypes; rapid growth</span></div>
+      <div class="kv-row"><span class="kv-key">Lentigo maligna melanoma</span><span class="kv-val">Elderly; sun-damaged face; slow growing; melanoma in situ (Hutchinson's melanotic freckle) → invasive</span></div>
+      <div class="kv-row"><span class="kv-key">Acral lentiginous melanoma</span><span class="kv-val danger">Palms, soles, subungual; MC in dark-skinned individuals; Hutchinson's nail sign (pigment on proximal nail fold)</span></div>
+      <div class="kv-row"><span class="kv-key">Most important prognostic factor</span><span class="kv-val danger">Breslow thickness (tumour depth in mm)</span></div>
+      <div class="kv-row"><span class="kv-key">Sentinel lymph node biopsy</span><span class="kv-val">Breslow &gt;1 mm (or &gt;0.8 mm with ulceration)</span></div>
+      <div class="kv-row"><span class="kv-key">BRAF mutation</span><span class="kv-val">50% of melanomas; BRAF V600E; targeted therapy: vemurafenib / dabrafenib</span></div>
+      <div class="kv-row"><span class="kv-key">Immunotherapy for melanoma</span><span class="kv-val highlight">Anti-PD1 (pembrolizumab, nivolumab); anti-CTLA4 (ipilimumab)</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🔮 Rare Skin Tumours</div>
+      <div class="kv-row"><span class="kv-key">Mycosis fungoides (MF)</span><span class="kv-val highlight">MC primary cutaneous T-cell lymphoma (CTCL); CD4+ T cells; Sézary cells</span></div>
+      <div class="kv-row"><span class="kv-key">MF stages</span><span class="kv-val">Patch → Plaque → Tumour → Erythroderma (Sézary syndrome)</span></div>
+      <div class="kv-row"><span class="kv-key">Sézary syndrome</span><span class="kv-val danger">Erythroderma + Sézary cells in blood + lymphadenopathy; worst prognosis</span></div>
+      <div class="kv-row"><span class="kv-key">Pautrier's microabscesses</span><span class="kv-val">Atypical lymphocytes in epidermis on histology — MF</span></div>
+      <div class="kv-row"><span class="kv-key">Kaposi's sarcoma</span><span class="kv-val danger">HHV-8; HIV/AIDS; purple vascular nodules on lower extremities; epidemic KS MC</span></div>
+      <div class="kv-row"><span class="kv-key">Merkel cell carcinoma</span><span class="kv-val danger">Merkel cell polyomavirus (MCPyV); neuroendocrine; pearly/violaceous nodule; aggressive; elderly/immunosuppressed</span></div>
+      <div class="kv-row"><span class="kv-key">Dermatofibrosarcoma protuberans (DFSP)</span><span class="kv-val">CD34+; t(17;22); imatinib for unresectable; Mohs surgery preferred</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- STIs & LEPROSY -->
+<div class="section" id="std">
+  <div class="section-title">STIs <span>&amp; Leprosy</span></div>
+  <div class="section-sub">Syphilis, gonorrhoea, chancroid, leprosy classifications and treatment</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🦠 Syphilis</div>
+      <div class="kv-row"><span class="kv-key">Organism</span><span class="kv-val highlight">Treponema pallidum (spirochaete)</span></div>
+      <div class="kv-row"><span class="kv-key">Primary syphilis</span><span class="kv-val">Painless indurated chancre (hard) + painless LN; heals in 3–6 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Secondary syphilis</span><span class="kv-val">6–8 wks post-chancre; generalised rash (palms + soles — pathognomonic); condyloma lata; mucous patches; lymphadenopathy; "moth-eaten" alopecia</span></div>
+      <div class="kv-row"><span class="kv-key">Tertiary syphilis</span><span class="kv-val danger">Gumma; cardiovascular (aortic regurgitation, aortitis); neurosyphilis (tabes dorsalis, general paresis)</span></div>
+      <div class="kv-row"><span class="kv-key">Screening test (non-treponemal)</span><span class="kv-val highlight">VDRL / RPR (titre follows disease activity)</span></div>
+      <div class="kv-row"><span class="kv-key">Confirmatory (treponemal)</span><span class="kv-val">TPHA / FTA-ABS (remains positive lifelong)</span></div>
+      <div class="kv-row"><span class="kv-key">False positive VDRL</span><span class="kv-val">SLE, APS, pregnancy, viral infections (VDRL = "Very Dubious, Rarely Legitimate")</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val highlight">Benzathine penicillin G (all stages); doxycycline if PCN allergic</span></div>
+      <div class="kv-row"><span class="kv-key">Jarisch-Herxheimer reaction</span><span class="kv-val danger">Fever + rigors within 24 hrs of antibiotic treatment (endotoxin release); Rx: paracetamol</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🦠 Other STIs</div>
+      <table class="comparison-table">
+        <tr><th>Disease</th><th>Organism</th><th>Ulcer features</th><th>Treatment</th></tr>
+        <tr><td>Chancroid</td><td>Haemophilus ducreyi</td><td>Painful, soft, ragged, undermined edges; tender buboes; "school of fish" on Gram stain</td><td>Azithromycin 1 g single dose OR ceftriaxone</td></tr>
+        <tr><td>LGV (Lymphogranuloma venereum)</td><td>Chlamydia trachomatis L1–L3</td><td>Small transient painless ulcer → massive inguinal LN (buboes); groove sign (Greenblatt sign)</td><td>Doxycycline 100 mg BD × 21 days</td></tr>
+        <tr><td>Donovanosis (Granuloma inguinale)</td><td>Klebsiella granulomatis</td><td>Painless progressive beef-red ulcer; no LN; Donovan bodies (safety-pin appearance)</td><td>Azithromycin × 3 weeks</td></tr>
+        <tr><td>Gonorrhoea</td><td>Neisseria gonorrhoeae</td><td>Urethral discharge; gram-negative diplococci (intracellular); "gonococcal arthritis-dermatitis"</td><td>Ceftriaxone 500 mg IM single dose</td></tr>
+        <tr><td>NGU</td><td>Chlamydia trachomatis D–K (MC)</td><td>Urethral discharge; Reiter's syndrome (urethritis + arthritis + conjunctivitis + oral ulcers)</td><td>Doxycycline 100 mg BD × 7 days</td></tr>
+      </table>
+      <div class="mnemonic"><b>Ulcer pain mnemonic — "Painless in Syphilis and Donovanosis (PSD), Painful in Chancroid and Herpes (PCH)":</b> Primary syphilis = painless; Chancroid = most painful; Donovanosis = painless; Herpes = painful</div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🔬 Leprosy — Ridley-Jopling Classification</div>
+      <table class="comparison-table">
+        <tr><th>Type</th><th>Skin lesions</th><th>Nerve involvement</th><th>Bacilli (BI)</th><th>Lepromin test</th></tr>
+        <tr><td>Tuberculoid (TT)</td><td>1–5 lesions; well-defined; hypopigmented; dry; anaesthetic</td><td>1–2 nerves; thickened; early nerve damage</td><td>0 (paucibacillary)</td><td>Strongly positive</td></tr>
+        <tr><td>Borderline tuberculoid (BT)</td><td>Few; well-defined; satellite lesions</td><td>Moderate</td><td>1+ (PB)</td><td>Weakly positive</td></tr>
+        <tr><td>Borderline borderline (BB)</td><td>Dimorphic; target/punched-out lesions</td><td>Asymmetric</td><td>2–3+ (MB)</td><td>Negative</td></tr>
+        <tr><td>Borderline lepromatous (BL)</td><td>Many; ill-defined</td><td>Asymmetric → symmetric</td><td>4–5+ (MB)</td><td>Negative</td></tr>
+        <tr><td>Lepromatous (LL)</td><td>Numerous; bilateral symmetric; madarosis (loss of lateral eyebrows); leonine face; saddle nose</td><td>Glove-stocking; late</td><td>6+ (MB)</td><td>Negative (anergic)</td></tr>
+      </table>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">💊 Leprosy — Treatment &amp; Reactions</div>
+      <div class="kv-row"><span class="kv-key">PB leprosy (TT + BT + single patch)</span><span class="kv-val highlight">Rifampicin 600 mg monthly + Dapsone 100 mg daily × 6 months</span></div>
+      <div class="kv-row"><span class="kv-key">MB leprosy (BB + BL + LL)</span><span class="kv-val highlight">Rifampicin 600 mg monthly + Dapsone 100 mg daily + Clofazimine 300 mg monthly (+ 50 mg daily) × 12 months</span></div>
+      <div class="kv-row"><span class="kv-key">Single skin lesion PB</span><span class="kv-val">ROM: Rifampicin 600 mg + Ofloxacin 400 mg + Minocycline 100 mg — single dose</span></div>
+      <div class="kv-row"><span class="kv-key">Type 1 reaction (Reversal reaction)</span><span class="kv-val danger">BT/BB/BL; CMI ↑; erythema/oedema of existing lesions; nerve function impairment; Rx: prednisolone</span></div>
+      <div class="kv-row"><span class="kv-key">Type 2 reaction (ENL)</span><span class="kv-val danger">BL/LL; immune complex (Type III); tender erythematous nodules; fever; Rx: thalidomide (males) / clofazimine / steroids</span></div>
+      <div class="kv-row"><span class="kv-key">Lucio's phenomenon</span><span class="kv-val danger">Diffuse LL; haemorrhagic infarcts; vasculitis; Mexico/Central America; poor prognosis</span></div>
+      <div class="kv-row"><span class="kv-key">Clofazimine — side effect</span><span class="kv-val">Skin discolouration (reddish-brown); ichthyosis</span></div>
+      <div class="kv-row"><span class="kv-key">Dapsone — side effects</span><span class="kv-val danger">Haemolytic anaemia (G6PD deficiency), methaemoglobinaemia, agranulocytosis</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">⚡ Leprosy — Special Points</div>
+      <div class="kv-row"><span class="kv-key">Causative organism</span><span class="kv-val highlight">Mycobacterium leprae (cannot be cultured in vitro)</span></div>
+      <div class="kv-row"><span class="kv-key">Reservoir in animals</span><span class="kv-val">Nine-banded armadillo (Dasypus novemcinctus)</span></div>
+      <div class="kv-row"><span class="kv-key">MC nerve involved overall</span><span class="kv-val danger">Ulnar nerve (claw hand) — most frequently affected peripheral nerve</span></div>
+      <div class="kv-row"><span class="kv-key">Earliest nerve involved</span><span class="kv-val highlight">Lateral popliteal (common peroneal) nerve → foot drop</span></div>
+      <div class="kv-row"><span class="kv-key">MC pure neural leprosy nerve</span><span class="kv-val">Ulnar &gt; radial cutaneous &gt; lateral popliteal</span></div>
+      <div class="kv-row"><span class="kv-key">Fite-Faraco stain</span><span class="kv-val">Modified ZN stain for M. leprae (not seen on standard ZN)</span></div>
+      <div class="kv-row"><span class="kv-key">Virchow cells</span><span class="kv-val">Foamy macrophages laden with M. leprae; lepromatous leprosy</span></div>
+      <div class="kv-row"><span class="kv-key">Slit-skin smear — site</span><span class="kv-val">Earlobes + 2 lesions; BI and MI calculated</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency single-answer facts for rapid Dermatology revision</div>
+  <div class="grid-2">
+    <div class="card orange">
+      <div class="card-title">⭐ Derma Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">MC skin cancer overall</span><span class="kv-val highlight">BCC (basal cell carcinoma)</span></div>
+      <div class="kv-row"><span class="kv-key">MC skin cancer to metastasize</span><span class="kv-val danger">Melanoma (then SCC)</span></div>
+      <div class="kv-row"><span class="kv-key">MC benign skin tumour</span><span class="kv-val">Seborrhoeic keratosis</span></div>
+      <div class="kv-row"><span class="kv-key">MC STI worldwide</span><span class="kv-val">Chlamydia trachomatis</span></div>
+      <div class="kv-row"><span class="kv-key">MC ulcerating STI in India</span><span class="kv-val">Syphilis</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause of tinea capitis (India)</span><span class="kv-val">Trichophyton violaceum</span></div>
+      <div class="kv-row"><span class="kv-key">Coral-red fluorescence Wood's lamp</span><span class="kv-val highlight">Erythrasma (Corynebacterium minutissimum)</span></div>
+      <div class="kv-row"><span class="kv-key">Green fluorescence Wood's lamp</span><span class="kv-val">Microsporum canis (tinea capitis)</span></div>
+      <div class="kv-row"><span class="kv-key">Blue-white fluorescence Wood's lamp</span><span class="kv-val">Vitiligo (brilliant blue-white)</span></div>
+      <div class="kv-row"><span class="kv-key">Gold fluorescence Wood's lamp</span><span class="kv-val">Tinea versicolor (Malassezia)</span></div>
+      <div class="kv-row"><span class="kv-key">Spaghetti and meatballs (KOH)</span><span class="kv-val">Tinea versicolor (short hyphae + round spores)</span></div>
+      <div class="kv-row"><span class="kv-key">School of fish (Gram stain)</span><span class="kv-val">Haemophilus ducreyi (chancroid)</span></div>
+      <div class="kv-row"><span class="kv-key">Safety pin appearance</span><span class="kv-val">Donovan bodies (Donovanosis / granuloma inguinale)</span></div>
+      <div class="kv-row"><span class="kv-key">Tzanck smear positive in</span><span class="kv-val">HSV, VZV, pemphigus (acantholytic cells)</span></div>
+      <div class="kv-row"><span class="kv-key">Positive Nikolsky sign in</span><span class="kv-val danger">Pemphigus vulgaris, SSSS, TEN</span></div>
+      <div class="kv-row"><span class="kv-key">Negative Nikolsky sign</span><span class="kv-val green">Bullous pemphigoid (tense bullae)</span></div>
+      <div class="kv-row"><span class="kv-key">Intercellular IgG (DIF)</span><span class="kv-val">Pemphigus vulgaris (fish-net pattern)</span></div>
+      <div class="kv-row"><span class="kv-key">Linear IgG at BMZ (DIF)</span><span class="kv-val">Bullous pemphigoid / Goodpasture's</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">⭐ Derma Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">Granular IgA at dermal papillae (DIF)</span><span class="kv-val highlight">Dermatitis herpetiformis (coeliac disease)</span></div>
+      <div class="kv-row"><span class="kv-key">DH treatment (rapid relief)</span><span class="kv-val highlight">Dapsone (within 48–72 hrs)</span></div>
+      <div class="kv-row"><span class="kv-key">DH treatment (long term)</span><span class="kv-val">Gluten-free diet</span></div>
+      <div class="kv-row"><span class="kv-key">Munro's microabscesses</span><span class="kv-val">Psoriasis (neutrophils in stratum corneum)</span></div>
+      <div class="kv-row"><span class="kv-key">Pautrier's microabscesses</span><span class="kv-val danger">Mycosis fungoides (CTCL)</span></div>
+      <div class="kv-row"><span class="kv-key">Civatte bodies (colloid bodies)</span><span class="kv-val">Lichen planus (apoptotic keratinocytes at DEJ)</span></div>
+      <div class="kv-row"><span class="kv-key">Henderson-Paterson bodies</span><span class="kv-val">Molluscum contagiosum</span></div>
+      <div class="kv-row"><span class="kv-key">Medlar bodies (copper penny cells)</span><span class="kv-val">Chromoblastomycosis</span></div>
+      <div class="kv-row"><span class="kv-key">Corps ronds + grains</span><span class="kv-val">Darier's disease (dyskeratosis)</span></div>
+      <div class="kv-row"><span class="kv-key">Dilapidated brick wall histology</span><span class="kv-val">Hailey-Hailey disease</span></div>
+      <div class="kv-row"><span class="kv-key">Tombstone appearance</span><span class="kv-val">Pemphigus vulgaris (basal cells remain attached)</span></div>
+      <div class="kv-row"><span class="kv-key">Koilocytes (HPV cytopathic effect)</span><span class="kv-val">Warts / condyloma acuminata</span></div>
+      <div class="kv-row"><span class="kv-key">Breslow thickness — most important factor</span><span class="kv-val danger">Melanoma prognosis</span></div>
+      <div class="kv-row"><span class="kv-key">Hutchinson's nail sign</span><span class="kv-val danger">Proximal nail fold pigmentation → acral lentiginous melanoma</span></div>
+      <div class="kv-row"><span class="kv-key">Hutchinson's melanotic freckle</span><span class="kv-val">Lentigo maligna (in-situ melanoma on face)</span></div>
+      <div class="kv-row"><span class="kv-key">MC melanoma type</span><span class="kv-val">Superficial spreading melanoma (SSM)</span></div>
+      <div class="kv-row"><span class="kv-key">Worst prognosis melanoma</span><span class="kv-val danger">Nodular melanoma (vertical growth from start)</span></div>
+      <div class="kv-row"><span class="kv-key">BRAF V600E — drug</span><span class="kv-val">Vemurafenib / dabrafenib (BRAF inhibitors)</span></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-auto">
+    <div class="card green">
+      <div class="card-title">🏆 High-Yield Mnemonics</div>
+      <div class="mnemonic"><b>6 Ps of Lichen Planus:</b> Pruritic, Purple, Polygonal, Planar, Papule, Plaque — on Wickham's striae</div>
+      <div class="mnemonic"><b>Psoriasis signs — "ACM":</b> Auspitz sign (pinpoint bleeding), Candle-grease sign (scale scraping), Marcus-Munro microabscesses (neutrophils in corneum)</div>
+      <div class="mnemonic"><b>Koebner phenomenon diseases — "WLVP":</b> Warts, Lichen planus, Vitiligo, Psoriasis (also molluscum, lichen sclerosus)</div>
+      <div class="mnemonic"><b>Pemphigus vs Pemphigoid memory aid:</b> Pemphigus = Vulgaris = Flaccid = Suprabasalar = Positive Nikolsky = mucosa INVOLVED | Pemphigoid = Old = Tense = Subepidermal = Negative Nikolsky = mucosa SPARED</div>
+      <div class="mnemonic"><b>DRESS drugs — "CAVE":</b> Carbamazepine, Allopurinol, Vancomycin, (anti-)Epileptics (phenytoin, lamotrigine, dapsone)</div>
+      <div class="mnemonic"><b>Leprosy reactions:</b> Type 1 = Reversal = CMI increase = TT→BT→BL = Steroids | Type 2 = ENL = Immune complex = BL→LL = Thalidomide / Clofazimine</div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">⚡ Drug–Skin Associations</div>
+      <div class="kv-row"><span class="kv-key">SJS/TEN — top culprits</span><span class="kv-val danger">Allopurinol (MC worldwide), Carbamazepine (HLA-B*1502), Sulfonamides, Lamotrigine</span></div>
+      <div class="kv-row"><span class="kv-key">Fixed drug eruption</span><span class="kv-val">Cotrimoxazole, NSAIDs, tetracyclines, metronidazole</span></div>
+      <div class="kv-row"><span class="kv-key">Lichenoid drug eruption</span><span class="kv-val">Gold, antimalarials, thiazides, beta-blockers, ACEi</span></div>
+      <div class="kv-row"><span class="kv-key">Drug-induced pemphigus</span><span class="kv-val danger">Penicillamine, captopril, rifampicin</span></div>
+      <div class="kv-row"><span class="kv-key">Drug-induced BP</span><span class="kv-val">Furosemide, NSAIDs, DPP4 inhibitors (gliptins)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug-induced linear IgA</span><span class="kv-val danger">Vancomycin (MC), captopril, amiodarone</span></div>
+      <div class="kv-row"><span class="kv-key">Phototoxic reaction</span><span class="kv-val">Tetracyclines (esp. doxycycline), amiodarone, psoralens, fluoroquinolones</span></div>
+      <div class="kv-row"><span class="kv-key">Photoallergic reaction</span><span class="kv-val">Sulfonamides, thiazides, piroxicam; Type IV mechanism</span></div>
+      <div class="kv-row"><span class="kv-key">Drug-induced acne (acneiform eruption)</span><span class="kv-val">Steroids, lithium, INH, phenytoin, EGFR inhibitors</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🔥 Exam Traps &amp; Frequently Confused</div>
+      <div class="kv-row"><span class="kv-key">Erysipelas vs Cellulitis</span><span class="kv-val danger">Erysipelas = sharp border + raised + lymphatics; Cellulitis = diffuse border + deeper</span></div>
+      <div class="kv-row"><span class="kv-key">SSSS vs TEN</span><span class="kv-val danger">SSSS = children + subgranular split + mucosa spared; TEN = adults + subepidermal + mucosa involved</span></div>
+      <div class="kv-row"><span class="kv-key">Pemphigus foliaceus vs vulgaris</span><span class="kv-val">Foliaceus = anti-Dsg1 only + NO mucosal + superficial bullae; Vulgaris = anti-Dsg3 (+Dsg1) + mucosa + deep</span></div>
+      <div class="kv-row"><span class="kv-key">Acute urticaria vs angioedema</span><span class="kv-val">Urticaria = superficial dermis; Angioedema = deep dermis/subcutis; HAE = no urticaria</span></div>
+      <div class="kv-row"><span class="kv-key">Leukoplakia vs lichen planus</span><span class="kv-val">LP = white reticular/lacy with Wickham's striae; Leukoplakia = homogeneous white patch (no striae)</span></div>
+      <div class="kv-row"><span class="kv-key">BCC vs SCC</span><span class="kv-val danger">BCC = pearly + telangiectatic border + rarely metastasises; SCC = indurated + everted edge + can metastasize</span></div>
+      <div class="kv-row"><span class="kv-key">Condyloma acuminata vs condyloma lata</span><span class="kv-val">Acuminata = HPV (cauliflower); Lata = secondary syphilis (flat, moist, smooth)</span></div>
+      <div class="kv-row"><span class="kv-key">Mycosis fungoides vs psoriasis</span><span class="kv-val danger">MF = Pautrier's microabscesses (atypical lymphocytes); Psoriasis = Munro's microabscesses (neutrophils)</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Biochemistry Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #05080f; --surface: #0c1120; --surface2: #131a2e; --border: #1a2540;
+    --accent: #a78bfa; --accent2: #34d399; --accent3: #fb923c; --accent4: #f9a8d4; --accent5: #38bdf8;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #05080f 0%, #0e0a1e 50%, #05080f 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent); color: #05080f; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent); color: #05080f; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.violet::before { background: var(--accent); }
+  .card.green::before { background: var(--accent2); }
+  .card.orange::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.sky::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.violet .card-title { color: var(--accent); }
+  .card.green .card-title { color: var(--accent2); }
+  .card.orange .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.sky .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #131a2e; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.green { color: var(--accent2); }
+  .kv-val.orange { color: var(--accent3); }
+  .kv-val.sky { color: var(--accent5); }
+  .kv-val.danger { color: var(--danger); }
+  .formula-box { background: #070d1a; border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent2); margin: 6px 0; line-height: 1.8; }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(167,139,250,0.07); border: 1px solid rgba(167,139,250,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent); margin-top: 8px; line-height: 1.5; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  .mt-12 { margin-top: 12px; }
+  @media (max-width: 800px) { .grid-auto, .grid-2 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>Bio<span>chemistry</span> Cheatsheet</h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('metabolism',this)">Carb Metabolism</div>
+    <div class="tab" onclick="showSection('lipids',this)">Lipid Metabolism</div>
+    <div class="tab" onclick="showSection('proteins',this)">Proteins &amp; AA</div>
+    <div class="tab" onclick="showSection('vitamins',this)">Vitamins</div>
+    <div class="tab" onclick="showSection('enzymes',this)">Enzymes</div>
+    <div class="tab" onclick="showSection('genetics',this)">Molecular Biology</div>
+    <div class="tab" onclick="showSection('clinicalbio',this)">Clinical Biochem</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- CARB METABOLISM -->
+<div class="section active" id="metabolism">
+  <div class="section-title">Carbohydrate <span>Metabolism</span></div>
+  <div class="section-sub">Glycolysis, TCA cycle, gluconeogenesis, glycogen, HMP shunt</div>
+  <div class="grid-auto">
+    <div class="card violet">
+      <div class="card-title">⚡ Glycolysis Key Points</div>
+      <div class="kv-row"><span class="kv-key">Location</span><span class="kv-val highlight">Cytoplasm</span></div>
+      <div class="kv-row"><span class="kv-key">Net ATP yield</span><span class="kv-val">2 ATP per glucose</span></div>
+      <div class="kv-row"><span class="kv-key">Net NADH</span><span class="kv-val">2 NADH</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting enzyme</span><span class="kv-val highlight">Phosphofructokinase-1 (PFK-1)</span></div>
+      <div class="kv-row"><span class="kv-key">PFK-1 inhibited by</span><span class="kv-val danger">ATP, citrate</span></div>
+      <div class="kv-row"><span class="kv-key">PFK-1 activated by</span><span class="kv-val green">AMP, fructose-2,6-BP</span></div>
+      <div class="kv-row"><span class="kv-key">Irreversible steps</span><span class="kv-val">Hexokinase, PFK-1, Pyruvate kinase</span></div>
+      <div class="kv-row"><span class="kv-key">Anaerobic end product</span><span class="kv-val">Lactate (regenerates NAD+)</span></div>
+      <div class="kv-row"><span class="kv-key">2,3-BPG pathway</span><span class="kv-val">Rapoport-Luebering (RBC only)</span></div>
+      <div class="kv-row"><span class="kv-key">Pyruvate → Acetyl-CoA</span><span class="kv-val">Pyruvate dehydrogenase (mitochondria)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔄 TCA Cycle (Krebs)</div>
+      <div class="kv-row"><span class="kv-key">Location</span><span class="kv-val highlight">Mitochondrial matrix</span></div>
+      <div class="kv-row"><span class="kv-key">Entry: Acetyl-CoA + OAA</span><span class="kv-val">→ Citrate</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting enzyme</span><span class="kv-val highlight">Isocitrate dehydrogenase</span></div>
+      <div class="kv-row"><span class="kv-key">NADH per turn</span><span class="kv-val">3</span></div>
+      <div class="kv-row"><span class="kv-key">FADH2 per turn</span><span class="kv-val">1</span></div>
+      <div class="kv-row"><span class="kv-key">GTP per turn</span><span class="kv-val">1 (substrate-level phosphorylation)</span></div>
+      <div class="kv-row"><span class="kv-key">CO2 release steps</span><span class="kv-val">Isocitrate → α-KG; α-KG → Succinyl-CoA</span></div>
+      <div class="kv-row"><span class="kv-key">α-KG dehydrogenase</span><span class="kv-val danger">Inhibited in thiamine deficiency</span></div>
+      <div class="kv-row"><span class="kv-key">Anaplerotic reaction</span><span class="kv-val">Pyruvate carboxylase → OAA</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔼 Gluconeogenesis</div>
+      <div class="kv-row"><span class="kv-key">Location</span><span class="kv-val">Liver (primary); Kidney (prolonged starvation)</span></div>
+      <div class="kv-row"><span class="kv-key">Substrates (GLAP)</span><span class="kv-val highlight">Glycerol, Lactate, Amino acids (glucogenic), Propionate</span></div>
+      <div class="kv-row"><span class="kv-key">Bypass enzyme 1</span><span class="kv-val">Pyruvate carboxylase (pyruvate → OAA)</span></div>
+      <div class="kv-row"><span class="kv-key">Bypass enzyme 2</span><span class="kv-val">PEPCK (OAA → PEP)</span></div>
+      <div class="kv-row"><span class="kv-key">Bypass enzyme 3</span><span class="kv-val">Fructose-1,6-bisphosphatase</span></div>
+      <div class="kv-row"><span class="kv-key">Bypass enzyme 4</span><span class="kv-val">Glucose-6-phosphatase (liver/kidney only)</span></div>
+      <div class="kv-row"><span class="kv-key">Cori cycle</span><span class="kv-val">Lactate (muscle) ↔ Glucose (liver)</span></div>
+      <div class="kv-row"><span class="kv-key">Glucose-Alanine cycle</span><span class="kv-val">Alanine (muscle) → Glucose (liver)</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🧱 Glycogen Metabolism</div>
+      <div class="kv-row"><span class="kv-key">Synthesis enzyme (rate-limiting)</span><span class="kv-val highlight">Glycogen synthase</span></div>
+      <div class="kv-row"><span class="kv-key">Degradation enzyme (rate-limiting)</span><span class="kv-val highlight">Glycogen phosphorylase</span></div>
+      <div class="kv-row"><span class="kv-key">Branching enzyme</span><span class="kv-val">α1,6-glucosidase (adds branches)</span></div>
+      <div class="kv-row"><span class="kv-key">Liver glycogen role</span><span class="kv-val">Blood glucose homeostasis</span></div>
+      <div class="kv-row"><span class="kv-key">Muscle glycogen role</span><span class="kv-val">Local energy only (no G6Pase)</span></div>
+      <div class="kv-row"><span class="kv-key">Von Gierke (Type Ia)</span><span class="kv-val danger">G6Pase deficiency → hypoglycaemia</span></div>
+      <div class="kv-row"><span class="kv-key">Pompe (Type II)</span><span class="kv-val danger">Acid maltase deficiency → cardiomegaly</span></div>
+      <div class="kv-row"><span class="kv-key">McArdle (Type V)</span><span class="kv-val danger">Muscle phosphorylase → cramps on exercise</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🔬 HMP Shunt (Pentose Phosphate Pathway)</div>
+      <div class="kv-row"><span class="kv-key">Location</span><span class="kv-val">Cytoplasm</span></div>
+      <div class="kv-row"><span class="kv-key">Products</span><span class="kv-val highlight">NADPH + Ribose-5-phosphate</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting enzyme</span><span class="kv-val highlight">Glucose-6-phosphate dehydrogenase (G6PD)</span></div>
+      <div class="kv-row"><span class="kv-key">G6PD deficiency</span><span class="kv-val danger">Haemolytic anaemia on oxidant exposure</span></div>
+      <div class="kv-row"><span class="kv-key">G6PD triggers</span><span class="kv-val danger">Primaquine, dapsone, fava beans, infection</span></div>
+      <div class="kv-row"><span class="kv-key">NADPH role</span><span class="kv-val">Glutathione reduction, FA synthesis, NADPH oxidase</span></div>
+      <div class="kv-row"><span class="kv-key">Ribose-5-P role</span><span class="kv-val">Nucleotide synthesis (DNA/RNA)</span></div>
+      <div class="kv-row"><span class="kv-key">Active in</span><span class="kv-val">Liver, adrenal cortex, RBC, mammary gland</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🔋 ETC &amp; Oxidative Phosphorylation</div>
+      <div class="kv-row"><span class="kv-key">Location</span><span class="kv-val">Inner mitochondrial membrane</span></div>
+      <div class="kv-row"><span class="kv-key">Complex I</span><span class="kv-val">NADH dehydrogenase</span></div>
+      <div class="kv-row"><span class="kv-key">Complex II</span><span class="kv-val">Succinate dehydrogenase (FADH2)</span></div>
+      <div class="kv-row"><span class="kv-key">Complex IV</span><span class="kv-val">Cytochrome c oxidase (O2 → H2O)</span></div>
+      <div class="kv-row"><span class="kv-key">P:O ratio NADH</span><span class="kv-val">2.5 ATP</span></div>
+      <div class="kv-row"><span class="kv-key">P:O ratio FADH2</span><span class="kv-val">1.5 ATP</span></div>
+      <div class="kv-row"><span class="kv-key">Total ATP/glucose (aerobic)</span><span class="kv-val highlight">~30–32 ATP</span></div>
+      <div class="kv-row"><span class="kv-key">Uncoupling agent</span><span class="kv-val danger">DNP, thermogenin (↑ heat, ↓ ATP)</span></div>
+      <div class="kv-row"><span class="kv-key">Cyanide poisoning</span><span class="kv-val danger">Inhibits Complex IV (cytochrome c oxidase)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- LIPID METABOLISM -->
+<div class="section" id="lipids">
+  <div class="section-title">Lipid <span>Metabolism</span></div>
+  <div class="section-sub">FA synthesis, beta-oxidation, ketogenesis, cholesterol, lipoproteins</div>
+  <div class="grid-auto">
+    <div class="card violet">
+      <div class="card-title">⚡ Fatty Acid Synthesis</div>
+      <div class="kv-row"><span class="kv-key">Location</span><span class="kv-val highlight">Cytoplasm</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting enzyme</span><span class="kv-val highlight">Acetyl-CoA Carboxylase (ACC)</span></div>
+      <div class="kv-row"><span class="kv-key">ACC activated by</span><span class="kv-val green">Insulin, citrate</span></div>
+      <div class="kv-row"><span class="kv-key">ACC inhibited by</span><span class="kv-val danger">Glucagon, palmitoyl-CoA, AMPK</span></div>
+      <div class="kv-row"><span class="kv-key">First committed step</span><span class="kv-val">Acetyl-CoA → Malonyl-CoA</span></div>
+      <div class="kv-row"><span class="kv-key">Reducing agent required</span><span class="kv-val">NADPH (from HMP shunt + malic enzyme)</span></div>
+      <div class="kv-row"><span class="kv-key">First FA product</span><span class="kv-val">Palmitate (C16:0)</span></div>
+      <div class="kv-row"><span class="kv-key">Carnitine shuttle</span><span class="kv-val">Transports long-chain FA into mitochondria</span></div>
+      <div class="kv-row"><span class="kv-key">CPTI inhibited by</span><span class="kv-val danger">Malonyl-CoA (prevents futile cycle)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔥 Beta-Oxidation</div>
+      <div class="kv-row"><span class="kv-key">Location</span><span class="kv-val highlight">Mitochondrial matrix</span></div>
+      <div class="kv-row"><span class="kv-key">Products per 2-C cycle</span><span class="kv-val">1 NADH + 1 FADH2 + 1 Acetyl-CoA</span></div>
+      <div class="kv-row"><span class="kv-key">Palmitate (C16) yields</span><span class="kv-val">7 cycles → 8 Acetyl-CoA</span></div>
+      <div class="kv-row"><span class="kv-key">Net ATP (palmitate)</span><span class="kv-val highlight">~106 ATP</span></div>
+      <div class="kv-row"><span class="kv-key">Odd-chain FA</span><span class="kv-val">Propionyl-CoA → Succinyl-CoA (B12 needed)</span></div>
+      <div class="kv-row"><span class="kv-key">Refsum disease</span><span class="kv-val danger">Phytanic acid oxidase deficiency (peroxisomal)</span></div>
+      <div class="kv-row"><span class="kv-key">Peroxisomal β-oxidation</span><span class="kv-val">VLCFA (very long chain FA)</span></div>
+      <div class="kv-row"><span class="kv-key">Zellweger syndrome</span><span class="kv-val danger">Peroxisome biogenesis defect</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🧪 Ketone Bodies &amp; Cholesterol</div>
+      <div class="kv-row"><span class="kv-key">Ketogenesis location</span><span class="kv-val">Liver mitochondria</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting enzyme</span><span class="kv-val">HMG-CoA synthase (mitochondrial)</span></div>
+      <div class="kv-row"><span class="kv-key">Types of ketone bodies</span><span class="kv-val highlight">Acetoacetate, β-hydroxybutyrate, Acetone</span></div>
+      <div class="kv-row"><span class="kv-key">Liver cannot use ketones</span><span class="kv-val">No succinyl-CoA transferase</span></div>
+      <div class="kv-row"><span class="kv-key">Cholesterol synthesis RLS</span><span class="kv-val highlight">HMG-CoA reductase (liver cytoplasm)</span></div>
+      <div class="kv-row"><span class="kv-key">Statin MOA</span><span class="kv-val">Inhibit HMG-CoA reductase</span></div>
+      <div class="kv-row"><span class="kv-key">Bile acids from</span><span class="kv-val">Cholesterol (7α-hydroxylase)</span></div>
+      <div class="kv-row"><span class="kv-key">Steroid hormones from</span><span class="kv-val">Cholesterol → Pregnenolone</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🚚 Lipoproteins</div>
+      <table class="comparison-table">
+        <tr><th>Lipoprotein</th><th>Main Content</th><th>Key Fact</th></tr>
+        <tr><td>Chylomicron</td><td>Dietary TG (90%)</td><td>Gut origin; ApoB-48; degraded by LPL</td></tr>
+        <tr><td>VLDL</td><td>Endogenous TG</td><td>Liver origin; ApoB-100; becomes IDL → LDL</td></tr>
+        <tr><td>LDL</td><td>Cholesterol (50%)</td><td>"Bad" cholesterol; ApoB-100; LDL receptor</td></tr>
+        <tr><td>HDL</td><td>Protein-rich</td><td>"Good"; reverse cholesterol transport; ApoA-I</td></tr>
+        <tr><td>Lp(a)</td><td>LDL-like</td><td>Independent CVD risk factor</td></tr>
+      </table>
+      <div class="kv-row mt-12"><span class="kv-key">Familial hypercholesterolaemia</span><span class="kv-val danger">LDL receptor defect → ↑ LDL; tendon xanthomas</span></div>
+      <div class="kv-row"><span class="kv-key">Type I hyperlipoproteinaemia</span><span class="kv-val danger">LPL deficiency → ↑ chylomicrons; pancreatitis</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🔬 Prostaglandins &amp; Eicosanoids</div>
+      <div class="kv-row"><span class="kv-key">Precursor</span><span class="kv-val highlight">Arachidonic acid (C20:4)</span></div>
+      <div class="kv-row"><span class="kv-key">COX pathway</span><span class="kv-val">→ Prostaglandins, Thromboxanes</span></div>
+      <div class="kv-row"><span class="kv-key">LOX pathway</span><span class="kv-val">→ Leukotrienes</span></div>
+      <div class="kv-row"><span class="kv-key">TXA2 (thromboxane)</span><span class="kv-val danger">Vasoconstriction + platelet aggregation (platelets)</span></div>
+      <div class="kv-row"><span class="kv-key">PGI2 (prostacyclin)</span><span class="kv-val green">Vasodilation + anti-platelet (endothelium)</span></div>
+      <div class="kv-row"><span class="kv-key">LTB4</span><span class="kv-val">Neutrophil chemotaxis</span></div>
+      <div class="kv-row"><span class="kv-key">LTC4, LTD4, LTE4</span><span class="kv-val danger">Bronchoconstriction (asthma)</span></div>
+      <div class="kv-row"><span class="kv-key">Aspirin MOA</span><span class="kv-val">Irreversibly inhibits COX-1 and COX-2</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">⚠️ Sphingolipid Storage Diseases</div>
+      <table class="comparison-table">
+        <tr><th>Disease</th><th>Enzyme Defect</th><th>Accumulates</th></tr>
+        <tr><td>Gaucher (MC)</td><td>Glucocerebrosidase</td><td>Glucocerebroside; Erlenmeyer flask deformity; Gaucher cells</td></tr>
+        <tr><td>Niemann-Pick</td><td>Sphingomyelinase</td><td>Sphingomyelin; foam cells; cherry-red spot</td></tr>
+        <tr><td>Tay-Sachs</td><td>Hexosaminidase A</td><td>GM2 ganglioside; cherry-red spot; no organomegaly</td></tr>
+        <tr><td>Fabry</td><td>α-galactosidase A</td><td>Globotriaosylceramide; X-linked; angiokeratomas</td></tr>
+        <tr><td>Krabbe</td><td>Galactocerebrosidase</td><td>Galactocerebroside; globoid cells</td></tr>
+        <tr><td>Metachromatic LD</td><td>Arylsulfatase A</td><td>Sulfatide; demyelination</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- PROTEINS & AA -->
+<div class="section" id="proteins">
+  <div class="section-title">Proteins <span>&amp; Amino Acids</span></div>
+  <div class="section-sub">Essential AAs, structure, disorders, haemoglobin, collagen</div>
+  <div class="grid-auto">
+    <div class="card violet">
+      <div class="card-title">🧬 Essential Amino Acids</div>
+      <div class="kv-row"><span class="kv-key">Mnemonic (9 essential)</span><span class="kv-val highlight">PVT TIM HaLL</span></div>
+      <div class="kv-row"><span class="kv-key">Essential AAs</span><span class="kv-val">Phe, Val, Thr, Trp, Ile, Met, His, Leu, Lys</span></div>
+      <div class="kv-row"><span class="kv-key">Purely ketogenic</span><span class="kv-val danger">Leucine, Lysine (only 2)</span></div>
+      <div class="kv-row"><span class="kv-key">Both gluco + ketogenic</span><span class="kv-val">Phe, Trp, Tyr, Ile, Thr</span></div>
+      <div class="kv-row"><span class="kv-key">Acidic AAs</span><span class="kv-val">Aspartate, Glutamate</span></div>
+      <div class="kv-row"><span class="kv-key">Basic AAs</span><span class="kv-val">Lys, Arg, His</span></div>
+      <div class="kv-row"><span class="kv-key">Urea cycle AAs</span><span class="kv-val">Orn, Citr, Arginosuccinate, Arg → Urea + Orn</span></div>
+      <div class="kv-row"><span class="kv-key">Glutamine role</span><span class="kv-val">Non-toxic nitrogen transport in blood</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔴 Amino Acid Disorders</div>
+      <table class="comparison-table">
+        <tr><th>Disease</th><th>Enzyme Defect</th><th>Key Feature</th></tr>
+        <tr><td>PKU</td><td>Phenylalanine hydroxylase</td><td>Musty odour; intellectual disability; fair skin; treat with low-Phe diet</td></tr>
+        <tr><td>Alkaptonuria</td><td>Homogentisate oxidase</td><td>Dark urine; ochronosis; arthritis; benign course</td></tr>
+        <tr><td>Albinism</td><td>Tyrosinase</td><td>No melanin; photosensitivity; ↑ skin Ca risk</td></tr>
+        <tr><td>MSUD</td><td>BCKDH</td><td>Leu, Ile, Val accumulate; sweet urine; neonatal encephalopathy</td></tr>
+        <tr><td>Homocystinuria</td><td>Cystathionine β-synthase</td><td>Marfanoid + lens dislocation (downward) + thrombosis; B6 responsive</td></tr>
+        <tr><td>Hartnup</td><td>Neutral AA transporter</td><td>Trp malabsorption → pellagra-like; autosomal recessive</td></tr>
+        <tr><td>Cystinuria</td><td>Cystine transporter</td><td>Renal stones (cystine, ornithine, Arg, Lys) — COAL mnemonic</td></tr>
+      </table>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔴 Haemoglobin Biochemistry</div>
+      <div class="kv-row"><span class="kv-key">HbA (adult)</span><span class="kv-val">α2β2</span></div>
+      <div class="kv-row"><span class="kv-key">HbA2</span><span class="kv-val">α2δ2 (↑ in β-thalassaemia trait)</span></div>
+      <div class="kv-row"><span class="kv-key">HbF (fetal)</span><span class="kv-val highlight">α2γ2 — high O2 affinity (low 2,3-BPG binding)</span></div>
+      <div class="kv-row"><span class="kv-key">Sickle cell mutation</span><span class="kv-val danger">Glu→Val at β-chain position 6</span></div>
+      <div class="kv-row"><span class="kv-key">Right shift (↑O2 delivery)</span><span class="kv-val danger">↑ CO2, ↑ H+, ↑ temp, ↑ 2,3-BPG</span></div>
+      <div class="kv-row"><span class="kv-key">Left shift (↓O2 delivery)</span><span class="kv-val">HbF, CO poisoning, methaemoglobin</span></div>
+      <div class="kv-row"><span class="kv-key">Bohr effect</span><span class="kv-val">↑ CO2/H+ → right shift → O2 release in tissues</span></div>
+      <div class="kv-row"><span class="kv-key">Hb breakdown</span><span class="kv-val">Haem → Biliverdin → Bilirubin → Urobilinogen</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🧱 Collagen &amp; Connective Tissue</div>
+      <div class="kv-row"><span class="kv-key">Collagen structure</span><span class="kv-val highlight">Triple helix; Gly-X-Y repeats</span></div>
+      <div class="kv-row"><span class="kv-key">X = Proline; Y = Hydroxyproline</span><span class="kv-val">Hydroxylation needs Vit C</span></div>
+      <div class="kv-row"><span class="kv-key">Type I</span><span class="kv-val">Skin, bone, tendon (MC type)</span></div>
+      <div class="kv-row"><span class="kv-key">Type II</span><span class="kv-val">Cartilage</span></div>
+      <div class="kv-row"><span class="kv-key">Type III</span><span class="kv-val">Fetal skin, blood vessels (early wound healing)</span></div>
+      <div class="kv-row"><span class="kv-key">Type IV</span><span class="kv-val">Basement membrane (no fibrils)</span></div>
+      <div class="kv-row"><span class="kv-key">Osteogenesis imperfecta</span><span class="kv-val danger">Type I collagen defect; blue sclerae, brittle bones</span></div>
+      <div class="kv-row"><span class="kv-key">Ehlers-Danlos</span><span class="kv-val danger">Type III collagen (classical) — hyperelastic skin</span></div>
+      <div class="kv-row"><span class="kv-key">Scurvy</span><span class="kv-val danger">Vit C def → defective collagen hydroxylation</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🧬 Urea Cycle</div>
+      <div class="kv-row"><span class="kv-key">Location</span><span class="kv-val">Liver (mitochondria + cytoplasm)</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting enzyme</span><span class="kv-val highlight">Carbamoyl phosphate synthetase I (CPS I)</span></div>
+      <div class="kv-row"><span class="kv-key">CPS I activator</span><span class="kv-val">N-acetylglutamate (NAG)</span></div>
+      <div class="kv-row"><span class="kv-key">Step 1 (mito)</span><span class="kv-val">NH4+ + CO2 → Carbamoyl phosphate</span></div>
+      <div class="kv-row"><span class="kv-key">Step 2 (mito)</span><span class="kv-val">CP + Ornithine → Citrulline</span></div>
+      <div class="kv-row"><span class="kv-key">Remaining steps (cytoplasm)</span><span class="kv-val">Citrulline → Argininosuccinate → Arginine → Urea</span></div>
+      <div class="kv-row"><span class="kv-key">Hyperammonaemia Rx</span><span class="kv-val">Lactulose, sodium benzoate, arginine</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- VITAMINS -->
+<div class="section" id="vitamins">
+  <div class="section-title">Vitamins <span>&amp; Cofactors</span></div>
+  <div class="section-sub">Fat-soluble (ADEK), water-soluble (B-complex + C), deficiency states</div>
+  <div class="grid-auto">
+    <div class="card violet">
+      <div class="card-title">☀️ Fat-Soluble Vitamins (ADEK)</div>
+      <div class="kv-row"><span class="kv-key">Vitamin A (Retinol)</span><span class="kv-val">Night blindness, xerophthalmia, Bitot's spots</span></div>
+      <div class="kv-row"><span class="kv-key">Vit A toxicity</span><span class="kv-val danger">Pseudotumour cerebri, teratogenic</span></div>
+      <div class="kv-row"><span class="kv-key">Active Vit D</span><span class="kv-val highlight">1,25-(OH)2-D3 (Calcitriol) — made in kidney</span></div>
+      <div class="kv-row"><span class="kv-key">Storage form Vit D</span><span class="kv-val">25-OH-D3 (measured clinically) — made in liver</span></div>
+      <div class="kv-row"><span class="kv-key">Vit D deficiency</span><span class="kv-val danger">Rickets (child), Osteomalacia (adult)</span></div>
+      <div class="kv-row"><span class="kv-key">Vitamin E</span><span class="kv-val">Antioxidant; haemolytic anaemia (premature infants)</span></div>
+      <div class="kv-row"><span class="kv-key">Vitamin K factors</span><span class="kv-val highlight">II, VII, IX, X + Protein C, S (PIVKA if deficient)</span></div>
+      <div class="kv-row"><span class="kv-key">Warfarin MOA</span><span class="kv-val">Inhibits Vit K epoxide reductase (VKORC1)</span></div>
+      <div class="kv-row"><span class="kv-key">Vit K deficiency → ↑</span><span class="kv-val danger">PT (extrinsic pathway affected first)</span></div>
+    </div>
+    <div class="card green span-full">
+      <div class="card-title">💊 B-Vitamins Master Table</div>
+      <table class="comparison-table">
+        <tr><th>Vitamin</th><th>Deficiency Disease</th><th>Co-factor Role</th><th>Key Enzyme</th></tr>
+        <tr><td>B1 Thiamine</td><td>Beriberi (wet/dry); Wernicke-Korsakoff</td><td>TPP (thiamine pyrophosphate)</td><td>PDH, α-KGDH, BCKDH, Transketolase</td></tr>
+        <tr><td>B2 Riboflavin</td><td>Corneal vascularisation, angular stomatitis, magenta tongue</td><td>FAD, FMN</td><td>Oxidation-reduction reactions</td></tr>
+        <tr><td>B3 Niacin</td><td>Pellagra (3D: Dermatitis, Diarrhoea, Dementia)</td><td>NAD+, NADP+</td><td>Redox reactions (300+ enzymes)</td></tr>
+        <tr><td>B5 Pantothenic acid</td><td>Burning feet syndrome</td><td>CoA (acetyl-CoA)</td><td>TCA, FA synthesis, steroid synthesis</td></tr>
+        <tr><td>B6 Pyridoxine</td><td>Sideroblastic anaemia; peripheral neuropathy (INH)</td><td>PLP (pyridoxal phosphate)</td><td>Transamination, DOPA synthesis, haem</td></tr>
+        <tr><td>B7 Biotin</td><td>Raw egg whites; dermatitis, alopecia</td><td>Carboxylation reactions</td><td>Acetyl-CoA carboxylase, Pyruvate carboxylase</td></tr>
+        <tr><td>B9 Folate</td><td>Megaloblastic anaemia; NTD in pregnancy</td><td>THF (tetrahydrofolate)</td><td>One-carbon transfers; nucleotide synthesis</td></tr>
+        <tr><td>B12 Cobalamin</td><td>Megaloblastic anaemia + subacute combined degeneration of cord</td><td>Cobalamin cofactor</td><td>Methylmalonyl-CoA mutase; Methionine synthase</td></tr>
+        <tr><td>C Ascorbic acid</td><td>Scurvy (perifollicular haemorrhage, corkscrew hair, gum bleeding)</td><td>Antioxidant; cofactor</td><td>Prolyl/Lysyl hydroxylase (collagen synthesis)</td></tr>
+      </table>
+    </div>
+    <div class="card orange">
+      <div class="card-title">⚡ Thiamine Special Focus</div>
+      <div class="kv-row"><span class="kv-key">Wernicke's triad</span><span class="kv-val danger">Confusion + Ataxia + Ophthalmoplegia</span></div>
+      <div class="kv-row"><span class="kv-key">Korsakoff's</span><span class="kv-val danger">Confabulation + amnesia (irreversible)</span></div>
+      <div class="kv-row"><span class="kv-key">Wet beriberi</span><span class="kv-val">High-output cardiac failure</span></div>
+      <div class="kv-row"><span class="kv-key">Dry beriberi</span><span class="kv-val">Peripheral neuropathy</span></div>
+      <div class="kv-row"><span class="kv-key">Lab test</span><span class="kv-val">RBC transketolase activity (gold standard)</span></div>
+      <div class="kv-row"><span class="kv-key">TPP-dependent enzymes</span><span class="kv-val">PDH, α-KGDH, BCKDH, Transketolase</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🧪 Folate vs B12 Deficiency</div>
+      <div class="kv-row"><span class="kv-key">Both cause</span><span class="kv-val">Megaloblastic anaemia (macro-ovalocytes, hyperseg PMN)</span></div>
+      <div class="kv-row"><span class="kv-key">Neurological features</span><span class="kv-val danger">B12 only (SCD of cord) — NEVER folate</span></div>
+      <div class="kv-row"><span class="kv-key">↑ Methylmalonic acid</span><span class="kv-val danger">B12 deficiency only</span></div>
+      <div class="kv-row"><span class="kv-key">↑ Homocysteine</span><span class="kv-val">Both B12 and Folate deficiency</span></div>
+      <div class="kv-row"><span class="kv-key">Pernicious anaemia</span><span class="kv-val">Anti-intrinsic factor antibodies → B12 malabsorption</span></div>
+      <div class="kv-row"><span class="kv-key">Folate given in pregnancy</span><span class="kv-val green">5 mg/day (↓ NTD risk)</span></div>
+      <div class="kv-row"><span class="kv-key">Methotrexate MOA</span><span class="kv-val">Inhibits DHFR → folate deficiency</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ENZYMES -->
+<div class="section" id="enzymes">
+  <div class="section-title">Enzyme <span>Biochemistry</span></div>
+  <div class="section-sub">Kinetics, inhibition types, regulation, clinical markers</div>
+  <div class="grid-auto">
+    <div class="card violet">
+      <div class="card-title">📐 Michaelis-Menten Kinetics</div>
+      <div class="formula-box">v = Vmax × [S] / (Km + [S])</div>
+      <div class="kv-row"><span class="kv-key">Km definition</span><span class="kv-val highlight">[S] at ½Vmax = inverse measure of affinity</span></div>
+      <div class="kv-row"><span class="kv-key">Low Km</span><span class="kv-val green">High affinity</span></div>
+      <div class="kv-row"><span class="kv-key">Competitive inhibition</span><span class="kv-val danger">↑ Km; Vmax unchanged; overcome by ↑[S]</span></div>
+      <div class="kv-row"><span class="kv-key">Non-competitive inhibition</span><span class="kv-val danger">↓ Vmax; Km unchanged; cannot overcome</span></div>
+      <div class="kv-row"><span class="kv-key">Uncompetitive inhibition</span><span class="kv-val danger">↓ Vmax AND ↓ Km (both decrease)</span></div>
+      <div class="kv-row"><span class="kv-key">Mixed inhibition</span><span class="kv-val">↓ Vmax; Km may increase or decrease</span></div>
+      <div class="kv-row"><span class="kv-key">Allosteric enzymes</span><span class="kv-val">Sigmoidal O2 dissociation curve (cooperative)</span></div>
+      <div class="kv-row"><span class="kv-key">Lineweaver-Burk</span><span class="kv-val">1/v vs 1/[S]; x-intercept = -1/Km</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔬 Clinical Enzyme Markers</div>
+      <div class="kv-row"><span class="kv-key">Troponin I / T</span><span class="kv-val highlight">Gold standard for MI (rises 3–6 hrs; peaks 24 hrs)</span></div>
+      <div class="kv-row"><span class="kv-key">CK-MB</span><span class="kv-val">Rises 4–6 hrs; useful for reinfarction detection</span></div>
+      <div class="kv-row"><span class="kv-key">AST:ALT &gt;2:1</span><span class="kv-val highlight">Alcoholic hepatitis</span></div>
+      <div class="kv-row"><span class="kv-key">AST:ALT &lt;1 (both ↑↑↑)</span><span class="kv-val">Viral hepatitis</span></div>
+      <div class="kv-row"><span class="kv-key">ALP elevated in</span><span class="kv-val">Cholestasis, Paget's, bone tumours, pregnancy</span></div>
+      <div class="kv-row"><span class="kv-key">GGT (gamma-GT)</span><span class="kv-val">Most sensitive for alcohol; cholestasis</span></div>
+      <div class="kv-row"><span class="kv-key">Amylase in pancreatitis</span><span class="kv-val">Rises 2–12 hrs; normalises 3–5 days</span></div>
+      <div class="kv-row"><span class="kv-key">Lipase</span><span class="kv-val green">More specific; elevated longer than amylase</span></div>
+      <div class="kv-row"><span class="kv-key">LDH isoforms</span><span class="kv-val">LDH-1 (heart), LDH-5 (liver)</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔬 Enzyme Regulation</div>
+      <div class="kv-row"><span class="kv-key">Covalent modification</span><span class="kv-val highlight">Phosphorylation/dephosphorylation (MC)</span></div>
+      <div class="kv-row"><span class="kv-key">Phosphorylation ACTIVATES</span><span class="kv-val green">Glycogen phosphorylase, Hormone-sensitive lipase</span></div>
+      <div class="kv-row"><span class="kv-key">Phosphorylation INACTIVATES</span><span class="kv-val danger">Glycogen synthase, Pyruvate kinase, ACC</span></div>
+      <div class="kv-row"><span class="kv-key">Zymogen (proenzyme)</span><span class="kv-val">Pepsinogen, Trypsinogen, Chymotrypsinogen</span></div>
+      <div class="kv-row"><span class="kv-key">Trypsinogen activated by</span><span class="kv-val">Enterokinase (duodenum)</span></div>
+      <div class="kv-row"><span class="kv-key">Feedback inhibition</span><span class="kv-val">End product inhibits first committed step</span></div>
+      <div class="kv-row"><span class="kv-key">Induced fit model</span><span class="kv-val">Koshland (enzyme changes shape on substrate binding)</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🧬 Plasma Proteins</div>
+      <div class="kv-row"><span class="kv-key">Most abundant plasma protein</span><span class="kv-val highlight">Albumin</span></div>
+      <div class="kv-row"><span class="kv-key">Albumin function</span><span class="kv-val">Oncotic pressure, transport (bilirubin, drugs, FA)</span></div>
+      <div class="kv-row"><span class="kv-key">Acute phase proteins ↑</span><span class="kv-val">CRP, fibrinogen, haptoglobin, ferritin, α1-antitrypsin</span></div>
+      <div class="kv-row"><span class="kv-key">Acute phase proteins ↓</span><span class="kv-val danger">Albumin, transferrin, prealbumin (transthyretin)</span></div>
+      <div class="kv-row"><span class="kv-key">Best nutritional marker</span><span class="kv-val">Prealbumin (t½ = 2 days)</span></div>
+      <div class="kv-row"><span class="kv-key">α1-antitrypsin deficiency</span><span class="kv-val danger">Emphysema + liver cirrhosis (PAS+ globules)</span></div>
+      <div class="kv-row"><span class="kv-key">Haptoglobin</span><span class="kv-val">Binds free Hb (↓ in haemolysis)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- MOLECULAR BIOLOGY -->
+<div class="section" id="genetics">
+  <div class="section-title">Molecular <span>Biology</span></div>
+  <div class="section-sub">DNA replication, transcription, translation, mutations, oncogenes</div>
+  <div class="grid-auto">
+    <div class="card violet">
+      <div class="card-title">🧬 DNA Replication</div>
+      <div class="kv-row"><span class="kv-key">Direction</span><span class="kv-val highlight">5' → 3' (new strand synthesis)</span></div>
+      <div class="kv-row"><span class="kv-key">Leading strand</span><span class="kv-val green">Continuous synthesis</span></div>
+      <div class="kv-row"><span class="kv-key">Lagging strand</span><span class="kv-val">Okazaki fragments (5'→3' discontinuous)</span></div>
+      <div class="kv-row"><span class="kv-key">Helicase</span><span class="kv-val">Unwinds double helix</span></div>
+      <div class="kv-row"><span class="kv-key">Primase</span><span class="kv-val">Makes RNA primer</span></div>
+      <div class="kv-row"><span class="kv-key">DNA Pol III</span><span class="kv-val">Main replication enzyme (prokaryote)</span></div>
+      <div class="kv-row"><span class="kv-key">DNA Pol I</span><span class="kv-val">Removes RNA primer, fills gap (prokaryote)</span></div>
+      <div class="kv-row"><span class="kv-key">DNA Pol δ</span><span class="kv-val">Main replication enzyme (eukaryote, lagging)</span></div>
+      <div class="kv-row"><span class="kv-key">Telomerase</span><span class="kv-val">Adds TTAGGG repeats; active in cancer, stem cells</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">📜 Transcription &amp; Translation</div>
+      <div class="kv-row"><span class="kv-key">Transcription direction</span><span class="kv-val">3'→5' template read; 5'→3' mRNA made</span></div>
+      <div class="kv-row"><span class="kv-key">RNA Pol I</span><span class="kv-val">rRNA (ribosomal)</span></div>
+      <div class="kv-row"><span class="kv-key">RNA Pol II</span><span class="kv-val highlight">mRNA (protein-coding) — inhibited by α-amanitin</span></div>
+      <div class="kv-row"><span class="kv-key">RNA Pol III</span><span class="kv-val">tRNA, 5S rRNA</span></div>
+      <div class="kv-row"><span class="kv-key">5' cap</span><span class="kv-val">7-methyl guanosine (translation initiation)</span></div>
+      <div class="kv-row"><span class="kv-key">3' poly-A tail</span><span class="kv-val">mRNA stability, nuclear export</span></div>
+      <div class="kv-row"><span class="kv-key">Start codon</span><span class="kv-val highlight">AUG (Met)</span></div>
+      <div class="kv-row"><span class="kv-key">Stop codons</span><span class="kv-val">UAA, UAG, UGA ("U Are Away", "U Are Gone", "U Go Away")</span></div>
+      <div class="kv-row"><span class="kv-key">Wobble position</span><span class="kv-val">3rd codon position (degenerate)</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">⚠️ Mutations &amp; DNA Repair</div>
+      <div class="kv-row"><span class="kv-key">Missense mutation</span><span class="kv-val">Different AA substituted (eg. sickle cell)</span></div>
+      <div class="kv-row"><span class="kv-key">Nonsense mutation</span><span class="kv-val danger">Stop codon introduced → truncated protein</span></div>
+      <div class="kv-row"><span class="kv-key">Silent (synonymous)</span><span class="kv-val green">Same AA (degenerate code)</span></div>
+      <div class="kv-row"><span class="kv-key">Frameshift</span><span class="kv-val danger">Insertion/deletion (not multiples of 3)</span></div>
+      <div class="kv-row"><span class="kv-key">Nucleotide excision repair</span><span class="kv-val">Pyrimidine dimers (UV); XP defect</span></div>
+      <div class="kv-row"><span class="kv-key">Base excision repair</span><span class="kv-val">Spontaneous deamination, alkylation</span></div>
+      <div class="kv-row"><span class="kv-key">Mismatch repair</span><span class="kv-val">Lynch syndrome (HNPCC) — MMR gene defect</span></div>
+      <div class="kv-row"><span class="kv-key">Xeroderma pigmentosum</span><span class="kv-val danger">NER defect → UV sensitivity → skin cancer</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🔬 Oncogenes &amp; Tumour Suppressors</div>
+      <div class="kv-row"><span class="kv-key">Proto-oncogene → oncogene</span><span class="kv-val danger">Point mutation, amplification, translocation</span></div>
+      <div class="kv-row"><span class="kv-key">RAS mutation</span><span class="kv-val">MC oncogene mutation; GTPase activity lost</span></div>
+      <div class="kv-row"><span class="kv-key">BCR-ABL</span><span class="kv-val highlight">t(9;22) Philadelphia chromosome → CML</span></div>
+      <div class="kv-row"><span class="kv-key">c-myc amplification</span><span class="kv-val">Burkitt's lymphoma t(8;14)</span></div>
+      <div class="kv-row"><span class="kv-key">HER2/neu</span><span class="kv-val">Breast cancer amplification</span></div>
+      <div class="kv-row"><span class="kv-key">p53 (TP53)</span><span class="kv-val">Guardian of genome; MC mutated TSG</span></div>
+      <div class="kv-row"><span class="kv-key">Rb gene</span><span class="kv-val danger">Retinoblastoma; 2-hit hypothesis (Knudson)</span></div>
+      <div class="kv-row"><span class="kv-key">BRCA1/2</span><span class="kv-val">Hereditary breast/ovarian cancer</span></div>
+      <div class="kv-row"><span class="kv-key">APC gene</span><span class="kv-val">FAP (familial adenomatous polyposis)</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🔬 Recombinant DNA &amp; Techniques</div>
+      <div class="kv-row"><span class="kv-key">PCR</span><span class="kv-val">Amplifies specific DNA; Taq polymerase (heat stable)</span></div>
+      <div class="kv-row"><span class="kv-key">Southern blot</span><span class="kv-val highlight">Detects DNA</span></div>
+      <div class="kv-row"><span class="kv-key">Northern blot</span><span class="kv-val">Detects RNA (mRNA)</span></div>
+      <div class="kv-row"><span class="kv-key">Western blot</span><span class="kv-val">Detects protein (used in HIV confirmation)</span></div>
+      <div class="kv-row"><span class="kv-key">ELISA</span><span class="kv-val">Detects antigen or antibody (HIV screening)</span></div>
+      <div class="kv-row"><span class="kv-key">FISH</span><span class="kv-val">Detects chromosomal abnormalities/gene amplification</span></div>
+      <div class="kv-row"><span class="kv-key">Microarray</span><span class="kv-val">Gene expression profiling (thousands at once)</span></div>
+      <div class="kv-row"><span class="kv-key">RFLP</span><span class="kv-val">Restriction fragment length polymorphism (fingerprinting)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- CLINICAL BIOCHEM -->
+<div class="section" id="clinicalbio">
+  <div class="section-title">Clinical <span>Biochemistry</span></div>
+  <div class="section-sub">ABG, electrolytes, renal function, LFTs, tumour markers</div>
+  <div class="grid-auto">
+    <div class="card violet">
+      <div class="card-title">🫧 ABG &amp; Acid-Base</div>
+      <div class="kv-row"><span class="kv-key">Normal pH</span><span class="kv-val green">7.35–7.45</span></div>
+      <div class="kv-row"><span class="kv-key">Normal PaCO2</span><span class="kv-val green">35–45 mmHg</span></div>
+      <div class="kv-row"><span class="kv-key">Normal HCO3-</span><span class="kv-val green">22–26 mEq/L</span></div>
+      <div class="kv-row"><span class="kv-key">Respiratory acidosis</span><span class="kv-val danger">↓ pH + ↑ CO2 (↑ HCO3 if compensated)</span></div>
+      <div class="kv-row"><span class="kv-key">Respiratory alkalosis</span><span class="kv-val">↑ pH + ↓ CO2 (hyperventilation)</span></div>
+      <div class="kv-row"><span class="kv-key">Metabolic acidosis</span><span class="kv-val danger">↓ pH + ↓ HCO3 (↓ CO2 if compensated)</span></div>
+      <div class="kv-row"><span class="kv-key">Anion gap</span><span class="kv-val highlight">Na − (Cl + HCO3); Normal 8–12 mEq/L</span></div>
+      <div class="kv-row"><span class="kv-key">High AG acidosis (MUDPILES)</span><span class="kv-val">Methanol, Uraemia, DKA, Propylene glycol, INH, Lactic, Ethylene glycol, Salicylates</span></div>
+      <div class="kv-row"><span class="kv-key">Normal AG acidosis</span><span class="kv-val">Diarrhoea, RTA, Fistula, Acetazolamide</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔬 Renal Function Tests</div>
+      <div class="kv-row"><span class="kv-key">Normal serum creatinine</span><span class="kv-val green">0.6–1.2 mg/dL (men); 0.5–1.0 (women)</span></div>
+      <div class="kv-row"><span class="kv-key">Normal BUN</span><span class="kv-val green">7–20 mg/dL</span></div>
+      <div class="kv-row"><span class="kv-key">BUN:Creatinine ratio &gt;20</span><span class="kv-val highlight">Pre-renal AKI</span></div>
+      <div class="kv-row"><span class="kv-key">BUN:Creatinine ratio &lt;10</span><span class="kv-val">Intrinsic renal disease / liver disease</span></div>
+      <div class="kv-row"><span class="kv-key">GFR estimation</span><span class="kv-val">CKD-EPI formula (most accurate); MDRD</span></div>
+      <div class="kv-row"><span class="kv-key">Inulin clearance</span><span class="kv-val highlight">Gold standard for GFR</span></div>
+      <div class="kv-row"><span class="kv-key">PAH clearance</span><span class="kv-val">Measures effective renal plasma flow (ERPF)</span></div>
+      <div class="kv-row"><span class="kv-key">Urine osmolality (pre-renal)</span><span class="kv-val danger">&gt;500 mOsm/kg</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🔬 Liver Function Tests</div>
+      <div class="kv-row"><span class="kv-key">Bilirubin (total) normal</span><span class="kv-val green">&lt;1.0 mg/dL</span></div>
+      <div class="kv-row"><span class="kv-key">Jaundice visible</span><span class="kv-val">&gt;2.5–3 mg/dL (sclera first)</span></div>
+      <div class="kv-row"><span class="kv-key">Conjugated (direct) bilirubin</span><span class="kv-val">Water soluble; excreted in bile</span></div>
+      <div class="kv-row"><span class="kv-key">Unconjugated (indirect)</span><span class="kv-val">Lipid soluble; crosses BBB</span></div>
+      <div class="kv-row"><span class="kv-key">↑ Unconjugated only</span><span class="kv-val">Pre-hepatic (haemolysis), Gilbert's, Crigler-Najjar</span></div>
+      <div class="kv-row"><span class="kv-key">↑ Conjugated only</span><span class="kv-val">Dubin-Johnson, Rotor syndrome</span></div>
+      <div class="kv-row"><span class="kv-key">Child-Pugh score</span><span class="kv-val">Albumin, bilirubin, PT, ascites, encephalopathy</span></div>
+      <div class="kv-row"><span class="kv-key">MELD score</span><span class="kv-val">Bilirubin, INR, creatinine → transplant priority</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🔬 Electrolytes &amp; Minerals</div>
+      <div class="kv-row"><span class="kv-key">Na+ normal</span><span class="kv-val green">135–145 mEq/L</span></div>
+      <div class="kv-row"><span class="kv-key">K+ normal</span><span class="kv-val green">3.5–5.0 mEq/L</span></div>
+      <div class="kv-row"><span class="kv-key">Serum Ca2+ normal</span><span class="kv-val green">8.5–10.5 mg/dL</span></div>
+      <div class="kv-row"><span class="kv-key">Corrected Ca formula</span><span class="kv-val highlight">Add 0.8 mg/dL per 1 g/dL ↓ in albumin</span></div>
+      <div class="kv-row"><span class="kv-key">Mg2+ normal</span><span class="kv-val green">1.7–2.2 mg/dL</span></div>
+      <div class="kv-row"><span class="kv-key">Hypokalaemia ECG</span><span class="kv-val danger">Flat T, U waves, ST depression</span></div>
+      <div class="kv-row"><span class="kv-key">Hyperkalaemia ECG</span><span class="kv-val danger">Peaked T waves → wide QRS → sine wave</span></div>
+      <div class="kv-row"><span class="kv-key">Hypocalcaemia signs</span><span class="kv-val">Chvostek's sign, Trousseau's sign</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency biochemistry facts for rapid revision</div>
+  <div class="grid-2">
+    <div class="card violet">
+      <div class="card-title">⭐ Biochem Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting step glycolysis</span><span class="kv-val highlight">PFK-1</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting step TCA</span><span class="kv-val">Isocitrate dehydrogenase</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting step FA synthesis</span><span class="kv-val">Acetyl-CoA Carboxylase</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting step FA oxidation</span><span class="kv-val">CPTI (carnitine palmitoyl transferase I)</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting step cholesterol</span><span class="kv-val">HMG-CoA reductase</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting step urea cycle</span><span class="kv-val">Carbamoyl phosphate synthetase I</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting step HMP shunt</span><span class="kv-val">G6PD</span></div>
+      <div class="kv-row"><span class="kv-key">Rate-limiting step glycogenolysis</span><span class="kv-val">Glycogen phosphorylase</span></div>
+      <div class="kv-row"><span class="kv-key">Purely ketogenic AAs</span><span class="kv-val">Leucine, Lysine</span></div>
+      <div class="kv-row"><span class="kv-key">Only 2 essential FA</span><span class="kv-val">Linoleic acid (ω-6), α-Linolenic acid (ω-3)</span></div>
+      <div class="kv-row"><span class="kv-key">Cherry-red spot on macula</span><span class="kv-val">Tay-Sachs (GM2), Niemann-Pick</span></div>
+      <div class="kv-row"><span class="kv-key">MC storage disease</span><span class="kv-val">Gaucher disease (Type 1)</span></div>
+      <div class="kv-row"><span class="kv-key">Erlenmeyer flask appearance</span><span class="kv-val">Gaucher disease (femur)</span></div>
+      <div class="kv-row"><span class="kv-key">Foam cells in bone marrow</span><span class="kv-val">Niemann-Pick disease</span></div>
+      <div class="kv-row"><span class="kv-key">X-linked storage disease</span><span class="kv-val">Fabry disease (α-galactosidase A)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment Gaucher</span><span class="kv-val">Imiglucerase (enzyme replacement)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">⭐ Biochem Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">Philadelphia chromosome</span><span class="kv-val highlight">t(9;22) → BCR-ABL → CML</span></div>
+      <div class="kv-row"><span class="kv-key">Imatinib (Gleevec) MOA</span><span class="kv-val">BCR-ABL tyrosine kinase inhibitor</span></div>
+      <div class="kv-row"><span class="kv-key">Oncogene (dominant)</span><span class="kv-val">1 hit sufficient for transformation</span></div>
+      <div class="kv-row"><span class="kv-key">Tumour suppressor (recessive)</span><span class="kv-val">Both alleles need to be lost (2-hit)</span></div>
+      <div class="kv-row"><span class="kv-key">Warburg effect</span><span class="kv-val">Cancer cells prefer glycolysis even with O2 (aerobic glycolysis)</span></div>
+      <div class="kv-row"><span class="kv-key">Myoglobin O2 dissociation</span><span class="kv-val">Hyperbolic (single subunit; no cooperativity)</span></div>
+      <div class="kv-row"><span class="kv-key">Haemoglobin O2 dissociation</span><span class="kv-val">Sigmoidal (cooperative binding)</span></div>
+      <div class="kv-row"><span class="kv-key">PKU screening test</span><span class="kv-val">Guthrie test (heel prick, bacterial inhibition)</span></div>
+      <div class="kv-row"><span class="kv-key">Wilson's disease</span><span class="kv-val">ATP7B mutation → Cu accumulation; Kayser-Fleischer rings</span></div>
+      <div class="kv-row"><span class="kv-key">Haemochromatosis</span><span class="kv-val">HFE mutation; ↑ ferritin, ↑ transferrin sat, ↓ TIBC</span></div>
+      <div class="kv-row"><span class="kv-key">TIBC in iron deficiency</span><span class="kv-val danger">↑ TIBC (more transferrin available)</span></div>
+      <div class="kv-row"><span class="kv-key">Ferritin in ACD</span><span class="kv-val">↑ ferritin (acute phase protein)</span></div>
+      <div class="kv-row"><span class="kv-key">HbA1c measures</span><span class="kv-val">Average blood glucose over 8–12 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">HbA1c normal</span><span class="kv-val green">&lt;5.7%</span></div>
+      <div class="kv-row"><span class="kv-key">HbA1c target (diabetics)</span><span class="kv-val">&lt;7% (most guidelines)</span></div>
+      <div class="kv-row"><span class="kv-key">Fructosamine</span><span class="kv-val">Measures glycaemic control over 2–3 weeks</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

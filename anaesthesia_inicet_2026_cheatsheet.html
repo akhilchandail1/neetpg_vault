@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Anaesthesia Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0e1a; --surface: #111827; --surface2: #1a2235; --border: #1e2d45;
+    --accent: #fb923c; --accent2: #7dd3fc; --accent3: #86efac; --accent4: #f9a8d4; --accent5: #c4b5fd;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #0f172a 0%, #0f1a10 50%, #0f172a 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent); color: #0a0e1a; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent); color: #0a0e1a; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.orange::before { background: var(--accent); }
+  .card.blue::before { background: var(--accent2); }
+  .card.green::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.purple::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.orange .card-title { color: var(--accent); }
+  .card.blue .card-title { color: var(--accent2); }
+  .card.green .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.purple .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #1a2235; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.blue { color: var(--accent2); }
+  .kv-val.green { color: var(--accent3); }
+  .kv-val.pink { color: var(--accent4); }
+  .kv-val.danger { color: var(--danger); }
+  .kv-val.purple { color: var(--accent5); }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(125,211,252,0.06); border: 1px solid rgba(125,211,252,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent2); margin-top: 8px; line-height: 1.5; }
+  .green-box { background: rgba(134,239,172,0.06); border: 1px solid rgba(134,239,172,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent3); margin-top: 8px; line-height: 1.5; }
+  .mnemonic { background: rgba(196,181,253,0.07); border-left: 3px solid var(--accent5); border-radius: 0 8px 8px 0; padding: 8px 12px; margin-top: 8px; font-size: 12px; color: var(--accent5); line-height: 1.6; }
+  .mnemonic b { color: var(--accent); }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  @media (max-width: 800px) { .grid-auto, .grid-2 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>Anaesthesia <span>Cheatsheet</span></h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('preop',this)">Pre-op &amp; GA</div>
+    <div class="tab" onclick="showSection('airway',this)">Airway</div>
+    <div class="tab" onclick="showSection('inhalational',this)">Inhalational Agents</div>
+    <div class="tab" onclick="showSection('iv_agents',this)">IV Agents</div>
+    <div class="tab" onclick="showSection('nmb',this)">NMBDs &amp; Reversal</div>
+    <div class="tab" onclick="showSection('regional',this)">Regional Anaesthesia</div>
+    <div class="tab" onclick="showSection('complications',this)">Complications</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- PRE-OP & GA -->
+<div class="section active" id="preop">
+  <div class="section-title">Pre-operative <span>&amp; General Anaesthesia</span></div>
+  <div class="section-sub">ASA classification, fasting, monitoring, stages of anaesthesia, MAC</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">📋 ASA Physical Status Classification</div>
+      <div class="kv-row"><span class="kv-key">ASA I</span><span class="kv-val green">Normal healthy patient</span></div>
+      <div class="kv-row"><span class="kv-key">ASA II</span><span class="kv-val green">Mild systemic disease; no functional limitation (controlled DM, HTN, smoker)</span></div>
+      <div class="kv-row"><span class="kv-key">ASA III</span><span class="kv-val">Severe systemic disease; functional limitation (uncontrolled DM, COPD, morbid obesity, active hepatitis)</span></div>
+      <div class="kv-row"><span class="kv-key">ASA IV</span><span class="kv-val danger">Severe systemic disease — constant threat to life (MI within 3 months, severe HF, hepatic failure)</span></div>
+      <div class="kv-row"><span class="kv-key">ASA V</span><span class="kv-val danger">Moribund; not expected to survive without operation (ruptured AAA, massive trauma)</span></div>
+      <div class="kv-row"><span class="kv-key">ASA VI</span><span class="kv-val danger">Brain-dead; organ donation</span></div>
+      <div class="kv-row"><span class="kv-key">"E" suffix</span><span class="kv-val highlight">Emergency surgery (adds to any class)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">⏱️ Pre-operative Fasting (NPO Guidelines)</div>
+      <div class="kv-row"><span class="kv-key">Clear liquids (water, tea, coffee)</span><span class="kv-val highlight">2 hours (2-4-6 rule)</span></div>
+      <div class="kv-row"><span class="kv-key">Breast milk</span><span class="kv-val">4 hours</span></div>
+      <div class="kv-row"><span class="kv-key">Infant formula / non-human milk</span><span class="kv-val">6 hours</span></div>
+      <div class="kv-row"><span class="kv-key">Light meal (toast, clear fluids)</span><span class="kv-val">6 hours</span></div>
+      <div class="kv-row"><span class="kv-key">Full/heavy meal, fatty food, meat</span><span class="kv-val danger">8 hours</span></div>
+      <div class="kv-row"><span class="kv-key">Aspiration risk — Mendelson criteria</span><span class="kv-val danger">pH &lt;2.5 AND volume &gt;25 mL (0.4 mL/kg)</span></div>
+      <div class="kv-row"><span class="kv-key">Rapid sequence induction (RSI)</span><span class="kv-val danger">Full stomach / aspiration risk; cricoid pressure (Sellick's) + succinylcholine + thiopentone</span></div>
+      <div class="kv-row"><span class="kv-key">Pre-medication goals</span><span class="kv-val">Anxiolysis, analgesia, antisialagogue, antiemetic, aspiration prophylaxis</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🌡️ Stages of Anaesthesia (Guedel)</div>
+      <div class="kv-row"><span class="kv-key">Stage I — Analgesia</span><span class="kv-val green">Conscious; amnesia begins; pain reduced; eye movements — voluntary</span></div>
+      <div class="kv-row"><span class="kv-key">Stage II — Excitement/Delirium</span><span class="kv-val danger">Unconscious; breath-holding; vomiting; laryngospasm risk; irregular breathing; no surgery here</span></div>
+      <div class="kv-row"><span class="kv-key">Stage III Plane 1</span><span class="kv-val">Eyelid reflex lost; regular breathing; eyes start to deviate</span></div>
+      <div class="kv-row"><span class="kv-key">Stage III Plane 2</span><span class="kv-val highlight">Surgical anaesthesia; regular breathing; corneal reflex lost; eyes central and fixed</span></div>
+      <div class="kv-row"><span class="kv-key">Stage III Plane 3</span><span class="kv-val danger">Intercostal paralysis begins; diaphragmatic breathing; pupil dilates</span></div>
+      <div class="kv-row"><span class="kv-key">Stage III Plane 4</span><span class="kv-val danger">Complete intercostal paralysis; diaphragmatic only; deep anaesthesia</span></div>
+      <div class="kv-row"><span class="kv-key">Stage IV — Medullary depression</span><span class="kv-val danger">Apnoea; circulatory failure; death if uncorrected</span></div>
+      <div class="kv-row"><span class="kv-key">Signs of adequate depth</span><span class="kv-val">Fixed central pupils; regular breathing; haemodynamic stability; no lacrimation/sweating</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">📊 MAC (Minimum Alveolar Concentration)</div>
+      <div class="kv-row"><span class="kv-key">MAC definition</span><span class="kv-val highlight">Alveolar concentration preventing movement in 50% of patients to surgical skin incision</span></div>
+      <div class="kv-row"><span class="kv-key">MAC — additive property</span><span class="kv-val">MACs of different agents are additive (0.5 MAC + 0.5 MAC = 1 MAC)</span></div>
+      <div class="kv-row"><span class="kv-key">Factors ↑ MAC (need more drug)</span><span class="kv-val danger">Hyperthermia, hyperthyroidism, chronic alcoholism, hypernatraemia, young age, anxiety, red hair</span></div>
+      <div class="kv-row"><span class="kv-key">Factors ↓ MAC (need less drug)</span><span class="kv-val green">Hypothermia, hypothyroidism, acute alcohol, opioids, pregnancy, elderly, anaemia, hypoxia, hypotension</span></div>
+      <div class="kv-row"><span class="kv-key">MAC-awake</span><span class="kv-val">~0.3–0.4 MAC; loss of consciousness</span></div>
+      <div class="kv-row"><span class="kv-key">MAC-BAR (block adrenergic response)</span><span class="kv-val">~1.5 MAC; suppresses autonomic response to incision</span></div>
+      <div class="kv-row"><span class="kv-key">Meyer-Overton rule</span><span class="kv-val highlight">Potency correlates with oil:gas partition coefficient (lipid solubility)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">📡 Intraoperative Monitoring</div>
+      <div class="kv-row"><span class="kv-key">Minimum monitoring (ASA standard)</span><span class="kv-val highlight">ECG + SpO₂ + NIBP + EtCO₂ + temperature</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard for ETT placement</span><span class="kv-val highlight">Capnography (EtCO₂ waveform)</span></div>
+      <div class="kv-row"><span class="kv-key">Normal EtCO₂</span><span class="kv-val">35–45 mmHg (PaCO₂ is ~5 mmHg higher)</span></div>
+      <div class="kv-row"><span class="kv-key">EtCO₂ sudden ↓ to zero</span><span class="kv-val danger">Oesophageal intubation / circuit disconnection / cardiac arrest</span></div>
+      <div class="kv-row"><span class="kv-key">EtCO₂ sudden ↑</span><span class="kv-val danger">MH (malignant hyperthermia — earliest sign), ↑metabolism, hypoventilation, CO₂ absorption (lap surgery)</span></div>
+      <div class="kv-row"><span class="kv-key">BIS (Bispectral Index)</span><span class="kv-val">EEG-derived; depth of anaesthesia; 40–60 = surgical anaesthesia; &gt;80 = awake</span></div>
+      <div class="kv-row"><span class="kv-key">Pulse oximetry — limitation</span><span class="kv-val danger">Inaccurate in: metHb (reads ~85%), COHb (falsely high), nail polish, peripheral vasoconstriction</span></div>
+      <div class="kv-row"><span class="kv-key">Awareness under anaesthesia</span><span class="kv-val danger">0.1–0.2% overall; highest risk: cardiac surgery, caesarean section, trauma</span></div>
+    </div>
+
+    <div class="card pink">
+      <div class="card-title">💉 Pre-medication Drugs</div>
+      <div class="kv-row"><span class="kv-key">Midazolam</span><span class="kv-val highlight">Benzodiazepine; anxiolysis + amnesia; 0.02–0.05 mg/kg IV; does NOT provide analgesia</span></div>
+      <div class="kv-row"><span class="kv-key">Atropine — antisialagogue</span><span class="kv-val">Blocks muscarinic receptors; ↓secretions; ↑HR; used pre-ketamine / paediatrics</span></div>
+      <div class="kv-row"><span class="kv-key">Glycopyrrolate</span><span class="kv-val">Quaternary ammonium; does NOT cross BBB; antisialagogue; no tachycardia / CNS effects</span></div>
+      <div class="kv-row"><span class="kv-key">Ranitidine / omeprazole</span><span class="kv-val">↑ Gastric pH; aspiration prophylaxis</span></div>
+      <div class="kv-row"><span class="kv-key">Sodium citrate</span><span class="kv-val">Immediate-acting antacid; Mendelson's prophylaxis; obstetric anaesthesia</span></div>
+      <div class="kv-row"><span class="kv-key">Metoclopramide</span><span class="kv-val">↑ LES tone; prokinetic; anti-emetic; aspiration prophylaxis</span></div>
+      <div class="kv-row"><span class="kv-key">Ondansetron</span><span class="kv-val highlight">5-HT₃ antagonist; PONV prophylaxis; no sedation</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- AIRWAY -->
+<div class="section" id="airway">
+  <div class="section-title">Airway <span>Management</span></div>
+  <div class="section-sub">Airway assessment, intubation, LMA, difficult airway, RSI</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🔍 Airway Assessment</div>
+      <div class="kv-row"><span class="kv-key">Mallampati Class I</span><span class="kv-val green">Soft palate + uvula + fauces + pillars visible</span></div>
+      <div class="kv-row"><span class="kv-key">Mallampati Class II</span><span class="kv-val green">Soft palate + uvula + fauces visible</span></div>
+      <div class="kv-row"><span class="kv-key">Mallampati Class III</span><span class="kv-val danger">Soft palate + base of uvula visible</span></div>
+      <div class="kv-row"><span class="kv-key">Mallampati Class IV</span><span class="kv-val danger">Hard palate only visible — difficult intubation</span></div>
+      <div class="kv-row"><span class="kv-key">Thyromental distance (TMD)</span><span class="kv-val danger">&lt;6.5 cm (3 finger-breadths) → difficult laryngoscopy</span></div>
+      <div class="kv-row"><span class="kv-key">Sternomental distance</span><span class="kv-val danger">&lt;12.5 cm → difficult laryngoscopy</span></div>
+      <div class="kv-row"><span class="kv-key">Mouth opening</span><span class="kv-val danger">&lt;4 cm (2 finger-breadths) → difficult intubation</span></div>
+      <div class="kv-row"><span class="kv-key">Upper lip bite test</span><span class="kv-val">Class I = lower teeth bite upper lip above mucosa (easy); Class III = cannot bite (difficult)</span></div>
+      <div class="kv-row"><span class="kv-key">LEMON rule</span><span class="kv-val highlight">Look, Evaluate 3-3-2, Mallampati, Obstruction, Neck mobility</span></div>
+      <div class="kv-row"><span class="kv-key">Cormack-Lehane Grade</span><span class="kv-val">I = full glottis; II = posterior glottis; III = epiglottis only; IV = nothing seen</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🫁 Endotracheal Intubation</div>
+      <div class="kv-row"><span class="kv-key">ETT size (adult female)</span><span class="kv-val">7.0–7.5 mm ID</span></div>
+      <div class="kv-row"><span class="kv-key">ETT size (adult male)</span><span class="kv-val">8.0–8.5 mm ID</span></div>
+      <div class="kv-row"><span class="kv-key">ETT size (paediatric)</span><span class="kv-val highlight">(Age/4) + 4 mm (uncuffed); cuffed = (Age/4) + 3.5</span></div>
+      <div class="kv-row"><span class="kv-key">Depth of insertion (adult)</span><span class="kv-val">Oral: 21 cm (female) / 23 cm (male); nasal: +3 cm</span></div>
+      <div class="kv-row"><span class="kv-key">Confirm ETT placement</span><span class="kv-val highlight">EtCO₂ waveform (gold standard); bilateral breath sounds; chest rise; SpO₂</span></div>
+      <div class="kv-row"><span class="kv-key">Right main bronchus intubation</span><span class="kv-val danger">Breath sounds absent on left; ↓SpO₂; pull ETT back 2–3 cm</span></div>
+      <div class="kv-row"><span class="kv-key">Laryngoscope blade — Macintosh</span><span class="kv-val">Curved; tip in vallecula; indirect epiglottis elevation; MC used</span></div>
+      <div class="kv-row"><span class="kv-key">Laryngoscope blade — Miller</span><span class="kv-val">Straight; tip lifts epiglottis directly; children / anterior larynx</span></div>
+      <div class="kv-row"><span class="kv-key">Sniffing position</span><span class="kv-val">Neck flexion + head extension; aligns oral-pharyngeal-laryngeal axes</span></div>
+      <div class="kv-row"><span class="kv-key">BURP manoeuvre</span><span class="kv-val">Backward + Upward + Rightward Pressure on larynx; improves Cormack-Lehane grade</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">😷 Supraglottic Airway Devices</div>
+      <div class="kv-row"><span class="kv-key">LMA (Laryngeal Mask Airway)</span><span class="kv-val highlight">Supraglottic; no intubation; no muscle relaxant needed; spontaneous or controlled ventilation</span></div>
+      <div class="kv-row"><span class="kv-key">LMA — size 3</span><span class="kv-val">Children 30–50 kg / small adults</span></div>
+      <div class="kv-row"><span class="kv-key">LMA — size 4</span><span class="kv-val">Adults 50–70 kg (normal adult female)</span></div>
+      <div class="kv-row"><span class="kv-key">LMA — size 5</span><span class="kv-val">Adults 70–100 kg (normal adult male)</span></div>
+      <div class="kv-row"><span class="kv-key">LMA contraindications</span><span class="kv-val danger">Full stomach, morbid obesity, GERD, oropharyngeal pathology, head/neck position changes required</span></div>
+      <div class="kv-row"><span class="kv-key">ProSeal LMA</span><span class="kv-val">Gastric drain port; better seal; allows higher airway pressures; preferred for laparoscopy</span></div>
+      <div class="kv-row"><span class="kv-key">i-gel</span><span class="kv-val">No inflatable cuff; thermoplastic gel; gastric drain channel; disposable</span></div>
+      <div class="kv-row"><span class="kv-key">Combitube</span><span class="kv-val danger">Rescue airway; blind insertion; two lumens; inflatable pharyngeal + distal cuffs</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">⚠️ Difficult Airway Algorithm</div>
+      <div class="kv-row"><span class="kv-key">Cannot intubate — can ventilate</span><span class="kv-val">LMA / facemask → call for help → videolaryngoscopy → surgical airway</span></div>
+      <div class="kv-row"><span class="kv-key">Cannot intubate — cannot ventilate (CICV)</span><span class="kv-val danger">Emergency surgical airway immediately (cricothyroidotomy / tracheostomy)</span></div>
+      <div class="kv-row"><span class="kv-key">CICV — immediate action</span><span class="kv-val danger">Needle cricothyroidotomy (temporising) → surgical cricothyroidotomy</span></div>
+      <div class="kv-row"><span class="kv-key">Videolaryngoscope — advantage</span><span class="kv-val">Better glottic view; anterior larynx; C-MAC, McGrath, GlideScope</span></div>
+      <div class="kv-row"><span class="kv-key">Awake fibreoptic intubation</span><span class="kv-val highlight">Gold standard for anticipated difficult airway; patient cooperative; topical anaesthesia</span></div>
+      <div class="kv-row"><span class="kv-key">Retrograde intubation</span><span class="kv-val">Wire passed retrograde through cricothyroid membrane → guided intubation</span></div>
+      <div class="kv-row"><span class="kv-key">Failed intubation drill</span><span class="kv-val">Call for help → optimise position → 2 further attempts → LMA → surgical airway</span></div>
+      <div class="kv-row"><span class="kv-key">Extubation criteria</span><span class="kv-val">Awake + responsive + sustained head lift &gt;5 sec + Vt &gt;5 mL/kg + SpO₂ &gt;95% on FiO₂ 0.3</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🚨 Rapid Sequence Induction (RSI)</div>
+      <div class="kv-row"><span class="kv-key">Indications</span><span class="kv-val danger">Full stomach, GERD, pregnancy (&gt;14 wks), trauma, bowel obstruction, emergency surgery</span></div>
+      <div class="kv-row"><span class="kv-key">Preoxygenation</span><span class="kv-val">100% O₂ for 3–5 min (denitrogenation); SpO₂ maintained during apnoea</span></div>
+      <div class="kv-row"><span class="kv-key">Induction agent in RSI</span><span class="kv-val highlight">Thiopentone (traditional) / Propofol / Ketamine (haemodynamic instability)</span></div>
+      <div class="kv-row"><span class="kv-key">Muscle relaxant in RSI</span><span class="kv-val highlight">Succinylcholine 1.5 mg/kg (fastest onset) OR Rocuronium 1.2 mg/kg (if succinylcholine CI)</span></div>
+      <div class="kv-row"><span class="kv-key">Cricoid pressure (Sellick's manoeuvre)</span><span class="kv-val">10 N (awake) → 30 N (unconscious); compresses oesophagus; controversial (may worsen view)</span></div>
+      <div class="kv-row"><span class="kv-key">No bag-mask ventilation</span><span class="kv-val">Avoids gastric insufflation and regurgitation risk</span></div>
+      <div class="kv-row"><span class="kv-key">Rocuronium reversal in RSI</span><span class="kv-val highlight">Sugammadex 16 mg/kg (immediately reverses 1.2 mg/kg rocuronium)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- INHALATIONAL AGENTS -->
+<div class="section" id="inhalational">
+  <div class="section-title">Inhalational <span>Anaesthetic Agents</span></div>
+  <div class="section-sub">MAC values, partition coefficients, properties, nitrous oxide</div>
+  <div class="grid-auto">
+
+    <div class="card orange span-full">
+      <div class="card-title">📊 Inhalational Agent Comparison</div>
+      <table class="comparison-table">
+        <tr><th>Agent</th><th>MAC (%)</th><th>Blood:Gas PC</th><th>Oil:Gas PC</th><th>Key Properties / Side Effects</th></tr>
+        <tr><td>Halothane</td><td>0.75%</td><td>2.5 (slow induction)</td><td>224</td><td>Hepatotoxicity (halothane hepatitis — Type II); sensitises myocardium to catecholamines → arrhythmias; bronchodilator; still used in paeds India; MH trigger</td></tr>
+        <tr><td>Isoflurane</td><td>1.15%</td><td>1.4</td><td>91</td><td>Pungent; coronary steal (debate); best muscle relaxation; least metabolism (0.2%); SVR ↓; MH trigger</td></tr>
+        <tr><td>Sevoflurane</td><td>2.05%</td><td>0.65 (fast)</td><td>47</td><td>Sweet smell; no airway irritation; smooth induction — preferred paeds; Compound A (nephrotoxic in theory); MH trigger</td></tr>
+        <tr><td>Desflurane</td><td>6.0%</td><td>0.42 (fastest)</td><td>18.7</td><td>Boiling point 23.5°C — special heated vaporiser; pungent; fastest recovery; SVR ↓; ↑ HR; MH trigger; NOT for induction</td></tr>
+        <tr><td>Nitrous Oxide (N₂O)</td><td>105% (supra-atmospheric)</td><td>0.47</td><td>1.4</td><td>Analgesic; second gas effect; diffusion hypoxia; expands air-filled cavities; bone marrow suppression (chronic); NO MH trigger; anti-vitamin B12</td></tr>
+      </table>
+      <div class="mnemonic"><b>Blood:Gas PC — speed of induction (lower = faster):</b> Desflurane (0.42) &lt; Sevoflurane (0.65) ≈ N₂O (0.47) &lt; Isoflurane (1.4) &lt; Halothane (2.5) — "Des &gt; Sevo &gt; Iso &gt; Halo"</div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🌬️ Nitrous Oxide — Special Points</div>
+      <div class="kv-row"><span class="kv-key">MAC of N₂O</span><span class="kv-val highlight">105% (cannot produce anaesthesia alone at 1 atm)</span></div>
+      <div class="kv-row"><span class="kv-key">Second gas effect</span><span class="kv-val">N₂O uptake concentrates co-administered agent (e.g. halothane) → faster induction</span></div>
+      <div class="kv-row"><span class="kv-key">Concentration effect</span><span class="kv-val">Higher inspired concentration → faster rise of alveolar concentration</span></div>
+      <div class="kv-row"><span class="kv-key">Diffusion hypoxia (Fink effect)</span><span class="kv-val danger">Post-N₂O: rapid N₂O diffusion out → dilutes alveolar O₂; give 100% O₂ for 5–10 min at end</span></div>
+      <div class="kv-row"><span class="kv-key">Expands closed gas spaces</span><span class="kv-val danger">Avoid in: pneumothorax, bowel obstruction, middle ear surgery, air embolism, vitreous gas (eye surgery), intracranial air</span></div>
+      <div class="kv-row"><span class="kv-key">Mechanism of action</span><span class="kv-val">NMDA receptor antagonism (analgesic); also GABA modulation</span></div>
+      <div class="kv-row"><span class="kv-key">Bone marrow suppression</span><span class="kv-val danger">Oxidises vitamin B12 → inactivates methionine synthase → megaloblastic anaemia (prolonged exposure)</span></div>
+      <div class="kv-row"><span class="kv-key">Entonox</span><span class="kv-val">50% N₂O + 50% O₂; labour analgesia; procedure sedation; pseudo-critical temperature −7°C</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">⚗️ Vaporisers &amp; Breathing Circuits</div>
+      <div class="kv-row"><span class="kv-key">Variable bypass vaporiser (Tec series)</span><span class="kv-val">Temp-compensated; agent-specific; plenum type; used for all agents except desflurane</span></div>
+      <div class="kv-row"><span class="kv-key">Desflurane vaporiser</span><span class="kv-val highlight">Tec 6 (heated to 39°C, 1.5 atm); electronically controlled; special design</span></div>
+      <div class="kv-row"><span class="kv-key">Mapleson A (Magill)</span><span class="kv-val highlight">Most efficient for spontaneous ventilation; FGF = minute ventilation; rebreathing-free</span></div>
+      <div class="kv-row"><span class="kv-key">Mapleson D</span><span class="kv-val highlight">Most efficient for controlled/IPPV ventilation; FGF = 2× minute ventilation; Bain circuit = coaxial D</span></div>
+      <div class="kv-row"><span class="kv-key">Mapleson F (Jackson-Rees)</span><span class="kv-val">T-piece modification; paediatrics; open-tail bag; spontaneous + controlled ventilation</span></div>
+      <div class="kv-row"><span class="kv-key">Circle system</span><span class="kv-val">Soda lime absorbs CO₂; ↓fresh gas flow; most economical; ↓heat/moisture loss</span></div>
+      <div class="kv-row"><span class="kv-key">Soda lime composition</span><span class="kv-val">Ca(OH)₂ (80%) + NaOH (4%) + KOH (1%) + silica; indicator dye changes colour when exhausted</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🫀 Cardiovascular Effects of Inhalational Agents</div>
+      <div class="kv-row"><span class="kv-key">All volatile agents</span><span class="kv-val danger">↓SVR (vasodilation); ↓myocardial contractility (dose-dependent)</span></div>
+      <div class="kv-row"><span class="kv-key">Halothane — unique CV effect</span><span class="kv-val danger">Sensitises myocardium to catecholamines → ventricular arrhythmias (avoid epinephrine with halothane)</span></div>
+      <div class="kv-row"><span class="kv-key">Isoflurane — CV</span><span class="kv-val">↑HR (reflex); ↓SVR; ↓BP; coronary vasodilation</span></div>
+      <div class="kv-row"><span class="kv-key">Desflurane — CV</span><span class="kv-val danger">Sympathetic activation with rapid ↑concentration → ↑HR + ↑BP transiently</span></div>
+      <div class="kv-row"><span class="kv-key">Sevoflurane — CV</span><span class="kv-val">Mildest CV depression; QT prolongation possible</span></div>
+      <div class="kv-row"><span class="kv-key">N₂O — CV effect</span><span class="kv-val">↑Sympathetic tone (↑NE release); mild myocardial depression; ↑PVR (avoid in pulmonary HTN)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- IV AGENTS -->
+<div class="section" id="iv_agents">
+  <div class="section-title">Intravenous <span>Anaesthetic Agents</span></div>
+  <div class="section-sub">Induction agents, opioids, benzodiazepines, local anaesthetics</div>
+  <div class="grid-auto">
+
+    <div class="card orange span-full">
+      <div class="card-title">📊 IV Induction Agents — Comparison</div>
+      <table class="comparison-table">
+        <tr><th>Agent</th><th>Dose</th><th>Onset / Duration</th><th>Key Properties</th><th>Side Effects / Cautions</th></tr>
+        <tr><td>Thiopentone (Thiopental)</td><td>3–5 mg/kg IV</td><td>30 s / 5–10 min</td><td>Barbiturate; ↓ICP (↓CMRO₂); anticonvulsant; yellow alkaline solution (pH 10.5)</td><td>Cardiovascular depression; bronchospasm (avoid in asthma); porphyria CI; no analgesia; context-sensitive half-life ↑ with repeated doses</td></tr>
+        <tr><td>Propofol</td><td>1.5–2.5 mg/kg IV</td><td>30–40 s / 5–10 min</td><td>White emulsion (soybean oil, lecithin); ↓ICP; anti-emetic; smooth induction; TIVA</td><td>Pain on injection (add lidocaine); hypotension + apnoea; PRIS (propofol infusion syndrome) in ICU; no analgesia; avoid in egg/soy allergy (debated)</td></tr>
+        <tr><td>Ketamine</td><td>1–2 mg/kg IV; 4–6 mg/kg IM</td><td>1–2 min / 10–20 min</td><td>Dissociative anaesthesia; NMDA antagonist; ↑HR + ↑BP (sympathomimetic); bronchodilator; preserves laryngeal reflexes; analgesic; ↑salivation</td><td>Emergence delirium/hallucinations (give midazolam); ↑ICP (↑CMRO₂ — avoid in head injury); ↑IOP (avoid glaucoma); ↑secretions (give atropine)</td></tr>
+        <tr><td>Etomidate</td><td>0.2–0.3 mg/kg IV</td><td>30 s / 5 min</td><td>Most haemodynamically stable; minimal CV depression; ↓ICP; anticonvulsant; preferred in cardiac patients</td><td>Pain on injection; myoclonus (give fentanyl/midazolam); adrenal suppression (cortisol ↓) — AVOID single use in sepsis; PONV ++; no analgesia</td></tr>
+        <tr><td>Dexmedetomidine</td><td>0.5–1 µg/kg load then 0.2–0.7 µg/kg/hr</td><td>Sedation; slow</td><td>Alpha-2 agonist; sedation + anxiolysis + analgesia; no respiratory depression; ICU sedation; awake fibreoptic</td><td>Bradycardia; hypotension; dry mouth; no amnesia guaranteed</td></tr>
+      </table>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">💊 Opioid Analgesics</div>
+      <div class="kv-row"><span class="kv-key">Morphine</span><span class="kv-val">Prototype; histamine release; active metabolite (M6G); ↓GFR accumulates → avoid renal failure</span></div>
+      <div class="kv-row"><span class="kv-key">Fentanyl</span><span class="kv-val highlight">100× morphine potency; rapid onset; context-sensitive t½ ↑ with prolonged infusion; ↓ICP; chest wall rigidity (high dose)</span></div>
+      <div class="kv-row"><span class="kv-key">Remifentanil</span><span class="kv-val highlight">Ultra-short acting; ester hydrolysis by plasma cholinesterase; predictable offset; TIVA; no accumulation; hyperalgesia risk</span></div>
+      <div class="kv-row"><span class="kv-key">Sufentanil</span><span class="kv-val">5–10× fentanyl potency; most lipophilic opioid; epidural/spinal</span></div>
+      <div class="kv-row"><span class="kv-key">Alfentanil</span><span class="kv-val">10–25× morphine; shorter t½ than fentanyl; good for short procedures</span></div>
+      <div class="kv-row"><span class="kv-key">Tramadol</span><span class="kv-val">Weak µ-opioid + SNRI; ceiling effect; reduce dose in renal failure; avoid in epilepsy + MAOI</span></div>
+      <div class="kv-row"><span class="kv-key">Naloxone</span><span class="kv-val danger">Opioid antagonist; 0.4 mg IV; short t½ (re-narcotisation risk); reverses respiratory depression + analgesia</span></div>
+      <div class="kv-row"><span class="kv-key">Opioid side effects</span><span class="kv-val danger">Respiratory depression, sedation, nausea, constipation, pruritus (histamine), urinary retention, biliary spasm, ↑ICP</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">💉 Local Anaesthetics (LAs)</div>
+      <table class="comparison-table">
+        <tr><th>Agent</th><th>Type</th><th>Duration</th><th>Max Dose (plain / with adrenaline)</th></tr>
+        <tr><td>Lignocaine (Lidocaine)</td><td>Amide</td><td>1–2 hrs</td><td>3 mg/kg / 7 mg/kg (with adr); also antiarrhythmic Class Ib</td></tr>
+        <tr><td>Bupivacaine</td><td>Amide</td><td>4–8 hrs (long)</td><td>2 mg/kg / 2.5 mg/kg; most cardiotoxic; do NOT use 0.75% obstetric (cardiac arrest)</td></tr>
+        <tr><td>Ropivacaine</td><td>Amide (S-enantiomer)</td><td>4–8 hrs</td><td>3 mg/kg; less cardiotoxic than bupivacaine; motor sparing</td></tr>
+        <tr><td>Levobupivacaine</td><td>Amide (S-enantiomer)</td><td>4–8 hrs</td><td>Safer than racemic bupivacaine; similar duration</td></tr>
+        <tr><td>Cocaine</td><td>Ester</td><td>30–60 min</td><td>1.5 mg/kg; only LA with vasoconstriction; ENT topical; blocks NA reuptake</td></tr>
+        <tr><td>Procaine</td><td>Ester</td><td>30–60 min</td><td>500 mg; hydrolysed to PABA; sulfonamide allergy risk</td></tr>
+        <tr><td>Tetracaine (Amethocaine)</td><td>Ester</td><td>Long</td><td>1.5 mg/kg; spinal anaesthesia; most potent ester; most toxic ester</td></tr>
+      </table>
+      <div class="alert-box">LA Systemic Toxicity (LAST): Peri-oral tingling → metallic taste → tinnitus → seizures → cardiovascular collapse. Rx: Stop injection, 100% O₂, IV lipid emulsion 20% (1.5 mL/kg bolus).</div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🧠 Local Anaesthetic — Mechanisms</div>
+      <div class="kv-row"><span class="kv-key">MOA</span><span class="kv-val highlight">Reversible block of Na⁺ channels (inner surface); block in use-dependent manner</span></div>
+      <div class="kv-row"><span class="kv-key">Unionised form (B)</span><span class="kv-val">Crosses membrane (lipophilic); pKa determines ratio</span></div>
+      <div class="kv-row"><span class="kv-key">Ionised form (BH⁺)</span><span class="kv-val">Binds Na⁺ channel from inside; active blocking form</span></div>
+      <div class="kv-row"><span class="kv-key">Alkaline pH → more unionised</span><span class="kv-val green">Faster onset; sodium bicarbonate speeds onset</span></div>
+      <div class="kv-row"><span class="kv-key">Acidic pH (infected tissue)</span><span class="kv-val danger">More ionised → poor penetration → LA fails in abscess</span></div>
+      <div class="kv-row"><span class="kv-key">Adrenaline added to LA</span><span class="kv-val">↓Systemic absorption; ↑duration; ↓bleeding; marker of IV injection (tachycardia)</span></div>
+      <div class="kv-row"><span class="kv-key">Adrenaline CI with LA</span><span class="kv-val danger">End-arteries (finger, toe, nose, ear, penis) — ischaemic necrosis</span></div>
+      <div class="kv-row"><span class="kv-key">Nerve fibre sensitivity order</span><span class="kv-val">B &gt; C &gt; Aδ &gt; Aγ &gt; Aβ &gt; Aα (smallest unmyelinated fastest blocked)</span></div>
+      <div class="kv-row"><span class="kv-key">Differential block</span><span class="kv-val">Pain/temperature lost first → touch → proprioception → motor (last)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NMBDs & REVERSAL -->
+<div class="section" id="nmb">
+  <div class="section-title">NMBDs <span>&amp; Reversal</span></div>
+  <div class="section-sub">Depolarising, non-depolarising, monitoring, reversal agents</div>
+  <div class="grid-auto">
+
+    <div class="card orange span-full">
+      <div class="card-title">📊 Neuromuscular Blocking Drugs (NMBDs)</div>
+      <table class="comparison-table">
+        <tr><th>Drug</th><th>Type</th><th>Onset</th><th>Duration</th><th>Key Points</th></tr>
+        <tr><td>Succinylcholine (Suxamethonium)</td><td>Depolarising (Phase I)</td><td>60–90 s (fastest)</td><td>10–15 min (shortest)</td><td>Fastest onset/offset; CI: hyperkalaemia risk (burns &gt;24hrs, crush, denervation, immobility — wait 48 hrs post injury); malignant hyperthermia trigger; bradycardia (paeds); ↑IOP + ↑ICP + ↑intragastric pressure; fasciculations → myalgias; pseudocholinesterase deficiency → prolonged block; Phase II block with repeated doses</td></tr>
+        <tr><td>Rocuronium</td><td>Non-depolarising (aminosteroid)</td><td>60–90 s (standard 0.6 mg/kg); 45–60 s (RSI dose 1.2 mg/kg)</td><td>Intermediate (30–60 min)</td><td>Closest to succinylcholine onset at high dose; reversible with sugammadex; good alternative in RSI; no histamine release</td></tr>
+        <tr><td>Vecuronium</td><td>Non-depolarising (aminosteroid)</td><td>3–5 min</td><td>Intermediate (25–40 min)</td><td>Minimal CV effects; no histamine; active metabolite (3-OH vecuronium) accumulates in renal failure; steroidal</td></tr>
+        <tr><td>Atracurium</td><td>Non-depolarising (benzylisoquinolinium)</td><td>3–5 min</td><td>Intermediate (20–35 min)</td><td>Hofmann elimination + ester hydrolysis (organ-independent); ideal in hepatic/renal failure; histamine release; laudanosine (CNS stimulant metabolite — seizures in high dose)</td></tr>
+        <tr><td>Cisatracurium</td><td>Non-depolarising</td><td>3–5 min</td><td>Intermediate</td><td>Isomer of atracurium; Hofmann elimination; NO histamine; less laudanosine; preferred in ICU</td></tr>
+        <tr><td>Mivacurium</td><td>Non-depolarising (benzylisoquinolinium)</td><td>3 min</td><td>Short (12–20 min)</td><td>Hydrolysed by plasma cholinesterase; shortest acting NDMR; histamine release</td></tr>
+        <tr><td>Pancuronium</td><td>Non-depolarising (aminosteroid)</td><td>3–5 min</td><td>Long (60–90 min)</td><td>↑HR + ↑BP (vagolytic + catecholamine release); renal excretion; least expensive; long-acting ICU</td></tr>
+      </table>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">⚡ Neuromuscular Monitoring (TOF)</div>
+      <div class="kv-row"><span class="kv-key">Train-of-Four (TOF) stimulation</span><span class="kv-val highlight">4 supramaximal stimuli at 2 Hz; count twitches; TOF ratio = T4/T1</span></div>
+      <div class="kv-row"><span class="kv-key">TOF ratio &gt;0.9</span><span class="kv-val green">Adequate neuromuscular recovery for extubation</span></div>
+      <div class="kv-row"><span class="kv-key">TOF count 4 (fade)</span><span class="kv-val">~75% receptor blockade (light block)</span></div>
+      <div class="kv-row"><span class="kv-key">TOF count 3</span><span class="kv-val">~80% receptor blockade</span></div>
+      <div class="kv-row"><span class="kv-key">TOF count 1–2</span><span class="kv-val danger">~90–95% receptor blockade</span></div>
+      <div class="kv-row"><span class="kv-key">TOF count 0 (no twitches)</span><span class="kv-val danger">&gt;95% blockade; deep block; PTC used</span></div>
+      <div class="kv-row"><span class="kv-key">Double burst stimulation (DBS)</span><span class="kv-val">Detects residual blockade better than TOF tactilely</span></div>
+      <div class="kv-row"><span class="kv-key">Post-tetanic count (PTC)</span><span class="kv-val">Used during intense/deep blockade when TOF = 0</span></div>
+      <div class="kv-row"><span class="kv-key">Depolarising block (Phase I) vs Phase II</span><span class="kv-val">Phase I: no fade, no post-tetanic facilitation; Phase II: fade present, post-tetanic facilitation present (mimics NDMR)</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🔄 Reversal of Neuromuscular Block</div>
+      <div class="kv-row"><span class="kv-key">Neostigmine (acetylcholinesterase inhibitor)</span><span class="kv-val highlight">Inhibits AChE → ↑ACh → competes with NDMR; must give anticholinergic with it</span></div>
+      <div class="kv-row"><span class="kv-key">Neostigmine dose</span><span class="kv-val">0.04–0.07 mg/kg IV; max 5 mg</span></div>
+      <div class="kv-row"><span class="kv-key">With neostigmine — always give</span><span class="kv-val danger">Atropine 0.02 mg/kg OR glycopyrrolate 0.01 mg/kg (prevents bradycardia, ↑secretions, bronchospasm)</span></div>
+      <div class="kv-row"><span class="kv-key">Neostigmine — when to give</span><span class="kv-val">TOF count ≥2 (preferably ≥4); ceiling effect — cannot fully reverse deep block</span></div>
+      <div class="kv-row"><span class="kv-key">Sugammadex</span><span class="kv-val highlight">Modified γ-cyclodextrin; encapsulates rocuronium/vecuronium; direct reversal; no muscarinic SE; no anticholinergic needed</span></div>
+      <div class="kv-row"><span class="kv-key">Sugammadex — TOF count 1–2</span><span class="kv-val">2 mg/kg</span></div>
+      <div class="kv-row"><span class="kv-key">Sugammadex — TOF count 0</span><span class="kv-val">4 mg/kg</span></div>
+      <div class="kv-row"><span class="kv-key">Sugammadex — immediate reversal (RSI rocuronium)</span><span class="kv-val highlight">16 mg/kg (reverses 1.2 mg/kg rocuronium immediately)</span></div>
+      <div class="kv-row"><span class="kv-key">Sugammadex — does NOT reverse</span><span class="kv-val danger">Succinylcholine, atracurium, pancuronium (aminosteroid only)</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">⚠️ Succinylcholine — Contraindications &amp; Special</div>
+      <div class="kv-row"><span class="kv-key">Absolute CI — hyperkalaemia risk</span><span class="kv-val danger">Burns (&gt;24 hrs onset, up to 2 yrs); crush injury; upper/lower motor neuron injury; prolonged immobility; severe intra-abdominal infection</span></div>
+      <div class="kv-row"><span class="kv-key">Safe window post-trauma</span><span class="kv-val">First 24 hrs after injury (safe); becomes dangerous 24 hrs – 2 years</span></div>
+      <div class="kv-row"><span class="kv-key">Pseudocholinesterase deficiency</span><span class="kv-val danger">Prolonged apnoea ("scoline apnoea"); dibucaine number ↓; fresh frozen plasma / wait for metabolism</span></div>
+      <div class="kv-row"><span class="kv-key">Dibucaine number — normal</span><span class="kv-val">80 (80% inhibition); heterozygous = 60; homozygous abnormal = 20</span></div>
+      <div class="kv-row"><span class="kv-key">MH trigger</span><span class="kv-val danger">Succinylcholine + all volatile agents (except N₂O); treat with dantrolene</span></div>
+      <div class="kv-row"><span class="kv-key">Fasciculations</span><span class="kv-val">Prevented by pre-curarisation: small dose NDMR (e.g. vecuronium 0.01 mg/kg) 3 min before</span></div>
+      <div class="kv-row"><span class="kv-key">Bradycardia with suxamethonium</span><span class="kv-val danger">Children &gt; adults; prevented by atropine; especially with repeated doses</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- REGIONAL ANAESTHESIA -->
+<div class="section" id="regional">
+  <div class="section-title">Regional <span>Anaesthesia</span></div>
+  <div class="section-sub">Spinal, epidural, nerve blocks, obstetric anaesthesia</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">💉 Spinal Anaesthesia</div>
+      <div class="kv-row"><span class="kv-key">Level of injection</span><span class="kv-val highlight">L3–L4 or L4–L5 interspace (below conus medullaris at L1–L2 in adults)</span></div>
+      <div class="kv-row"><span class="kv-key">Conus medullaris — adult</span><span class="kv-val">L1 (range L1–L2)</span></div>
+      <div class="kv-row"><span class="kv-key">Conus medullaris — neonate</span><span class="kv-val">L3 (lower than adult)</span></div>
+      <div class="kv-row"><span class="kv-key">LA injected into</span><span class="kv-val highlight">Subarachnoid space (intrathecal); CSF</span></div>
+      <div class="kv-row"><span class="kv-key">Baricity — hyperbaric</span><span class="kv-val">Heavier than CSF (bupivacaine 0.5% heavy in dextrose); settles with gravity; posture affects spread</span></div>
+      <div class="kv-row"><span class="kv-key">Baricity — isobaric</span><span class="kv-val">Same density as CSF; less affected by posture; used for hip surgery</span></div>
+      <div class="kv-row"><span class="kv-key">Agent of choice for spinal</span><span class="kv-val highlight">Heavy bupivacaine 0.5% (hyperbaric)</span></div>
+      <div class="kv-row"><span class="kv-key">Saddle block level</span><span class="kv-val">S1–S5 (perineum, perianal); sitting position; small dose hyperbaric LA</span></div>
+      <div class="kv-row"><span class="kv-key">High spinal — level of danger</span><span class="kv-val danger">Above T4 → cardiac accelerators blocked → bradycardia; above C3–C5 → apnoea</span></div>
+      <div class="kv-row"><span class="kv-key">Spinal headache (PDPH)</span><span class="kv-val danger">Postural; frontal/occipital; CSF leak; Rx: bed rest → caffeine → blood patch (autologous epidural blood)</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">💉 Epidural Anaesthesia</div>
+      <div class="kv-row"><span class="kv-key">Space of injection</span><span class="kv-val highlight">Epidural (extradural) space; outside dura; no CSF</span></div>
+      <div class="kv-row"><span class="kv-key">Loss of resistance technique</span><span class="kv-val">Air or saline; identifies epidural space by sudden loss of resistance on plunger</span></div>
+      <div class="kv-row"><span class="kv-key">Hanging drop technique</span><span class="kv-val">Negative pressure in epidural space; drop sucked in; unreliable in obese/COPD</span></div>
+      <div class="kv-row"><span class="kv-key">Test dose (epidural)</span><span class="kv-val danger">Lignocaine 45 mg + adrenaline 15 µg; IV injection → ↑HR &gt;20 bpm (positive); intrathecal → total spinal</span></div>
+      <div class="kv-row"><span class="kv-key">Epidural vs spinal</span><span class="kv-val">Epidural: slower onset, titratable, catheter for continuous; Spinal: faster, denser block, single shot, headache risk</span></div>
+      <div class="kv-row"><span class="kv-key">CSEA (Combined Spinal-Epidural)</span><span class="kv-val">Needle-through-needle; quick spinal + epidural catheter for top-ups; caesarean section</span></div>
+      <div class="kv-row"><span class="kv-key">Epidural opioids — advantage</span><span class="kv-val highlight">Excellent analgesia; lower systemic doses; preserves motor function (motor-sparing)</span></div>
+      <div class="kv-row"><span class="kv-key">Epidural haematoma risk</span><span class="kv-val danger">Anticoagulants; LMWH: wait 12 hrs before / 4 hrs after; warfarin: INR &lt;1.5; aspirin: safe</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🫀 Obstetric Anaesthesia</div>
+      <div class="kv-row"><span class="kv-key">Aortocaval compression</span><span class="kv-val danger">Supine position → gravid uterus compresses IVC + aorta → hypotension; tilt 15° left lateral</span></div>
+      <div class="kv-row"><span class="kv-key">Aspiration risk in pregnancy</span><span class="kv-val danger">↑Gastric acid, ↓LES tone, delayed emptying → aspiration risk; Mendelson's syndrome</span></div>
+      <div class="kv-row"><span class="kv-key">Regional anaesthesia for C-section</span><span class="kv-val highlight">Preferred (spinal ± epidural); avoids aspiration risk; awake mother; bonding</span></div>
+      <div class="kv-row"><span class="kv-key">GA for C-section — when</span><span class="kv-val danger">Failed regional, maternal refusal, coagulopathy, severe fetal distress, time constraints</span></div>
+      <div class="kv-row"><span class="kv-key">GA for C-section — concerns</span><span class="kv-val danger">Difficult airway (2nd trimester oedema); RSI; aspiration; avoid N₂O (fetal); neonatal depression</span></div>
+      <div class="kv-row"><span class="kv-key">Epidural labour analgesia LA</span><span class="kv-val">Low-dose bupivacaine (0.0625–0.125%) + opioid (fentanyl); PCEA</span></div>
+      <div class="kv-row"><span class="kv-key">Spinal for C-section</span><span class="kv-val highlight">Hyperbaric bupivacaine 0.5% 10–12.5 mg + fentanyl 25 µg + morphine 0.1 mg intrathecal</span></div>
+      <div class="kv-row"><span class="kv-key">Pre-eclampsia — anaesthetic concern</span><span class="kv-val danger">Airway oedema; thrombocytopenia (epidural if plt &gt;75,000); avoid ergometrine (HTN); MgSO₄ potentiates NDMR</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">🦾 Peripheral Nerve Blocks</div>
+      <div class="kv-row"><span class="kv-key">Brachial plexus — interscalene</span><span class="kv-val">C5–C6; shoulder surgery; phrenic nerve block (100% ipsilateral hemidiaphragm — avoid bilateral, severe respiratory disease)</span></div>
+      <div class="kv-row"><span class="kv-key">Brachial plexus — supraclavicular</span><span class="kv-val">Most complete; upper limb below elbow; pneumothorax risk (1%)</span></div>
+      <div class="kv-row"><span class="kv-key">Brachial plexus — infraclavicular</span><span class="kv-val">Axillary sheath; forearm and hand; lower pneumothorax risk</span></div>
+      <div class="kv-row"><span class="kv-key">Brachial plexus — axillary</span><span class="kv-val highlight">Safest; hand/forearm; no pneumothorax; musculocutaneous nerve often missed (inject separately)</span></div>
+      <div class="kv-row"><span class="kv-key">Femoral nerve block</span><span class="kv-val">Knee surgery (TKR); medial thigh + anterior knee; 3-in-1 block if volume large</span></div>
+      <div class="kv-row"><span class="kv-key">Popliteal sciatic block</span><span class="kv-val">Below-knee analgesia; foot/ankle surgery</span></div>
+      <div class="kv-row"><span class="kv-key">Transversus Abdominis Plane (TAP) block</span><span class="kv-val">Abdominal wall analgesia; between internal oblique + transversus abdominis; laparotomy, C-section</span></div>
+      <div class="kv-row"><span class="kv-key">PECS block (I and II)</span><span class="kv-val">Breast surgery; serratus plane; replaces paravertebral in some centres</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">⚠️ Complications of Regional Anaesthesia</div>
+      <div class="kv-row"><span class="kv-key">Total spinal anaesthesia</span><span class="kv-val danger">High block → apnoea + hypotension + LOC; treat: IPPV + vasopressors + atropine</span></div>
+      <div class="kv-row"><span class="kv-key">Hypotension (spinal/epidural)</span><span class="kv-val danger">MC complication; sympathetic blockade → vasodilation; Rx: IV fluid preload + vasopressors (phenylephrine / ephedrine)</span></div>
+      <div class="kv-row"><span class="kv-key">Phenylephrine vs ephedrine (obstetric)</span><span class="kv-val highlight">Phenylephrine preferred (maintains uteroplacental flow, less fetal acidosis); ephedrine if bradycardia</span></div>
+      <div class="kv-row"><span class="kv-key">Post-dural puncture headache (PDPH)</span><span class="kv-val danger">Bilateral; frontal/occipital; worse upright; onset 12–48 hrs; ↑risk with large needle / inadvertent dural puncture</span></div>
+      <div class="kv-row"><span class="kv-key">Blood patch (epidural blood patch)</span><span class="kv-val highlight">Gold standard for PDPH; 15–20 mL autologous blood at same interspace; 90% success</span></div>
+      <div class="kv-row"><span class="kv-key">Epidural abscess</span><span class="kv-val danger">Back pain + fever + neurological deficit; MRI; emergency surgical drainage; S. aureus MC organism</span></div>
+      <div class="kv-row"><span class="kv-key">Anterior spinal artery syndrome</span><span class="kv-val danger">Hypotension during spinal/epidural → anterior cord ischaemia → paraplegia; proprioception spared</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- COMPLICATIONS -->
+<div class="section" id="complications">
+  <div class="section-title">Anaesthetic <span>Complications</span></div>
+  <div class="section-sub">Malignant hyperthermia, anaphylaxis, PONV, awareness, special situations</div>
+  <div class="grid-auto">
+
+    <div class="card orange">
+      <div class="card-title">🔥 Malignant Hyperthermia (MH)</div>
+      <div class="kv-row"><span class="kv-key">Mechanism</span><span class="kv-val danger">Autosomal dominant; RYR1 mutation; uncontrolled Ca²⁺ release from SR → hypermetabolic crisis</span></div>
+      <div class="kv-row"><span class="kv-key">Triggers</span><span class="kv-val danger">All volatile agents + Succinylcholine (NOT N₂O, propofol, NDMR, opioids, benzodiazepines)</span></div>
+      <div class="kv-row"><span class="kv-key">Earliest sign</span><span class="kv-val highlight">↑EtCO₂ (↑CO₂ production — unexpected rise despite unchanged ventilation)</span></div>
+      <div class="kv-row"><span class="kv-key">Classic triad</span><span class="kv-val danger">↑EtCO₂ + Tachycardia + Hyperthermia (temperature rises 1–2°C every 5 minutes)</span></div>
+      <div class="kv-row"><span class="kv-key">Other signs</span><span class="kv-val danger">Masseter spasm (triggered by suxamethonium), metabolic acidosis, rhabdomyolysis, ↑CK, ↑K⁺, myoglobinuria, DIC</span></div>
+      <div class="kv-row"><span class="kv-key">Immediate management</span><span class="kv-val danger">Stop trigger agent; 100% O₂ hyperventilate; call for help; get dantrolene</span></div>
+      <div class="kv-row"><span class="kv-key">Specific treatment</span><span class="kv-val danger">Dantrolene 2.5 mg/kg IV bolus; repeat up to 10 mg/kg total; inhibits Ca²⁺ release from SR</span></div>
+      <div class="kv-row"><span class="kv-key">Dantrolene continued</span><span class="kv-val">1–2 mg/kg every 6 hrs for 24–48 hrs (prevent recurrence)</span></div>
+      <div class="kv-row"><span class="kv-key">Confirmatory test</span><span class="kv-val highlight">Caffeine-halothane contracture test (CHCT) on muscle biopsy (Leeds/Toronto)</span></div>
+      <div class="kv-row"><span class="kv-key">Safe agents in MH-susceptible</span><span class="kv-val green">Propofol, N₂O, NDMR, opioids, benzodiazepines, LA — all safe</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🚨 Anaphylaxis Under Anaesthesia</div>
+      <div class="kv-row"><span class="kv-key">MC trigger in anaesthesia</span><span class="kv-val highlight">Neuromuscular blocking drugs (NMBDs) — especially rocuronium; also latex, antibiotics</span></div>
+      <div class="kv-row"><span class="kv-key">Clinical features</span><span class="kv-val danger">Bronchospasm + hypotension + rash (urticaria/flushing) + angioedema; may lack skin signs in GA</span></div>
+      <div class="kv-row"><span class="kv-key">Immediate treatment</span><span class="kv-val danger">Stop trigger; 100% O₂; IV adrenaline 1:10,000 (0.1 mg = 1 mL); call for help</span></div>
+      <div class="kv-row"><span class="kv-key">Adrenaline dose (IV — anaesthesia)</span><span class="kv-val danger">50–100 µg IV boluses (1:10,000); titrate; repeat every 1–2 min; adrenaline infusion if refractory</span></div>
+      <div class="kv-row"><span class="kv-key">Secondary treatment</span><span class="kv-val">Chlorphenamine + hydrocortisone + IV fluid; salbutamol for bronchospasm</span></div>
+      <div class="kv-row"><span class="kv-key">Serum tryptase</span><span class="kv-val highlight">Mast cell marker; take 1–2 hrs and 24 hrs post-event; helps confirm anaphylaxis</span></div>
+      <div class="kv-row"><span class="kv-key">Latex allergy — at-risk patients</span><span class="kv-val danger">Spina bifida (MC), healthcare workers, multiple surgeries, rubber industry workers</span></div>
+      <div class="kv-row"><span class="kv-key">Latex cross-reactivity</span><span class="kv-val">Avocado, banana, kiwi, chestnut (latex-fruit syndrome)</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title">🤢 PONV (Post-operative Nausea &amp; Vomiting)</div>
+      <div class="kv-row"><span class="kv-key">Apfel score risk factors</span><span class="kv-val highlight">Female sex + non-smoker + PONV/motion sickness history + post-op opioids (each = 1 point)</span></div>
+      <div class="kv-row"><span class="kv-key">Apfel score 0–1</span><span class="kv-val green">Low risk (~10–20%); no prophylaxis needed</span></div>
+      <div class="kv-row"><span class="kv-key">Apfel score 2</span><span class="kv-val">Moderate risk (~40%); 1–2 antiemetics</span></div>
+      <div class="kv-row"><span class="kv-key">Apfel score 3–4</span><span class="kv-val danger">High risk (60–80%); multimodal prophylaxis; consider TIVA (propofol)</span></div>
+      <div class="kv-row"><span class="kv-key">5-HT₃ antagonists</span><span class="kv-val highlight">Ondansetron 4 mg IV (end of surgery); most evidence; QT prolongation</span></div>
+      <div class="kv-row"><span class="kv-key">NK₁ antagonist</span><span class="kv-val">Aprepitant; most effective for PONV prophylaxis + chemotherapy CINV</span></div>
+      <div class="kv-row"><span class="kv-key">Dexamethasone</span><span class="kv-val">8 mg IV at induction; synergistic; ↑wound healing; ↑blood glucose (caution DM)</span></div>
+      <div class="kv-row"><span class="kv-key">Droperidol</span><span class="kv-val">D₂ antagonist; effective; QT prolongation; "black box" warning (large doses)</span></div>
+      <div class="kv-row"><span class="kv-key">TIVA with propofol</span><span class="kv-val highlight">Reduces PONV compared to volatile agents; preferred in high-risk PONV patients</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title">💀 Other Critical Complications</div>
+      <div class="kv-row"><span class="kv-key">Awareness under anaesthesia</span><span class="kv-val danger">0.1–0.2%; more common: C-section, cardiac surgery, trauma, rapid RSI; ↓BIS monitoring helps</span></div>
+      <div class="kv-row"><span class="kv-key">Laryngospasm</span><span class="kv-val danger">Stage II anaesthesia / extubation; inspiratory stridor / complete obstruction; Rx: CPAP → succinylcholine 0.1–0.5 mg/kg → reintubate</span></div>
+      <div class="kv-row"><span class="kv-key">Bronchospasm</span><span class="kv-val danger">↑airway pressure; silent chest; anaphylaxis/histamine/aspiration; Rx: deepen anaesthesia + salbutamol + adrenaline</span></div>
+      <div class="kv-row"><span class="kv-key">Negative pressure pulmonary oedema</span><span class="kv-val danger">Post-extubation laryngospasm → inspiration against closed glottis → pulmonary oedema; Rx: CPAP + diuretics</span></div>
+      <div class="kv-row"><span class="kv-key">Air embolism</span><span class="kv-val danger">Venous: sitting craniotomy; Durant's manoeuvre (left lateral + head down); aspirate CVP; CPR</span></div>
+      <div class="kv-row"><span class="kv-key">Propofol Infusion Syndrome (PRIS)</span><span class="kv-val danger">ICU; &gt;4 mg/kg/hr for &gt;48 hrs; metabolic acidosis + rhabdomyolysis + renal/cardiac failure; Rx: stop propofol</span></div>
+      <div class="kv-row"><span class="kv-key">Serotonin syndrome</span><span class="kv-val danger">Tramadol + SSRI/MAOI; triad: hyperthermia + clonus/myoclonus + agitation; Rx: cyproheptadine + supportive</span></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🏥 Paediatric Anaesthesia Essentials</div>
+      <div class="kv-row"><span class="kv-key">ETT size (child)</span><span class="kv-val highlight">(Age/4) + 4 mm (uncuffed); cuffed = (Age/4) + 3.5 mm</span></div>
+      <div class="kv-row"><span class="kv-key">Blood volume — neonate</span><span class="kv-val">90 mL/kg</span></div>
+      <div class="kv-row"><span class="kv-key">Blood volume — infant</span><span class="kv-val">80 mL/kg</span></div>
+      <div class="kv-row"><span class="kv-key">Blood volume — child &gt;1 yr</span><span class="kv-val">70–75 mL/kg</span></div>
+      <div class="kv-row"><span class="kv-key">Allowable blood loss (ABL)</span><span class="kv-val">ABL = EBV × (Hb start − Hb min) / Hb start</span></div>
+      <div class="kv-row"><span class="kv-key">Inhalational induction — preferred in children</span><span class="kv-val highlight">Sevoflurane 8% (fast, non-pungent, sweet smell)</span></div>
+      <div class="kv-row"><span class="kv-key">Atropine in paeds GA</span><span class="kv-val">Prevent vagal bradycardia (especially with succinylcholine / halothane)</span></div>
+      <div class="kv-row"><span class="kv-key">Larynx — narrowest point (child)</span><span class="kv-val danger">Cricoid ring (subglottis) — use uncuffed ETT; in adults: glottis</span></div>
+      <div class="kv-row"><span class="kv-key">Caudal block (children)</span><span class="kv-val">Sacral hiatus → epidural space; circumcision, hypospadias, inguinal hernia repair; bupivacaine 0.25% 1 mL/kg</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency single-answer facts for rapid Anaesthesia revision</div>
+  <div class="grid-2">
+    <div class="card orange">
+      <div class="card-title">⭐ Anaesthesia Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">Fastest acting NMBD</span><span class="kv-val highlight">Succinylcholine (depolarising); 60–90 s</span></div>
+      <div class="kv-row"><span class="kv-key">Shortest acting NDMR</span><span class="kv-val">Mivacurium (12–20 min)</span></div>
+      <div class="kv-row"><span class="kv-key">Organ-independent NDMR</span><span class="kv-val highlight">Atracurium + Cisatracurium (Hofmann elimination)</span></div>
+      <div class="kv-row"><span class="kv-key">Most cardio-stable induction agent</span><span class="kv-val highlight">Etomidate</span></div>
+      <div class="kv-row"><span class="kv-key">Dissociative anaesthesia</span><span class="kv-val">Ketamine</span></div>
+      <div class="kv-row"><span class="kv-key">Ketamine — unique advantage</span><span class="kv-val">Bronchodilator + maintains laryngeal reflexes + analgesic + sympathomimetic</span></div>
+      <div class="kv-row"><span class="kv-key">Emergence delirium drug</span><span class="kv-val">Ketamine; prevent with midazolam or diazepam</span></div>
+      <div class="kv-row"><span class="kv-key">Anti-emetic property</span><span class="kv-val highlight">Propofol (sub-anaesthetic doses 10–20 mg)</span></div>
+      <div class="kv-row"><span class="kv-key">Most pungent volatile agent</span><span class="kv-val danger">Desflurane (cannot be used for induction)</span></div>
+      <div class="kv-row"><span class="kv-key">Fastest recovery volatile agent</span><span class="kv-val">Desflurane (lowest blood:gas partition coefficient)</span></div>
+      <div class="kv-row"><span class="kv-key">Volatile agent for paediatric induction</span><span class="kv-val highlight">Sevoflurane (sweet smell, non-irritant)</span></div>
+      <div class="kv-row"><span class="kv-key">Only volatile agent without MH risk</span><span class="kv-val green">Nitrous oxide (N₂O)</span></div>
+      <div class="kv-row"><span class="kv-key">Malignant hyperthermia antidote</span><span class="kv-val danger">Dantrolene 2.5 mg/kg IV</span></div>
+      <div class="kv-row"><span class="kv-key">Earliest sign MH</span><span class="kv-val danger">↑EtCO₂ (unexplained rise)</span></div>
+      <div class="kv-row"><span class="kv-key">MH confirmatory test</span><span class="kv-val">Caffeine-halothane contracture test (muscle biopsy)</span></div>
+      <div class="kv-row"><span class="kv-key">Most efficient circuit for spontaneous ventilation</span><span class="kv-val highlight">Mapleson A (Magill)</span></div>
+      <div class="kv-row"><span class="kv-key">Most efficient circuit for IPPV</span><span class="kv-val highlight">Mapleson D (Bain circuit)</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">⭐ Anaesthesia Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">Gold standard depth of anaesthesia</span><span class="kv-val">BIS monitoring (40–60 = surgical anaesthesia)</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard ETT confirmation</span><span class="kv-val highlight">Capnography (EtCO₂ waveform)</span></div>
+      <div class="kv-row"><span class="kv-key">ASA classification — emergency suffix</span><span class="kv-val">Letter "E" added (e.g. ASA II E)</span></div>
+      <div class="kv-row"><span class="kv-key">NPO for clear fluids</span><span class="kv-val highlight">2 hours</span></div>
+      <div class="kv-row"><span class="kv-key">NPO for solid food</span><span class="kv-val">6–8 hours</span></div>
+      <div class="kv-row"><span class="kv-key">Mendelson's syndrome criteria</span><span class="kv-val danger">pH &lt;2.5 + volume &gt;25 mL</span></div>
+      <div class="kv-row"><span class="kv-key">LA toxicity treatment</span><span class="kv-val danger">20% intralipid emulsion 1.5 mL/kg IV bolus</span></div>
+      <div class="kv-row"><span class="kv-key">Most cardiotoxic LA</span><span class="kv-val danger">Bupivacaine (0.75% obstetric — banned)</span></div>
+      <div class="kv-row"><span class="kv-key">Only vasoconstrictive LA</span><span class="kv-val">Cocaine</span></div>
+      <div class="kv-row"><span class="kv-key">LA in infected tissue — ineffective</span><span class="kv-val danger">Acidic pH → more ionised → poor penetration</span></div>
+      <div class="kv-row"><span class="kv-key">Sugammadex — immediate RSI reversal dose</span><span class="kv-val highlight">16 mg/kg</span></div>
+      <div class="kv-row"><span class="kv-key">TOF ratio for safe extubation</span><span class="kv-val green">&gt;0.9</span></div>
+      <div class="kv-row"><span class="kv-key">Pseudocholinesterase deficiency test</span><span class="kv-val highlight">Dibucaine number (normal = 80)</span></div>
+      <div class="kv-row"><span class="kv-key">PDPH gold standard treatment</span><span class="kv-val">Epidural blood patch (15–20 mL autologous)</span></div>
+      <div class="kv-row"><span class="kv-key">Vasopressor of choice (obstetric hypotension)</span><span class="kv-val highlight">Phenylephrine (preserves uteroplacental flow)</span></div>
+      <div class="kv-row"><span class="kv-key">Larynx narrowest point — children</span><span class="kv-val danger">Cricoid ring (subglottic)</span></div>
+      <div class="kv-row"><span class="kv-key">Larynx narrowest point — adults</span><span class="kv-val">Glottis (vocal cords)</span></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-auto">
+    <div class="card green">
+      <div class="card-title">🏆 High-Yield Mnemonics</div>
+      <div class="mnemonic"><b>MAC factors ↑ (need more drug) — "HYPER-H":</b> Hyperthermia, hYperthyroidism, Chronic alcoholism, hYpernatraemia, Excitement/anxiety, Red hair — all increase MAC</div>
+      <div class="mnemonic"><b>Succinylcholine CI — "CRUSH-D":</b> Crush injury, Renal failure with K⁺, Upper motor neuron lesions, Spinal cord injury, Hyperkalaemia, Denervation/Duchenne's — avoid succinylcholine 24 hrs after any of these</div>
+      <div class="mnemonic"><b>PONV Apfel Score — "FNOS":</b> Female sex, Non-smoker, Opioids post-op, Surgery/motion sickness history — 1 point each; total 0–4</div>
+      <div class="mnemonic"><b>MH ABCDE:</b> Abandon volatile agents, Begin dantrolene (2.5 mg/kg), Cool patient, Dextrose + insulin (for K⁺), ECG monitoring + treat arrhythmias</div>
+      <div class="mnemonic"><b>Mapleson circuits efficiency:</b> Spontaneous = A&gt;DFE&gt;CB | Controlled = D&gt;FE&gt;CB&gt;A. "A for Awake/spontaneous; D for IPPV/Delivered"</div>
+      <div class="mnemonic"><b>Guedel's stages — "AESM":</b> Analgesia (Stage I), Excitement (Stage II), Surgical anaesthesia = Stage III (Planes 1–4), Medullary depression (Stage IV = death)</div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">⚡ Drug–Dose Quick Reference</div>
+      <div class="kv-row"><span class="kv-key">Propofol induction</span><span class="kv-val">1.5–2.5 mg/kg IV</span></div>
+      <div class="kv-row"><span class="kv-key">Ketamine IV induction</span><span class="kv-val">1–2 mg/kg IV / 4–6 mg/kg IM</span></div>
+      <div class="kv-row"><span class="kv-key">Thiopentone induction</span><span class="kv-val">3–5 mg/kg IV</span></div>
+      <div class="kv-row"><span class="kv-key">Etomidate induction</span><span class="kv-val">0.2–0.3 mg/kg IV</span></div>
+      <div class="kv-row"><span class="kv-key">Succinylcholine RSI</span><span class="kv-val highlight">1.5 mg/kg IV</span></div>
+      <div class="kv-row"><span class="kv-key">Rocuronium RSI</span><span class="kv-val highlight">1.2 mg/kg IV</span></div>
+      <div class="kv-row"><span class="kv-key">Neostigmine reversal</span><span class="kv-val">0.04–0.07 mg/kg (max 5 mg) + atropine/glycopyrrolate</span></div>
+      <div class="kv-row"><span class="kv-key">Sugammadex (moderate block)</span><span class="kv-val">2 mg/kg</span></div>
+      <div class="kv-row"><span class="kv-key">Sugammadex (deep block TOF=0)</span><span class="kv-val">4 mg/kg</span></div>
+      <div class="kv-row"><span class="kv-key">Sugammadex (immediate reversal)</span><span class="kv-val highlight">16 mg/kg</span></div>
+      <div class="kv-row"><span class="kv-key">Dantrolene (MH)</span><span class="kv-val danger">2.5 mg/kg IV; repeat to max 10 mg/kg</span></div>
+      <div class="kv-row"><span class="kv-key">Adrenaline anaphylaxis (IV)</span><span class="kv-val danger">50–100 µg IV bolus (1:10,000)</span></div>
+      <div class="kv-row"><span class="kv-key">Intralipid (LA toxicity)</span><span class="kv-val danger">20% lipid emulsion 1.5 mL/kg IV bolus</span></div>
+      <div class="kv-row"><span class="kv-key">Ondansetron PONV prophylaxis</span><span class="kv-val">4 mg IV at end of surgery</span></div>
+      <div class="kv-row"><span class="kv-key">Dexamethasone PONV</span><span class="kv-val">8 mg IV at induction</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🔥 Exam Traps &amp; Frequently Confused</div>
+      <div class="kv-row"><span class="kv-key">Etomidate — single dose in sepsis</span><span class="kv-val danger">AVOID — single induction dose causes adrenal suppression for 24 hrs; relative adrenal insufficiency</span></div>
+      <div class="kv-row"><span class="kv-key">Ketamine — avoid in head injury</span><span class="kv-val danger">↑ICP (↑CMRO₂ + ↑CBF); traditionally avoided — now evidence suggests safe with ventilation</span></div>
+      <div class="kv-row"><span class="kv-key">Bupivacaine 0.75% — obstetrics</span><span class="kv-val danger">BANNED for obstetric epidural (cardiac arrest on accidental IV); max 0.5% for epidural</span></div>
+      <div class="kv-row"><span class="kv-key">Neostigmine without anticholinergic</span><span class="kv-val danger">Never give alone — causes bradycardia, bronchospasm, ↑secretions (always pair with atropine/glycopyrrolate)</span></div>
+      <div class="kv-row"><span class="kv-key">N₂O in middle ear surgery</span><span class="kv-val danger">Expands air spaces — ↑pressure in middle ear → tympanic membrane rupture / graft displacement</span></div>
+      <div class="kv-row"><span class="kv-key">Depolarising vs non-depolarising block</span><span class="kv-val danger">Depolarising (Phase I): no fade, no post-tetanic facilitation, ↑by anticholinesterase | Non-depolarising: fade present, reversed by neostigmine</span></div>
+      <div class="kv-row"><span class="kv-key">Halothane hepatitis</span><span class="kv-val danger">Type I (mild, common, reversible) vs Type II (immune-mediated, rare, fatal hepatic necrosis — repeat exposure)</span></div>
+      <div class="kv-row"><span class="kv-key">Phenylephrine vs ephedrine choice</span><span class="kv-val danger">Phenylephrine = alpha agonist (better fetal pH); Ephedrine = alpha+beta (use if bradycardia with hypotension)</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

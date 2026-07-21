@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Paediatrics Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0e1a; --surface: #111827; --surface2: #1a2235; --border: #1e2d45;
+    --accent: #fb923c; --accent2: #7dd3fc; --accent3: #86efac; --accent4: #f9a8d4; --accent5: #c4b5fd;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #0f172a 0%, #0a1a0f 50%, #0f172a 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent); color: #0a0e1a; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent); color: #0a0e1a; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.orange::before { background: var(--accent); }
+  .card.blue::before { background: var(--accent2); }
+  .card.green::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.purple::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.orange .card-title { color: var(--accent); }
+  .card.blue .card-title { color: var(--accent2); }
+  .card.green .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.purple .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #1a2235; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.blue { color: var(--accent2); }
+  .kv-val.green { color: var(--accent3); }
+  .kv-val.pink { color: var(--accent4); }
+  .kv-val.danger { color: var(--danger); }
+  .kv-val.purple { color: var(--accent5); }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(125,211,252,0.06); border: 1px solid rgba(125,211,252,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent2); margin-top: 8px; line-height: 1.5; }
+  .green-box { background: rgba(134,239,172,0.06); border: 1px solid rgba(134,239,172,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent3); margin-top: 8px; line-height: 1.5; }
+  .orange-box { background: rgba(251,146,60,0.08); border: 1px solid rgba(251,146,60,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent); margin-top: 8px; line-height: 1.5; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  .span-2 { grid-column: span 2; }
+  .mnemonic { font-family: 'DM Mono', monospace; font-size: 12px; background: rgba(196,181,253,0.08); border: 1px solid rgba(196,181,253,0.2); border-radius: 6px; padding: 8px 10px; margin-top: 8px; color: var(--accent5); letter-spacing: 0.5px; }
+  @media (max-width: 800px) { .grid-auto, .grid-2, .grid-3 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } .span-2 { grid-column: span 1; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>Paedia<span>trics</span> Cheatsheet</h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('growth',this)">Growth & Dev</div>
+    <div class="tab" onclick="showSection('nutrition',this)">Nutrition</div>
+    <div class="tab" onclick="showSection('neonatal',this)">Neonatal</div>
+    <div class="tab" onclick="showSection('vaccines',this)">Vaccines</div>
+    <div class="tab" onclick="showSection('respiratory',this)">Respiratory</div>
+    <div class="tab" onclick="showSection('gi',this)">GI & Liver</div>
+    <div class="tab" onclick="showSection('nephro',this)">Nephro</div>
+    <div class="tab" onclick="showSection('neuro',this)">Neuro</div>
+    <div class="tab" onclick="showSection('cardio',this)">Cardiology</div>
+    <div class="tab" onclick="showSection('heme',this)">Heme & Onco</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- GROWTH & DEVELOPMENT -->
+<div class="section active" id="growth">
+  <div class="section-title">Growth <span>&amp; Development</span></div>
+  <div class="section-sub">Milestones, anthropometry, reflexes — PYQ favourite</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">📏 Weight Milestones</div>
+      <div class="kv-row"><span class="kv-key">Birth weight</span><span class="kv-val highlight">2.5–3.5 kg (average 3 kg)</span></div>
+      <div class="kv-row"><span class="kv-key">Physiological weight loss</span><span class="kv-val">10% by day 3–5; regained by day 10</span></div>
+      <div class="kv-row"><span class="kv-key">Double birth weight</span><span class="kv-val highlight">5 months</span></div>
+      <div class="kv-row"><span class="kv-key">Triple birth weight</span><span class="kv-val">1 year</span></div>
+      <div class="kv-row"><span class="kv-key">Quadruple birth weight</span><span class="kv-val">2 years</span></div>
+      <div class="kv-row"><span class="kv-key">Weight gain 0–3 months</span><span class="kv-val">30 g/day</span></div>
+      <div class="kv-row"><span class="kv-key">Weight gain 3–6 months</span><span class="kv-val">20 g/day</span></div>
+      <div class="kv-row"><span class="kv-key">Weight gain 6–12 months</span><span class="kv-val">10 g/day</span></div>
+      <div class="kv-row"><span class="kv-key">Weight formula (2–12 yrs)</span><span class="kv-val highlight">Age × 2 + 8 (kg)</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">📏 Height &amp; Head Circumference</div>
+      <div class="kv-row"><span class="kv-key">Birth length</span><span class="kv-val">50 cm</span></div>
+      <div class="kv-row"><span class="kv-key">1 year height</span><span class="kv-val highlight">75 cm (1.5× birth)</span></div>
+      <div class="kv-row"><span class="kv-key">2 years height</span><span class="kv-val">87.5 cm</span></div>
+      <div class="kv-row"><span class="kv-key">4 years height</span><span class="kv-val highlight">Double birth length (100 cm)</span></div>
+      <div class="kv-row"><span class="kv-key">Height formula (2–12 yrs)</span><span class="kv-val highlight">Age × 6 + 77 (cm)</span></div>
+      <div class="kv-row"><span class="kv-key">Birth head circumference</span><span class="kv-val">34 cm</span></div>
+      <div class="kv-row"><span class="kv-key">HC at 1 year</span><span class="kv-val highlight">46–47 cm (adult = 54–55 cm)</span></div>
+      <div class="kv-row"><span class="kv-key">HC gain 0–3 months</span><span class="kv-val">2 cm/month</span></div>
+      <div class="kv-row"><span class="kv-key">HC gain 3–6 months</span><span class="kv-val">1 cm/month</span></div>
+      <div class="kv-row"><span class="kv-key">HC gain 6–12 months</span><span class="kv-val">0.5 cm/month</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🧠 Developmental Milestones (Motor)</div>
+      <div class="kv-row"><span class="kv-key">Head holding prone</span><span class="kv-val green">1 month</span></div>
+      <div class="kv-row"><span class="kv-key">Head holding in vertical</span><span class="kv-val">3 months</span></div>
+      <div class="kv-row"><span class="kv-key">Rolls prone → supine</span><span class="kv-val">5 months</span></div>
+      <div class="kv-row"><span class="kv-key">Sits without support</span><span class="kv-val highlight">8 months</span></div>
+      <div class="kv-row"><span class="kv-key">Stands with support</span><span class="kv-val">9 months</span></div>
+      <div class="kv-row"><span class="kv-key">Stands alone / cruising</span><span class="kv-val">10–11 months</span></div>
+      <div class="kv-row"><span class="kv-key">Walks independently</span><span class="kv-val highlight">12–15 months</span></div>
+      <div class="kv-row"><span class="kv-key">Runs</span><span class="kv-val">18 months</span></div>
+      <div class="kv-row"><span class="kv-key">Climbs stairs (both feet)</span><span class="kv-val">2 years</span></div>
+      <div class="kv-row"><span class="kv-key">Climbs stairs (alternate feet)</span><span class="kv-val">3 years</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">💬 Developmental Milestones (Social/Language)</div>
+      <div class="kv-row"><span class="kv-key">Social smile</span><span class="kv-val highlight">6 weeks (earliest PYQ)</span></div>
+      <div class="kv-row"><span class="kv-key">Cooing</span><span class="kv-val">2 months</span></div>
+      <div class="kv-row"><span class="kv-key">Monosyllables (ma, ba)</span><span class="kv-val">6 months</span></div>
+      <div class="kv-row"><span class="kv-key">Bisyllables (mama, dada)</span><span class="kv-val">9 months</span></div>
+      <div class="kv-row"><span class="kv-key">First meaningful word</span><span class="kv-val highlight">1 year</span></div>
+      <div class="kv-row"><span class="kv-key">2–3 words with meaning</span><span class="kv-val">18 months</span></div>
+      <div class="kv-row"><span class="kv-key">Two-word sentences</span><span class="kv-val">2 years</span></div>
+      <div class="kv-row"><span class="kv-key">Three-word sentences</span><span class="kv-val">3 years</span></div>
+      <div class="kv-row"><span class="kv-key">Name/sex/age known</span><span class="kv-val">3 years</span></div>
+      <div class="kv-row"><span class="kv-key">Stranger anxiety</span><span class="kv-val">8 months</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">✋ Fine Motor &amp; Grasp Development</div>
+      <div class="kv-row"><span class="kv-key">Palmar grasp (reflex)</span><span class="kv-val">Birth (disappears 3–4 months)</span></div>
+      <div class="kv-row"><span class="kv-key">Ulnar grasp</span><span class="kv-val">4–5 months</span></div>
+      <div class="kv-row"><span class="kv-key">Radial palmar grasp</span><span class="kv-val">6 months</span></div>
+      <div class="kv-row"><span class="kv-key">Scissor grasp</span><span class="kv-val">7 months</span></div>
+      <div class="kv-row"><span class="kv-key">Inferior pincer grasp</span><span class="kv-val">8 months</span></div>
+      <div class="kv-row"><span class="kv-key">Superior pincer grasp</span><span class="kv-val highlight">9–10 months (tip of thumb+index)</span></div>
+      <div class="kv-row"><span class="kv-key">Transfers hand to hand</span><span class="kv-val">6 months</span></div>
+      <div class="kv-row"><span class="kv-key">Scribbles</span><span class="kv-val">15 months</span></div>
+      <div class="kv-row"><span class="kv-key">Vertical line copy</span><span class="kv-val">2 years</span></div>
+      <div class="kv-row"><span class="kv-key">Circle copy</span><span class="kv-val">3 years</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">⚡ Primitive Reflexes — Must Know</div>
+      <div class="kv-row"><span class="kv-key">Moro reflex</span><span class="kv-val">Birth → 4–5 months</span></div>
+      <div class="kv-row"><span class="kv-key">Rooting reflex</span><span class="kv-val">Birth → 3–4 months</span></div>
+      <div class="kv-row"><span class="kv-key">Sucking reflex</span><span class="kv-val">Birth → 4 months</span></div>
+      <div class="kv-row"><span class="kv-key">Palmar grasp reflex</span><span class="kv-val">Birth → 3–4 months</span></div>
+      <div class="kv-row"><span class="kv-key">Plantar grasp reflex</span><span class="kv-val">Birth → 9–15 months</span></div>
+      <div class="kv-row"><span class="kv-key">Stepping reflex</span><span class="kv-val">Birth → 2 months</span></div>
+      <div class="kv-row"><span class="kv-key">Parachute reflex</span><span class="kv-val danger">Appears 9 months → persists lifelong</span></div>
+      <div class="kv-row"><span class="kv-key">Asymmetric tonic neck (ATNR)</span><span class="kv-val">Birth → 6 months</span></div>
+      <div class="kv-row"><span class="kv-key">Babinski sign normal until</span><span class="kv-val highlight">2 years</span></div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="grid-auto">
+    <div class="card blue span-full">
+      <div class="card-title">📊 Fontanelle &amp; Dentition</div>
+      <table class="comparison-table">
+        <tr><th>Parameter</th><th>Normal Value</th><th>Closes</th></tr>
+        <tr><td>Anterior fontanelle</td><td>2–4 cm (diamond shaped)</td><td>12–18 months (up to 24 months)</td></tr>
+        <tr><td>Posterior fontanelle</td><td>0.5 cm (triangular)</td><td>6–8 weeks (at birth in some)</td></tr>
+        <tr><td>Sphenoid fontanelle</td><td>Anterolateral</td><td>6 months</td></tr>
+        <tr><td>Mastoid fontanelle</td><td>Posterolateral</td><td>12–18 months</td></tr>
+        <tr><td>Primary teeth (deciduous)</td><td>20 teeth total</td><td>Lower central incisor — 6–8 months (first)</td></tr>
+        <tr><td>All primary teeth</td><td>—</td><td>2.5 years</td></tr>
+        <tr><td>First permanent molar</td><td>6-year molar</td><td>6 years (landmark)</td></tr>
+        <tr><td>No. of teeth formula</td><td>Age (months) − 6</td><td>(for 6–24 months)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- NUTRITION -->
+<div class="section" id="nutrition">
+  <div class="section-title">Nutrition <span>&amp; Feeding</span></div>
+  <div class="section-sub">Breast milk, PEM, vitamins, complementary feeding</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🍼 Breast Milk — High Yield</div>
+      <div class="kv-row"><span class="kv-key">Colostrum produced</span><span class="kv-val highlight">First 4–5 days; yellow, thick</span></div>
+      <div class="kv-row"><span class="kv-key">Colostrum IgA</span><span class="kv-val green">High secretory IgA (passive immunity)</span></div>
+      <div class="kv-row"><span class="kv-key">Carbohydrate in breast milk</span><span class="kv-val">Lactose (7 g/100 mL)</span></div>
+      <div class="kv-row"><span class="kv-key">Fat content</span><span class="kv-val">3.5–4 g/100 mL (PUFA rich)</span></div>
+      <div class="kv-row"><span class="kv-key">Protein content</span><span class="kv-val">1.1 g/100 mL (whey dominant 60:40)</span></div>
+      <div class="kv-row"><span class="kv-key">Casein:Whey breast milk</span><span class="kv-val highlight">40:60 (cow milk = 80:20)</span></div>
+      <div class="kv-row"><span class="kv-key">Calories</span><span class="kv-val">67 kcal/100 mL</span></div>
+      <div class="kv-row"><span class="kv-key">Low in breast milk</span><span class="kv-val danger">Vitamin K, Vitamin D, Iron (after 6 mo)</span></div>
+      <div class="kv-row"><span class="kv-key">Bifidus factor</span><span class="kv-val green">Promotes Lactobacillus bifidus (protective)</span></div>
+      <div class="kv-row"><span class="kv-key">Complementary feeding starts</span><span class="kv-val highlight">6 months (WHO 2023)</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">☠️ PEM — Kwashiorkor vs Marasmus</div>
+      <table class="comparison-table">
+        <tr><th>Feature</th><th>Kwashiorkor</th><th>Marasmus</th></tr>
+        <tr><td>Age</td><td>1–3 years</td><td>&lt;1 year</td></div></tr>
+        <tr><td>Deficit</td><td>Protein only</td><td>Protein + Calories</td></tr>
+        <tr><td>Oedema</td><td>Present (pitting)</td><td>Absent</td></tr>
+        <tr><td>Hair changes</td><td>Flag sign, depigmentation</td><td>—</td></tr>
+        <tr><td>Skin</td><td>Flaky paint / crazy paving</td><td>Loose skin ("old man")</td></tr>
+        <tr><td>Appetite</td><td>Poor (anorexia)</td><td>Good (ravenous)</td></tr>
+        <tr><td>Liver</td><td>Fatty liver</td><td>Not affected</td></tr>
+        <tr><td>Serum albumin</td><td>Very low</td><td>Near normal</td></tr>
+        <tr><td>Mood</td><td>Apathetic, miserable</td><td>Alert</td></tr>
+      </table>
+    </div>
+    <div class="card blue">
+      <div class="card-title">💊 Vitamin Deficiencies</div>
+      <div class="kv-row"><span class="kv-key">Vit A deficiency — earliest sign</span><span class="kv-val danger">Night blindness</span></div>
+      <div class="kv-row"><span class="kv-key">Bitot's spots</span><span class="kv-val">Xerophthalmia (Vit A)</span></div>
+      <div class="kv-row"><span class="kv-key">Vit A dose (6m–1yr)</span><span class="kv-val">1 lakh IU</span></div>
+      <div class="kv-row"><span class="kv-key">Vit A dose (&gt;1 yr)</span><span class="kv-val highlight">2 lakh IU</span></div>
+      <div class="kv-row"><span class="kv-key">Rickets — earliest X-ray</span><span class="kv-val danger">Fraying/cupping/splaying at metaphysis</span></div>
+      <div class="kv-row"><span class="kv-key">Rachitic rosary</span><span class="kv-val">Costochondral junctions (Vit D)</span></div>
+      <div class="kv-row"><span class="kv-key">Harrison's sulcus</span><span class="kv-val">Rickets (diaphragm pull)</span></div>
+      <div class="kv-row"><span class="kv-key">Vit C deficiency</span><span class="kv-val danger">Scurvy — Trümmerfeld zone, Frankel's line</span></div>
+      <div class="kv-row"><span class="kv-key">Pellagra (Vit B3)</span><span class="kv-val">4 D's: Dermatitis, Diarrhoea, Dementia, Death</span></div>
+      <div class="kv-row"><span class="kv-key">Vit B12 deficiency</span><span class="kv-val">Subacute combined degeneration</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">📊 Anthropometric Cut-offs</div>
+      <div class="kv-row"><span class="kv-key">Normal W/H (weight for height)</span><span class="kv-val green">&gt;90% (Waterlow)</span></div>
+      <div class="kv-row"><span class="kv-key">Acute malnutrition (wasting)</span><span class="kv-val danger">W/H &lt;70% or 3SD below median</span></div>
+      <div class="kv-row"><span class="kv-key">MUAC normal (&gt;5 yrs)</span><span class="kv-val green">&gt;13.5 cm</span></div>
+      <div class="kv-row"><span class="kv-key">MUAC SAM</span><span class="kv-val danger">&lt;11.5 cm</span></div>
+      <div class="kv-row"><span class="kv-key">MUAC MAM</span><span class="kv-val">11.5–12.5 cm</span></div>
+      <div class="kv-row"><span class="kv-key">Gomez classification</span><span class="kv-val">Based on weight-for-age % of median</span></div>
+      <div class="kv-row"><span class="kv-key">Grade I Gomez</span><span class="kv-val">75–90%</span></div>
+      <div class="kv-row"><span class="kv-key">Grade II Gomez</span><span class="kv-val">60–75%</span></div>
+      <div class="kv-row"><span class="kv-key">Grade III Gomez (SAM)</span><span class="kv-val danger">&lt;60%</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- NEONATAL -->
+<div class="section" id="neonatal">
+  <div class="section-title">Neonatal <span>Disorders</span></div>
+  <div class="section-sub">Birth asphyxia, jaundice, RDS, sepsis, APGAR</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🏥 APGAR Score</div>
+      <table class="comparison-table">
+        <tr><th>Sign</th><th>0</th><th>1</th><th>2</th></tr>
+        <tr><td>Appearance (colour)</td><td>Blue/pale all</td><td>Blue extremities</td><td>Pink all</td></tr>
+        <tr><td>Pulse (HR)</td><td>Absent</td><td>&lt;100</td><td>&gt;100</td></tr>
+        <tr><td>Grimace (reflex)</td><td>None</td><td>Grimace</td><td>Cry/cough</td></tr>
+        <tr><td>Activity (tone)</td><td>Limp</td><td>Some flexion</td><td>Active motion</td></tr>
+        <tr><td>Respiration</td><td>Absent</td><td>Slow/irregular</td><td>Good crying</td></tr>
+      </table>
+      <div class="info-box">Score ≥7 = Normal | 4–6 = Moderate depression | ≤3 = Severe depression (immediate resuscitation)</div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🟡 Neonatal Jaundice</div>
+      <div class="kv-row"><span class="kv-key">Physiological jaundice appears</span><span class="kv-val highlight">&gt;24 hours of life</span></div>
+      <div class="kv-row"><span class="kv-key">Pathological jaundice</span><span class="kv-val danger">&lt;24 hours (always investigate)</span></div>
+      <div class="kv-row"><span class="kv-key">Physiological — duration (term)</span><span class="kv-val">&lt;2 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">Physiological — duration (preterm)</span><span class="kv-val">&lt;3 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">Kernicterus risk bilirubin</span><span class="kv-val danger">&gt;20 mg/dL (unconjugated)</span></div>
+      <div class="kv-row"><span class="kv-key">Phototherapy starts (term)</span><span class="kv-val">&gt;15 mg/dL (day 3–7)</span></div>
+      <div class="kv-row"><span class="kv-key">Exchange transfusion</span><span class="kv-val danger">&gt;20 mg/dL (term) or failing phototherapy</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause pathological neonatal jaundice</span><span class="kv-val">ABO incompatibility</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause haemolytic jaundice</span><span class="kv-val">Rh incompatibility (Rh–ve mother)</span></div>
+      <div class="kv-row"><span class="kv-key">Breast milk jaundice</span><span class="kv-val">Unconjugated; peaks 2nd week; benign</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🫁 RDS (Hyaline Membrane Disease)</div>
+      <div class="kv-row"><span class="kv-key">Aetiology</span><span class="kv-val danger">Surfactant deficiency (prematurity)</span></div>
+      <div class="kv-row"><span class="kv-key">Surfactant produced by</span><span class="kv-val">Type II pneumocytes</span></div>
+      <div class="kv-row"><span class="kv-key">Surfactant components</span><span class="kv-val highlight">DPPC (dipalmitoyl phosphatidylcholine)</span></div>
+      <div class="kv-row"><span class="kv-key">L:S ratio (lung maturity)</span><span class="kv-val green">&gt;2:1 = mature (amniotic fluid)</span></div>
+      <div class="kv-row"><span class="kv-key">X-ray findings</span><span class="kv-val">Ground glass opacity + air bronchograms</span></div>
+      <div class="kv-row"><span class="kv-key">Prevention (antenatal)</span><span class="kv-val highlight">Betamethasone (24–34 weeks gestation)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val">Exogenous surfactant + CPAP/ventilation</span></div>
+      <div class="kv-row"><span class="kv-key">Complication</span><span class="kv-val danger">Bronchopulmonary dysplasia (BPD)</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🦠 Neonatal Sepsis</div>
+      <div class="kv-row"><span class="kv-key">Early onset (EOS)</span><span class="kv-val">&lt;72 hours; vertical transmission</span></div>
+      <div class="kv-row"><span class="kv-key">EOS MC organism</span><span class="kv-val danger">Group B Streptococcus (GBS)</span></div>
+      <div class="kv-row"><span class="kv-key">Late onset (LOS)</span><span class="kv-val">&gt;72 hours; nosocomial</span></div>
+      <div class="kv-row"><span class="kv-key">LOS MC organism</span><span class="kv-val danger">S. aureus / CoNS (NICU)</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard diagnosis</span><span class="kv-val highlight">Blood culture</span></div>
+      <div class="kv-row"><span class="kv-key">Sepsis screen includes</span><span class="kv-val">TLC, ANC, I:T ratio, CRP, micro-ESR</span></div>
+      <div class="kv-row"><span class="kv-key">I:T ratio cutoff</span><span class="kv-val danger">&gt;0.2 = sepsis</span></div>
+      <div class="kv-row"><span class="kv-key">EOS antibiotic</span><span class="kv-val">Ampicillin + Gentamicin</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">⚠️ NEC &amp; Other Neonatal Emergencies</div>
+      <div class="kv-row"><span class="kv-key">NEC — MC in</span><span class="kv-val danger">Premature infants (gut immaturity)</span></div>
+      <div class="kv-row"><span class="kv-key">NEC X-ray hallmark</span><span class="kv-val danger">Pneumatosis intestinalis</span></div>
+      <div class="kv-row"><span class="kv-key">NEC staging</span><span class="kv-val">Bell's staging I–IIIB</span></div>
+      <div class="kv-row"><span class="kv-key">Meconium ileus association</span><span class="kv-val highlight">Cystic fibrosis</span></div>
+      <div class="kv-row"><span class="kv-key">Duodenal atresia X-ray</span><span class="kv-val">Double bubble sign</span></div>
+      <div class="kv-row"><span class="kv-key">Duodenal atresia association</span><span class="kv-val highlight">Down syndrome (30%)</span></div>
+      <div class="kv-row"><span class="kv-key">Congenital diaphragmatic hernia</span><span class="kv-val danger">Bowel in chest; mediastinal shift</span></div>
+      <div class="kv-row"><span class="kv-key">CDH side</span><span class="kv-val">Left (85%) — Bochdalek</span></div>
+      <div class="kv-row"><span class="kv-key">TEF most common type</span><span class="kv-val highlight">Type C (EA + distal TEF) — 85%</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🩺 Preterm &amp; SGA Definitions</div>
+      <div class="kv-row"><span class="kv-key">Preterm</span><span class="kv-val">&lt;37 weeks gestation</span></div>
+      <div class="kv-row"><span class="kv-key">Very preterm</span><span class="kv-val">&lt;32 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">Extremely preterm</span><span class="kv-val danger">&lt;28 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">LBW</span><span class="kv-val">&lt;2500 g at birth</span></div>
+      <div class="kv-row"><span class="kv-key">VLBW</span><span class="kv-val">&lt;1500 g</span></div>
+      <div class="kv-row"><span class="kv-key">ELBW</span><span class="kv-val danger">&lt;1000 g</span></div>
+      <div class="kv-row"><span class="kv-key">SGA definition</span><span class="kv-val">&lt;10th percentile for gestational age</span></div>
+      <div class="kv-row"><span class="kv-key">Macrosomia</span><span class="kv-val">&gt;4000 g (&gt;90th percentile)</span></div>
+      <div class="kv-row"><span class="kv-key">Gestational age assessment</span><span class="kv-val highlight">New Ballard score (most accurate)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- VACCINES -->
+<div class="section" id="vaccines">
+  <div class="section-title">Vaccines <span>&amp; Immunisation</span></div>
+  <div class="section-sub">UIP schedule, cold chain, types, CI — very high yield</div>
+  <div class="grid-auto">
+    <div class="card orange span-full">
+      <div class="card-title">📅 UIP Schedule India (IAP 2024)</div>
+      <table class="comparison-table">
+        <tr><th>Age</th><th>Vaccine</th><th>Route/Site</th></tr>
+        <tr><td>Birth</td><td>BCG, OPV-0, Hep B-1</td><td>BCG: ID right arm; OPV: oral; HepB: IM</td></tr>
+        <tr><td>6 weeks</td><td>DTwP-1/DTaP, IPV-1, Hib-1, HepB-2, RVV-1, PCV-1</td><td>IM anterolateral thigh</td></tr>
+        <tr><td>10 weeks</td><td>DTwP-2, IPV-2, Hib-2, RVV-2, PCV-2</td><td>—</td></tr>
+        <tr><td>14 weeks</td><td>DTwP-3, IPV-3, Hib-3, RVV-3, PCV-3</td><td>—</td></tr>
+        <tr><td>6 months</td><td>OPV-1, HepB-3</td><td>—</td></tr>
+        <tr><td>9 months</td><td>MMR-1, Measles (if MMR unavailable), OPV-2, Vit A-1</td><td>SC; Vit A 1 lakh IU oral</td></tr>
+        <tr><td>12 months</td><td>Hep A-1 (optional), Varicella-1</td><td>—</td></tr>
+        <tr><td>15 months</td><td>MMR-2, PCV Booster, Varicella-2</td><td>—</td></tr>
+        <tr><td>16–18 months</td><td>DTwP B1, IPV B1, Hib B1, OPV-3</td><td>—</td></tr>
+        <tr><td>2 years</td><td>Hep A-2 (optional), Typhoid (TCV)</td><td>—</td></tr>
+        <tr><td>4–6 years</td><td>DTwP B2/DTaP, OPV B, MMR-3 (optional)</td><td>—</td></tr>
+        <tr><td>10–12 years</td><td>Tdap, HPV (girls: 2 doses 6 months apart)</td><td>—</td></tr>
+      </table>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🧊 Cold Chain &amp; Vaccine Storage</div>
+      <div class="kv-row"><span class="kv-key">ILR (Ice Lined Refrigerator)</span><span class="kv-val highlight">2–8°C storage</span></div>
+      <div class="kv-row"><span class="kv-key">Deep freezer</span><span class="kv-val">–15 to –25°C (OPV, Varicella)</span></div>
+      <div class="kv-row"><span class="kv-key">Most heat sensitive vaccine</span><span class="kv-val danger">OPV (stored at –20°C)</span></div>
+      <div class="kv-row"><span class="kv-key">Most freeze sensitive vaccine</span><span class="kv-val danger">DPT, TT, Hep B (never freeze)</span></div>
+      <div class="kv-row"><span class="kv-key">Shake test</span><span class="kv-val">To detect freeze damage (DPT, TT)</span></div>
+      <div class="kv-row"><span class="kv-key">VVM (Vaccine Vial Monitor)</span><span class="kv-val">Heat exposure indicator</span></div>
+      <div class="kv-row"><span class="kv-key">BCG reconstituted — discard</span><span class="kv-val danger">Within 4 hours</span></div>
+      <div class="kv-row"><span class="kv-key">MMR reconstituted — discard</span><span class="kv-val danger">Within 1 hour</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🚫 Vaccine Contraindications</div>
+      <div class="kv-row"><span class="kv-key">BCG CI</span><span class="kv-val danger">Symptomatic HIV, immunocompromised</span></div>
+      <div class="kv-row"><span class="kv-key">MMR CI</span><span class="kv-val danger">Immunocompromised, pregnancy, anaphylaxis to eggs (relative)</span></div>
+      <div class="kv-row"><span class="kv-key">OPV CI</span><span class="kv-val danger">Immunocompromised child/household contact</span></div>
+      <div class="kv-row"><span class="kv-key">DPT CI</span><span class="kv-val">Encephalopathy within 7 days of prior dose</span></div>
+      <div class="kv-row"><span class="kv-key">NOT a CI (common myths)</span><span class="kv-val green">Mild fever, diarrhoea, malnutrition, antibiotics</span></div>
+      <div class="kv-row"><span class="kv-key">Hep B given in HIV</span><span class="kv-val green">Yes — safe (all inactivated vaccines)</span></div>
+      <div class="kv-row"><span class="kv-key">Arthus reaction</span><span class="kv-val">Type III hypersensitivity (TT repeat dose)</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">💉 Vaccine Types &amp; Routes</div>
+      <div class="kv-row"><span class="kv-key">Live attenuated</span><span class="kv-val highlight">BCG, OPV, MMR, Varicella, Yellow fever, Rotavirus</span></div>
+      <div class="kv-row"><span class="kv-key">Killed/inactivated</span><span class="kv-val">IPV, Hep A, Flu (injection), Rabies, Cholera</span></div>
+      <div class="kv-row"><span class="kv-key">Toxoid</span><span class="kv-val">DT, TT (tetanus toxoid)</span></div>
+      <div class="kv-row"><span class="kv-key">Subunit</span><span class="kv-val">Hep B, HPV, acellular Pertussis</span></div>
+      <div class="kv-row"><span class="kv-key">BCG route</span><span class="kv-val highlight">Intradermal (left deltoid)</span></div>
+      <div class="kv-row"><span class="kv-key">BCG dose (neonates)</span><span class="kv-val">0.05 mL; older children 0.1 mL</span></div>
+      <div class="kv-row"><span class="kv-key">BCG reaction timeline</span><span class="kv-val">Papule at 2 weeks → ulcer → scar (6–12 weeks)</span></div>
+      <div class="kv-row"><span class="kv-key">TT schedule in pregnancy</span><span class="kv-val">T1: early pregnancy; T2: 4 wks later</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- RESPIRATORY -->
+<div class="section" id="respiratory">
+  <div class="section-title">Respiratory <span>Disorders</span></div>
+  <div class="section-sub">Pneumonia, asthma, croup, bronchiolitis, TB</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🫁 WHO ARI Classification</div>
+      <div class="kv-row"><span class="kv-key">Fast breathing (2–12 months)</span><span class="kv-val danger">≥50 breaths/min</span></div>
+      <div class="kv-row"><span class="kv-key">Fast breathing (1–5 years)</span><span class="kv-val danger">≥40 breaths/min</span></div>
+      <div class="kv-row"><span class="kv-key">Fast breathing (&gt;5 years)</span><span class="kv-val danger">≥30 breaths/min</span></div>
+      <div class="kv-row"><span class="kv-key">No pneumonia (ARI)</span><span class="kv-val green">No fast breathing; outpatient cotrimoxazole</span></div>
+      <div class="kv-row"><span class="kv-key">Pneumonia</span><span class="kv-val">Fast breathing; outpatient amoxicillin</span></div>
+      <div class="kv-row"><span class="kv-key">Severe pneumonia</span><span class="kv-val danger">Chest indrawing; refer + parenteral antibiotics</span></div>
+      <div class="kv-row"><span class="kv-key">Very severe pneumonia</span><span class="kv-val danger">Danger signs (cyanosis, convulsions, unable to drink)</span></div>
+      <div class="kv-row"><span class="kv-key">MC pneumonia organism (&lt;5 yrs)</span><span class="kv-val highlight">S. pneumoniae</span></div>
+      <div class="kv-row"><span class="kv-key">Atypical pneumonia organism</span><span class="kv-val">Mycoplasma (school age); Chlamydia (neonates)</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🌬️ Asthma in Children</div>
+      <div class="kv-row"><span class="kv-key">MC chronic disease of childhood</span><span class="kv-val highlight">Asthma</span></div>
+      <div class="kv-row"><span class="kv-key">Diagnosis</span><span class="kv-val">≥12% reversibility in FEV1 post-bronchodilator</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard severity</span><span class="kv-val">Spirometry (PEFR in children)</span></div>
+      <div class="kv-row"><span class="kv-key">Mild intermittent Rx</span><span class="kv-val">SABA PRN only</span></div>
+      <div class="kv-row"><span class="kv-key">Mild persistent Rx</span><span class="kv-val highlight">Low-dose ICS (first controller)</span></div>
+      <div class="kv-row"><span class="kv-key">Acute severe attack Rx</span><span class="kv-val danger">O2 + Salbutamol nebulisation + Prednisolone</span></div>
+      <div class="kv-row"><span class="kv-key">Life-threatening sign</span><span class="kv-val danger">Silent chest (no wheeze)</span></div>
+      <div class="kv-row"><span class="kv-key">Stepdown after 3 months</span><span class="kv-val">Consider reducing ICS</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🦠 Croup vs Epiglottitis</div>
+      <table class="comparison-table">
+        <tr><th>Feature</th><th>Croup (LTB)</th><th>Epiglottitis</th></tr>
+        <tr><td>Age</td><td>6 months–3 years</td><td>3–7 years</td></tr>
+        <tr><td>Organism</td><td>Parainfluenza virus</td><td>H. influenzae type b</td></tr>
+        <tr><td>Onset</td><td>Gradual</td><td>Rapid (hours)</td></tr>
+        <tr><td>Stridor</td><td>Inspiratory (brassy)</td><td>Inspiratory + drooling</td></tr>
+        <tr><td>Posture</td><td>Prefers lying down</td><td>Tripod position</td></tr>
+        <tr><td>Fever</td><td>Low-grade</td><td>High fever (toxic)</td></tr>
+        <tr><td>X-ray</td><td>Steeple sign (neck AP)</td><td>Thumb sign (lateral)</td></tr>
+        <tr><td>Rx</td><td>Nebulised adrenaline + dexamethasone</td><td>IV ceftriaxone + secure airway</td></tr>
+      </table>
+    </div>
+    <div class="card red">
+      <div class="card-title">🫁 Bronchiolitis</div>
+      <div class="kv-row"><span class="kv-key">MC organism</span><span class="kv-val danger">RSV (Respiratory Syncytial Virus)</span></div>
+      <div class="kv-row"><span class="kv-key">Age group</span><span class="kv-val">&lt;2 years (peak 2–6 months)</span></div>
+      <div class="kv-row"><span class="kv-key">Clinical features</span><span class="kv-val">Wheeze + hyperinflation + subcostal recession</span></div>
+      <div class="kv-row"><span class="kv-key">X-ray</span><span class="kv-val">Hyperinflation + peribronchial cuffing</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val highlight">Supportive (O2, hydration) — bronchodilators NOT recommended</span></div>
+      <div class="kv-row"><span class="kv-key">Prophylaxis (high risk)</span><span class="kv-val">Palivizumab (anti-RSV monoclonal Ab)</span></div>
+      <div class="kv-row"><span class="kv-key">Indication for admission</span><span class="kv-val danger">SpO2 &lt;92%, poor feeding, apnoea</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🦠 Paediatric TB</div>
+      <div class="kv-row"><span class="kv-key">Primary complex</span><span class="kv-val highlight">Ghon focus + ipsilateral hilar LN</span></div>
+      <div class="kv-row"><span class="kv-key">Mantoux reaction (positive)</span><span class="kv-val">≥10 mm (immunocompetent unvaccinated)</span></div>
+      <div class="kv-row"><span class="kv-key">Mantoux in BCG vaccinated</span><span class="kv-val danger">≥15 mm = significant</span></div>
+      <div class="kv-row"><span class="kv-key">Mantoux in HIV</span><span class="kv-val danger">≥5 mm = significant</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard diagnosis</span><span class="kv-val">Culture (Lowenstein-Jensen medium)</span></div>
+      <div class="kv-row"><span class="kv-key">Best non-invasive test</span><span class="kv-val">IGRA (Interferon Gamma Release Assay)</span></div>
+      <div class="kv-row"><span class="kv-key">Miliary TB X-ray</span><span class="kv-val">Snowstorm pattern (1–2 mm nodules)</span></div>
+      <div class="kv-row"><span class="kv-key">Category I treatment</span><span class="kv-val highlight">2HRZE + 4HR</span></div>
+      <div class="kv-row"><span class="kv-key">TBM additional drug</span><span class="kv-val">Steroids (dexamethasone)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- GI & LIVER -->
+<div class="section" id="gi">
+  <div class="section-title">GI <span>&amp; Liver</span></div>
+  <div class="section-sub">Diarrhoea, intussusception, Hirschsprung's, hepatitis</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">💧 ORS &amp; Dehydration</div>
+      <div class="kv-row"><span class="kv-key">WHO ORS composition</span><span class="kv-val highlight">Na 75, K 20, Cl 65, Citrate 10, Glucose 75 mEq/L</span></div>
+      <div class="kv-row"><span class="kv-key">Osmolarity (new ORS)</span><span class="kv-val">245 mOsm/L (hypoosmolar)</span></div>
+      <div class="kv-row"><span class="kv-key">No dehydration plan A</span><span class="kv-val green">ORS 10 mL/kg per stool at home</span></div>
+      <div class="kv-row"><span class="kv-key">Some dehydration plan B</span><span class="kv-val">ORS 75 mL/kg over 4 hours in OPD</span></div>
+      <div class="kv-row"><span class="kv-key">Severe dehydration plan C</span><span class="kv-val danger">IV Ringer's Lactate: 100 mL/kg in 3 hrs (&lt;1yr 6hrs)</span></div>
+      <div class="kv-row"><span class="kv-key">Zinc supplementation</span><span class="kv-val highlight">20 mg/day × 14 days (&lt;6 months: 10 mg)</span></div>
+      <div class="kv-row"><span class="kv-key">Cholera rice water stools</span><span class="kv-val">Vibrio cholerae (MC in older children)</span></div>
+      <div class="kv-row"><span class="kv-key">Bloody diarrhoea (dysentery)</span><span class="kv-val danger">Shigella (MC), EIEC, Salmonella</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🔴 Intussusception</div>
+      <div class="kv-row"><span class="kv-key">Age</span><span class="kv-val highlight">6–18 months (peak)</span></div>
+      <div class="kv-row"><span class="kv-key">Type</span><span class="kv-val">Ileocolic (MC)</span></div>
+      <div class="kv-row"><span class="kv-key">Classic triad</span><span class="kv-val danger">Colicky pain + Currant jelly stools + Sausage-shaped mass</span></div>
+      <div class="kv-row"><span class="kv-key">Dance sign</span><span class="kv-val">Empty RIF on palpation</span></div>
+      <div class="kv-row"><span class="kv-key">X-ray</span><span class="kv-val">Target/crescent sign; absence of gas in RIF</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard diagnosis</span><span class="kv-val">USG (target sign / donut sign)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val highlight">Air enema reduction (first-line if no peritonitis)</span></div>
+      <div class="kv-row"><span class="kv-key">Lead point in older children</span><span class="kv-val">Meckel's diverticulum / polyp</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🦠 Hirschsprung's Disease</div>
+      <div class="kv-row"><span class="kv-key">Pathology</span><span class="kv-val danger">Absence of ganglion cells (Auerbach's plexus)</span></div>
+      <div class="kv-row"><span class="kv-key">MC segment</span><span class="kv-val highlight">Rectosigmoid (75%)</span></div>
+      <div class="kv-row"><span class="kv-key">Presentation</span><span class="kv-val">Delayed passage of meconium (&gt;48 hrs)</span></div>
+      <div class="kv-row"><span class="kv-key">Clinical sign</span><span class="kv-val">Explosive stools on PR (squirt sign)</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard diagnosis</span><span class="kv-val highlight">Rectal biopsy (absence of ganglion cells)</span></div>
+      <div class="kv-row"><span class="kv-key">Barium enema</span><span class="kv-val">Transition zone (narrow aganglionic + dilated proximal)</span></div>
+      <div class="kv-row"><span class="kv-key">Anorectal manometry</span><span class="kv-val">Absent rectoanal inhibitory reflex (RAIR)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val">Swenson / Duhamel / Soave pull-through</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🟡 Hepatitis in Children</div>
+      <div class="kv-row"><span class="kv-key">Hep A</span><span class="kv-val green">Faeco-oral; self-limiting; anti-HAV IgM (acute)</span></div>
+      <div class="kv-row"><span class="kv-key">Hep B window period marker</span><span class="kv-val highlight">Anti-HBc IgM (only detectable marker)</span></div>
+      <div class="kv-row"><span class="kv-key">Hep B infective marker</span><span class="kv-val danger">HBsAg + HBeAg = highly infective</span></div>
+      <div class="kv-row"><span class="kv-key">Hep B immunity marker</span><span class="kv-val green">Anti-HBs (after vaccination or recovery)</span></div>
+      <div class="kv-row"><span class="kv-key">Hep C</span><span class="kv-val">Parenteral; MC cause chronic liver disease (children)</span></div>
+      <div class="kv-row"><span class="kv-key">Hep E — dangerous in</span><span class="kv-val danger">Pregnancy (30% maternal mortality)</span></div>
+      <div class="kv-row"><span class="kv-key">Wilson's disease</span><span class="kv-val highlight">Copper accumulation; ATP7B gene; K-F rings</span></div>
+      <div class="kv-row"><span class="kv-key">Wilson's — gold standard</span><span class="kv-val">Liver biopsy (copper quantification)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- NEPHRO -->
+<div class="section" id="nephro">
+  <div class="section-title">Paediatric <span>Nephrology</span></div>
+  <div class="section-sub">Nephrotic, nephritic, UTI, HUS, RTA</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">💧 Nephrotic vs Nephritic Syndrome</div>
+      <table class="comparison-table">
+        <tr><th>Feature</th><th>Nephrotic</th><th>Nephritic</th></tr>
+        <tr><td>Proteinuria</td><td>&gt;3.5 g/day (massive)</td><td>Mild–moderate</td></tr>
+        <tr><td>Haematuria</td><td>Absent (usually)</td><td>Present (RBC casts)</td></tr>
+        <tr><td>Oedema</td><td>Massive (periorbital, pitting)</td><td>Mild (periorbital)</td></tr>
+        <tr><td>BP</td><td>Normal/low</td><td>Raised (HTN)</td></tr>
+        <tr><td>Serum albumin</td><td>Very low (&lt;2.5 g/dL)</td><td>Near normal</td></tr>
+        <tr><td>Complement (C3)</td><td>Normal</td><td>Low (PSGN)</td></tr>
+        <tr><td>MC cause (child)</td><td>Minimal Change Disease</td><td>PSGN (post-strep)</td></tr>
+      </table>
+    </div>
+    <div class="card blue">
+      <div class="card-title">💊 Nephrotic Syndrome Management</div>
+      <div class="kv-row"><span class="kv-key">Minimal change disease</span><span class="kv-val highlight">MC nephrotic syndrome in children (75%)</span></div>
+      <div class="kv-row"><span class="kv-key">Electron microscopy (MCD)</span><span class="kv-val">Podocyte foot process effacement</span></div>
+      <div class="kv-row"><span class="kv-key">First-line treatment</span><span class="kv-val highlight">Prednisolone 60 mg/m²/day × 4 wks</span></div>
+      <div class="kv-row"><span class="kv-key">Steroid sensitive (remission)</span><span class="kv-val green">Urine protein –ve / trace × 3 consecutive days</span></div>
+      <div class="kv-row"><span class="kv-key">Steroid resistant</span><span class="kv-val danger">No remission after 8 weeks → biopsy</span></div>
+      <div class="kv-row"><span class="kv-key">MC complication</span><span class="kv-val danger">Infection (peritonitis — S. pneumoniae)</span></div>
+      <div class="kv-row"><span class="kv-key">Thrombosis risk</span><span class="kv-val danger">Renal vein thrombosis (hypercoagulable state)</span></div>
+      <div class="kv-row"><span class="kv-key">Frequent relapse Rx</span><span class="kv-val">Cyclophosphamide / Levamisole</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🦠 UTI in Children</div>
+      <div class="kv-row"><span class="kv-key">MC organism</span><span class="kv-val danger">E. coli (75–90%)</span></div>
+      <div class="kv-row"><span class="kv-key">Diagnosis (colony count)</span><span class="kv-val highlight">≥10⁵ CFU/mL (midstream clean catch)</span></div>
+      <div class="kv-row"><span class="kv-key">Suprapubic aspiration cutoff</span><span class="kv-val">Any growth = significant</span></div>
+      <div class="kv-row"><span class="kv-key">VCUG indication</span><span class="kv-val">After first febrile UTI in boys &lt;5 yrs; recurrent UTI girls</span></div>
+      <div class="kv-row"><span class="kv-key">DMSA scan</span><span class="kv-val">Renal scarring (gold standard)</span></div>
+      <div class="kv-row"><span class="kv-key">VUR grade</span><span class="kv-val">I–V; grade V = reflux into dilated calyces</span></div>
+      <div class="kv-row"><span class="kv-key">VUR Rx (grade I–III)</span><span class="kv-val">Antibiotic prophylaxis</span></div>
+      <div class="kv-row"><span class="kv-key">VUR Rx (grade IV–V)</span><span class="kv-val">Surgical reimplantation</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">⚠️ HUS &amp; Glomerulonephritis</div>
+      <div class="kv-row"><span class="kv-key">HUS triad</span><span class="kv-val danger">Haemolytic anaemia + Thrombocytopenia + AKI</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause HUS (children)</span><span class="kv-val highlight">E. coli O157:H7 (STEC/EHEC)</span></div>
+      <div class="kv-row"><span class="kv-key">HUS treatment</span><span class="kv-val danger">Supportive; NO antibiotics (worsen toxin release)</span></div>
+      <div class="kv-row"><span class="kv-key">PSGN latent period</span><span class="kv-val highlight">1–3 weeks (throat) / 3–6 weeks (skin)</span></div>
+      <div class="kv-row"><span class="kv-key">PSGN — low C3</span><span class="kv-val">Returns to normal in 8 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">IgA nephropathy (Berger's)</span><span class="kv-val">Gross haematuria 1–3 days after URTI (synpharyngitic)</span></div>
+      <div class="kv-row"><span class="kv-key">Alport syndrome</span><span class="kv-val danger">COL4A5 mutation; sensorineural deafness + nephritis</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- NEURO -->
+<div class="section" id="neuro">
+  <div class="section-title">Paediatric <span>Neurology</span></div>
+  <div class="section-sub">Seizures, meningitis, CP, NTDs, neuro-cutaneous syndromes</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">⚡ Seizures &amp; Epilepsy</div>
+      <div class="kv-row"><span class="kv-key">Febrile seizures age</span><span class="kv-val highlight">6 months – 5 years</span></div>
+      <div class="kv-row"><span class="kv-key">Simple febrile seizure</span><span class="kv-val green">&lt;15 min, generalised, once per episode</span></div>
+      <div class="kv-row"><span class="kv-key">Complex febrile seizure</span><span class="kv-val danger">&gt;15 min / focal / recurs within 24 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Status epilepticus definition</span><span class="kv-val danger">&gt;30 min OR 2 seizures without recovery</span></div>
+      <div class="kv-row"><span class="kv-key">First-line acute seizure drug</span><span class="kv-val highlight">IV Lorazepam (0.1 mg/kg) OR diazepam (rectal)</span></div>
+      <div class="kv-row"><span class="kv-key">West syndrome (infantile spasms)</span><span class="kv-val">Hypsarrhythmia on EEG; ACTH treatment</span></div>
+      <div class="kv-row"><span class="kv-key">Lennox-Gastaut syndrome</span><span class="kv-val">Multiple seizure types; slow spike-wave EEG</span></div>
+      <div class="kv-row"><span class="kv-key">Absence seizures drug of choice</span><span class="kv-val highlight">Ethosuximide (valproate also used)</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🦠 Meningitis in Children</div>
+      <div class="kv-row"><span class="kv-key">Neonates MC organism</span><span class="kv-val danger">GBS (Group B Strep), E. coli, Listeria</span></div>
+      <div class="kv-row"><span class="kv-key">1 month–5 years MC organism</span><span class="kv-val danger">N. meningitidis, S. pneumoniae, H. influenzae</span></div>
+      <div class="kv-row"><span class="kv-key">Bacterial meningitis CSF</span><span class="kv-val danger">Cloudy; WBC &gt;1000 (PMN); protein↑; glucose↓</span></div>
+      <div class="kv-row"><span class="kv-key">Viral meningitis CSF</span><span class="kv-val green">Clear; WBC 10–1000 (lymphocytes); normal glucose</span></div>
+      <div class="kv-row"><span class="kv-key">TB meningitis CSF</span><span class="kv-val">Lymphocytes; protein↑↑; glucose very low; cobweb clot</span></div>
+      <div class="kv-row"><span class="kv-key">Antibiotic (bacterial meningitis)</span><span class="kv-val highlight">Ceftriaxone 100 mg/kg/day</span></div>
+      <div class="kv-row"><span class="kv-key">Adjunct therapy</span><span class="kv-val">Dexamethasone (reduce neurological sequelae)</span></div>
+      <div class="kv-row"><span class="kv-key">Kernig's / Brudzinski's</span><span class="kv-val">Meningeal irritation signs</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🧠 Cerebral Palsy</div>
+      <div class="kv-row"><span class="kv-key">Definition</span><span class="kv-val">Non-progressive motor disorder; brain lesion before 2 yrs</span></div>
+      <div class="kv-row"><span class="kv-key">MC type</span><span class="kv-val highlight">Spastic (70%) — upper motor neuron</span></div>
+      <div class="kv-row"><span class="kv-key">MC topographical form</span><span class="kv-val">Diplegia (legs &gt; arms)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause (preterm)</span><span class="kv-val">Periventricular leukomalacia (PVL)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause (term)</span><span class="kv-val">Hypoxic-ischaemic encephalopathy (HIE)</span></div>
+      <div class="kv-row"><span class="kv-key">Earliest sign</span><span class="kv-val danger">Delay in motor milestones + persistence of primitive reflexes</span></div>
+      <div class="kv-row"><span class="kv-key">Athetoid CP</span><span class="kv-val">Extrapyramidal; MC cause — kernicterus (Rh)</span></div>
+      <div class="kv-row"><span class="kv-key">Spasticity Rx</span><span class="kv-val">Baclofen; botulinum toxin</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🧬 Neurocutaneous Syndromes</div>
+      <div class="kv-row"><span class="kv-key">Tuberous sclerosis gene</span><span class="kv-val highlight">TSC1 (hamartin) + TSC2 (tuberin)</span></div>
+      <div class="kv-row"><span class="kv-key">Tuberous sclerosis triad</span><span class="kv-val">Seizures + intellectual disability + Adenoma sebaceum</span></div>
+      <div class="kv-row"><span class="kv-key">Shagreen patch</span><span class="kv-val">TSC (leathery skin — sacral area)</span></div>
+      <div class="kv-row"><span class="kv-key">Ash-leaf macule</span><span class="kv-val">Hypopigmented (earliest skin sign TSC)</span></div>
+      <div class="kv-row"><span class="kv-key">NF-1 (von Recklinghausen)</span><span class="kv-val">&gt;6 café-au-lait spots; Lisch nodules</span></div>
+      <div class="kv-row"><span class="kv-key">NF-1 diagnostic criteria</span><span class="kv-val highlight">Café-au-lait &gt;1.5 cm (6 spots minimum)</span></div>
+      <div class="kv-row"><span class="kv-key">Sturge-Weber</span><span class="kv-val">Port-wine stain (CN V) + seizures + glaucoma</span></div>
+      <div class="kv-row"><span class="kv-key">Von Hippel-Lindau</span><span class="kv-val">Haemangioblastoma + RCC + retinal angioma</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- CARDIOLOGY -->
+<div class="section" id="cardio">
+  <div class="section-title">Paediatric <span>Cardiology</span></div>
+  <div class="section-sub">CHD, murmurs, rheumatic fever, Kawasaki</div>
+  <div class="grid-auto">
+    <div class="card orange span-full">
+      <div class="card-title">❤️ Congenital Heart Defects — Must-Know Classification</div>
+      <table class="comparison-table">
+        <tr><th>Lesion</th><th>Type</th><th>Key Feature / Murmur</th></tr>
+        <tr><td>VSD</td><td>Acyanotic (MC CHD overall)</td><td>Harsh pansystolic murmur at LLSB; may close spontaneously</td></tr>
+        <tr><td>ASD</td><td>Acyanotic</td><td>Fixed wide split S2; ejection systolic murmur at ULSB</td></tr>
+        <tr><td>PDA</td><td>Acyanotic</td><td>Continuous machinery murmur at left infrascapular; indomethacin closes</td></tr>
+        <tr><td>PS</td><td>Acyanotic</td><td>Ejection systolic murmur at ULSB; post-stenotic dilatation PA</td></tr>
+        <tr><td>Coarctation of Aorta</td><td>Acyanotic</td><td>Radiofemoral delay; rib notching; associated Turner syndrome</td></tr>
+        <tr><td>TOF</td><td>Cyanotic (MC cyanotic CHD)</td><td>Boot-shaped heart; RVH; Tet spells → squatting relief</td></tr>
+        <tr><td>TGA</td><td>Cyanotic (MC cyanotic in neonates)</td><td>Egg-on-string X-ray; cyanosis day 1; PGE1 to keep PDA open</td></tr>
+        <tr><td>Tricuspid Atresia</td><td>Cyanotic</td><td>LVH on ECG (unusual for cyanotic CHD)</td></tr>
+        <tr><td>TAPVR</td><td>Cyanotic</td><td>Snowman/Figure-8 X-ray (supracardiac type)</td></tr>
+        <tr><td>Truncus Arteriosus</td><td>Cyanotic</td><td>Single great vessel; early heart failure</td></tr>
+      </table>
+    </div>
+    <div class="card red">
+      <div class="card-title">🔥 TOF — High Yield</div>
+      <div class="kv-row"><span class="kv-key">TOF components</span><span class="kv-val highlight">PROVE: PS + RVH + Overriding aorta + VSD</span></div>
+      <div class="kv-row"><span class="kv-key">ECG</span><span class="kv-val">RVH (right axis deviation)</span></div>
+      <div class="kv-row"><span class="kv-key">CXR</span><span class="kv-val danger">Boot-shaped heart (coeur en sabot)</span></div>
+      <div class="kv-row"><span class="kv-key">Tet spell Rx</span><span class="kv-val danger">Knee-chest position + O2 + IV morphine + propranolol</span></div>
+      <div class="kv-row"><span class="kv-key">Murmur during Tet spell</span><span class="kv-val danger">Decreases (less blood through RVOT)</span></div>
+      <div class="kv-row"><span class="kv-key">Palliation</span><span class="kv-val">BT shunt (subclavian → PA)</span></div>
+      <div class="kv-row"><span class="kv-key">Surgical correction</span><span class="kv-val">Total correction (VSD closure + RVOT repair)</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🔥 Rheumatic Fever (Jones Criteria 2015)</div>
+      <div class="kv-row"><span class="kv-key">Major criteria (SPACES)</span><span class="kv-val highlight">Sydenham's chorea, Polyarthritis, Arthralgia*, Carditis, Erythema marginatum, Subcutaneous nodules</span></div>
+      <div class="kv-row"><span class="kv-key">Minor criteria</span><span class="kv-val">Fever, Elevated ESR/CRP, Prolonged PR interval</span></div>
+      <div class="kv-row"><span class="kv-key">Diagnosis</span><span class="kv-val danger">2 major OR 1 major + 2 minor + evidence of strep</span></div>
+      <div class="kv-row"><span class="kv-key">MC cardiac lesion</span><span class="kv-val highlight">Mitral regurgitation (acute)</span></div>
+      <div class="kv-row"><span class="kv-key">Pathognomonic lesion</span><span class="kv-val">Aschoff body (granuloma)</span></div>
+      <div class="kv-row"><span class="kv-key">Prophylaxis</span><span class="kv-val danger">Benzathine Penicillin G 1.2 MU IM every 3–4 weeks</span></div>
+      <div class="kv-row"><span class="kv-key">Prophylaxis duration (no carditis)</span><span class="kv-val">5 years or until 21 years</span></div>
+      <div class="kv-row"><span class="kv-key">Prophylaxis duration (with carditis)</span><span class="kv-val danger">10 years or until 40 years (lifelong if severe)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔥 Kawasaki Disease</div>
+      <div class="kv-row"><span class="kv-key">Diagnostic criteria (CRASH)</span><span class="kv-val highlight">Conjunctivitis (non-purulent), Rash, Adenopathy (cervical), Strawberry tongue, Hand/foot changes</span></div>
+      <div class="kv-row"><span class="kv-key">Fever duration</span><span class="kv-val danger">&gt;5 days + 4 of 5 features (or atypical Kawasaki)</span></div>
+      <div class="kv-row"><span class="kv-key">Cardiac complication</span><span class="kv-val danger">Coronary artery aneurysm (30% untreated)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment</span><span class="kv-val highlight">IVIG 2 g/kg (single dose) + Aspirin</span></div>
+      <div class="kv-row"><span class="kv-key">High-dose aspirin phase</span><span class="kv-val">80–100 mg/kg/day (acute phase)</span></div>
+      <div class="kv-row"><span class="kv-key">Low-dose aspirin</span><span class="kv-val">3–5 mg/kg/day (after fever settles × 6–8 weeks)</span></div>
+      <div class="kv-row"><span class="kv-key">Monitoring</span><span class="kv-val">Echo at diagnosis, 2 wks, 6 wks</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- HEME & ONCO -->
+<div class="section" id="heme">
+  <div class="section-title">Haematology <span>&amp; Oncology</span></div>
+  <div class="section-sub">Anaemia, bleeding disorders, leukaemia, lymphoma</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🩸 Anaemia in Children</div>
+      <div class="kv-row"><span class="kv-key">Hb cutoff for anaemia (6m–6yr)</span><span class="kv-val danger">&lt;11 g/dL</span></div>
+      <div class="kv-row"><span class="kv-key">MC anaemia worldwide</span><span class="kv-val highlight">Iron deficiency anaemia</span></div>
+      <div class="kv-row"><span class="kv-key">IDA blood film</span><span class="kv-val">Microcytic hypochromic + pencil cells</span></div>
+      <div class="kv-row"><span class="kv-key">IDA first lab abnormality</span><span class="kv-val">Reduced serum ferritin</span></div>
+      <div class="kv-row"><span class="kv-key">IDA treatment (therapeutic dose)</span><span class="kv-val highlight">3–6 mg/kg/day elemental iron × 3 months</span></div>
+      <div class="kv-row"><span class="kv-key">Prophylaxis dose (iron)</span><span class="kv-val">1–2 mg/kg/day</span></div>
+      <div class="kv-row"><span class="kv-key">Megaloblastic anaemia</span><span class="kv-val">Vit B12 or Folate deficiency</span></div>
+      <div class="kv-row"><span class="kv-key">Hypersegmented neutrophils</span><span class="kv-val">Megaloblastic anaemia (5+ lobes)</span></div>
+      <div class="kv-row"><span class="kv-key">G6PD deficiency</span><span class="kv-val danger">X-linked; triggered by oxidants; Heinz bodies</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🩸 Thalassaemia</div>
+      <div class="kv-row"><span class="kv-key">β-thal major</span><span class="kv-val danger">Severe haemolytic anaemia; Hb &lt;7; transfusion-dependent</span></div>
+      <div class="kv-row"><span class="kv-key">X-ray β-thal major</span><span class="kv-val">Hair-on-end appearance (skull)</span></div>
+      <div class="kv-row"><span class="kv-key">Chipmunk facies</span><span class="kv-val">Maxillary overgrowth (thalassaemia)</span></div>
+      <div class="kv-row"><span class="kv-key">Diagnosis</span><span class="kv-val highlight">Hb electrophoresis (HbF↑↑, HbA absent)</span></div>
+      <div class="kv-row"><span class="kv-key">HbA2 in β-thal trait</span><span class="kv-val">3.5–7% (elevated)</span></div>
+      <div class="kv-row"><span class="kv-key">Iron chelation</span><span class="kv-val">Desferrioxamine (parenteral) / Deferasirox (oral)</span></div>
+      <div class="kv-row"><span class="kv-key">Curative treatment</span><span class="kv-val highlight">Bone marrow/HSCT</span></div>
+      <div class="kv-row"><span class="kv-key">Hydrops fetalis</span><span class="kv-val danger">α-thal major (4-gene deletion) — incompatible with life</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🩸 Bleeding Disorders</div>
+      <div class="kv-row"><span class="kv-key">Haemophilia A</span><span class="kv-val danger">Factor VIII deficiency; X-linked recessive</span></div>
+      <div class="kv-row"><span class="kv-key">Haemophilia B (Christmas)</span><span class="kv-val">Factor IX deficiency</span></div>
+      <div class="kv-row"><span class="kv-key">Haemophilia — PT/APTT</span><span class="kv-val danger">PT normal; APTT prolonged</span></div>
+      <div class="kv-row"><span class="kv-key">von Willebrand disease</span><span class="kv-val">Both PT and APTT abnormal; mucous membrane bleeding</span></div>
+      <div class="kv-row"><span class="kv-key">ITP — presentation</span><span class="kv-val">Petechiae/purpura; Plt &lt;100k; 1–4 wks after viral URTI</span></div>
+      <div class="kv-row"><span class="kv-key">ITP management</span><span class="kv-val highlight">Observation (most resolve); IVIG / steroids if Plt &lt;20k</span></div>
+      <div class="kv-row"><span class="kv-key">DIC — consumptive coagulopathy</span><span class="kv-val danger">All clotting factors + platelets low; fibrin degradation products↑</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔬 Childhood Leukaemia &amp; Tumours</div>
+      <div class="kv-row"><span class="kv-key">MC childhood malignancy</span><span class="kv-val highlight">ALL (Acute Lymphoblastic Leukaemia)</span></div>
+      <div class="kv-row"><span class="kv-key">ALL peak age</span><span class="kv-val">2–5 years</span></div>
+      <div class="kv-row"><span class="kv-key">ALL best prognosis type</span><span class="kv-val green">Pre-B ALL, DNA index &gt;1.16, t(12;21)</span></div>
+      <div class="kv-row"><span class="kv-key">ALL worst prognosis</span><span class="kv-val danger">Philadelphia chromosome t(9;22); T-ALL; infant ALL</span></div>
+      <div class="kv-row"><span class="kv-key">Wilms' tumour (nephroblastoma)</span><span class="kv-val highlight">MC renal tumour in children; 2–5 yrs</span></div>
+      <div class="kv-row"><span class="kv-key">Wilms' tumour gene</span><span class="kv-val">WT1 (chromosome 11)</span></div>
+      <div class="kv-row"><span class="kv-key">Neuroblastoma</span><span class="kv-val">MC solid tumour outside CNS in infants; adrenal medulla</span></div>
+      <div class="kv-row"><span class="kv-key">Neuroblastoma marker</span><span class="kv-val danger">Urinary VMA/HVA (catecholamines)</span></div>
+      <div class="kv-row"><span class="kv-key">Medulloblastoma</span><span class="kv-val">MC brain tumour in children; posterior fossa</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency single-answer facts for rapid revision</div>
+  <div class="grid-2">
+    <div class="card orange">
+      <div class="card-title">⭐ Paeds Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">MC inborn error of metabolism</span><span class="kv-val highlight">Phenylketonuria (PKU)</span></div>
+      <div class="kv-row"><span class="kv-key">PKU diet</span><span class="kv-val">Low phenylalanine (low protein)</span></div>
+      <div class="kv-row"><span class="kv-key">Guthrie test (neonatal screening)</span><span class="kv-val">PKU (phenylalanine level)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause short stature</span><span class="kv-val">Familial / constitutional growth delay</span></div>
+      <div class="kv-row"><span class="kv-key">Bone age &lt; chronological age</span><span class="kv-val highlight">Constitutional growth delay</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause precocious puberty girls</span><span class="kv-val">Idiopathic (central) GnRH dependent</span></div>
+      <div class="kv-row"><span class="kv-key">Normal puberty girls starts</span><span class="kv-val">8–13 years (thelarche first)</span></div>
+      <div class="kv-row"><span class="kv-key">Normal puberty boys starts</span><span class="kv-val">9–14 years (testicular enlargement first)</span></div>
+      <div class="kv-row"><span class="kv-key">Tanner stage breast (B2)</span><span class="kv-val">Breast bud — first sign puberty in girls</span></div>
+      <div class="kv-row"><span class="kv-key">Menarche — Tanner stage</span><span class="kv-val">B3–B4 (after peak height velocity)</span></div>
+      <div class="kv-row"><span class="kv-key">Peak height velocity girls</span><span class="kv-val">11–12 years</span></div>
+      <div class="kv-row"><span class="kv-key">Peak height velocity boys</span><span class="kv-val">13–14 years</span></div>
+      <div class="kv-row"><span class="kv-key">Down syndrome karyotype</span><span class="kv-val danger">47, XX/XY +21 (trisomy 21)</span></div>
+      <div class="kv-row"><span class="kv-key">Down syndrome — MC CHD</span><span class="kv-val">AVSD (atrioventricular septal defect)</span></div>
+      <div class="kv-row"><span class="kv-key">Turner syndrome karyotype</span><span class="kv-val">45, XO</span></div>
+      <div class="kv-row"><span class="kv-key">Klinefelter karyotype</span><span class="kv-val">47, XXY</span></div>
+      <div class="kv-row"><span class="kv-key">Cri du Chat</span><span class="kv-val">Deletion 5p; cat-like cry</span></div>
+      <div class="kv-row"><span class="kv-key">Edwards syndrome</span><span class="kv-val">Trisomy 18; rocker bottom feet; worse prognosis than Down</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">⭐ Paeds Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">MC cause stridor in infants</span><span class="kv-val highlight">Laryngomalacia</span></div>
+      <div class="kv-row"><span class="kv-key">Cystic fibrosis gene</span><span class="kv-val">CFTR (chromosome 7); ΔF508 MC mutation</span></div>
+      <div class="kv-row"><span class="kv-key">CF sweat chloride</span><span class="kv-val danger">&gt;60 mEq/L (diagnostic)</span></div>
+      <div class="kv-row"><span class="kv-key">CF neonatal presentation</span><span class="kv-val">Meconium ileus</span></div>
+      <div class="kv-row"><span class="kv-key">CF MC organism (early)</span><span class="kv-val">S. aureus</span></div>
+      <div class="kv-row"><span class="kv-key">CF MC organism (late)</span><span class="kv-val danger">Pseudomonas aeruginosa (irreplaceable coloniser)</span></div>
+      <div class="kv-row"><span class="kv-key">Reye syndrome</span><span class="kv-val danger">Aspirin + viral illness → hepatic encephalopathy</span></div>
+      <div class="kv-row"><span class="kv-key">Epiglottitis — don't do</span><span class="kv-val danger">Throat exam / LP before securing airway</span></div>
+      <div class="kv-row"><span class="kv-key">Pyloric stenosis</span><span class="kv-val highlight">Non-bilious projectile vomiting 2–6 weeks; olive mass</span></div>
+      <div class="kv-row"><span class="kv-key">Pyloric stenosis metabolic state</span><span class="kv-val danger">Hypokalaemic, hypochloraemic metabolic alkalosis</span></div>
+      <div class="kv-row"><span class="kv-key">Meckel's diverticulum rule of 2</span><span class="kv-val highlight">2% pop, 2 feet from IC valve, 2 inches long, 2:1 M:F, 2 years MC presentation</span></div>
+      <div class="kv-row"><span class="kv-key">Ectopic tissue in Meckel's</span><span class="kv-val">Gastric (MC) → peptic ulceration/bleeding</span></div>
+      <div class="kv-row"><span class="kv-key">Best imaging Meckel's</span><span class="kv-val">Tc-99m pertechnetate scan</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause neonatal intestinal obstruction</span><span class="kv-val">Hirschsprung's disease</span></div>
+      <div class="kv-row"><span class="kv-key">Sudden death in young athlete</span><span class="kv-val danger">HCM (hypertrophic cardiomyopathy)</span></div>
+      <div class="kv-row"><span class="kv-key">Dextrocardia + situs inversus</span><span class="kv-val">Kartagener's syndrome (primary ciliary dyskinesia)</span></div>
+      <div class="kv-row"><span class="kv-key">Paediatric fluid maintenance</span><span class="kv-val highlight">4 mL/kg/hr (first 10 kg) + 2 mL (10–20 kg) + 1 mL (&gt;20 kg)</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">⭐ Chromosomal &amp; Genetic Mnemonics</div>
+      <div class="mnemonic">VACTERL: Vertebral, Anal atresia, Cardiac, TEF, Esophageal atresia, Renal, Limb defects</div>
+      <div class="mnemonic">CHARGE: Coloboma, Heart, Atresia choanae, Retardation (growth/dev), Genital, Ear</div>
+      <div class="mnemonic">TOF = PROVE: PS + RVH + Overriding aorta + VSD + (Equinus = no)</div>
+      <div class="mnemonic">Kwashiorkor = Kids Who Suffer (Protein-only deficit → Pitting oedema, Poor appetite)</div>
+      <div class="mnemonic">APGAR = Appearance, Pulse, Grimace, Activity, Respiration</div>
+      <div class="mnemonic">Jones criteria Major = SPACES: Sydenham's, Polyarthritis, Arthralgia*, Carditis, Erythema, Subcutaneous nodules</div>
+      <div class="mnemonic">Kawasaki = CRASH: Conjunctivitis, Rash, Adenopathy, Strawberry tongue, Hand changes</div>
+      <div class="mnemonic">CTEV = CAVE: Cavus, Adductus, Varus, Equinus</div>
+    </div>
+    <div class="card red">
+      <div class="card-title">⭐ Commonly Confused Pairs</div>
+      <div class="kv-row"><span class="kv-key">Ortolani vs Barlow</span><span class="kv-val danger">Ortolani = REDUCES dislocation; Barlow = DISLOCATES hip</span></div>
+      <div class="kv-row"><span class="kv-key">Intussusception vs Volvulus age</span><span class="kv-val">Intussusception 6–18 months; Volvulus — any age (malrotation neonates)</span></div>
+      <div class="kv-row"><span class="kv-key">PSGN vs IgA nephropathy latency</span><span class="kv-val">PSGN: 1–3 wks; IgA: 1–3 DAYS (synpharyngitic)</span></div>
+      <div class="kv-row"><span class="kv-key">Croup vs Epiglottitis</span><span class="kv-val">Croup = Steeple sign + Parainfluenza; Epiglottitis = Thumb sign + H. flu</span></div>
+      <div class="kv-row"><span class="kv-key">Nephrotic vs Nephritic C3</span><span class="kv-val">Nephrotic: C3 normal; Nephritic PSGN: C3 LOW</span></div>
+      <div class="kv-row"><span class="kv-key">Hirschsprung vs Functional constipation</span><span class="kv-val">Hirschsprung: delay in meconium, squirt sign; Functional: older child</span></div>
+      <div class="kv-row"><span class="kv-key">West syndrome vs Lennox-Gastaut</span><span class="kv-val">West: infantile spasms + hypsarrhythmia; LGS: multiple types + slow spike-wave</span></div>
+      <div class="kv-row"><span class="kv-key">Haemophilia A vs vWD</span><span class="kv-val">Haem A: APTT only; vWD: PT + APTT + bleeding time</span></div>
+      <div class="kv-row"><span class="kv-key">Phototherapy vs Exchange transfusion</span><span class="kv-val">Phototherapy at 15 mg/dL; Exchange at 20 mg/dL (term neonate)</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomy Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #05080f; --surface: #0c1120; --surface2: #131a2e; --border: #1a2540;
+    --accent: #a78bfa; --accent2: #34d399; --accent3: #fb923c; --accent4: #f9a8d4; --accent5: #38bdf8;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #05080f 0%, #0e0a1e 50%, #05080f 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent3); color: #05080f; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent3); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent5); border: 1px solid var(--accent5); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent3); color: #05080f; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent3); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.violet::before { background: var(--accent); }
+  .card.green::before { background: var(--accent2); }
+  .card.orange::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.sky::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.violet .card-title { color: var(--accent); }
+  .card.green .card-title { color: var(--accent2); }
+  .card.orange .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.sky .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #131a2e; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.green { color: var(--accent2); }
+  .kv-val.orange { color: var(--accent3); }
+  .kv-val.sky { color: var(--accent5); }
+  .kv-val.danger { color: var(--danger); }
+  .kv-val.pink { color: var(--accent4); }
+  .formula-box { background: #070d1a; border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent3); margin: 6px 0; line-height: 1.8; }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(167,139,250,0.07); border: 1px solid rgba(167,139,250,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent); margin-top: 8px; line-height: 1.5; }
+  .orange-box { background: rgba(251,146,60,0.07); border: 1px solid rgba(251,146,60,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent3); margin-top: 8px; line-height: 1.5; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent3); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  .mt-12 { margin-top: 12px; }
+  @media (max-width: 800px) { .grid-auto, .grid-2 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>Ana<span>tomy</span> Cheatsheet</h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('upperlimb',this)">Upper Limb</div>
+    <div class="tab" onclick="showSection('lowerlimb',this)">Lower Limb</div>
+    <div class="tab" onclick="showSection('thorax',this)">Thorax</div>
+    <div class="tab" onclick="showSection('abdomen',this)">Abdomen</div>
+    <div class="tab" onclick="showSection('head',this)">Head &amp; Neck</div>
+    <div class="tab" onclick="showSection('neuro',this)">Neuroanatomy</div>
+    <div class="tab" onclick="showSection('embryo',this)">Embryology</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- UPPER LIMB -->
+<div class="section active" id="upperlimb">
+  <div class="section-title">Upper <span>Limb</span></div>
+  <div class="section-sub">Brachial plexus, nerve injuries, muscles, rotator cuff, surgical spaces</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🦾 Brachial Plexus — Roots to Branches</div>
+      <div class="formula-box">Roots (C5-T1) → Trunks (3) → Divisions (6) → Cords (3) → Branches
+Mnemonic: "Real Texans Drink Cold Beer"</div>
+      <div class="kv-row"><span class="kv-key">Upper trunk (C5, C6)</span><span class="kv-val orange">Musculocutaneous, Axillary nerves</span></div>
+      <div class="kv-row"><span class="kv-key">Middle trunk (C7)</span><span class="kv-val">Radial nerve (mainly)</span></div>
+      <div class="kv-row"><span class="kv-key">Lower trunk (C8, T1)</span><span class="kv-val">Ulnar nerve mainly</span></div>
+      <div class="kv-row"><span class="kv-key">Lateral cord branches</span><span class="kv-val highlight">Musculocutaneous N, Lateral root of median N</span></div>
+      <div class="kv-row"><span class="kv-key">Medial cord branches</span><span class="kv-val">Ulnar N, Medial root of median N, Medial cutaneous</span></div>
+      <div class="kv-row"><span class="kv-key">Posterior cord branches</span><span class="kv-val">Axillary N, Radial N (also subscapular, thoracodorsal)</span></div>
+      <div class="kv-row"><span class="kv-key">Erb's palsy (C5, C6)</span><span class="kv-val danger">Waiter's tip; abduction/ER lost; deltoid, supraspinatus affected</span></div>
+      <div class="kv-row"><span class="kv-key">Klumpke's palsy (C8, T1)</span><span class="kv-val danger">Claw hand + Horner's syndrome (T1 → sympathetics)</span></div>
+    </div>
+    <div class="card violet">
+      <div class="card-title">⚠️ Nerve Injuries — Upper Limb</div>
+      <table class="comparison-table">
+        <tr><th>Nerve</th><th>Injury Site</th><th>Deformity / Loss</th></tr>
+        <tr><td>Axillary (C5,C6)</td><td>Surgical neck humerus; anterior dislocation shoulder</td><td>Loss of deltoid (abduction); loss of lateral arm sensation</td></tr>
+        <tr><td>Radial (C5-T1)</td><td>Spiral groove of humerus (mid-shaft #)</td><td>Wrist drop; loss of wrist/finger extension; dorsal 1st web loss</td></tr>
+        <tr><td>Radial (posterior IO)</td><td>Lateral epicondyle; radial tunnel syndrome</td><td>Finger drop only; NO wrist drop; NO sensory loss</td></tr>
+        <tr><td>Median (C6-T1)</td><td>Supracondylar # humerus (kids); carpal tunnel</td><td>Ape hand; loss of opposition/flex; Benediction hand (weak)</td></tr>
+        <tr><td>Anterior IO nerve</td><td>Pronator teres</td><td>No grip pinch; OK sign lost (FPL + FDP index affected)</td></tr>
+        <tr><td>Ulnar (C8,T1)</td><td>Medial epicondyle; Guyon canal (wrist)</td><td>Claw hand (ring+little); hypothenar wasting; Froment's sign</td></tr>
+        <tr><td>Long thoracic (C5-7)</td><td>Radical mastectomy; serratus anterior</td><td>Winged scapula (cannot push wall)</td></tr>
+        <tr><td>Suprascapular</td><td>Suprascapular notch</td><td>Supraspinatus (initiation of abduction) + Infraspinatus (ER) paralysis</td></tr>
+        <tr><td>Musculocutaneous</td><td>Coracobrachialis (rare)</td><td>Loss of elbow flexion + lateral forearm sensation</td></tr>
+      </table>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔄 Rotator Cuff — SITS</div>
+      <div class="formula-box">Mnemonic: SITS → Supraspinatus, Infraspinatus, Teres minor, Subscapularis</div>
+      <div class="kv-row"><span class="kv-key">Supraspinatus</span><span class="kv-val orange">Initiation of abduction (0-15°); MC torn tendon</span></div>
+      <div class="kv-row"><span class="kv-key">Infraspinatus + Teres minor</span><span class="kv-val">External rotation (IR lost in subscapularis tear)</span></div>
+      <div class="kv-row"><span class="kv-key">Subscapularis</span><span class="kv-val">Internal rotation; belly press test</span></div>
+      <div class="kv-row"><span class="kv-key">Deltoid abduction</span><span class="kv-val">15-180° (after supraspinatus initiates)</span></div>
+      <div class="kv-row"><span class="kv-key">Painful arc</span><span class="kv-val danger">60-120° → supraspinatus impingement</span></div>
+      <div class="kv-row"><span class="kv-key">Empty can test</span><span class="kv-val">Supraspinatus integrity</span></div>
+      <div class="kv-row"><span class="kv-key">Drop arm test</span><span class="kv-val">Full thickness rotator cuff tear</span></div>
+      <div class="kv-row"><span class="kv-key">Blood supply supraspinatus</span><span class="kv-val danger">Critical zone (avascular): 1 cm from insertion</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🔬 Carpal Tunnel &amp; Hand Spaces</div>
+      <div class="kv-row"><span class="kv-key">Carpal tunnel contents (9+1)</span><span class="kv-val highlight">FDS×4, FDP×4, FPL×1 + Median nerve (NOT ulnar)</span></div>
+      <div class="kv-row"><span class="kv-key">Roof of carpal tunnel</span><span class="kv-val">Flexor retinaculum</span></div>
+      <div class="kv-row"><span class="kv-key">Carpal tunnel syndrome</span><span class="kv-val danger">Tinel's sign +ve; Phalen's test +ve; thenar wasting</span></div>
+      <div class="kv-row"><span class="kv-key">Guyon canal</span><span class="kv-val">Ulnar nerve + artery; pisiform to hook of hamate</span></div>
+      <div class="kv-row"><span class="kv-key">Anatomical snuffbox</span><span class="kv-val highlight">Tenderness → scaphoid # (AVN risk)</span></div>
+      <div class="kv-row"><span class="kv-key">Scaphoid blood supply</span><span class="kv-val danger">Distal to proximal → AVN after proximal pole #</span></div>
+      <div class="kv-row"><span class="kv-key">Thenar muscles</span><span class="kv-val">Median nerve (APB, Opponens, FPB-superficial head)</span></div>
+      <div class="kv-row"><span class="kv-key">Hypothenar muscles</span><span class="kv-val">Ulnar nerve (AbDM, FDM, OpponensM)</span></div>
+      <div class="kv-row"><span class="kv-key">Lumbricals 1&2</span><span class="kv-val">Median nerve; Lumbricals 3&4 → Ulnar</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🔬 Shoulder &amp; Axillary Spaces</div>
+      <div class="kv-row"><span class="kv-key">Quadrangular space contents</span><span class="kv-val highlight">Axillary nerve + Posterior circumflex humeral artery</span></div>
+      <div class="kv-row"><span class="kv-key">Triangular space contents</span><span class="kv-val">Circumflex scapular artery</span></div>
+      <div class="kv-row"><span class="kv-key">Triangular interval</span><span class="kv-val">Radial nerve + Profunda brachii artery</span></div>
+      <div class="kv-row"><span class="kv-key">Axillary sheath</span><span class="kv-val">Contains brachial plexus + axillary vessels</span></div>
+      <div class="kv-row"><span class="kv-key">Most common shoulder dislocation</span><span class="kv-val danger">Anterior (subcoracoid); axillary nerve injury</span></div>
+      <div class="kv-row"><span class="kv-key">Posterior dislocation</span><span class="kv-val danger">Epileptic fit / electrocution; "Light bulb sign" on X-ray</span></div>
+      <div class="kv-row"><span class="kv-key">Cubital fossa contents</span><span class="kv-val">TAN (Tendon biceps, Artery brachial, Nerve median)</span></div>
+      <div class="kv-row"><span class="kv-key">Biceps tendon reflex</span><span class="kv-val">C5, C6 (musculocutaneous nerve)</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">📋 Reflexes — Upper Limb</div>
+      <div class="kv-row"><span class="kv-key">Biceps reflex</span><span class="kv-val orange">C5, C6 — Musculocutaneous nerve</span></div>
+      <div class="kv-row"><span class="kv-key">Brachioradialis reflex</span><span class="kv-val">C5, C6 — Radial nerve</span></div>
+      <div class="kv-row"><span class="kv-key">Triceps reflex</span><span class="kv-val">C7 — Radial nerve</span></div>
+      <div class="kv-row"><span class="kv-key">Finger flexors (Hoffmann)</span><span class="kv-val">C8 — UMN sign</span></div>
+      <div class="kv-row"><span class="kv-key">Froment's sign</span><span class="kv-val danger">Ulnar nerve palsy; FPL compensates for weak adductor pollicis</span></div>
+      <div class="kv-row"><span class="kv-key">Wartenberg's sign</span><span class="kv-val">Ulnar nerve; little finger abducted (AbDM unopposed)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- LOWER LIMB -->
+<div class="section" id="lowerlimb">
+  <div class="section-title">Lower <span>Limb</span></div>
+  <div class="section-sub">Lumbar plexus, sacral plexus, nerve injuries, knee, foot</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🦵 Lumbar &amp; Sacral Plexus</div>
+      <div class="kv-row"><span class="kv-key">Lumbar plexus (L1-L4)</span><span class="kv-val highlight">Femoral, Obturator, Lateral femoral cutaneous, Genitofemoral</span></div>
+      <div class="kv-row"><span class="kv-key">Sacral plexus (L4-S3)</span><span class="kv-val">Sciatic (largest nerve in body), Superior/Inferior gluteal, Pudendal</span></div>
+      <div class="kv-row"><span class="kv-key">Femoral nerve (L2-L4)</span><span class="kv-val">Knee extension (quads); hip flexion (iliopsoas); saphenous branch</span></div>
+      <div class="kv-row"><span class="kv-key">Obturator nerve (L2-L4)</span><span class="kv-val">Hip adduction; medial thigh sensation</span></div>
+      <div class="kv-row"><span class="kv-key">Sciatic nerve</span><span class="kv-val">L4-S3; exits greater sciatic foramen below piriformis</span></div>
+      <div class="kv-row"><span class="kv-key">Common peroneal injury</span><span class="kv-val danger">Neck of fibula; foot drop; loss of dorsiflexion/eversion</span></div>
+      <div class="kv-row"><span class="kv-key">Tibial nerve injury</span><span class="kv-val danger">Loss of plantarflexion/inversion; "calcaneovalgus" deformity</span></div>
+      <div class="kv-row"><span class="kv-key">Lateral femoral cutaneous N</span><span class="kv-val">Meralgia paraesthetica (inguinal ligament compression)</span></div>
+    </div>
+    <div class="card violet">
+      <div class="card-title">🦵 Femoral Triangle &amp; Adductor Canal</div>
+      <div class="formula-box">Femoral triangle: NAVY (lateral to medial)
+Nerve → Artery → Vein → Y-shaped lymphatics (within femoral sheath: A+V only)</div>
+      <div class="kv-row"><span class="kv-key">Femoral sheath contents</span><span class="kv-val highlight">Femoral artery (lateral), Vein (middle), Femoral canal (medial)</span></div>
+      <div class="kv-row"><span class="kv-key">Femoral canal</span><span class="kv-val">Contains lymphatics + fat; site of femoral hernia</span></div>
+      <div class="kv-row"><span class="kv-key">Femoral hernia</span><span class="kv-val danger">More common in women; medial to femoral vein; below inguinal ligament</span></div>
+      <div class="kv-row"><span class="kv-key">Adductor canal (Hunter's)</span><span class="kv-val">Femoral artery, vein, saphenous nerve, nerve to vastus medialis</span></div>
+      <div class="kv-row"><span class="kv-key">Popliteal fossa roof</span><span class="kv-val">Deep fascia; biceps femoris (superolateral), semimembranosus (superomedial)</span></div>
+      <div class="kv-row"><span class="kv-key">Popliteal fossa contents</span><span class="kv-val">Popliteal artery (deepest), vein, tibial nerve, common peroneal nerve</span></div>
+      <div class="kv-row"><span class="kv-key">Great saphenous vein</span><span class="kv-val">Drains into femoral vein (4 cm below inguinal ligament; SFJ)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🦵 Hip Joint &amp; Femoral Head Blood Supply</div>
+      <div class="kv-row"><span class="kv-key">Type of joint</span><span class="kv-val highlight">Ball and socket; synovial; most stable joint in body</span></div>
+      <div class="kv-row"><span class="kv-key">Blood supply — adult</span><span class="kv-val danger">Medial femoral circumflex artery (MFCA) — main supply</span></div>
+      <div class="kv-row"><span class="kv-key">Blood supply — child (up to 4yr)</span><span class="kv-val">Lateral circumflex femoral A + obturator A (foveal)</span></div>
+      <div class="kv-row"><span class="kv-key">Intracapsular # risk</span><span class="kv-val danger">AVN of femoral head (MFCA disrupted by retinacular vessels)</span></div>
+      <div class="kv-row"><span class="kv-key">Extracapsular #</span><span class="kv-val">Intertrochanteric — lower AVN risk (extraosseous vessels intact)</span></div>
+      <div class="kv-row"><span class="kv-key">Hilgenreiner's line</span><span class="kv-val">Horizontal line through triradiate cartilage — DDH assessment</span></div>
+      <div class="kv-row"><span class="kv-key">Perkin's line</span><span class="kv-val">Vertical through lateral edge of acetabulum — DDH</span></div>
+      <div class="kv-row"><span class="kv-key">Telescoping sign</span><span class="kv-val">DDH (developmental dysplasia of hip)</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🦵 Knee Joint — Ligaments &amp; Menisci</div>
+      <div class="kv-row"><span class="kv-key">Unhappy triad (O'Donoghue)</span><span class="kv-val danger">ACL + MCL + Medial meniscus injury (lateral force)</span></div>
+      <div class="kv-row"><span class="kv-key">ACL function</span><span class="kv-val highlight">Prevents anterior tibia displacement; Anterior drawer test</span></div>
+      <div class="kv-row"><span class="kv-key">PCL function</span><span class="kv-val">Prevents posterior tibia displacement; Posterior drawer test</span></div>
+      <div class="kv-row"><span class="kv-key">Lachman test</span><span class="kv-val highlight">Best ACL test (sensitivity 85-98%); flexed 20-30°</span></div>
+      <div class="kv-row"><span class="kv-key">MCL injury</span><span class="kv-val danger">Valgus stress test; medial joint opening</span></div>
+      <div class="kv-row"><span class="kv-key">Medial meniscus</span><span class="kv-val">C-shaped; more fixed (attached to MCL) → more tears</span></div>
+      <div class="kv-row"><span class="kv-key">Lateral meniscus</span><span class="kv-val">O-shaped; more mobile; popliteus groove posteriorly</span></div>
+      <div class="kv-row"><span class="kv-key">McMurray's test</span><span class="kv-val">Meniscal tear; medial (external rot) vs lateral (internal rot)</span></div>
+      <div class="kv-row"><span class="kv-key">Bursae around patella</span><span class="kv-val">Prepatellar (housemaid's knee); Infrapatellar; Suprapatellar</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🦶 Foot &amp; Ankle Anatomy</div>
+      <div class="kv-row"><span class="kv-key">Tom, Dick And NeRVy Harry</span><span class="kv-val highlight">Tarsal tunnel (medial malleolus, medial → lateral): Tibialis post, FDL, posterior tibial A+V, Tibial N, FHL</span></div>
+      <div class="kv-row"><span class="kv-key">Lateral ankle ligaments</span><span class="kv-val danger">ATFL (MC sprained), CFL, PTFL — inversion injury</span></div>
+      <div class="kv-row"><span class="kv-key">Deltoid ligament (medial)</span><span class="kv-val">Strong; rarely torn alone; associated with fibula #</span></div>
+      <div class="kv-row"><span class="kv-key">Plantar fascia origin</span><span class="kv-val">Medial tubercle of calcaneum → plantar fasciitis</span></div>
+      <div class="kv-row"><span class="kv-key">Achilles tendon</span><span class="kv-val">Gastrocnemius + Soleus (S1,S2); Simmonds test</span></div>
+      <div class="kv-row"><span class="kv-key">Critical zone of Achilles</span><span class="kv-val danger">2-6 cm above insertion (watershed area — rupture site)</span></div>
+      <div class="kv-row"><span class="kv-key">Key inversion muscles</span><span class="kv-val">Tibialis posterior (main), Tibialis anterior</span></div>
+      <div class="kv-row"><span class="kv-key">Eversion muscles</span><span class="kv-val">Peroneals (longus + brevis) — common peroneal nerve</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">📋 Lower Limb Reflexes</div>
+      <div class="kv-row"><span class="kv-key">Knee jerk (patellar)</span><span class="kv-val orange">L3, L4 — Femoral nerve</span></div>
+      <div class="kv-row"><span class="kv-key">Ankle jerk (Achilles)</span><span class="kv-val">S1, S2 — Tibial nerve</span></div>
+      <div class="kv-row"><span class="kv-key">Plantar reflex</span><span class="kv-val">S1 — Tibial nerve; Babinski sign (UMN)</span></div>
+      <div class="kv-row"><span class="kv-key">Cremasteric reflex</span><span class="kv-val">L1, L2 — Genitofemoral nerve</span></div>
+      <div class="kv-row"><span class="kv-key">Trendelenburg sign +ve</span><span class="kv-val danger">Weak gluteus medius (Superior gluteal nerve L4,5); pelvis drops to opposite side</span></div>
+      <div class="kv-row"><span class="kv-key">Thomas test</span><span class="kv-val">Fixed flexion deformity of hip</span></div>
+      <div class="kv-row"><span class="kv-key">FABER/Patrick test</span><span class="kv-val">Sacroiliac joint pathology + hip pathology</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- THORAX -->
+<div class="section" id="thorax">
+  <div class="section-title">Thorax &amp; <span>Mediastinum</span></div>
+  <div class="section-sub">Heart, lungs, great vessels, pleura, diaphragm</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">❤️ Heart — Anatomy Essentials</div>
+      <div class="kv-row"><span class="kv-key">Right border of heart</span><span class="kv-val highlight">Right atrium</span></div>
+      <div class="kv-row"><span class="kv-key">Left border of heart</span><span class="kv-val">Left ventricle (mainly) + left auricle</span></div>
+      <div class="kv-row"><span class="kv-key">Inferior border</span><span class="kv-val">Right ventricle + small portion of left ventricle</span></div>
+      <div class="kv-row"><span class="kv-key">Most anterior chamber</span><span class="kv-val danger">Right ventricle (sternocostal surface)</span></div>
+      <div class="kv-row"><span class="kv-key">Most posterior chamber</span><span class="kv-val">Left atrium (overlies oesophagus)</span></div>
+      <div class="kv-row"><span class="kv-key">SA node location</span><span class="kv-val highlight">Junction of SVC + right atrium (crista terminalis)</span></div>
+      <div class="kv-row"><span class="kv-key">AV node location</span><span class="kv-val">Interatrial septum (Koch's triangle)</span></div>
+      <div class="kv-row"><span class="kv-key">Blood supply SA node</span><span class="kv-val">RCA (60%) or Circumflex (40%)</span></div>
+      <div class="kv-row"><span class="kv-key">Dominant coronary</span><span class="kv-val">Supplies PDA; RCA-dominant in 85%; Left-dominant 8%</span></div>
+      <div class="kv-row"><span class="kv-key">LAD territory</span><span class="kv-val danger">Anterior LV wall, apex, anterior 2/3 IVS, anterior papillary m.</span></div>
+    </div>
+    <div class="card violet">
+      <div class="card-title">🫁 Lung Anatomy &amp; Pleura</div>
+      <div class="kv-row"><span class="kv-key">Right lung lobes</span><span class="kv-val highlight">3 lobes; 10 bronchopulmonary segments</span></div>
+      <div class="kv-row"><span class="kv-key">Left lung lobes</span><span class="kv-val">2 lobes; 8-10 bronchopulmonary segments</span></div>
+      <div class="kv-row"><span class="kv-key">Lingula</span><span class="kv-val">Left upper lobe; anatomical equivalent of right middle lobe</span></div>
+      <div class="kv-row"><span class="kv-key">Most aspirated foreign body</span><span class="kv-val danger">Right lower lobe (right main bronchus — wider, more vertical)</span></div>
+      <div class="kv-row"><span class="kv-key">Pleura reflection</span><span class="kv-val">Midaxillary line: 8th rib; MCL: 6th rib; Posterior: 10th rib</span></div>
+      <div class="kv-row"><span class="kv-key">Costophrenic angle</span><span class="kv-val">Pleural fluid ≥200 mL to blunt on PA CXR; ≥50 mL lateral</span></div>
+      <div class="kv-row"><span class="kv-key">Thoracocentesis site</span><span class="kv-val">Upper border of rib (avoid NVB = below rib)</span></div>
+      <div class="kv-row"><span class="kv-key">Pulmonary ligament</span><span class="kv-val">Double layer of pleura below hilum; anchors lung</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔬 Mediastinum Divisions</div>
+      <table class="comparison-table">
+        <tr><th>Division</th><th>Contents</th></tr>
+        <tr><td>Superior mediastinum</td><td>Aortic arch, SVC, thymus, trachea, oesophagus, thoracic duct (upper), phrenic/vagal/cardiac nerves</td></tr>
+        <tr><td>Anterior mediastinum</td><td>Thymus (remnant in adults), lymph nodes, sternopericardial ligaments — "Terrible Ts": Thymoma, Teratoma, Thyroid, Thoracic aortic aneurysm</td></tr>
+        <tr><td>Middle mediastinum</td><td>Heart (pericardium), ascending aorta, SVC/IVC, pulmonary vessels, phrenic nerve, bifurcation of trachea</td></tr>
+        <tr><td>Posterior mediastinum</td><td>Descending aorta, oesophagus, azygos vein, thoracic duct, sympathetic chain, splanchnic nerves</td></tr>
+      </table>
+      <div class="orange-box">Posterior mediastinal masses: Neurogenic tumours (MC — neurofibroma, ganglioneuroma); also enteric cysts, vertebral tumours</div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🔬 Diaphragm — Openings &amp; Levels</div>
+      <table class="comparison-table">
+        <tr><th>Level</th><th>Opening</th><th>Passes Through</th></tr>
+        <tr><td>T8</td><td>Caval opening (in central tendon)</td><td>IVC + Right phrenic nerve</td></tr>
+        <tr><td>T10</td><td>Oesophageal hiatus (in muscle)</td><td>Oesophagus + Left & Right vagus nerves</td></tr>
+        <tr><td>T12</td><td>Aortic hiatus (behind diaphragm)</td><td>Aorta + Thoracic duct + Azygos vein</td></tr>
+      </table>
+      <div class="formula-box">Mnemonic: I (IVC) 8 (T8) Ten (T10) Egg (oesophagus) Twelve (T12) Aorta
+"I 8 10 eggs at 12"</div>
+      <div class="kv-row mt-12"><span class="kv-key">Motor supply of diaphragm</span><span class="kv-val danger">Phrenic nerve ONLY (C3, C4, C5)</span></div>
+      <div class="kv-row"><span class="kv-key">Sensory — central tendon</span><span class="kv-val">Phrenic nerve (referred pain to shoulder tip — C4 dermatome)</span></div>
+      <div class="kv-row"><span class="kv-key">Sensory — peripheral</span><span class="kv-val">Lower 6 intercostal nerves</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🔬 Great Vessels &amp; Aortic Arch</div>
+      <div class="kv-row"><span class="kv-key">Aortic arch branches (right to left)</span><span class="kv-val highlight">Brachiocephalic, Left common carotid, Left subclavian</span></div>
+      <div class="kv-row"><span class="kv-key">Right subclavian origin</span><span class="kv-val">Brachiocephalic trunk</span></div>
+      <div class="kv-row"><span class="kv-key">Ductus arteriosus</span><span class="kv-val">Connects pulmonary artery to aorta; ligamentum arteriosum (adult)</span></div>
+      <div class="kv-row"><span class="kv-key">Left recurrent laryngeal</span><span class="kv-val danger">Loops under aortic arch → hoarseness in aortic aneurysm</span></div>
+      <div class="kv-row"><span class="kv-key">Right recurrent laryngeal</span><span class="kv-val">Loops under right subclavian artery</span></div>
+      <div class="kv-row"><span class="kv-key">SVC formed by</span><span class="kv-val">Left + Right brachiocephalic veins</span></div>
+      <div class="kv-row"><span class="kv-key">Azygos vein</span><span class="kv-val">Drains into SVC; connects portal and systemic (portocaval anastomosis)</span></div>
+      <div class="kv-row"><span class="kv-key">Thoracic duct</span><span class="kv-val">Empties into left subclavian/jugular junction; drains ALL body except right upper quadrant</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ABDOMEN -->
+<div class="section" id="abdomen">
+  <div class="section-title">Abdomen &amp; <span>Pelvis</span></div>
+  <div class="section-sub">Peritoneum, GI tract, liver, portal system, inguinal canal, pelvis</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🔬 Inguinal Canal — Exam Favourite</div>
+      <div class="kv-row"><span class="kv-key">Anterior wall</span><span class="kv-val highlight">External oblique aponeurosis (throughout) + Internal oblique (lateral third)</span></div>
+      <div class="kv-row"><span class="kv-key">Posterior wall</span><span class="kv-val">Transversalis fascia + Conjoint tendon (medial third)</span></div>
+      <div class="kv-row"><span class="kv-key">Floor</span><span class="kv-val">Inguinal ligament (reflected part medially)</span></div>
+      <div class="kv-row"><span class="kv-key">Roof</span><span class="kv-val">Internal oblique + Transversus abdominis (arching fibres)</span></div>
+      <div class="kv-row"><span class="kv-key">Male canal contents</span><span class="kv-val">Spermatic cord; Ilioinguinal nerve; Genital branch of genitofemoral nerve</span></div>
+      <div class="kv-row"><span class="kv-key">Female canal contents</span><span class="kv-val">Round ligament of uterus; Ilioinguinal nerve</span></div>
+      <div class="kv-row"><span class="kv-key">Deep ring vs Superficial ring</span><span class="kv-val highlight">Indirect hernia exits deep ring (above inguinal ligament, lateral to IEV)</span></div>
+      <div class="kv-row"><span class="kv-key">Hesselbach's triangle</span><span class="kv-val danger">Boundaries: Inguinal lig (inferior), Lateral border rectus (medial), IEV (lateral) — Direct hernia site</span></div>
+    </div>
+    <div class="card violet">
+      <div class="card-title">🔬 Portal System &amp; Portocaval Anastomoses</div>
+      <div class="kv-row"><span class="kv-key">Portal vein formed by</span><span class="kv-val highlight">Superior mesenteric V + Splenic V (behind neck of pancreas)</span></div>
+      <div class="kv-row"><span class="kv-key">Portal vein tributaries</span><span class="kv-val">SMV, Splenic V, IMV, Left gastric (coronary), Right gastric</span></div>
+      <div class="kv-row"><span class="kv-key">Portal hypertension level</span><span class="kv-val danger">&gt;12 mmHg (normal 5-10 mmHg)</span></div>
+      <div class="kv-row"><span class="kv-key">Portosystemic anastomoses sites</span><span class="kv-val highlight">Oesophagus, Umbilicus, Rectum, Bare area of liver, Retroperitoneum</span></div>
+      <div class="kv-row"><span class="kv-key">Oesophageal varices</span><span class="kv-val danger">Left gastric V (portal) ↔ Oesophageal veins (systemic via azygos)</span></div>
+      <div class="kv-row"><span class="kv-key">Caput medusae</span><span class="kv-val">Para-umbilical veins (portal) ↔ Superficial epigastric (systemic)</span></div>
+      <div class="kv-row"><span class="kv-key">Rectal varices</span><span class="kv-val">Superior rectal V (IMV/portal) ↔ Middle/inferior rectal V (systemic)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔬 Liver — Surgical &amp; Functional Anatomy</div>
+      <div class="kv-row"><span class="kv-key">Couinaud segments</span><span class="kv-val highlight">8 functional segments (based on portal pedicles + hepatic veins)</span></div>
+      <div class="kv-row"><span class="kv-key">Caudate lobe</span><span class="kv-val">Segment I; independent venous drainage directly to IVC</span></div>
+      <div class="kv-row"><span class="kv-key">Right lobe segments</span><span class="kv-val">V, VI, VII, VIII; Left lobe: II, III, IV</span></div>
+      <div class="kv-row"><span class="kv-key">Portal triad</span><span class="kv-val">Portal vein branch + Hepatic artery branch + Bile duct</span></div>
+      <div class="kv-row"><span class="kv-key">Zone 1 (periportal)</span><span class="kv-val">First O2; damaged in right heart failure; phosphorus poisoning</span></div>
+      <div class="kv-row"><span class="kv-key">Zone 3 (centrilobular)</span><span class="kv-val danger">Least O2; damaged in CCF/ischaemia; paracetamol toxicity</span></div>
+      <div class="kv-row"><span class="kv-key">Foramen of Winslow</span><span class="kv-val">Epiploic foramen; enters lesser sac; posterior wall = IVC</span></div>
+      <div class="kv-row"><span class="kv-key">Calot's triangle</span><span class="kv-val highlight">Cystic duct + Common hepatic duct + Liver (inferior surface); cystic artery in it</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🔬 Peritoneum &amp; Retroperitoneal Organs</div>
+      <div class="kv-row"><span class="kv-key">Intraperitoneal organs</span><span class="kv-val highlight">Stomach, Spleen, Liver, Gallbladder, 1st part duodenum, Jejunum, Ileum, Caecum, Appendix, Transverse/Sigmoid colon, Ovary, Uterus (when gravid)</span></div>
+      <div class="kv-row"><span class="kv-key">Retroperitoneal (SAD PUCKER)</span><span class="kv-val">Suprarenal glands, Aorta/IVC, Duodenum (2-4th), Pancreas (head + body), Ureters, Colon (ascending + descending), Kidneys, Oesophagus (lower), Rectum</span></div>
+      <div class="kv-row"><span class="kv-key">Appendix base</span><span class="kv-val highlight">McBurney's point (1/3 from ASIS to umbilicus)</span></div>
+      <div class="kv-row"><span class="kv-key">Meckel's diverticulum rule of 2s</span><span class="kv-val">2 feet from ileocaecal valve; 2 inches long; 2% of population; 2 types of mucosa</span></div>
+      <div class="kv-row"><span class="kv-key">Referred pain — diaphragm</span><span class="kv-val">Shoulder tip (C4); phrenic nerve</span></div>
+      <div class="kv-row"><span class="kv-key">Psoas major origin</span><span class="kv-val">T12-L5 vertebrae; psoas abscess points to medial thigh (lesser trochanter)</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🔬 Pelvis — Female Anatomy</div>
+      <div class="kv-row"><span class="kv-key">Uterine artery</span><span class="kv-val highlight">Crosses ABOVE ureter at level of cervix (Water under the bridge)</span></div>
+      <div class="kv-row"><span class="kv-key">Uterine artery origin</span><span class="kv-val">Internal iliac artery (anterior division)</span></div>
+      <div class="kv-row"><span class="kv-key">Ureter relation (surgical danger)</span><span class="kv-val danger">Risk of ligation during hysterectomy — 1.5-2 cm lateral to cervix</span></div>
+      <div class="kv-row"><span class="kv-key">Pouch of Douglas</span><span class="kv-val">Rectouterine pouch; most dependent part of peritoneal cavity in upright position</span></div>
+      <div class="kv-row"><span class="kv-key">Broad ligament contents</span><span class="kv-val">Uterine tube (mesosalpinx), Round ligament, Ovarian vessels, Uterine vessels, Ureter</span></div>
+      <div class="kv-row"><span class="kv-key">Round ligament</span><span class="kv-val">Homologue of gubernaculum; passes through inguinal canal; labium majus</span></div>
+      <div class="kv-row"><span class="kv-key">Ovarian lymphatics</span><span class="kv-val">Para-aortic nodes (L1/L2 level) — NOT inguinal</span></div>
+      <div class="kv-row"><span class="kv-key">Uterine lymphatics</span><span class="kv-val">Cervix → iliac nodes; Fundus → para-aortic nodes</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- HEAD & NECK -->
+<div class="section" id="head">
+  <div class="section-title">Head <span>&amp; Neck</span></div>
+  <div class="section-sub">Cranial nerves, triangles, parotid, orbit, pharynx, larynx</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🧠 Cranial Nerves — Quick Reference</div>
+      <table class="comparison-table">
+        <tr><th>CN</th><th>Name</th><th>Modality</th><th>Key Test/Lesion</th></tr>
+        <tr><td>I</td><td>Olfactory</td><td>S</td><td>Anosmia; cribriform plate #</td></tr>
+        <tr><td>II</td><td>Optic</td><td>S</td><td>APD; visual field defects</td></tr>
+        <tr><td>III</td><td>Oculomotor</td><td>M</td><td>Down+out; ptosis; dilated pupil; "surgical" CN3 palsy (PCom aneurysm)</td></tr>
+        <tr><td>IV</td><td>Trochlear</td><td>M</td><td>Superior oblique; longest intracranial course; head tilt</td></tr>
+        <tr><td>V</td><td>Trigeminal</td><td>B</td><td>Face sensation (3 divisions); jaw jerk; corneal reflex (afferent)</td></tr>
+        <tr><td>VI</td><td>Abducens</td><td>M</td><td>Lateral rectus; medial squint; longest intracranial course (some say CN4)</td></tr>
+        <tr><td>VII</td><td>Facial</td><td>B</td><td>Facial expression; taste ant 2/3; LMN=all face; UMN=lower face only</td></tr>
+        <tr><td>VIII</td><td>Vestibulocochlear</td><td>S</td><td>Rinne/Weber; cochlear (hearing) + vestibular (balance)</td></tr>
+        <tr><td>IX</td><td>Glossopharyngeal</td><td>B</td><td>Taste post 1/3 tongue; carotid body/sinus; gag reflex (afferent)</td></tr>
+        <tr><td>X</td><td>Vagus</td><td>B</td><td>Pharynx/larynx/gut; gag reflex (efferent); RLN</td></tr>
+        <tr><td>XI</td><td>Accessory</td><td>M</td><td>SCM + Trapezius; posterior triangle of neck</td></tr>
+        <tr><td>XII</td><td>Hypoglossal</td><td>M</td><td>Tongue; LMN lesion → tongue deviates to SAME side</td></tr>
+      </table>
+    </div>
+    <div class="card violet">
+      <div class="card-title">👁️ Orbit &amp; Eye Muscles</div>
+      <div class="kv-row"><span class="kv-key">Superior orbital fissure contents</span><span class="kv-val highlight">CN III, IV, V1 (frontal/lacrimal/nasociliary), VI, Ophthalmic veins, Sympathetic</span></div>
+      <div class="kv-row"><span class="kv-key">Optic canal contents</span><span class="kv-val">Optic nerve (CN II) + Ophthalmic artery</span></div>
+      <div class="kv-row"><span class="kv-key">Extraocular muscle innervation</span><span class="kv-val highlight">LR6SO4 (rest CN3) — Lateral Rectus CN6, Superior Oblique CN4</span></div>
+      <div class="kv-row"><span class="kv-key">Superior oblique action</span><span class="kv-val">Intorts eye; depresses adducted eye</span></div>
+      <div class="kv-row"><span class="kv-key">CN III palsy — surgical</span><span class="kv-val danger">Posterior communicating artery aneurysm; pupil involved; painful</span></div>
+      <div class="kv-row"><span class="kv-key">CN III palsy — medical</span><span class="kv-val">DM, HTN; pupil spared (ischaemia); painless</span></div>
+      <div class="kv-row"><span class="kv-key">Horner's syndrome triad</span><span class="kv-val danger">Miosis + Ptosis (partial) + Anhidrosis → sympathetic chain</span></div>
+      <div class="kv-row"><span class="kv-key">Corneal reflex</span><span class="kv-val">Afferent: V1 (nasociliary/long ciliary); Efferent: CN VII</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔬 Parotid Gland &amp; Facial Nerve</div>
+      <div class="kv-row"><span class="kv-key">Structures within parotid</span><span class="kv-val highlight">CN VII (lateral→medial: most superficial) + ECA + Retromandibular vein + Auriculotemporal nerve</span></div>
+      <div class="kv-row"><span class="kv-key">Parotid duct (Stensen's)</span><span class="kv-val">Opens opposite upper 2nd molar; passes over masseter</span></div>
+      <div class="kv-row"><span class="kv-key">Parotidectomy risk</span><span class="kv-val danger">Facial nerve palsy (most important complication)</span></div>
+      <div class="kv-row"><span class="kv-key">Frey's syndrome</span><span class="kv-val">Auriculotemporal nerve → sweating/flushing during eating (after parotidectomy)</span></div>
+      <div class="kv-row"><span class="kv-key">Chorda tympani</span><span class="kv-val">Branch of CN VII; taste anterior 2/3 tongue; submandibular/sublingual gland secretion</span></div>
+      <div class="kv-row"><span class="kv-key">Submandibular duct (Wharton's)</span><span class="kv-val">Opens at sublingual papilla; lingual nerve wraps around it (below-above)</span></div>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🔬 Triangles of the Neck</div>
+      <table class="comparison-table">
+        <tr><th>Triangle</th><th>Boundaries</th><th>Key Contents</th></tr>
+        <tr><td>Anterior triangle</td><td>SCM, mandible, midline</td><td>Carotid artery (common/bifurcation), IJV, vagus, ansa cervicalis</td></tr>
+        <tr><td>Carotid triangle</td><td>SCM, digastric (post belly), superior belly of omohyoid</td><td>Common/external/internal carotid, IJV, CN X, XII, ansa</td></tr>
+        <tr><td>Muscular (strap) triangle</td><td>Omohyoid, SCM, midline</td><td>Strap muscles, thyroid, trachea, parathyroids</td></tr>
+        <tr><td>Digastric (submandibular)</td><td>Digastric (both bellies), mandible</td><td>Submandibular gland, facial artery, CN XII, mylohyoid</td></tr>
+        <tr><td>Posterior triangle</td><td>SCM, trapezius, clavicle</td><td>CN XI (accessory) — lies in this triangle; brachial plexus trunks, EJV, lymph nodes</td></tr>
+        <tr><td>Occipital triangle</td><td>SCM, trapezius, omohyoid</td><td>CN XI, occipital artery</td></tr>
+        <tr><td>Supraclavicular (subclavian)</td><td>Omohyoid, SCM, clavicle</td><td>Subclavian artery (brachial plexus trunks exit here)</td></tr>
+      </table>
+      <div class="alert-box">CN XI injury in posterior triangle → trapezius wasted; cannot abduct arm above 90° (serratus anterior also needed for full abduction)</div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🔬 Larynx — High Yield</div>
+      <div class="kv-row"><span class="kv-key">Motor supply — all laryngeal muscles</span><span class="kv-val highlight">Recurrent laryngeal nerve (EXCEPT cricothyroid → External laryngeal nerve)</span></div>
+      <div class="kv-row"><span class="kv-key">Sensory supply above vocal cords</span><span class="kv-val">Internal laryngeal nerve (SLN branch)</span></div>
+      <div class="kv-row"><span class="kv-key">Sensory supply below vocal cords</span><span class="kv-val">Recurrent laryngeal nerve</span></div>
+      <div class="kv-row"><span class="kv-key">RLN injury — unilateral</span><span class="kv-val danger">Hoarseness (affected cord lies in paramedian position)</span></div>
+      <div class="kv-row"><span class="kv-key">RLN injury — bilateral</span><span class="kv-val danger">Stridor + respiratory distress; both cords adducted (cadaveric position)</span></div>
+      <div class="kv-row"><span class="kv-key">Glottis level vertebra</span><span class="kv-val">C4-C5 (during respiration); C6 (during swallowing — raised)</span></div>
+      <div class="kv-row"><span class="kv-key">Piriform fossa</span><span class="kv-val">Lateral wall of laryngopharynx; lodges foreign bodies</span></div>
+      <div class="kv-row"><span class="kv-key">Reinke's space</span><span class="kv-val">Potential space in vocal cord; oedema in smokers (Reinke's oedema)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- NEUROANATOMY -->
+<div class="section" id="neuro">
+  <div class="section-title">Neuro<span>anatomy</span></div>
+  <div class="section-sub">Brain, spinal cord, blood supply, CSF, tracts, lesions</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🧠 Cerebral Blood Supply</div>
+      <div class="kv-row"><span class="kv-key">Circle of Willis composition</span><span class="kv-val highlight">2× ACA + 2× MCA + 2× PCA + ACom + 2× PCom + basilar tip</span></div>
+      <div class="kv-row"><span class="kv-key">ACA territory</span><span class="kv-val">Medial surface; leg area of motor + sensory cortex</span></div>
+      <div class="kv-row"><span class="kv-key">MCA territory</span><span class="kv-val danger">Lateral surface; arm/face/speech (Broca + Wernicke if dominant)</span></div>
+      <div class="kv-row"><span class="kv-key">PCA territory</span><span class="kv-val">Occipital lobe; thalamus; cortical blindness</span></div>
+      <div class="kv-row"><span class="kv-key">PICA territory</span><span class="kv-val danger">Lateral medulla → Wallenberg syndrome (ipsilateral CN V + IX + X + Horner; contralateral pain/temp loss)</span></div>
+      <div class="kv-row"><span class="kv-key">Lenticulostriate arteries</span><span class="kv-val danger">MCA branches; "arteries of stroke"; rupture → internal capsule bleed</span></div>
+      <div class="kv-row"><span class="kv-key">Berry aneurysm MC site</span><span class="kv-val danger">Anterior communicating artery (AComA) — MC overall; PCom → CN3 palsy</span></div>
+    </div>
+    <div class="card violet">
+      <div class="card-title">🔬 CSF Pathway &amp; Spaces</div>
+      <div class="formula-box">Lateral ventricles → Foramen of Monro → 3rd ventricle → Aqueduct of Sylvius → 4th ventricle → Foramina of Luschka (2) & Magendie (1) → Subarachnoid space → Arachnoid villi → Superior sagittal sinus</div>
+      <div class="kv-row"><span class="kv-key">CSF production site</span><span class="kv-val highlight">Choroid plexus (500 mL/day; 150 mL at any time)</span></div>
+      <div class="kv-row"><span class="kv-key">Normal CSF pressure</span><span class="kv-val green">70-180 mmH2O</span></div>
+      <div class="kv-row"><span class="kv-key">Normal CSF protein</span><span class="kv-val green">15-45 mg/dL (↑ in GBS, meningitis)</span></div>
+      <div class="kv-row"><span class="kv-key">Normal CSF glucose</span><span class="kv-val green">60-80% of blood glucose</span></div>
+      <div class="kv-row"><span class="kv-key">Obstructive (non-communicating) HC</span><span class="kv-val danger">Block within ventricle (aqueduct stenosis MC)</span></div>
+      <div class="kv-row"><span class="kv-key">Communicating HC</span><span class="kv-val">Block at arachnoid villi (post-meningitis, SAH)</span></div>
+      <div class="kv-row"><span class="kv-key">Normal pressure HC (Hakim)</span><span class="kv-val">Wet, Wobbly, Wacky (incontinence, gait, dementia)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔬 Spinal Cord Tracts — Must Know</div>
+      <table class="comparison-table">
+        <tr><th>Tract</th><th>Location</th><th>Carries</th><th>Crosses At</th></tr>
+        <tr><td>Dorsal column (DC)</td><td>Posterior</td><td>Fine touch, vibration, proprioception, 2-point discrimination</td><td>Medulla (decussation of lemnisci)</td></tr>
+        <tr><td>Lateral spinothalamic</td><td>Anterolateral</td><td>Pain and temperature</td><td>2 segments above entry (in spinal cord)</td></tr>
+        <tr><td>Anterior spinothalamic</td><td>Anterior</td><td>Crude touch and pressure</td><td>In spinal cord</td></tr>
+        <tr><td>Lateral corticospinal</td><td>Posterior lateral</td><td>Voluntary motor (UMN → LMN)</td><td>Medulla (pyramidal decussation)</td></tr>
+        <tr><td>Anterior corticospinal</td><td>Anterior</td><td>Voluntary motor (10%; crosses at level)</td><td>At spinal cord level</td></tr>
+        <tr><td>Rubrospinal</td><td>Lateral</td><td>Motor (limb movements)</td><td>Midbrain</td></tr>
+      </table>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🔬 Spinal Cord Syndromes</div>
+      <table class="comparison-table">
+        <tr><th>Syndrome</th><th>Lesion</th><th>Features</th></tr>
+        <tr><td>Brown-Séquard (Hemisection)</td><td>Lateral half of cord</td><td>Ipsilateral: DC loss + UMN; Contralateral: pain/temp loss (2 segments below)</td></tr>
+        <tr><td>Central cord syndrome</td><td>Central (syringomyelia)</td><td>Bilateral arm > leg weakness; pain/temp loss at lesion level (cape distribution); sphincter dysfunction</td></tr>
+        <tr><td>Anterior cord syndrome</td><td>Anterior 2/3</td><td>Bilateral motor loss + pain/temp loss; preserved DC (vibration/proprioception)</td></tr>
+        <tr><td>Posterior cord syndrome</td><td>Posterior 1/3</td><td>Loss of vibration/proprioception; preserved motor + pain/temp; ataxia</td></tr>
+        <tr><td>Subacute combined degeneration</td><td>DC + Lateral corticospinal</td><td>B12 deficiency; UMN signs + DC signs; peripheral neuropathy</td></tr>
+        <tr><td>Tabes dorsalis</td><td>Posterior (dorsal) columns + dorsal roots</td><td>Syphilis; lightning pains; Romberg +ve; Argyll Robertson pupil; loss of proprioception</td></tr>
+      </table>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🧠 Cerebral Lobes &amp; Functions</div>
+      <div class="kv-row"><span class="kv-key">Frontal lobe</span><span class="kv-val highlight">Motor cortex, Broca's area (44,45), prefrontal (executive function)</span></div>
+      <div class="kv-row"><span class="kv-key">Parietal lobe</span><span class="kv-val">Somatosensory cortex; spatial awareness; apraxia; neglect (non-dominant)</span></div>
+      <div class="kv-row"><span class="kv-key">Temporal lobe</span><span class="kv-val">Wernicke's area (22); auditory; memory (hippocampus); language</span></div>
+      <div class="kv-row"><span class="kv-key">Occipital lobe</span><span class="kv-val">Visual cortex; calcarine sulcus; visual field defects</span></div>
+      <div class="kv-row"><span class="kv-key">Broca's aphasia</span><span class="kv-val danger">Non-fluent, effortful speech; comprehension INTACT; frustration</span></div>
+      <div class="kv-row"><span class="kv-key">Wernicke's aphasia</span><span class="kv-val danger">Fluent speech but nonsensical; comprehension LOST; jargon aphasia</span></div>
+      <div class="kv-row"><span class="kv-key">Dominant hemisphere</span><span class="kv-val">Left in 95% right-handers + 70% left-handers</span></div>
+      <div class="kv-row"><span class="kv-key">Gerstmann's syndrome</span><span class="kv-val">Dominant parietal (angular gyrus): Acalculia + Agraphia + Finger agnosia + R-L disorientation</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- EMBRYOLOGY -->
+<div class="section" id="embryo">
+  <div class="section-title">Embryo<span>logy</span></div>
+  <div class="section-sub">Germ layers, pharyngeal arches, congenital anomalies, critical periods</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🧬 Pharyngeal Arches — High Yield</div>
+      <table class="comparison-table">
+        <tr><th>Arch</th><th>Nerve</th><th>Muscle</th><th>Bone/Cartilage</th></tr>
+        <tr><td>1st (Mandibular)</td><td>CN V (trigeminal)</td><td>Mastication (masseter, temporalis, pterygoids, mylohyoid, ant digastric, tensor tympani)</td><td>Meckel's cartilage → malleus, incus, mandible</td></tr>
+        <tr><td>2nd (Hyoid)</td><td>CN VII (facial)</td><td>Expression (orbicularis, buccinator, stapedius, post digastric, stylohyoid)</td><td>Reichert's cartilage → stapes, styloid, lesser cornu of hyoid</td></tr>
+        <tr><td>3rd</td><td>CN IX (glossopharyngeal)</td><td>Stylopharyngeus (only)</td><td>Greater cornu + body of hyoid</td></tr>
+        <tr><td>4th-6th</td><td>CN X (vagus)</td><td>Larynx + pharynx (cricothyroid = SLN; all others = RLN)</td><td>Laryngeal cartilages (thyroid, cricoid, arytenoids)</td></tr>
+      </table>
+    </div>
+    <div class="card violet">
+      <div class="card-title">🧬 Germ Layer Derivatives</div>
+      <div class="kv-row"><span class="kv-key">Ectoderm</span><span class="kv-val highlight">Brain + spinal cord; PNS; epidermis; hair; nails; lens; enamel; anterior pituitary (Rathke's pouch)</span></div>
+      <div class="kv-row"><span class="kv-key">Mesoderm</span><span class="kv-val">Muscle; bone; cartilage; connective tissue; cardiovascular; kidneys; spleen; gonads; dura mater; middle layer of gut</span></div>
+      <div class="kv-row"><span class="kv-key">Endoderm</span><span class="kv-val">GI tract lining; liver; pancreas; lungs; thyroid; parathyroids; thymus; bladder; urethra lining; posterior pituitary (neural crest origin: debated)</span></div>
+      <div class="kv-row"><span class="kv-key">Neural crest cells</span><span class="kv-val danger">Melanocytes; peripheral neurons; Schwann cells; adrenal medulla; craniofacial bones; odontoblasts; aorticopulmonary septum</span></div>
+      <div class="formula-box">MESODERM: MUSClES, Bone, CV, Kidneys, Spleen, Gonads
+Think "MESS" — Mesoderm makes a mess of everything structural</div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔬 Congenital Heart Defects</div>
+      <table class="comparison-table">
+        <tr><th>Defect</th><th>Embryological Origin</th><th>Clinical Feature</th></tr>
+        <tr><td>VSD (MC CHD)</td><td>Membranous IV septum failure</td><td>Holosystolic murmur; left → right shunt</td></tr>
+        <tr><td>ASD (Secundum MC)</td><td>Failure of septum secundum</td><td>Fixed split S2; pulmonary flow murmur</td></tr>
+        <tr><td>PDA</td><td>Ductus arteriosus fails to close</td><td>Continuous machinery murmur; rubella association; Indometacin closes</td></tr>
+        <tr><td>Tetralogy of Fallot</td><td>Anterosuperior displacement of conotruncal septum</td><td>PROVE: Pulm stenosis, RVH, Overriding aorta, VSD; Boot-shaped heart; squatting</td></tr>
+        <tr><td>TGA</td><td>Failure of aortopulmonary septum to spiral</td><td>Egg on string CXR; two parallel circuits; needs PGE1 + Rashkind procedure</td></tr>
+        <tr><td>Truncus arteriosus</td><td>Incomplete AP septation</td><td>Single great vessel; DiGeorge association; cyanosis</td></tr>
+        <tr><td>Coarctation (juxtaductal)</td><td>Abnormal smooth muscle migration from ductus</td><td>Rib notching; radio-femoral delay; hypertensive upper limbs; Turner syndrome</td></tr>
+      </table>
+    </div>
+    <div class="card sky">
+      <div class="card-title">🔬 Gut Development &amp; Rotations</div>
+      <div class="kv-row"><span class="kv-key">Foregut derivatives</span><span class="kv-val highlight">Oesophagus to 2nd part duodenum + Liver, gallbladder, pancreas + Spleen (mesoderm)</span></div>
+      <div class="kv-row"><span class="kv-key">Foregut artery</span><span class="kv-val">Coeliac trunk</span></div>
+      <div class="kv-row"><span class="kv-key">Midgut</span><span class="kv-val">3rd + 4th duodenum → proximal 2/3 transverse colon; SMA</span></div>
+      <div class="kv-row"><span class="kv-key">Hindgut</span><span class="kv-val">Distal 1/3 transverse colon → rectum; IMA</span></div>
+      <div class="kv-row"><span class="kv-key">Midgut rotation</span><span class="kv-val highlight">270° counter-clockwise around SMA axis</span></div>
+      <div class="kv-row"><span class="kv-key">Malrotation</span><span class="kv-val danger">Incomplete rotation → Ladd's bands → duodenal obstruction; midgut volvulus</span></div>
+      <div class="kv-row"><span class="kv-key">Duodenal atresia</span><span class="kv-val danger">Double bubble sign; Down syndrome association; failure of vacuolisation</span></div>
+      <div class="kv-row"><span class="kv-key">Tracheoesophageal fistula (MC type)</span><span class="kv-val danger">Type C — proximal oesophageal atresia + distal TE fistula (85%)</span></div>
+    </div>
+    <div class="card pink">
+      <div class="card-title">🔬 Urogenital Development</div>
+      <div class="kv-row"><span class="kv-key">Pronephros → Mesonephros → Metanephros</span><span class="kv-val highlight">Metanephros = permanent kidney (ureteric bud + metanephric blastema)</span></div>
+      <div class="kv-row"><span class="kv-key">Ureteric bud gives</span><span class="kv-val">Ureter, pelvis, calyces, collecting ducts</span></div>
+      <div class="kv-row"><span class="kv-key">Metanephric blastema gives</span><span class="kv-val">Glomerulus through DCT (nephrons)</span></div>
+      <div class="kv-row"><span class="kv-key">Renal agenesis (bilateral)</span><span class="kv-val danger">Potter sequence: oligohydramnios + pulmonary hypoplasia + limb deformities</span></div>
+      <div class="kv-row"><span class="kv-key">Horseshoe kidney</span><span class="kv-val">Lower poles fused; trapped below IMA; urinary obstruction</span></div>
+      <div class="kv-row"><span class="kv-key">Wolffian duct → male</span><span class="kv-val">Vas deferens, epididymis, seminal vesicles, ejaculatory duct (testosterone-driven)</span></div>
+      <div class="kv-row"><span class="kv-key">Müllerian duct → female</span><span class="kv-val">Fallopian tubes, uterus, upper 1/3 vagina (default female development)</span></div>
+      <div class="kv-row"><span class="kv-key">SRY gene</span><span class="kv-val">Y chromosome; codes testis-determining factor; Sertoli cells → AMH (Müllerian regression)</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">⚠️ Teratogens — Must Know</div>
+      <table class="comparison-table">
+        <tr><th>Teratogen</th><th>Defect Caused</th></tr>
+        <tr><td>Alcohol</td><td>FAS: short stature, microcephaly, smooth philtrum, VSD, intellectual disability</td></tr>
+        <tr><td>Thalidomide</td><td>Phocomelia (limb reduction); given for morning sickness (1950s)</td></tr>
+        <tr><td>Isotretinoin (Vit A excess)</td><td>CNS anomalies, microtia, CV defects, cleft palate; Pregnancy category X</td></tr>
+        <tr><td>Valproic acid</td><td>Neural tube defects (spina bifida); also: polydactyly, cardiac</td></tr>
+        <tr><td>Warfarin</td><td>Warfarin embryopathy: nasal hypoplasia, stippled epiphyses; also CNS; avoid 6-12 weeks</td></tr>
+        <tr><td>ACE inhibitors</td><td>Renal dysgenesis, oligohydramnios (2nd/3rd trimester); teratogenic only from 2nd trimester</td></tr>
+        <tr><td>Rubella (congenital)</td><td>PDA, pulmonary artery stenosis, cataracts, deafness, microcephaly</td></tr>
+        <tr><td>CMV (congenital)</td><td>Periventricular calcifications, sensorineural deafness, microcephaly, chorioretinitis</td></tr>
+        <tr><td>Toxoplasma (congenital)</td><td>Diffuse intracranial calcifications, chorioretinitis, hydrocephalus</td></tr>
+        <tr><td>Methotrexate</td><td>Folic acid antagonist; NTD; craniosynostosis; Category X</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency anatomy facts for rapid revision</div>
+  <div class="grid-2">
+    <div class="card violet">
+      <div class="card-title">⭐ Anatomy Favourites — Part 1</div>
+      <div class="kv-row"><span class="kv-key">Longest nerve in body</span><span class="kv-val highlight">Sciatic nerve (L4-S3)</span></div>
+      <div class="kv-row"><span class="kv-key">Largest nerve in body</span><span class="kv-val">Sciatic nerve</span></div>
+      <div class="kv-row"><span class="kv-key">Narrowest part of GI tract</span><span class="kv-val">Pylorus (functionally); anatomically → appendix lumen</span></div>
+      <div class="kv-row"><span class="kv-key">Narrowest part of pharynx</span><span class="kv-val">Cricopharyngeus (C6 level) — Killian's dehiscence → Zenker's diverticulum</span></div>
+      <div class="kv-row"><span class="kv-key">Narrowest part of ureter</span><span class="kv-val danger">Pelviureteric junction (PUJ) — MC site of calculus obstruction</span></div>
+      <div class="kv-row"><span class="kv-key">Shortest muscle in body</span><span class="kv-val">Stapedius (CN VII innervation)</span></div>
+      <div class="kv-row"><span class="kv-key">Smallest bone in body</span><span class="kv-val">Stapes</span></div>
+      <div class="kv-row"><span class="kv-key">Largest bone in body</span><span class="kv-val">Femur</span></div>
+      <div class="kv-row"><span class="kv-key">Largest gland in body</span><span class="kv-val highlight">Liver (skin is the largest organ)</span></div>
+      <div class="kv-row"><span class="kv-key">Largest salivary gland</span><span class="kv-val">Parotid (but submandibular produces most saliva — 70%)</span></div>
+      <div class="kv-row"><span class="kv-key">MC congenital heart defect</span><span class="kv-val">VSD</span></div>
+      <div class="kv-row"><span class="kv-key">Nutcracker syndrome</span><span class="kv-val danger">Left renal vein compressed between aorta + SMA → haematuria</span></div>
+      <div class="kv-row"><span class="kv-key">Left-sided varicocele</span><span class="kv-val danger">Left testicular vein → Left renal vein (90° angle); right drains directly into IVC</span></div>
+      <div class="kv-row"><span class="kv-key">McBurney's point</span><span class="kv-val">1/3 of ASIS-to-umbilicus line; appendix base; Rovsing's sign</span></div>
+      <div class="kv-row"><span class="kv-key">Murphy's sign</span><span class="kv-val">Cholecystitis; inspiratory arrest on palpation right hypochondrium</span></div>
+      <div class="kv-row"><span class="kv-key">Battle's sign</span><span class="kv-val">Bruising behind ear (mastoid); middle cranial fossa #</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">⭐ Anatomy Favourites — Part 2</div>
+      <div class="kv-row"><span class="kv-key">Phrenic nerve root value</span><span class="kv-val highlight">C3, C4, C5 (C3,4,5 keeps the diaphragm alive)</span></div>
+      <div class="kv-row"><span class="kv-key">Obturator nerve injury</span><span class="kv-val danger">Medial thigh sensation loss + weak adduction; obturator hernia</span></div>
+      <div class="kv-row"><span class="kv-key">Geniculate ganglion</span><span class="kv-val">CN VII; VZV reactivation → Ramsay Hunt; taste + lacrimation + ear</span></div>
+      <div class="kv-row"><span class="kv-key">Parinaud syndrome</span><span class="kv-val danger">Dorsal midbrain (superior colliculus); upgaze paralysis; pineal tumor</span></div>
+      <div class="kv-row"><span class="kv-key">Locked-in syndrome</span><span class="kv-val">Pontine infarct (basilar artery); aware but cannot move except eye vertical gaze</span></div>
+      <div class="kv-row"><span class="kv-key">Medial medullary syndrome</span><span class="kv-val">ASA / vertebral artery; contralateral hemiparesis + DC loss + ipsilateral CN XII palsy</span></div>
+      <div class="kv-row"><span class="kv-key">Internuclear ophthalmoplegia</span><span class="kv-val danger">MLF lesion; MS (bilateral); fail to adduct on ipsilateral side</span></div>
+      <div class="kv-row"><span class="kv-key">Epidural haematoma</span><span class="kv-val highlight">Middle meningeal artery (pterion #); lens-shaped (biconvex); lucid interval</span></div>
+      <div class="kv-row"><span class="kv-key">Subdural haematoma</span><span class="kv-val">Bridging veins; crescent-shaped; crosses suture lines</span></div>
+      <div class="kv-row"><span class="kv-key">Watershed infarction</span><span class="kv-val danger">Between ACA+MCA (upper limb prox) or MCA+PCA (visual); hypotension/cardiac arrest</span></div>
+      <div class="kv-row"><span class="kv-key">Charcot's triad (ascending cholangitis)</span><span class="kv-val danger">Fever + Jaundice + RUQ pain; add hypotension + AMS = Reynolds pentad</span></div>
+      <div class="kv-row"><span class="kv-key">Cousin of Colon triangle</span><span class="kv-val">Rouvier's sulcus / "critical view of safety" in cholecystectomy</span></div>
+      <div class="kv-row"><span class="kv-key">Danger area of face</span><span class="kv-val danger">Nasolabial triangle; veins lack valves → infection spreads to cavernous sinus</span></div>
+      <div class="kv-row"><span class="kv-key">Cavernous sinus contents</span><span class="kv-val">CN III, IV, V1, V2, VI (most medial, inside sinus); ICA; sympathetics</span></div>
+      <div class="kv-row"><span class="kv-key">Virchow's node</span><span class="kv-val">Left supraclavicular (Troisier's sign); gastric Ca metastasis; thoracic duct</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

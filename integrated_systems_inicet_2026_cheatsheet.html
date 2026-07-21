@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Integrated Systems Cheatsheet — INICET 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0e1a; --surface: #111827; --surface2: #1a2235; --border: #1e2d45;
+    --accent: #fb923c; --accent2: #7dd3fc; --accent3: #86efac; --accent4: #f9a8d4; --accent5: #c4b5fd;
+    --text: #e2e8f0; --muted: #64748b; --danger: #f87171;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #0f172a 0%, #05101c 50%, #0f172a 100%); border-bottom: 1px solid var(--border); padding: 24px 32px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge { background: var(--accent); color: #0a0e1a; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 4px 8px; border-radius: 4px; letter-spacing: 1px; }
+  .logo h1 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+  .logo h1 span { color: var(--accent); }
+  .exam-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { border-color: var(--border); background: var(--surface); }
+  .tab.active { background: var(--accent); color: #0a0e1a; font-weight: 700; }
+  .content { padding: 24px 32px; max-width: 1400px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; font-weight: 300; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.orange::before { background: var(--accent); }
+  .card.blue::before { background: var(--accent2); }
+  .card.green::before { background: var(--accent3); }
+  .card.pink::before { background: var(--accent4); }
+  .card.purple::before { background: var(--accent5); }
+  .card.red::before { background: var(--danger); }
+  .card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 12px; }
+  .card.orange .card-title { color: var(--accent); }
+  .card.blue .card-title { color: var(--accent2); }
+  .card.green .card-title { color: var(--accent3); }
+  .card.pink .card-title { color: var(--accent4); }
+  .card.purple .card-title { color: var(--accent5); }
+  .card.red .card-title { color: var(--danger); }
+  .kv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #1a2235; font-size: 12.5px; gap: 10px; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--muted); flex: 1; font-weight: 400; }
+  .kv-val { color: var(--text); font-weight: 500; text-align: right; font-family: 'DM Mono', monospace; font-size: 11.5px; }
+  .kv-val.highlight { color: var(--accent); }
+  .kv-val.blue { color: var(--accent2); }
+  .kv-val.green { color: var(--accent3); }
+  .kv-val.pink { color: var(--accent4); }
+  .kv-val.danger { color: var(--danger); }
+  .kv-val.purple { color: var(--accent5); }
+  .alert-box { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--danger); margin-top: 8px; line-height: 1.5; }
+  .info-box { background: rgba(125,211,252,0.06); border: 1px solid rgba(125,211,252,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent2); margin-top: 8px; line-height: 1.5; }
+  .green-box { background: rgba(134,239,172,0.06); border: 1px solid rgba(134,239,172,0.2); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent3); margin-top: 8px; line-height: 1.5; }
+  .orange-box { background: rgba(251,146,60,0.08); border: 1px solid rgba(251,146,60,0.25); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: var(--accent); margin-top: 8px; line-height: 1.5; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .comparison-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .comparison-table th { background: var(--surface2); padding: 7px 10px; text-align: left; font-weight: 600; color: var(--muted); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .comparison-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.4; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table td:first-child { color: var(--accent); font-weight: 500; }
+  .span-full { grid-column: 1 / -1; }
+  .mnemonic { background: rgba(196,181,253,0.07); border-left: 3px solid var(--accent5); border-radius: 0 8px 8px 0; padding: 8px 12px; margin-top: 8px; font-size: 12px; color: var(--accent5); line-height: 1.6; }
+  .mnemonic b { color: var(--accent); }
+  @media (max-width: 800px) { .grid-auto, .grid-2, .grid-3 { grid-template-columns: 1fr; } .content { padding: 14px; } .header { padding: 14px; } }
+</style>
+  <link rel="stylesheet" href="cheatsheet-theme.css">
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">
+      <span class="logo-badge">INICET 2026</span>
+      <h1>Integrated <span>Systems</span> Cheatsheet</h1>
+    </div>
+    <span class="exam-tag">HIGH YIELD</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('cvs',this)">CVS</div>
+    <div class="tab" onclick="showSection('respiratory',this)">Respiratory</div>
+    <div class="tab" onclick="showSection('renal',this)">Renal</div>
+    <div class="tab" onclick="showSection('gi',this)">GI &amp; Liver</div>
+    <div class="tab" onclick="showSection('endocrine',this)">Endocrine</div>
+    <div class="tab" onclick="showSection('neuro',this)">Neurology</div>
+    <div class="tab" onclick="showSection('hemato',this)">Haematology</div>
+    <div class="tab" onclick="showSection('immuno',this)">Immunology</div>
+    <div class="tab" onclick="showSection('oneliners',this)">One-Liners</div>
+  </div>
+</div>
+<div class="content">
+
+<!-- CVS -->
+<div class="section active" id="cvs">
+  <div class="section-title">Cardiovascular <span>System</span></div>
+  <div class="section-sub">ECG, heart failure, valves, arrhythmias, cardiac pharmacology</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">❤️ Heart Failure — Basics</div>
+      <div class="kv-row"><span class="kv-key">HFrEF (systolic HF) EF</span><span class="kv-val danger">&lt;40%</span></div>
+      <div class="kv-row"><span class="kv-key">HFpEF (diastolic HF) EF</span><span class="kv-val green">≥50%</span></div>
+      <div class="kv-row"><span class="kv-key">HFmrEF</span><span class="kv-val">40–49%</span></div>
+      <div class="kv-row"><span class="kv-key">NYHA I</span><span class="kv-val green">No symptoms on ordinary activity</span></div>
+      <div class="kv-row"><span class="kv-key">NYHA II</span><span class="kv-val">Slight limitation; comfortable at rest</span></div>
+      <div class="kv-row"><span class="kv-key">NYHA III</span><span class="kv-val danger">Marked limitation; comfortable at rest</span></div>
+      <div class="kv-row"><span class="kv-key">NYHA IV</span><span class="kv-val danger">Symptoms at rest</span></div>
+      <div class="kv-row"><span class="kv-key">Mortality benefit drugs (HFrEF)</span><span class="kv-val highlight">ACEi/ARB, BB, MRA, SGLT2i</span></div>
+      <div class="kv-row"><span class="kv-key">Avoid in HF</span><span class="kv-val danger">NSAIDs, CCBs (verapamil/diltiazem), TZDs</span></div>
+      <div class="kv-row"><span class="kv-key">BNP — elevated in</span><span class="kv-val">HF, PE, RVH; decreased in obesity</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">⚡ ECG Essentials</div>
+      <div class="kv-row"><span class="kv-key">PR interval normal</span><span class="kv-val">120–200 ms (3–5 small sq)</span></div>
+      <div class="kv-row"><span class="kv-key">QRS normal</span><span class="kv-val">&lt;120 ms</span></div>
+      <div class="kv-row"><span class="kv-key">QTc prolonged</span><span class="kv-val danger">&gt;440 ms (♂) / &gt;460 ms (♀)</span></div>
+      <div class="kv-row"><span class="kv-key">Delta wave</span><span class="kv-val highlight">WPW syndrome (accessory pathway)</span></div>
+      <div class="kv-row"><span class="kv-key">Osborne (J) wave</span><span class="kv-val">Hypothermia</span></div>
+      <div class="kv-row"><span class="kv-key">Epsilon wave</span><span class="kv-val">ARVC (arrhythmogenic RV cardiomyopathy)</span></div>
+      <div class="kv-row"><span class="kv-key">Brugada pattern</span><span class="kv-val danger">Coved ST elevation V1–V3; SCD risk</span></div>
+      <div class="kv-row"><span class="kv-key">STEMI — posterior</span><span class="kv-val">ST depression V1–V3 + tall R waves</span></div>
+      <div class="kv-row"><span class="kv-key">ECG in hyperkalaemia</span><span class="kv-val danger">Peaked T → wide QRS → sine wave</span></div>
+      <div class="kv-row"><span class="kv-key">ECG in hypokalaemia</span><span class="kv-val">Flat T, prominent U wave</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔀 Arrhythmias</div>
+      <div class="kv-row"><span class="kv-key">AF — rate control drug</span><span class="kv-val highlight">Beta-blocker / digoxin / diltiazem</span></div>
+      <div class="kv-row"><span class="kv-key">AF — rhythm control</span><span class="kv-val">Amiodarone, flecainide, cardioversion</span></div>
+      <div class="kv-row"><span class="kv-key">CHA₂DS₂-VASc ≥2 (♂)</span><span class="kv-val danger">Anticoagulate (DOAC preferred)</span></div>
+      <div class="kv-row"><span class="kv-key">SVT — acute Rx</span><span class="kv-val highlight">Vagal manoeuvres → Adenosine IV</span></div>
+      <div class="kv-row"><span class="kv-key">Adenosine half-life</span><span class="kv-val">10 seconds</span></div>
+      <div class="kv-row"><span class="kv-key">VT with pulse</span><span class="kv-val danger">Amiodarone → synchronized cardioversion</span></div>
+      <div class="kv-row"><span class="kv-key">VF / pulseless VT</span><span class="kv-val danger">Immediate defibrillation (unsynchronized)</span></div>
+      <div class="kv-row"><span class="kv-key">Torsades de pointes — cause</span><span class="kv-val danger">Long QT; Rx: IV MgSO₄</span></div>
+      <div class="kv-row"><span class="kv-key">WPW — avoid</span><span class="kv-val danger">Digoxin, adenosine, verapamil</span></div>
+      <div class="kv-row"><span class="kv-key">WPW — drug of choice</span><span class="kv-val">Procainamide / DC cardioversion</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🫀 Valvular Heart Disease</div>
+      <div class="kv-row"><span class="kv-key">Mitral stenosis — murmur</span><span class="kv-val">Mid-diastolic, rumbling, apex, opening snap</span></div>
+      <div class="kv-row"><span class="kv-key">MS — MC cause</span><span class="kv-val highlight">Rheumatic fever</span></div>
+      <div class="kv-row"><span class="kv-key">MS — valve area normal</span><span class="kv-val">4–6 cm²</span></div>
+      <div class="kv-row"><span class="kv-key">MS — severe if area</span><span class="kv-val danger">&lt;1 cm²</span></div>
+      <div class="kv-row"><span class="kv-key">Aortic stenosis — murmur</span><span class="kv-val">Ejection systolic, radiates to carotids</span></div>
+      <div class="kv-row"><span class="kv-key">AS — classic triad</span><span class="kv-val danger">Angina, Syncope, Dyspnoea (SAD)</span></div>
+      <div class="kv-row"><span class="kv-key">AR — Corrigan's pulse</span><span class="kv-val">Collapsing/water-hammer pulse</span></div>
+      <div class="kv-row"><span class="kv-key">MVP — murmur</span><span class="kv-val">Mid-systolic click + late systolic murmur</span></div>
+      <div class="kv-row"><span class="kv-key">Prosthetic valve anticoag</span><span class="kv-val danger">Warfarin (mechanical); DOAC contraindicated</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">💊 Cardiac Pharmacology</div>
+      <div class="kv-row"><span class="kv-key">Digoxin toxicity signs</span><span class="kv-val danger">Xanthopsia (yellow vision), nausea, bradycardia</span></div>
+      <div class="kv-row"><span class="kv-key">Digoxin — antidote</span><span class="kv-val">Digoxin-specific Fab antibody</span></div>
+      <div class="kv-row"><span class="kv-key">Amiodarone toxicity</span><span class="kv-val danger">Pulmonary fibrosis, thyroid dysfunction, corneal microdeposits, photosensitivity</span></div>
+      <div class="kv-row"><span class="kv-key">Amiodarone class</span><span class="kv-val">Class III (K⁺ channel blocker)</span></div>
+      <div class="kv-row"><span class="kv-key">Vaughan-Williams Class I</span><span class="kv-val">Na⁺ channel blockers (quinidine, lidocaine)</span></div>
+      <div class="kv-row"><span class="kv-key">Vaughan-Williams Class II</span><span class="kv-val">Beta-blockers</span></div>
+      <div class="kv-row"><span class="kv-key">Vaughan-Williams Class IV</span><span class="kv-val">CCBs (verapamil, diltiazem)</span></div>
+      <div class="kv-row"><span class="kv-key">ACE inhibitor — cough cause</span><span class="kv-val">Bradykinin accumulation</span></div>
+      <div class="kv-row"><span class="kv-key">Hydralazine — side effect</span><span class="kv-val danger">Drug-induced lupus (SLE)</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🫀 Cardiomyopathies</div>
+      <div class="kv-row"><span class="kv-key">DCM — MC cause</span><span class="kv-val">Idiopathic; also alcohol, viral, peripartum</span></div>
+      <div class="kv-row"><span class="kv-key">HCM — gene</span><span class="kv-val highlight">Sarcomere protein mutations (MYH7, MYBPC3)</span></div>
+      <div class="kv-row"><span class="kv-key">HCM — murmur increases with</span><span class="kv-val danger">Valsalva, standing (↓ preload worsens)</span></div>
+      <div class="kv-row"><span class="kv-key">HCM — murmur decreases with</span><span class="kv-val green">Squatting, leg raise (↑ preload improves)</span></div>
+      <div class="kv-row"><span class="kv-key">HCM — avoid</span><span class="kv-val danger">Digoxin, nitrates, diuretics</span></div>
+      <div class="kv-row"><span class="kv-key">RCM — MC cause</span><span class="kv-val">Amyloidosis; also sarcoidosis, haemochromatosis</span></div>
+      <div class="kv-row"><span class="kv-key">Peripartum CM — timing</span><span class="kv-val">Last month of pregnancy to 5 months postpartum</span></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-auto">
+    <div class="card blue span-full">
+      <div class="card-title">📊 ACS — Key Differentials</div>
+      <table class="comparison-table">
+        <tr><th>Feature</th><th>STEMI</th><th>NSTEMI</th><th>Unstable Angina</th></tr>
+        <tr><td>Troponin</td><td>↑↑</td><td>↑</td><td>Normal</td></tr>
+        <tr><td>ECG</td><td>ST elevation + LBBB</td><td>ST depression / T-wave inversion</td><td>Normal or non-specific</td></tr>
+        <tr><td>Reperfusion</td><td>Primary PCI &lt;90 min (door-to-balloon)</td><td>PCI within 24–72 hrs</td><td>Medical ± PCI</td></tr>
+        <tr><td>Thrombolysis</td><td>If PCI not available within 120 min</td><td>Contraindicated</td><td>Not indicated</td></tr>
+        <tr><td>Antiplatelet</td><td>Aspirin + P2Y12 inhibitor (DAPT)</td><td>DAPT</td><td>Aspirin + P2Y12</td></tr>
+      </table>
+      <div class="mnemonic"><b>MONA:</b> Morphine, Oxygen (if SpO₂&lt;90%), Nitrates, Aspirin — acute STEMI initial Rx</div>
+    </div>
+  </div>
+</div>
+
+<!-- RESPIRATORY -->
+<div class="section" id="respiratory">
+  <div class="section-title">Respiratory <span>System</span></div>
+  <div class="section-sub">Obstructive vs restrictive, spirometry, PFTs, lung diseases</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🫁 Spirometry Patterns</div>
+      <div class="kv-row"><span class="kv-key">Obstructive pattern</span><span class="kv-val danger">FEV1/FVC &lt;0.7</span></div>
+      <div class="kv-row"><span class="kv-key">Restrictive pattern</span><span class="kv-val">FEV1/FVC &gt;0.7 + ↓TLC</span></div>
+      <div class="kv-row"><span class="kv-key">COPD — severity (FEV1 %pred)</span><span class="kv-val highlight">GOLD: ≥80% / 50–79% / 30–49% / &lt;30%</span></div>
+      <div class="kv-row"><span class="kv-key">DLCO ↓ in</span><span class="kv-val danger">Emphysema, IPF, pulmonary HTN, anaemia</span></div>
+      <div class="kv-row"><span class="kv-key">DLCO ↑ in</span><span class="kv-val green">Polycythaemia, pulmonary haemorrhage, left-to-right shunt</span></div>
+      <div class="kv-row"><span class="kv-key">Asthma reversibility</span><span class="kv-val green">FEV1 ↑ ≥12% and ≥200 mL post-bronchodilator</span></div>
+      <div class="kv-row"><span class="kv-key">Pink puffer</span><span class="kv-val">Emphysema (Type A COPD)</span></div>
+      <div class="kv-row"><span class="kv-key">Blue bloater</span><span class="kv-val">Chronic bronchitis (Type B COPD)</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🫁 COPD Management</div>
+      <div class="kv-row"><span class="kv-key">SABA (short-acting)</span><span class="kv-val">Salbutamol — reliever</span></div>
+      <div class="kv-row"><span class="kv-key">LABA</span><span class="kv-val">Salmeterol, Formoterol</span></div>
+      <div class="kv-row"><span class="kv-key">LAMA</span><span class="kv-val highlight">Tiotropium (mainstay COPD Rx)</span></div>
+      <div class="kv-row"><span class="kv-key">ICS use in COPD</span><span class="kv-val">Frequent exacerbations + EOS &gt;300</span></div>
+      <div class="kv-row"><span class="kv-key">Roflumilast</span><span class="kv-val">PDE4 inhibitor; severe COPD + chronic bronchitis</span></div>
+      <div class="kv-row"><span class="kv-key">Long-term O₂ therapy</span><span class="kv-val danger">PaO₂ &lt;55 mmHg or SpO₂ ≤88% at rest</span></div>
+      <div class="kv-row"><span class="kv-key">O₂ target in COPD exacerbation</span><span class="kv-val">SpO₂ 88–92%</span></div>
+      <div class="kv-row"><span class="kv-key">Smoking cessation drug</span><span class="kv-val highlight">Varenicline (most effective)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🫁 Asthma</div>
+      <div class="kv-row"><span class="kv-key">Mild acute asthma (PEFR)</span><span class="kv-val green">67–80% predicted</span></div>
+      <div class="kv-row"><span class="kv-key">Moderate acute asthma</span><span class="kv-val">50–66% predicted</span></div>
+      <div class="kv-row"><span class="kv-key">Severe acute asthma</span><span class="kv-val danger">&lt;50% predicted</span></div>
+      <div class="kv-row"><span class="kv-key">Life-threatening — PEFR</span><span class="kv-val danger">&lt;33% + silent chest / cyanosis / exhaustion</span></div>
+      <div class="kv-row"><span class="kv-key">Acute severe Rx</span><span class="kv-val">SABA nebs + O₂ + oral prednisolone</span></div>
+      <div class="kv-row"><span class="kv-key">IV MgSO₄ — when</span><span class="kv-val danger">Severe/life-threatening not responding</span></div>
+      <div class="kv-row"><span class="kv-key">Step 1 (mild intermittent)</span><span class="kv-val">SABA PRN only</span></div>
+      <div class="kv-row"><span class="kv-key">Step 2 add</span><span class="kv-val">ICS (beclomethasone/budesonide)</span></div>
+      <div class="kv-row"><span class="kv-key">Step 3 add</span><span class="kv-val">LABA (salmeterol) + ICS</span></div>
+      <div class="kv-row"><span class="kv-key">Biologics (severe asthma)</span><span class="kv-val highlight">Omalizumab (anti-IgE), Mepolizumab (anti-IL5)</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🫁 Interstitial Lung Diseases</div>
+      <div class="kv-row"><span class="kv-key">IPF — diagnosis</span><span class="kv-val">UIP pattern on HRCT; basal honeycombing</span></div>
+      <div class="kv-row"><span class="kv-key">IPF — prognosis</span><span class="kv-val danger">Median survival 3–5 years</span></div>
+      <div class="kv-row"><span class="kv-key">IPF — treatment</span><span class="kv-val">Pirfenidone / Nintedanib (antifibrotics)</span></div>
+      <div class="kv-row"><span class="kv-key">Sarcoidosis — lung stage I</span><span class="kv-val">BHL only</span></div>
+      <div class="kv-row"><span class="kv-key">Sarcoidosis — lung stage II</span><span class="kv-val">BHL + pulmonary infiltrates</span></div>
+      <div class="kv-row"><span class="kv-key">Sarcoidosis — lung stage III</span><span class="kv-val">Pulmonary infiltrates only</span></div>
+      <div class="kv-row"><span class="kv-key">Sarcoidosis — lung stage IV</span><span class="kv-val danger">Pulmonary fibrosis</span></div>
+      <div class="kv-row"><span class="kv-key">Löfgren's syndrome</span><span class="kv-val green">BHL + erythema nodosum + arthralgia (good prognosis)</span></div>
+      <div class="kv-row"><span class="kv-key">Hypersensitivity pneumonitis</span><span class="kv-val">Farmer's lung (thermophilic actinomycetes)</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">⚠️ Pleural Effusion</div>
+      <div class="kv-row"><span class="kv-key">Light's criteria — exudate (any 1)</span><span class="kv-val danger">Fluid:serum protein &gt;0.5; LDH &gt;0.6; Fluid LDH &gt;2/3 upper serum limit</span></div>
+      <div class="kv-row"><span class="kv-key">Transudate causes</span><span class="kv-val">HF, cirrhosis, nephrotic syndrome, hypothyroidism</span></div>
+      <div class="kv-row"><span class="kv-key">Exudate causes</span><span class="kv-val">Malignancy, infection, PE, RA, SLE</span></div>
+      <div class="kv-row"><span class="kv-key">Chylothorax — fluid</span><span class="kv-val">Triglycerides &gt;110 mg/dL</span></div>
+      <div class="kv-row"><span class="kv-key">Empyema pH</span><span class="kv-val danger">&lt;7.2 → chest drain</span></div>
+      <div class="kv-row"><span class="kv-key">Mesothelioma — asbestos latency</span><span class="kv-val">20–40 years</span></div>
+    </div>
+    <div class="card orange">
+      <div class="card-title">🩸 Pulmonary Embolism</div>
+      <div class="kv-row"><span class="kv-key">Wells score &gt;4</span><span class="kv-val danger">High probability PE — CT-PA directly</span></div>
+      <div class="kv-row"><span class="kv-key">Wells score ≤4</span><span class="kv-val">D-dimer first</span></div>
+      <div class="kv-row"><span class="kv-key">D-dimer — negative predictive value</span><span class="kv-val green">Very high (rules out PE if low probability)</span></div>
+      <div class="kv-row"><span class="kv-key">Gold standard imaging</span><span class="kv-val highlight">CT pulmonary angiography (CT-PA)</span></div>
+      <div class="kv-row"><span class="kv-key">Classic ECG in PE</span><span class="kv-val">S1Q3T3 + sinus tachycardia (MC)</span></div>
+      <div class="kv-row"><span class="kv-key">Massive PE with haemodynamic instability</span><span class="kv-val danger">IV thrombolysis (alteplase)</span></div>
+      <div class="kv-row"><span class="kv-key">Treatment (stable)</span><span class="kv-val highlight">DOAC (rivaroxaban/apixaban) preferred</span></div>
+      <div class="kv-row"><span class="kv-key">Duration anticoagulation (unprovoked)</span><span class="kv-val">≥3 months; consider indefinite</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- RENAL -->
+<div class="section" id="renal">
+  <div class="section-title">Renal <span>System</span></div>
+  <div class="section-sub">AKI, CKD, glomerulonephritis, acid-base, electrolytes</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🫘 AKI — KDIGO Staging</div>
+      <div class="kv-row"><span class="kv-key">AKI Stage 1</span><span class="kv-val">Cr ×1.5–1.9 baseline or ↑ ≥0.3 mg/dL; UO &lt;0.5 mL/kg/hr × 6–12 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">AKI Stage 2</span><span class="kv-val">Cr ×2–2.9 baseline; UO &lt;0.5 mL/kg/hr × 12 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">AKI Stage 3</span><span class="kv-val danger">Cr ×3 baseline or &gt;4 mg/dL; UO &lt;0.3 mL/kg/hr × 24 hrs or anuria × 12 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Pre-renal — FeNa</span><span class="kv-val green">&lt;1% (kidneys avid Na retention)</span></div>
+      <div class="kv-row"><span class="kv-key">Intrinsic ATN — FeNa</span><span class="kv-val danger">&gt;2%</span></div>
+      <div class="kv-row"><span class="kv-key">FeNa unreliable if</span><span class="kv-val">Patient on diuretics → use FeUrea instead</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause ATN</span><span class="kv-val danger">Ischaemia &gt; aminoglycosides, contrast</span></div>
+      <div class="kv-row"><span class="kv-key">Muddy brown casts</span><span class="kv-val danger">ATN (acute tubular necrosis)</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🫘 CKD — Staging &amp; Management</div>
+      <div class="kv-row"><span class="kv-key">CKD G1</span><span class="kv-val green">eGFR ≥90 + kidney damage markers</span></div>
+      <div class="kv-row"><span class="kv-key">CKD G2</span><span class="kv-val">eGFR 60–89</span></div>
+      <div class="kv-row"><span class="kv-key">CKD G3a/3b</span><span class="kv-val">45–59 / 30–44</span></div>
+      <div class="kv-row"><span class="kv-key">CKD G4</span><span class="kv-val danger">15–29</span></div>
+      <div class="kv-row"><span class="kv-key">CKD G5 (ESRD)</span><span class="kv-val danger">&lt;15</span></div>
+      <div class="kv-row"><span class="kv-key">BP target in CKD + proteinuria</span><span class="kv-val highlight">&lt;130/80 mmHg</span></div>
+      <div class="kv-row"><span class="kv-key">1st line antihypertensive CKD</span><span class="kv-val highlight">ACEi/ARB (reduce proteinuria)</span></div>
+      <div class="kv-row"><span class="kv-key">Renal anaemia — cause</span><span class="kv-val">↓ EPO (normocytic normochromic)</span></div>
+      <div class="kv-row"><span class="kv-key">Renal osteodystrophy sequence</span><span class="kv-val">↓GFR → ↓PO₄ excretion → ↓Ca → ↑PTH → osteitis fibrosa cystica</span></div>
+      <div class="kv-row"><span class="kv-key">SGLT2i benefit in CKD</span><span class="kv-val highlight">Slows progression (empagliflozin, dapagliflozin)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔬 Glomerulonephritis — Patterns</div>
+      <table class="comparison-table">
+        <tr><th>GN Type</th><th>Presentation</th><th>Key Finding</th></tr>
+        <tr><td>IgA nephropathy (Berger's)</td><td>Haematuria post-URTI (synpharyngitic)</td><td>Mesangial IgA deposits; MC primary GN worldwide</td></tr>
+        <tr><td>Minimal Change Disease</td><td>Nephrotic syndrome in children</td><td>Normal LM; podocyte fusion on EM; responds to steroids</td></tr>
+        <tr><td>FSGS</td><td>Nephrotic; adults; HIV, heroin</td><td>Segmental sclerosis; poor steroid response</td></tr>
+        <tr><td>Membranous GN</td><td>Nephrotic; MC in adults; associated with HBV, malignancy</td><td>Spike and dome (IF); PLA2R antibody</td></tr>
+        <tr><td>MPGN</td><td>Nephritic + nephrotic mixed</td><td>Tram-track (splitting GBM); C3 ↓</td></tr>
+        <tr><td>Post-strep GN</td><td>Nephritic; 2–3 wks post throat/skin</td><td>Subepithelial humps (IF); ASO titre ↑; C3 ↓</td></tr>
+        <tr><td>Goodpasture's</td><td>Pulmonary-renal syndrome</td><td>Linear IgG (anti-GBM); Rx: plasmapheresis</td></tr>
+        <tr><td>ANCA-associated</td><td>Rapidly progressive GN; no Ig deposit</td><td>Pauci-immune; crescents on biopsy</td></tr>
+      </table>
+    </div>
+    <div class="card red">
+      <div class="card-title">⚗️ Acid-Base Disorders</div>
+      <table class="comparison-table">
+        <tr><th>Disorder</th><th>pH</th><th>PaCO₂</th><th>HCO₃⁻</th><th>Key Cause</th></tr>
+        <tr><td>Metabolic acidosis</td><td>↓</td><td>↓ (compensation)</td><td>↓</td><td>DKA, lactic acidosis, renal failure</td></tr>
+        <tr><td>Metabolic alkalosis</td><td>↑</td><td>↑ (compensation)</td><td>↑</td><td>Vomiting, diuretics, hyperaldosteronism</td></tr>
+        <tr><td>Resp acidosis</td><td>↓</td><td>↑</td><td>↑ (compensation)</td><td>COPD, sedation, neuromuscular</td></tr>
+        <tr><td>Resp alkalosis</td><td>↑</td><td>↓</td><td>↓ (compensation)</td><td>Hyperventilation, pregnancy, altitude</td></tr>
+      </table>
+      <div class="info-box">Anion gap = Na – (Cl + HCO₃⁻) | Normal: 8–12 mEq/L | High AG metabolic acidosis: MUDPILES (Methanol, Uraemia, DKA, Propylene glycol, Isoniazid, Lactic acidosis, Ethanol, Salicylates)</div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🧪 Electrolyte Disorders</div>
+      <div class="kv-row"><span class="kv-key">Hyponatraemia — SIADH</span><span class="kv-val">Urine osmolality &gt;100; urine Na &gt;40</span></div>
+      <div class="kv-row"><span class="kv-key">SIADH causes</span><span class="kv-val">CNS disease, small cell lung Ca, drugs (cyclophosphamide, carbamazepine)</span></div>
+      <div class="kv-row"><span class="kv-key">Rapid Na correction risk</span><span class="kv-val danger">Central pontine myelinolysis (osmotic demyelination)</span></div>
+      <div class="kv-row"><span class="kv-key">Max Na correction rate</span><span class="kv-val danger">8–10 mEq/L per 24 hrs</span></div>
+      <div class="kv-row"><span class="kv-key">Hypernatraemia Rx</span><span class="kv-val">Free water replacement (D5W or enteral water)</span></div>
+      <div class="kv-row"><span class="kv-key">Hypokalaemia ECG</span><span class="kv-val">Flat T, U waves, ST depression</span></div>
+      <div class="kv-row"><span class="kv-key">Hyperkalaemia ECG</span><span class="kv-val danger">Peaked T → wide QRS → VF</span></div>
+      <div class="kv-row"><span class="kv-key">Hyperkalaemia — 1st Rx</span><span class="kv-val danger">IV calcium gluconate (membrane stabilization)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- GI & LIVER -->
+<div class="section" id="gi">
+  <div class="section-title">GI <span>&amp; Liver</span></div>
+  <div class="section-sub">IBD, peptic ulcer, hepatitis, cirrhosis, LFTs, jaundice</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🫀 Crohn's vs Ulcerative Colitis</div>
+      <table class="comparison-table">
+        <tr><th>Feature</th><th>Crohn's Disease</th><th>Ulcerative Colitis</th></tr>
+        <tr><td>Location</td><td>Any part (mouth to anus); skip lesions</td><td>Rectum to colon (contiguous, backwash ileitis)</td></tr>
+        <tr><td>Layer</td><td>Transmural (all layers)</td><td>Mucosal + submucosal only</td></tr>
+        <tr><td>Histology</td><td>Non-caseating granulomas</td><td>Crypt abscesses, goblet cell depletion</td></tr>
+        <tr><td>Endoscopy</td><td>Cobblestone, aphthous ulcers, skip areas</td><td>Continuous inflammation from rectum, pseudopolyps</td></tr>
+        <tr><td>Complications</td><td>Fistulae, strictures, abscess, malabsorption</td><td>Toxic megacolon, colorectal cancer</td></tr>
+        <tr><td>Smoking</td><td>↑ Risk (smoking worsens)</td><td>Protective (smoking improves UC)</td></tr>
+        <tr><td>Serology</td><td>ASCA positive</td><td>pANCA positive</td></tr>
+        <tr><td>Surgery</td><td>Not curative</td><td>Curative (colectomy)</td></tr>
+      </table>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🩺 Peptic Ulcer Disease</div>
+      <div class="kv-row"><span class="kv-key">DU — pain timing</span><span class="kv-val">Epigastric pain relieved by food</span></div>
+      <div class="kv-row"><span class="kv-key">GU — pain timing</span><span class="kv-val danger">Epigastric pain worsened by food</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause DU</span><span class="kv-val highlight">H. pylori (&gt;95%)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause GU</span><span class="kv-val">H. pylori + NSAIDs</span></div>
+      <div class="kv-row"><span class="kv-key">Best test H. pylori (active)</span><span class="kv-val">Urea breath test / stool antigen test</span></div>
+      <div class="kv-row"><span class="kv-key">Eradication — Triple therapy</span><span class="kv-val highlight">PPI + Clarithromycin + Amoxicillin × 14 days</span></div>
+      <div class="kv-row"><span class="kv-key">UGIB — Rockford / Blatchford score</span><span class="kv-val">Blatchford for outpatient triage; Rockford post-endoscopy</span></div>
+      <div class="kv-row"><span class="kv-key">Forrest Ia</span><span class="kv-val danger">Spurting arterial bleed — highest rebleed risk</span></div>
+      <div class="kv-row"><span class="kv-key">Zollinger-Ellison</span><span class="kv-val">Gastrinoma → multiple recurrent peptic ulcers</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🫀 Jaundice Classification</div>
+      <div class="kv-row"><span class="kv-key">Pre-hepatic</span><span class="kv-val">↑Unconjugated bili; dark urine absent; urine bilirubin –ve</span></div>
+      <div class="kv-row"><span class="kv-key">Pre-hepatic causes</span><span class="kv-val">Haemolysis, Gilbert's, Crigler-Najjar</span></div>
+      <div class="kv-row"><span class="kv-key">Hepatocellular</span><span class="kv-val">↑Both; ↑ALT/AST; dark urine; pale stool</span></div>
+      <div class="kv-row"><span class="kv-key">Hepatocellular causes</span><span class="kv-val">Viral hepatitis, alcohol, drugs, Wilson's</span></div>
+      <div class="kv-row"><span class="kv-key">Obstructive (cholestatic)</span><span class="kv-val">↑Conjugated bili; ↑ALP/GGT; pale stool; dark urine</span></div>
+      <div class="kv-row"><span class="kv-key">Obstructive causes</span><span class="kv-val">Gallstones, cholangiocarcinoma, pancreatic Ca, PSC, PBC</span></div>
+      <div class="kv-row"><span class="kv-key">Gilbert's syndrome</span><span class="kv-val green">Benign; ↑UGT1A1; jaundice with fasting/illness</span></div>
+      <div class="kv-row"><span class="kv-key">Crigler-Najjar Type I</span><span class="kv-val danger">No UGT1A1; kernicterus; fatal without liver transplant</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🫀 Cirrhosis &amp; Complications</div>
+      <div class="kv-row"><span class="kv-key">Child-Pugh A</span><span class="kv-val green">5–6 points; 1-yr survival ~100%</span></div>
+      <div class="kv-row"><span class="kv-key">Child-Pugh B</span><span class="kv-val">7–9 points; ~80% 1-yr survival</span></div>
+      <div class="kv-row"><span class="kv-key">Child-Pugh C</span><span class="kv-val danger">10–15 points; ~45% 1-yr survival</span></div>
+      <div class="kv-row"><span class="kv-key">SBP diagnosis</span><span class="kv-val danger">Ascitic fluid PMN ≥250 cells/µL</span></div>
+      <div class="kv-row"><span class="kv-key">SBP — MC organism</span><span class="kv-val">E. coli (gram-negative)</span></div>
+      <div class="kv-row"><span class="kv-key">SBP — Rx</span><span class="kv-val">Cefotaxime IV; add albumin to prevent HRS</span></div>
+      <div class="kv-row"><span class="kv-key">Hepatic encephalopathy Rx</span><span class="kv-val highlight">Lactulose + rifaximin</span></div>
+      <div class="kv-row"><span class="kv-key">HRS-AKI — vasopressor</span><span class="kv-val danger">Terlipressin + albumin</span></div>
+      <div class="kv-row"><span class="kv-key">Oesophageal varices 1° prophylaxis</span><span class="kv-val">Non-selective beta-blocker (propranolol/carvedilol)</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🦠 Viral Hepatitis</div>
+      <div class="kv-row"><span class="kv-key">HBsAg</span><span class="kv-val highlight">Active infection (acute or chronic)</span></div>
+      <div class="kv-row"><span class="kv-key">Anti-HBs</span><span class="kv-val green">Immunity (post-infection or vaccination)</span></div>
+      <div class="kv-row"><span class="kv-key">HBeAg positive</span><span class="kv-val danger">High infectivity</span></div>
+      <div class="kv-row"><span class="kv-key">IgM anti-HBc</span><span class="kv-val danger">Acute HBV infection</span></div>
+      <div class="kv-row"><span class="kv-key">Window period</span><span class="kv-val">HBsAg –ve + Anti-HBs –ve; only IgM anti-HBc +ve</span></div>
+      <div class="kv-row"><span class="kv-key">HCV — chronicity</span><span class="kv-val danger">~75–85% become chronic</span></div>
+      <div class="kv-row"><span class="kv-key">HCV treatment</span><span class="kv-val highlight">DAAs (sofosbuvir-based): SVR &gt;95%</span></div>
+      <div class="kv-row"><span class="kv-key">HAV / HEV — route</span><span class="kv-val">Faeco-oral (enteric)</span></div>
+      <div class="kv-row"><span class="kv-key">HEV — dangerous in</span><span class="kv-val danger">Pregnancy (fulminant; 20% mortality)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ENDOCRINE -->
+<div class="section" id="endocrine">
+  <div class="section-title">Endocrine <span>System</span></div>
+  <div class="section-sub">Diabetes, thyroid, adrenal, pituitary, parathyroid</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🩸 Diabetes Mellitus</div>
+      <div class="kv-row"><span class="kv-key">DM diagnostic criteria</span><span class="kv-val danger">FPG ≥126 mg/dL; 2hr PG ≥200; HbA1c ≥6.5%; Random ≥200 + symptoms</span></div>
+      <div class="kv-row"><span class="kv-key">Pre-diabetes FPG</span><span class="kv-val">100–125 mg/dL (IFG)</span></div>
+      <div class="kv-row"><span class="kv-key">DKA — pH</span><span class="kv-val danger">&lt;7.3; HCO₃⁻ &lt;18; blood ketones ↑↑</span></div>
+      <div class="kv-row"><span class="kv-key">HHS — glucose</span><span class="kv-val danger">&gt;600 mg/dL; no significant ketosis; osmolality &gt;320</span></div>
+      <div class="kv-row"><span class="kv-key">DKA — K⁺ management</span><span class="kv-val highlight">Always replace K⁺ (falls with insulin Rx)</span></div>
+      <div class="kv-row"><span class="kv-key">Metformin — MOA</span><span class="kv-val">↓ Hepatic glucose production (AMPK activation)</span></div>
+      <div class="kv-row"><span class="kv-key">Metformin — avoid if</span><span class="kv-val danger">eGFR &lt;30; contrast dye (hold 48 hrs); lactic acidosis risk</span></div>
+      <div class="kv-row"><span class="kv-key">SGLT2i — benefit beyond glucose</span><span class="kv-val highlight">CV mortality ↓, HF hospitalisation ↓, CKD progression ↓</span></div>
+      <div class="kv-row"><span class="kv-key">GLP-1 agonist — benefit</span><span class="kv-val">Weight loss + CV mortality ↓ (semaglutide, liraglutide)</span></div>
+      <div class="kv-row"><span class="kv-key">Sulphonylureas — side effect</span><span class="kv-val danger">Hypoglycaemia + weight gain</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🦋 Thyroid Disorders</div>
+      <div class="kv-row"><span class="kv-key">Graves' disease — antibody</span><span class="kv-val highlight">TSH receptor antibody (TRAb / TSI)</span></div>
+      <div class="kv-row"><span class="kv-key">Graves' — eye signs</span><span class="kv-val">Exophthalmos, lid lag, lid retraction (Dalrymple's)</span></div>
+      <div class="kv-row"><span class="kv-key">Hashimoto's — antibody</span><span class="kv-val">Anti-TPO, Anti-Tg</span></div>
+      <div class="kv-row"><span class="kv-key">Thyroid storm — Rx</span><span class="kv-val danger">PTU (block synthesis + peripheral conversion) → KI (Lugol's) → propranolol → steroids</span></div>
+      <div class="kv-row"><span class="kv-key">PTU vs carbimazole in pregnancy</span><span class="kv-val">PTU in 1st trimester; Carbimazole 2nd–3rd trimester</span></div>
+      <div class="kv-row"><span class="kv-key">Amiodarone → hypothyroid</span><span class="kv-val">Type 1: iodine-excess hyperthyroidism; Type 2: destructive thyroiditis</span></div>
+      <div class="kv-row"><span class="kv-key">MC thyroid cancer</span><span class="kv-val highlight">Papillary (best prognosis; Psammoma bodies)</span></div>
+      <div class="kv-row"><span class="kv-key">Medullary thyroid Ca — marker</span><span class="kv-val">Calcitonin; associated with MEN2A/2B (RET mutation)</span></div>
+      <div class="kv-row"><span class="kv-key">Anaplastic Ca — prognosis</span><span class="kv-val danger">Worst; months survival</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🩺 Adrenal Disorders</div>
+      <div class="kv-row"><span class="kv-key">Cushing's — 1st test</span><span class="kv-val highlight">24-hr urinary free cortisol / Overnight 1 mg DST</span></div>
+      <div class="kv-row"><span class="kv-key">Cushing's — localization</span><span class="kv-val">High dose DST + ACTH levels</span></div>
+      <div class="kv-row"><span class="kv-key">ACTH-dependent Cushing's</span><span class="kv-val">Pituitary adenoma (Cushing's disease) or ectopic (SCLC)</span></div>
+      <div class="kv-row"><span class="kv-key">ACTH-independent</span><span class="kv-val">Adrenal adenoma/carcinoma</span></div>
+      <div class="kv-row"><span class="kv-key">Conn's (primary hyperaldosteronism)</span><span class="kv-val danger">HTN + hypokalaemia + suppressed renin + ↑aldosterone</span></div>
+      <div class="kv-row"><span class="kv-key">Best test for Conn's</span><span class="kv-val">Aldosterone:renin ratio (ARR)</span></div>
+      <div class="kv-row"><span class="kv-key">Phaeochromocytoma — Rule of 10s</span><span class="kv-val highlight">10% bilateral, 10% extra-adrenal, 10% malignant, 10% familial</span></div>
+      <div class="kv-row"><span class="kv-key">Phaeochromocytoma — 1st drug</span><span class="kv-val danger">Alpha-blocker (phenoxybenzamine) FIRST, then beta-blocker</span></div>
+      <div class="kv-row"><span class="kv-key">Addison's — diagnosis</span><span class="kv-val">Short Synacthen test (cortisol fail to rise &gt;550 nmol/L)</span></div>
+      <div class="kv-row"><span class="kv-key">Addison's crisis — Rx</span><span class="kv-val danger">IV hydrocortisone + IV saline immediately</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🧠 Pituitary &amp; Parathyroid</div>
+      <div class="kv-row"><span class="kv-key">Acromegaly — 1st test</span><span class="kv-val highlight">IGF-1 (screening); OGTT + GH suppression (confirmatory)</span></div>
+      <div class="kv-row"><span class="kv-key">Acromegaly — cause</span><span class="kv-val">GH-secreting pituitary adenoma (somatotroph)</span></div>
+      <div class="kv-row"><span class="kv-key">Prolactinoma — MC pituitary adenoma</span><span class="kv-val highlight">First line: Dopamine agonist (cabergoline/bromocriptine)</span></div>
+      <div class="kv-row"><span class="kv-key">DI — central vs nephrogenic</span><span class="kv-val">Central: responds to desmopressin; Nephrogenic: does not</span></div>
+      <div class="kv-row"><span class="kv-key">Primary hyperPTH</span><span class="kv-val">↑Ca + ↑PTH + ↓PO₄; MC cause: adenoma (85%)</span></div>
+      <div class="kv-row"><span class="kv-key">Secondary hyperPTH</span><span class="kv-val">↓Ca + ↑PTH (CKD, vitamin D deficiency)</span></div>
+      <div class="kv-row"><span class="kv-key">Tertiary hyperPTH</span><span class="kv-val">↑Ca + ↑PTH autonomous (after prolonged 2° hyperPTH)</span></div>
+      <div class="kv-row"><span class="kv-key">MEN 1 (Wermer)</span><span class="kv-val highlight">Pituitary + Parathyroid + Pancreatic (3 Ps); MEN1 gene</span></div>
+      <div class="kv-row"><span class="kv-key">MEN 2A (Sipple)</span><span class="kv-val">MTC + Phaeochromocytoma + Parathyroid; RET gene</span></div>
+      <div class="kv-row"><span class="kv-key">MEN 2B</span><span class="kv-val danger">MTC + Phaeochromocytoma + Marfanoid + Mucosal neuromas; RET gene</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- NEUROLOGY -->
+<div class="section" id="neuro">
+  <div class="section-title">Neurology <span>System</span></div>
+  <div class="section-sub">Stroke, seizures, dementia, headache, CNS infections</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🧠 Stroke</div>
+      <div class="kv-row"><span class="kv-key">Ischaemic stroke — IV alteplase window</span><span class="kv-val danger">Within 4.5 hrs of symptom onset</span></div>
+      <div class="kv-row"><span class="kv-key">Mechanical thrombectomy window</span><span class="kv-val danger">Up to 24 hrs (large vessel occlusion)</span></div>
+      <div class="kv-row"><span class="kv-key">Contraindication to thrombolysis</span><span class="kv-val danger">BP &gt;185/110; recent surgery/bleed; anticoagulation</span></div>
+      <div class="kv-row"><span class="kv-key">MCA stroke — classic</span><span class="kv-val">Contralateral hemiparesis (arm &gt; leg) + aphasia (dominant)</span></div>
+      <div class="kv-row"><span class="kv-key">ACA stroke</span><span class="kv-val">Leg &gt; arm weakness; personality change (frontal)</span></div>
+      <div class="kv-row"><span class="kv-key">PCA stroke</span><span class="kv-val">Homonymous hemianopia; alexia without agraphia</span></div>
+      <div class="kv-row"><span class="kv-key">Lateral medullary (Wallenberg)</span><span class="kv-val">Ipsilateral face + contralateral body pain/temp; dysphagia; PICA</span></div>
+      <div class="kv-row"><span class="kv-key">Lacunar syndromes</span><span class="kv-val">Pure motor, pure sensory, ataxic hemiparesis; small vessel disease</span></div>
+      <div class="kv-row"><span class="kv-key">Haemorrhagic transformation — avoid</span><span class="kv-val danger">Anticoagulants for 2–4 weeks post-haemorrhagic transformation</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">⚡ Epilepsy &amp; Seizures</div>
+      <div class="kv-row"><span class="kv-key">Status epilepticus — 1st line</span><span class="kv-val danger">IV lorazepam (0.1 mg/kg) or IM midazolam</span></div>
+      <div class="kv-row"><span class="kv-key">Status — 2nd line (if persists)</span><span class="kv-val danger">IV levetiracetam, IV valproate, or IV fosphenytoin</span></div>
+      <div class="kv-row"><span class="kv-key">Absence seizures — drug</span><span class="kv-val highlight">Ethosuximide (1st line); Valproate (also effective)</span></div>
+      <div class="kv-row"><span class="kv-key">Juvenile myoclonic epilepsy — drug</span><span class="kv-val">Valproate (avoid carbamazepine — worsens)</span></div>
+      <div class="kv-row"><span class="kv-key">Temporal lobe epilepsy — features</span><span class="kv-val">Déjà vu, lip smacking, automatisms; MC focal epilepsy</span></div>
+      <div class="kv-row"><span class="kv-key">Valproate — side effects</span><span class="kv-val danger">Teratogenic (neural tube defect), hepatotoxicity, pancreatitis, alopecia</span></div>
+      <div class="kv-row"><span class="kv-key">Carbamazepine — watch for</span><span class="kv-val danger">SJS (HLA-B*1502 — Asian patients), hyponatraemia</span></div>
+      <div class="kv-row"><span class="kv-key">Phenytoin — side effects</span><span class="kv-val">Gingival hyperplasia, hirsutism, ataxia, folic acid depletion</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🧠 Dementia Differentials</div>
+      <table class="comparison-table">
+        <tr><th>Type</th><th>Key Feature</th><th>Pathology</th></tr>
+        <tr><td>Alzheimer's</td><td>MC; insidious memory loss; temporal/parietal; ApoE4 risk</td><td>Amyloid plaques + NFTs (tau); ↓ACh</td></tr>
+        <tr><td>Vascular dementia</td><td>Stepwise progression; multiple infarcts; CVD risk factors</td><td>White matter ischaemia; lacunar infarcts</td></tr>
+        <tr><td>Lewy body dementia</td><td>Fluctuating cognition + visual hallucinations + Parkinsonism; REM sleep disorder</td><td>Alpha-synuclein Lewy bodies</td></tr>
+        <tr><td>Frontotemporal dementia (FTD)</td><td>Personality change, disinhibition, preserved memory initially; younger onset</td><td>TDP-43, tau, FUS inclusions</td></tr>
+        <tr><td>Normal pressure hydrocephalus</td><td>Triad: Wet-Wobbly-Wacky (incontinence-gait-dementia)</td><td>↑CSF pressure with normal opening; responds to VP shunt</td></tr>
+        <tr><td>CJD</td><td>Rapidly progressive dementia + myoclonus; 14-3-3 protein in CSF</td><td>Prion; spongiform changes; periodic sharp waves EEG</td></tr>
+      </table>
+    </div>
+    <div class="card red">
+      <div class="card-title">🤕 Headache Syndromes</div>
+      <div class="kv-row"><span class="kv-key">Migraine — aura</span><span class="kv-val">Scintillating scotoma; reversible; &lt;60 min</span></div>
+      <div class="kv-row"><span class="kv-key">Migraine acute Rx</span><span class="kv-val highlight">Triptans (5-HT₁B/₁D agonist); NSAIDs</span></div>
+      <div class="kv-row"><span class="kv-key">Migraine prophylaxis</span><span class="kv-val">Propranolol, topiramate, amitriptyline, CGRP antibodies</span></div>
+      <div class="kv-row"><span class="kv-key">Cluster headache — features</span><span class="kv-val danger">Unilateral periorbital; lacrimation; rhinorrhoea; Horner's; nocturnal</span></div>
+      <div class="kv-row"><span class="kv-key">Cluster headache — acute Rx</span><span class="kv-val danger">100% O₂ × 15 min + subcutaneous sumatriptan</span></div>
+      <div class="kv-row"><span class="kv-key">Cluster prophylaxis</span><span class="kv-val">Verapamil (1st line)</span></div>
+      <div class="kv-row"><span class="kv-key">Thunderclap headache — rule out</span><span class="kv-val danger">Subarachnoid haemorrhage (CT → LP)</span></div>
+      <div class="kv-row"><span class="kv-key">Raised ICP headache</span><span class="kv-val">Worse in morning; worsened by Valsalva; papilloedema</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🦠 CNS Infections</div>
+      <div class="kv-row"><span class="kv-key">Bacterial meningitis — MC organism (adults)</span><span class="kv-val danger">N. meningitidis, S. pneumoniae</span></div>
+      <div class="kv-row"><span class="kv-key">Neonates MC meningitis</span><span class="kv-val">Group B Strep, E. coli, Listeria</span></div>
+      <div class="kv-row"><span class="kv-key">CSF — bacterial</span><span class="kv-val danger">↑PMN, ↑protein, ↓glucose (&lt;60% serum)</span></div>
+      <div class="kv-row"><span class="kv-key">CSF — viral</span><span class="kv-val">↑Lymphocytes; normal/mild ↑protein; normal glucose</span></div>
+      <div class="kv-row"><span class="kv-key">CSF — TB</span><span class="kv-val">↑Lymphocytes; ↑↑protein; ↓↓glucose; fibrin web clot</span></div>
+      <div class="kv-row"><span class="kv-key">Empirical bacterial meningitis Rx</span><span class="kv-val highlight">Ceftriaxone + Dexamethasone (reduce neurological sequelae)</span></div>
+      <div class="kv-row"><span class="kv-key">Add if Listeria suspected (elderly/immunocompromised)</span><span class="kv-val">+ IV Ampicillin</span></div>
+      <div class="kv-row"><span class="kv-key">HSV encephalitis — drug</span><span class="kv-val danger">IV Acyclovir; temporal lobe involvement on MRI</span></div>
+      <div class="kv-row"><span class="kv-key">Cryptococcal meningitis — Rx</span><span class="kv-val">IV AmBisome + flucytosine (induction) → fluconazole</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- HAEMATOLOGY -->
+<div class="section" id="hemato">
+  <div class="section-title">Haematology <span>System</span></div>
+  <div class="section-sub">Anaemia, bleeding disorders, leukaemia, lymphoma, coagulation</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🩸 Anaemia Classification</div>
+      <table class="comparison-table">
+        <tr><th>Type</th><th>MCV</th><th>Causes</th></tr>
+        <tr><td>Microcytic (↓MCV)</td><td>&lt;80 fL</td><td>IDA, Thalassaemia, Sideroblastic, Lead poisoning (TAILS mnemonic)</td></tr>
+        <tr><td>Normocytic</td><td>80–100 fL</td><td>Haemolysis, anaemia of chronic disease, aplastic anaemia, acute blood loss</td></tr>
+        <tr><td>Macrocytic</td><td>&gt;100 fL</td><td>B12/folate deficiency, alcohol, hypothyroidism, MDS, drugs (hydroxyurea, MTX)</td></tr>
+      </table>
+      <div class="mnemonic"><b>Iron deficiency vs Thalassaemia:</b> Mentzer Index = MCV/RBC — &lt;13 = Thalassaemia; &gt;13 = IDA</div>
+      <div class="info-box">IDA: ↓Ferritin, ↓serum Fe, ↑TIBC | ACD: ↓Fe, ↓TIBC, normal/↑ferritin</div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🩸 Haemolytic Anaemias</div>
+      <div class="kv-row"><span class="kv-key">Intravascular haemolysis markers</span><span class="kv-val danger">↓Haptoglobin, haemoglobinuria, haemoglobinaemia, ↑LDH</span></div>
+      <div class="kv-row"><span class="kv-key">DAT (direct Coombs) positive</span><span class="kv-val">Autoimmune haemolytic anaemia (AIHA)</span></div>
+      <div class="kv-row"><span class="kv-key">Warm AIHA — antibody</span><span class="kv-val highlight">IgG; Rx: steroids</span></div>
+      <div class="kv-row"><span class="kv-key">Cold AIHA — antibody</span><span class="kv-val">IgM; Rx: avoid cold, rituximab</span></div>
+      <div class="kv-row"><span class="kv-key">G6PD deficiency — trigger</span><span class="kv-val danger">Primaquine, dapsone, fava beans, infections</span></div>
+      <div class="kv-row"><span class="kv-key">G6PD — blood film</span><span class="kv-val">Heinz bodies (precipitated Hb)</span></div>
+      <div class="kv-row"><span class="kv-key">Hereditary spherocytosis</span><span class="kv-val">Ankyrin/spectrin defect; MCHC ↑; osmotic fragility ↑</span></div>
+      <div class="kv-row"><span class="kv-key">PNH — diagnosis</span><span class="kv-val highlight">Flow cytometry (↓CD55/CD59)</span></div>
+      <div class="kv-row"><span class="kv-key">PNH — treatment</span><span class="kv-val">Eculizumab (anti-C5 complement inhibitor)</span></div>
+    </div>
+    <div class="card green">
+      <div class="card-title">🩸 Coagulation Disorders</div>
+      <div class="kv-row"><span class="kv-key">PT/INR measures</span><span class="kv-val">Extrinsic pathway (VII) + common (X, V, II, I)</span></div>
+      <div class="kv-row"><span class="kv-key">APTT measures</span><span class="kv-val">Intrinsic pathway (XII, XI, IX, VIII) + common</span></div>
+      <div class="kv-row"><span class="kv-key">Haemophilia A</span><span class="kv-val danger">Factor VIII deficiency; ↑APTT, normal PT</span></div>
+      <div class="kv-row"><span class="kv-key">Haemophilia B</span><span class="kv-val danger">Factor IX deficiency (Christmas disease)</span></div>
+      <div class="kv-row"><span class="kv-key">vWD — MC bleeding disorder</span><span class="kv-val">↑Bleeding time + ↑APTT; ↓FVIII (vWF carrier)</span></div>
+      <div class="kv-row"><span class="kv-key">vWD — treatment</span><span class="kv-val highlight">Desmopressin (DDAVP) — Type I; Factor VIII/vWF concentrate for Type III</span></div>
+      <div class="kv-row"><span class="kv-key">DIC — features</span><span class="kv-val danger">↑PT, ↑APTT, ↓fibrinogen, ↑D-dimer, ↓platelets</span></div>
+      <div class="kv-row"><span class="kv-key">ITP — diagnosis</span><span class="kv-val">Isolated thrombocytopenia; normal PT/APTT; anti-platelet Ab</span></div>
+      <div class="kv-row"><span class="kv-key">ITP — 1st line</span><span class="kv-val">Prednisolone; IVIG (if urgent); Eltrombopag (TPO agonist)</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🔬 Leukaemias</div>
+      <table class="comparison-table">
+        <tr><th>Type</th><th>Peak Age</th><th>Key Feature</th></tr>
+        <tr><td>ALL</td><td>Children (2–5 yrs)</td><td>MC childhood malignancy; TdT +ve; Philadelphia chr in B-ALL (poor prognosis)</td></tr>
+        <tr><td>AML</td><td>Adults (>60 yrs)</td><td>Auer rods (M3 = APML); t(15;17) in APML; Rx: ATRA + arsenic</td></tr>
+        <tr><td>CML</td><td>Middle age</td><td>Philadelphia chromosome t(9;22) BCR-ABL; Rx: Imatinib (TKI)</td></tr>
+        <tr><td>CLL</td><td>Elderly (&gt;60 yrs)</td><td>MC adult leukaemia; smudge cells; CD5+CD19+CD23+; Richter transformation</td></tr>
+      </table>
+      <div class="mnemonic"><b>APML (M3 AML):</b> t(15;17) PML-RARA → DIC risk → ATRA (all-trans retinoic acid) is curative — never give chemotherapy alone!</div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🔬 Lymphomas</div>
+      <div class="kv-row"><span class="kv-key">Hodgkin's lymphoma — hallmark</span><span class="kv-val highlight">Reed-Sternberg cell (owl-eye nucleoli)</span></div>
+      <div class="kv-row"><span class="kv-key">HL — MC type</span><span class="kv-val">Nodular sclerosis (young adults)</span></div>
+      <div class="kv-row"><span class="kv-key">HL — best prognosis subtype</span><span class="kv-val green">Lymphocyte-predominant</span></div>
+      <div class="kv-row"><span class="kv-key">HL — worst prognosis</span><span class="kv-val danger">Lymphocyte-depleted</span></div>
+      <div class="kv-row"><span class="kv-key">NHL — MC type worldwide</span><span class="kv-val highlight">Diffuse Large B-Cell Lymphoma (DLBCL)</span></div>
+      <div class="kv-row"><span class="kv-key">Burkitt's lymphoma</span><span class="kv-val danger">t(8;14) c-MYC; "starry sky" pattern; EBV-associated; fastest growing tumour</span></div>
+      <div class="kv-row"><span class="kv-key">Follicular lymphoma</span><span class="kv-val">t(14;18) BCL-2; indolent; waxing-waning lymphadenopathy</span></div>
+      <div class="kv-row"><span class="kv-key">Mantle cell lymphoma</span><span class="kv-val">t(11;14) Cyclin D1; CD5+CD23–; worst prognosis NHL</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- IMMUNOLOGY -->
+<div class="section" id="immuno">
+  <div class="section-title">Immunology <span>&amp; Autoimmune</span></div>
+  <div class="section-sub">Hypersensitivity, immunodeficiencies, connective tissue disorders, vasculitis</div>
+  <div class="grid-auto">
+    <div class="card orange">
+      <div class="card-title">🛡️ Hypersensitivity Reactions</div>
+      <table class="comparison-table">
+        <tr><th>Type</th><th>Mechanism</th><th>Examples</th></tr>
+        <tr><td>Type I (Immediate)</td><td>IgE-mediated; mast cell degranulation</td><td>Anaphylaxis, atopy, allergic asthma, urticaria</td></tr>
+        <tr><td>Type II (Cytotoxic)</td><td>IgG/IgM → complement + ADCC</td><td>Haemolytic transfusion reactions, Goodpasture's, Myasthenia gravis, ITP, Graves', Pemphigus</td></tr>
+        <tr><td>Type III (Immune complex)</td><td>Antigen-antibody complex deposition → complement</td><td>SLE, serum sickness, post-strep GN, HSP, farmer's lung</td></tr>
+        <tr><td>Type IV (Delayed/Cell-mediated)</td><td>T-cell mediated; 48–72 hrs</td><td>Contact dermatitis, TB Mantoux, graft rejection, SJS</td></tr>
+      </table>
+      <div class="mnemonic"><b>ACID:</b> Anaphylactic, Cytotoxic, Immune complex, Delayed — Types I–IV</div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🛡️ Immunodeficiencies</div>
+      <table class="comparison-table">
+        <tr><th>Condition</th><th>Defect</th><th>Key Feature</th></tr>
+        <tr><td>X-linked agammaglobulinaemia (Bruton's)</td><td>BTK mutation → no B cells</td><td>Males; recurrent bacterial infections after 6 months; absent tonsils</td></tr>
+        <tr><td>Common Variable ID (CVID)</td><td>B cell dysfunction; ↓all Ig</td><td>Adults; recurrent sinopulmonary infections; giardia</td></tr>
+        <tr><td>Selective IgA deficiency</td><td>MC primary immunodeficiency</td><td>Often asymptomatic; anaphylaxis to blood products (anti-IgA antibodies)</td></tr>
+        <tr><td>DiGeorge syndrome</td><td>22q11 deletion → thymus aplasia → no T cells</td><td>CATCH-22: Cardiac, Abnormal face, Thymic aplasia, Cleft palate, Hypocalcaemia</td></tr>
+        <tr><td>SCID</td><td>ADA deficiency (AR) or γ-chain deficiency (X-linked)</td><td>No T and B cells; BCG contraindicated; Rx: BMT</td></tr>
+        <tr><td>Wiskott-Aldrich</td><td>WASp mutation (X-linked)</td><td>Triad: Eczema, Thrombocytopenia, Immunodeficiency; ↑IgA/E, ↓IgM</td></tr>
+        <tr><td>Chediak-Higashi</td><td>LYST gene; neutrophil dysfunction</td><td>Partial albinism + recurrent infections; giant granules on blood film</td></tr>
+        <tr><td>CGD (Chronic Granulomatous Disease)</td><td>NADPH oxidase defect; no respiratory burst</td><td>X-linked (males); catalase-positive organisms; NBT test –ve</td></tr>
+      </table>
+    </div>
+    <div class="card green">
+      <div class="card-title">🔴 Connective Tissue Disorders</div>
+      <div class="kv-row"><span class="kv-key">SLE — MC manifestation</span><span class="kv-val">Arthralgia/arthritis</span></div>
+      <div class="kv-row"><span class="kv-key">SLE — most sensitive antibody</span><span class="kv-val highlight">ANA (95–99%); not specific</span></div>
+      <div class="kv-row"><span class="kv-key">SLE — most specific antibody</span><span class="kv-val highlight">Anti-dsDNA; anti-Sm</span></div>
+      <div class="kv-row"><span class="kv-key">Anti-dsDNA — correlates with</span><span class="kv-val danger">Disease activity + lupus nephritis</span></div>
+      <div class="kv-row"><span class="kv-key">Anti-Ro/SSA — associated with</span><span class="kv-val">Sjögren's + neonatal lupus + congenital heart block</span></div>
+      <div class="kv-row"><span class="kv-key">Anti-Scl-70 (topoisomerase I)</span><span class="kv-val danger">Diffuse systemic sclerosis + ILD</span></div>
+      <div class="kv-row"><span class="kv-key">Anti-centromere Ab</span><span class="kv-val">Limited systemic sclerosis (CREST)</span></div>
+      <div class="kv-row"><span class="kv-key">Anti-Jo-1</span><span class="kv-val">Polymyositis/Dermatomyositis + ILD (antisynthetase syndrome)</span></div>
+      <div class="kv-row"><span class="kv-key">CREST syndrome</span><span class="kv-val highlight">Calcinosis, Raynaud's, Oesophageal dysmotility, Sclerodactyly, Telangiectasia</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🔥 Vasculitis — Chapel Hill Classification</div>
+      <table class="comparison-table">
+        <tr><th>Vessel</th><th>Disease</th><th>Key Feature</th></tr>
+        <tr><td>Large vessel</td><td>Giant cell arteritis (GCA)</td><td>Age &gt;50; temporal headache; jaw claudication; ESR↑↑; ↑risk blindness; steroids urgently</td></tr>
+        <tr><td>Large vessel</td><td>Takayasu's arteritis</td><td>Young Asian women; pulseless disease; aortic arch + branches</td></tr>
+        <tr><td>Medium vessel</td><td>PAN (Polyarteritis nodosa)</td><td>HBV-associated; renal + mesenteric arteries; ANCA –ve; no glomerulonephritis</td></tr>
+        <tr><td>Medium vessel</td><td>Kawasaki disease</td><td>Children &lt;5; CRASH: Conjunctivitis, Rash, Adenopathy, Strawberry tongue, Hands (desquamation); IVIG + aspirin</td></tr>
+        <tr><td>Small vessel</td><td>GPA (Wegener's)</td><td>c-ANCA/PR3; ENT + lung + kidney; saddle-nose; Rx: cyclophosphamide</td></tr>
+        <tr><td>Small vessel</td><td>EGPA (Churg-Strauss)</td><td>p-ANCA/MPO; asthma + eosinophilia + vasculitis</td></tr>
+        <tr><td>Small vessel</td><td>HSP (IgA vasculitis)</td><td>Children; palpable purpura buttocks/legs + arthritis + haematuria; IgA deposits</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ONE-LINERS -->
+<div class="section" id="oneliners">
+  <div class="section-title">Exam <span>One-Liners</span></div>
+  <div class="section-sub">High-frequency single-answer facts for rapid revision — Integrated Systems</div>
+  <div class="grid-2">
+    <div class="card orange">
+      <div class="card-title">⭐ Integrated Systems — Part 1</div>
+      <div class="kv-row"><span class="kv-key">MC cause of death worldwide</span><span class="kv-val highlight">Ischaemic heart disease</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause SCD in young athletes</span><span class="kv-val danger">HCM</span></div>
+      <div class="kv-row"><span class="kv-key">MC primary arrhythmia causing SCD</span><span class="kv-val danger">Ventricular fibrillation</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause cor pulmonale</span><span class="kv-val">COPD</span></div>
+      <div class="kv-row"><span class="kv-key">MC nephrotic syndrome in children</span><span class="kv-val highlight">Minimal Change Disease (MCD)</span></div>
+      <div class="kv-row"><span class="kv-key">MC nephrotic syndrome in adults</span><span class="kv-val">Membranous GN</span></div>
+      <div class="kv-row"><span class="kv-key">MC nephritic syndrome</span><span class="kv-val">IgA nephropathy</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause ESRD worldwide</span><span class="kv-val danger">Diabetic nephropathy</span></div>
+      <div class="kv-row"><span class="kv-key">MC primary malignancy in CNS</span><span class="kv-val">Glioblastoma multiforme (GBM)</span></div>
+      <div class="kv-row"><span class="kv-key">MC brain metastasis primary</span><span class="kv-val">Lung cancer</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause hepatocellular carcinoma (HCC)</span><span class="kv-val danger">HBV (globally); HCV (Western countries)</span></div>
+      <div class="kv-row"><span class="kv-key">HCC tumour marker</span><span class="kv-val">AFP (&gt;400 ng/mL diagnostic)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause portal hypertension</span><span class="kv-val">Liver cirrhosis (intrahepatic)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause Budd-Chiari</span><span class="kv-val">Hypercoagulable states (JAK2 mutation/PNH)</span></div>
+      <div class="kv-row"><span class="kv-key">Cholangiocarcinoma — association</span><span class="kv-val">PSC, Clonorchis sinensis</span></div>
+      <div class="kv-row"><span class="kv-key">Wilson's disease — gene/protein</span><span class="kv-val">ATP7B; copper transport; Kayser-Fleischer rings</span></div>
+      <div class="kv-row"><span class="kv-key">Haemochromatosis — gene</span><span class="kv-val">HFE gene (C282Y mutation); ↑ferritin, ↑transferrin sat</span></div>
+      <div class="kv-row"><span class="kv-key">Alpha-1 antitrypsin deficiency</span><span class="kv-val danger">Emphysema (panacinar) + cirrhosis; PiZZ phenotype</span></div>
+    </div>
+    <div class="card blue">
+      <div class="card-title">⭐ Integrated Systems — Part 2</div>
+      <div class="kv-row"><span class="kv-key">MC cause Addison's disease (worldwide)</span><span class="kv-val">TB; (developed world = autoimmune)</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause hypothyroidism (worldwide)</span><span class="kv-val">Iodine deficiency</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause hypothyroidism (developed)</span><span class="kv-val">Hashimoto's thyroiditis</span></div>
+      <div class="kv-row"><span class="kv-key">MC pituitary adenoma</span><span class="kv-val highlight">Prolactinoma</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause Cushing's syndrome overall</span><span class="kv-val">Exogenous steroids</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause endogenous Cushing's</span><span class="kv-val">Pituitary (Cushing's disease, ACTH-dependent)</span></div>
+      <div class="kv-row"><span class="kv-key">MC complication of DM</span><span class="kv-val danger">Peripheral neuropathy (distal symmetrical)</span></div>
+      <div class="kv-row"><span class="kv-key">Kussmaul breathing</span><span class="kv-val">Deep rapid breathing in metabolic acidosis (DKA)</span></div>
+      <div class="kv-row"><span class="kv-key">MC opportunistic infection in AIDS</span><span class="kv-val danger">Pneumocystis jirovecii pneumonia (PCP)</span></div>
+      <div class="kv-row"><span class="kv-key">CD4 count — prophylaxis threshold</span><span class="kv-val">PCP: &lt;200; MAC: &lt;50; CMV: &lt;50</span></div>
+      <div class="kv-row"><span class="kv-key">MC cause peripheral neuropathy</span><span class="kv-val">Diabetes mellitus</span></div>
+      <div class="kv-row"><span class="kv-key">Guillain-Barré — trigger</span><span class="kv-val highlight">Campylobacter jejuni (MC); also CMV, EBV, Zika</span></div>
+      <div class="kv-row"><span class="kv-key">GBS — CSF finding</span><span class="kv-val">Albuminocytological dissociation (↑protein, normal cells)</span></div>
+      <div class="kv-row"><span class="kv-key">Myasthenia gravis — antibody</span><span class="kv-val highlight">Anti-AChR (85%); anti-MuSK (10%)</span></div>
+      <div class="kv-row"><span class="kv-key">Myasthenia gravis — crisis Rx</span><span class="kv-val danger">Plasmapheresis / IVIG; avoid neostigmine in crisis</span></div>
+      <div class="kv-row"><span class="kv-key">Eaton-Lambert — distinction</span><span class="kv-val">Improves with repetition (vs MG worsens); VGCC antibody</span></div>
+      <div class="kv-row"><span class="kv-key">MC paraneoplastic syndrome cause</span><span class="kv-val">Small cell lung carcinoma (SIADH, Cushing's, Eaton-Lambert)</span></div>
+      <div class="kv-row"><span class="kv-key">Trousseau sign</span><span class="kv-val">Carpal spasm on BP cuff inflation → hypocalcaemia</span></div>
+      <div class="kv-row"><span class="kv-key">Chvostek sign</span><span class="kv-val">Facial muscle twitch on tapping → hypocalcaemia</span></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-auto">
+    <div class="card green">
+      <div class="card-title">🧪 Must-Know Lab Values</div>
+      <div class="kv-row"><span class="kv-key">Normal serum Na</span><span class="kv-val">135–145 mEq/L</span></div>
+      <div class="kv-row"><span class="kv-key">Normal serum K</span><span class="kv-val">3.5–5.0 mEq/L</span></div>
+      <div class="kv-row"><span class="kv-key">Normal serum Ca (total)</span><span class="kv-val">8.5–10.5 mg/dL (2.1–2.6 mmol/L)</span></div>
+      <div class="kv-row"><span class="kv-key">Normal HbA1c (non-diabetic)</span><span class="kv-val">&lt;5.7%</span></div>
+      <div class="kv-row"><span class="kv-key">PT normal range</span><span class="kv-val">11–13 seconds</span></div>
+      <div class="kv-row"><span class="kv-key">APTT normal</span><span class="kv-val">25–35 seconds</span></div>
+      <div class="kv-row"><span class="kv-key">INR therapeutic range (AF/DVT)</span><span class="kv-val highlight">2–3</span></div>
+      <div class="kv-row"><span class="kv-key">INR therapeutic range (mechanical valve)</span><span class="kv-val danger">2.5–3.5</span></div>
+      <div class="kv-row"><span class="kv-key">Normal CSF glucose</span><span class="kv-val">&gt;60% serum glucose (2.5–4.5 mmol/L)</span></div>
+      <div class="kv-row"><span class="kv-key">Normal CSF pressure</span><span class="kv-val">70–180 mmH₂O</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-title">💊 Drug-Disease Associations</div>
+      <div class="kv-row"><span class="kv-key">Drug-induced lupus</span><span class="kv-val danger">Hydralazine, procainamide, isoniazid, minocycline</span></div>
+      <div class="kv-row"><span class="kv-key">Drug-induced ILD</span><span class="kv-val danger">Amiodarone, bleomycin, methotrexate, nitrofurantoin</span></div>
+      <div class="kv-row"><span class="kv-key">Drug-induced aplastic anaemia</span><span class="kv-val danger">Chloramphenicol, benzene, carbamazepine</span></div>
+      <div class="kv-row"><span class="kv-key">Drug-induced haemolytic anaemia</span><span class="kv-val">Methyldopa, dapsone, primaquine</span></div>
+      <div class="kv-row"><span class="kv-key">Drug-induced agranulocytosis</span><span class="kv-val danger">Clozapine, carbimazole, propylthiouracil, sulfasalazine</span></div>
+      <div class="kv-row"><span class="kv-key">Drug-induced Parkinsonism</span><span class="kv-val">Metoclopramide, haloperidol, risperidone (D2 blockers)</span></div>
+      <div class="kv-row"><span class="kv-key">Drug-induced SIADH</span><span class="kv-val">Carbamazepine, cyclophosphamide, SSRIs, vincristine</span></div>
+      <div class="kv-row"><span class="kv-key">Drug-induced QT prolongation</span><span class="kv-val danger">Amiodarone, haloperidol, quinolones, macrolides</span></div>
+    </div>
+    <div class="card red">
+      <div class="card-title">🔗 Translocation Mnemonics</div>
+      <div class="kv-row"><span class="kv-key">t(9;22) — Philadelphia</span><span class="kv-val highlight">CML (BCR-ABL) → Imatinib</span></div>
+      <div class="kv-row"><span class="kv-key">t(15;17)</span><span class="kv-val danger">APML (PML-RARA) → ATRA</span></div>
+      <div class="kv-row"><span class="kv-key">t(8;14)</span><span class="kv-val danger">Burkitt's lymphoma (c-MYC)</span></div>
+      <div class="kv-row"><span class="kv-key">t(14;18)</span><span class="kv-val">Follicular lymphoma (BCL-2)</span></div>
+      <div class="kv-row"><span class="kv-key">t(11;14)</span><span class="kv-val">Mantle cell lymphoma (Cyclin D1)</span></div>
+      <div class="kv-row"><span class="kv-key">t(11;22)</span><span class="kv-val">Ewing's sarcoma (EWS-FLI1)</span></div>
+      <div class="kv-row"><span class="kv-key">t(12;21) ETV6-RUNX1</span><span class="kv-val green">B-ALL — best prognosis</span></div>
+      <div class="kv-row"><span class="kv-key">t(1;19) E2A-PBX1</span><span class="kv-val">Pre-B ALL</span></div>
+      <div class="kv-row"><span class="kv-key">inv(16)</span><span><span class="kv-val green">AML M4eo (eosinophilic) — good prognosis</span></span></div>
+      <div class="kv-row"><span class="kv-key">t(8;21)</span><span class="kv-val green">AML M2 — good prognosis</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>
