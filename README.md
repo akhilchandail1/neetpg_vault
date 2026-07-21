@@ -22,16 +22,6 @@ python -m http.server 8000
 
 Then visit `http://localhost:8000`.
 
-## Publish
-
-This project works directly with GitHub Pages, Netlify, or Vercel. Deploy the repository root as a static site; `index.html` is the homepage.
-
-Before publishing, replace the placeholder GitHub URL in the footer of `index.html`:
-
-```html
-https://github.com/your-username/NEET-cheatsheets
-```
-
 ## Structure
 
 ```text
@@ -40,10 +30,6 @@ cheatsheet-theme.css        Shared visual theme for subject pages
 pyq-dashboard.html          Personal NEET PG PYQ revision tracker
 *_cheatsheet.html           Individual subject cheatsheets
 ```
-
-## Suggested domain
-
-`NEETvault.com` — check availability with your preferred domain registrar before registering it.
 
 ## Note
 
