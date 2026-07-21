@@ -23,6 +23,17 @@ body { background: var(--bg) !important; color: var(--text) !important; }
   backdrop-filter: blur(10px);
 }
 .header-top { margin-bottom: 12px !important; }
+.home-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted) !important;
+  font: 500 10px "DM Mono", monospace;
+  letter-spacing: .05em;
+  margin-bottom: 12px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.home-link:hover { color: var(--text) !important; }
 .logo { gap: 10px !important; }
 .logo-badge {
   background: var(--lime, #d9ff71) !important;
